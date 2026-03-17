@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Redirecting…</title>
+  <script>
+    (function() {
+      var key = 'tutero_ab_variant';
+      var variants = ['a', 'b'];
+      var variant = localStorage.getItem(key);
+      if (!variant || variants.indexOf(variant) === -1) {
+        variant = variants[Math.floor(Math.random() * variants.length)];
+        localStorage.setItem(key, variant);
+      }
+      var search = window.location.search || '';
+      window.location.replace(variant + '/' + search);
+    })();
+  </script>
+</head>
+<body></body>
+</html>

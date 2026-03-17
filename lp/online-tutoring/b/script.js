@@ -3,7 +3,7 @@ var WEBHOOK_URL = 'https://hook.eu1.make.com/46pou90x59vasab9ljivd78sfazjgztv';
 function submitLeadData(data) {
   // Add page-level context
   data.landing_page = 'Online Tutoring Australia - Claude Code';
-  data.variant = 'a';
+  data.variant = 'b';
   data.page = window.location.href;
   data.timestamp = new Date().toISOString();
   data.referrer = document.referrer || '';
