@@ -1,0 +1,2470 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tutero — Special Needs Tutoring for ADHD, Dyslexia &amp; ASD</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    .cta-button, .cta-button *, .modal-submit, .modal-close, .modal-back, .cta-submit, .cta-back-btn,
+    .subject-pill, .modal-pill, .trust-card, .trust-card *, .story-card, .story-card *, .grade-btn, .needs-btn,
+    .faq-item, .faq-item *, .faq-question, .faq-toggle,
+    .hero-dot, .select-wrapper select, a.story-link,
+    .promo-banner,
+    .hero-dot, button, [onclick] {
+      cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='32' viewBox='0 0 28 32'%3E%3Ctext y='24' font-size='24'%3E%F0%9F%91%86%3C/text%3E%3C/svg%3E") 14 4, pointer !important;
+    }
+    .cta-button:active, .modal-submit:active, .modal-close:active, .modal-back:active, .cta-submit:active, .cta-back-btn:active,
+    .subject-pill:active, .modal-pill:active, .trust-card:active, .trust-card:active *, .story-card:active, .story-card:active *, .grade-btn:active, .needs-btn:active,
+    .faq-item:active, .faq-item:active *, .faq-question:active, .faq-toggle:active,
+    .promo-banner:active,
+    .hero-dot:active, .select-wrapper select:active, a.story-link:active,
+    button:active, [onclick]:active {
+      cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='32' viewBox='0 0 28 32'%3E%3Ctext y='24' font-size='24'%3E%E2%9C%8A%3C/text%3E%3C/svg%3E") 14 4, pointer !important;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: #f4f4f5;
+      color: #1a1a1a;
+    }
+
+    .page-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    /* ══════════════════════════════════ Top band (proof + hero) */
+    .top-band {
+      width: 100%;
+      min-height: 100vh;
+      background: #f9f9fa;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      overflow: hidden;
+    }
+    .top-band::before {
+      content: '';
+      position: absolute;
+      top: -120px;
+      right: -80px;
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(255,132,18,0.07) 0%, rgba(248,178,0,0.04) 40%, transparent 70%);
+      pointer-events: none;
+    }
+    .top-band::after {
+      content: '';
+      position: absolute;
+      bottom: -150px;
+      left: -100px;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(0,163,255,0.06) 0%, rgba(76,176,146,0.03) 40%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .scroll-hint { display: none; }
+    @keyframes bounce-down { 0%,100%{transform:translateY(0)} 50%{transform:translateY(8px)} }
+
+    /* ══════════════════════════════════ Promo Banner */
+    .promo-banner {
+      width: 100%;
+      background: #e9e9ea;
+      padding: 10px 32px;
+      text-align: center;
+      position: relative;
+      z-index: 3;
+    }
+    .promo-banner p {
+      font-size: 13px;
+      font-weight: 500;
+      color: #555;
+      letter-spacing: -0.01em;
+    }
+    .promo-banner strong {
+      color: #1a1a1a;
+      font-weight: 700;
+    }
+    .promo-banner a {
+      color: #FF8412;
+      font-weight: 600;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+      margin-left: 4px;
+      transition: color .2s;
+    }
+    .promo-banner a:hover { color: #e87510; }
+
+    /* ══════════════════════════════════ Scrolling Trust Bar */
+    .trust-bar {
+      width: 100%;
+      background: #f0f0f1;
+      border-top: 1px solid #e4e4e5;
+      padding: 16px 0;
+      overflow: hidden;
+      position: relative;
+      z-index: 2;
+      margin-top: auto;
+    }
+    .trust-bar::before,
+    .trust-bar::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 60px;
+      z-index: 2;
+      pointer-events: none;
+    }
+    .trust-bar::before {
+      left: 0;
+      background: linear-gradient(to right, #f0f0f1, transparent);
+    }
+    .trust-bar::after {
+      right: 0;
+      background: linear-gradient(to left, #f0f0f1, transparent);
+    }
+    .trust-bar-track {
+      display: flex;
+      gap: 48px;
+      animation: scroll-trust-bar 55s linear infinite;
+      width: max-content;
+    }
+    .trust-bar-track:hover { animation-play-state: paused; }
+    @keyframes scroll-trust-bar {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+    .trust-bar-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      white-space: nowrap;
+      font-size: 14px;
+      font-weight: 500;
+      color: #555;
+    }
+    .trust-bar-item svg {
+      width: 16px;
+      height: 16px;
+      flex-shrink: 0;
+    }
+    .trust-bar-dot {
+      width: 4px; height: 4px; border-radius: 50%;
+      background: #ccc; flex-shrink: 0;
+    }
+
+    /* Social Proof Bar */
+    .social-proof-bar {
+      width: 100%;
+      background: #1a1a1a;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      padding: 14px 32px;
+      position: relative;
+      z-index: 2;
+    }
+    .social-proof-inner {
+      max-width: 1140px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .proof-item { display: flex; align-items: center; gap: 8px; }
+    .proof-icon {
+      width: 32px; height: 32px; border-radius: 8px;
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    }
+    .proof-icon svg { width: 16px; height: 16px; }
+    .proof-icon--students { background: rgba(255,132,18,0.15); }
+    .proof-icon--tutors { background: rgba(76,176,146,0.15); }
+    .proof-icon--reviews { background: rgba(248,178,0,0.15); }
+    .proof-icon--curriculum { background: rgba(0,163,255,0.15); }
+    .proof-text { display: flex; flex-direction: column; gap: 0; }
+    .proof-number { font-size: 13.5px; font-weight: 700; color: #fff; letter-spacing: -0.02em; line-height: 1.3; }
+    .proof-label { font-size: 11px; font-weight: 500; color: rgba(255,255,255,0.45); line-height: 1.3; }
+    .proof-divider { width: 1px; height: 28px; background: rgba(255,255,255,0.1); flex-shrink: 0; }
+
+    /* ══════════════════════════════════ Hero */
+    .hero {
+      display: flex;
+      align-items: center;
+      gap: 48px;
+      max-width: 1140px;
+      width: 100%;
+      padding: 48px 32px 56px;
+      position: relative;
+      z-index: 1;
+      flex: 1;
+    }
+    .hero-image { position: relative; flex: 1; min-width: 0; }
+    .image-wrapper {
+      position: relative; width: 100%; height: 420px; min-height: 420px;
+      border-radius: 20px; overflow: hidden; background: #333;
+    }
+    .image-wrapper img {
+      width: 100%; height: 100%; object-fit: cover; display: block;
+      position: absolute; top: 0; left: 0;
+      opacity: 0; transition: opacity 1s ease-in-out;
+    }
+    .image-wrapper img.active { opacity: 1; }
+    .image-wrapper img:first-child { position: absolute; }
+    .hero-dots {
+      display: flex; gap: 8px; justify-content: center;
+      position: absolute; bottom: 16px; left: 50%;
+      transform: translateX(-50%); z-index: 12;
+    }
+    .hero-dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: rgba(255,255,255,0.4);
+      transition: background .4s, transform .3s;
+      cursor: pointer;
+    }
+    .hero-dot.active {
+      background: #fff;
+      transform: scale(1.25);
+    }
+    .hero-badge {
+      position: absolute;
+      display: flex; align-items: center; gap: 7px;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+      box-shadow: 0 2px 16px rgba(0,0,0,0.12);
+      z-index: 10;
+    }
+    /* Live badge — top left */
+    .live-badge {
+      top: 16px; left: 16px;
+      padding: 7px 13px; border-radius: 20px;
+      font-size: 12px; font-weight: 600; color: #1a1a1a;
+    }
+    .live-dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: #2ec26a; flex-shrink: 0;
+      animation: pulse-dot 2s ease-in-out infinite;
+    }
+    @keyframes pulse-dot { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.6;transform:scale(1.3)} }
+    /* Google rating — bottom right */
+    .google-badge {
+      bottom: 16px; right: 16px;
+      padding: 8px 14px; border-radius: 14px;
+      gap: 8px;
+    }
+    .google-badge-icon { display: flex; align-items: center; flex-shrink: 0; }
+    .google-badge-icon svg { width: 16px; height: 16px; }
+    .google-badge-score { font-size: 13px; font-weight: 800; color: #1a1a1a; letter-spacing: -0.02em; }
+    .google-badge-stars { display: flex; gap: 1px; color: #F8B200; font-size: 12px; }
+    .google-badge-count { font-size: 11px; font-weight: 500; color: #888; }
+
+    .hero-content {
+      flex: 0 0 420px;
+      display: flex; flex-direction: column; justify-content: center;
+    }
+    .logo { display: flex; align-items: center; margin-bottom: 24px; }
+    .logo img { height: 40px; width: auto; }
+    h1 {
+      font-size: 32px; font-weight: 800; line-height: 1.15;
+      letter-spacing: -0.035em; color: #1a1a1a; margin-bottom: 16px;
+    }
+    .subtitle { font-size: 15px; line-height: 1.6; color: #6b6b6b; margin-bottom: 28px; font-weight: 400; }
+    .form-label { font-size: 13px; font-weight: 500; color: #888; margin-bottom: 10px; display: block; }
+    .select-wrapper { position: relative; margin-bottom: 18px; }
+    .select-wrapper select {
+      width: 100%; padding: 14px 16px; font-size: 15px; font-weight: 500;
+      font-family: inherit; border: 2px solid #e0e0e0; border-radius: 10px;
+      background: #fff; color: #1a1a1a; appearance: none; -webkit-appearance: none;
+      cursor: pointer; outline: none; transition: border-color 0.2s;
+    }
+    .select-wrapper select option { color: #1a1a1a; background: #fff; }
+    .select-wrapper select:focus { border-color: #FF8412; }
+    .select-wrapper::after {
+      content:''; position:absolute; right:16px; top:50%;
+      width:10px; height:10px;
+      border-right:2px solid #aaa; border-bottom:2px solid #aaa;
+      transform:translateY(-60%) rotate(45deg); pointer-events:none;
+    }
+    .cta-button {
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      width: 100%; padding: 16px 24px; background: #FF9533; color: #fff;
+      font-size: 16px; font-weight: 700; font-family: inherit; border: none;
+      border-radius: 10px; cursor: pointer;
+      transition: background 0.2s, transform 0.1s; letter-spacing: -0.01em;
+    }
+    .cta-button:hover { background: #f08520; }
+    .cta-button:active { transform: scale(0.99); }
+    .cta-button .arrow { font-size: 18px; transition: transform 0.2s; }
+    .cta-button:hover .arrow { transform: translateX(3px); }
+    .hero-guarantee {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      margin-top: 14px;
+      font-size: 13px;
+      font-weight: 500;
+      color: #4CB092;
+    }
+    .hero-guarantee svg { width: 15px; height: 15px; flex-shrink: 0; }
+
+    /* ══════════════════════════════════ Hero Form Modal */
+    .modal-overlay {
+      display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.6);
+      backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
+      z-index: 1000; align-items: center; justify-content: center;
+    }
+    .modal-overlay.active { display: flex; animation: fadeIn .25s; }
+    @keyframes fadeIn { from{opacity:0} to{opacity:1} }
+    .modal {
+      background: #fff; border-radius: 20px; width: 100%; max-width: 440px;
+      position: relative; box-shadow: 0 24px 80px rgba(0,0,0,0.25);
+      animation: modalIn .35s cubic-bezier(.34,1.56,.64,1);
+    }
+    .modal-content { padding: 40px 32px 32px; }
+    @keyframes modalIn { from{opacity:0;transform:translateY(24px) scale(.96)} to{opacity:1;transform:none} }
+    .modal-close {
+      position: absolute; top: 16px; right: 16px; width: 32px; height: 32px;
+      border-radius: 50%; border: none; background: #f0f0f0; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px; color: #666; transition: background .2s;
+    }
+    .modal-close:hover { background: #e0e0e0; }
+    .modal h3 { font-size: 22px; font-weight: 800; letter-spacing: -0.03em; margin-bottom: 6px; }
+    .modal-sub { font-size: 14px; color: #888; margin-bottom: 8px; line-height: 1.5; }
+    .modal-steps { display: flex; gap: 6px; margin-bottom: 20px; }
+    .modal-step-dot {
+      flex: 1; height: 4px; border-radius: 2px; background: #f0f0f0;
+      transition: background .4s;
+    }
+    .modal-step-dot.active { background: #FF8412; }
+    .modal-step-dot.done { background: #4CB092; }
+    .modal-form-step { display: none; flex-direction: column; gap: 14px; }
+    .modal-form-step.active { display: flex; animation: step-in .35s cubic-bezier(.34,1.56,.64,1); }
+    @keyframes step-in { from{opacity:0;transform:translateY(12px)} to{opacity:1;transform:none} }
+    .modal-input {
+      width: 100%; padding: 13px 16px; font-size: 14px; font-weight: 500;
+      font-family: inherit; border: 1.5px solid #e0e0e0; border-radius: 10px;
+      background: #fff; color: #1a1a1a; outline: none; transition: border-color .2s;
+    }
+    .modal-input:focus { border-color: #FF8412; }
+    .modal-input::placeholder { color: #bbb; }
+    .modal-input-row { display: flex; gap: 10px; }
+    .modal-input-row .modal-input { flex: 1; }
+    .modal-submit {
+      width: 100%; padding: 14px; background: #FF8412; color: #fff;
+      font-size: 15px; font-weight: 700; font-family: inherit; border: none;
+      border-radius: 10px; cursor: pointer; transition: background .2s, transform .1s;
+      margin-top: 4px;
+    }
+    .modal-submit:hover { background: #e87510; }
+    .modal-submit:disabled { opacity: .4; cursor: not-allowed; }
+    .modal-back {
+      background: none; border: none; color: #aaa; font-size: 13px; font-weight: 500;
+      font-family: inherit; cursor: pointer; margin-top: 12px; transition: color .2s;
+    }
+    .modal-back:hover { color: #666; }
+    .modal-privacy { font-size: 11px; color: #bbb; text-align: center; margin-top: 8px; line-height: 1.4; }
+    .modal-pill-label {
+      font-size: 12px; font-weight: 600; color: #999;
+      text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: -4px;
+    }
+    .modal-pills {
+      display: flex; flex-direction: column; gap: 10px;
+      margin-top: 8px;
+    }
+    .modal-pill {
+      width: 100%; padding: 14px 20px; border-radius: 12px;
+      border: 1.5px solid #e8e8e8; background: #fafafa;
+      font-family: inherit; font-size: 15px; font-weight: 500; color: #444;
+      cursor: pointer; transition: all 0.2s;
+      text-align: left;
+    }
+    .modal-pill:hover { border-color: #ddd; background: #f0f0f0; }
+    .modal-pill.selected {
+      border-color: #FF8412; background: #FFF5EB; color: #FF8412; font-weight: 600;
+    }
+    .modal-social-proof {
+      display: flex; align-items: center; gap: 6px;
+      font-size: 11.5px; color: #aaa; font-weight: 500;
+      padding-top: 4px;
+    }
+    .modal-social-proof .proof-dot {
+      width: 6px; height: 6px; border-radius: 50%; background: #4CB092;
+      animation: pulse-dot 2s ease-in-out infinite;
+    }
+    .modal-testimonial {
+      font-size: 12px; color: #999; font-style: italic; line-height: 1.5;
+      border-left: 2px solid #eee; padding-left: 12px; margin-top: 4px;
+    }
+    .modal-testimonial strong { font-style: normal; color: #777; }
+    .modal-success { display: none; text-align: center; padding: 12px 0 0; }
+    .modal-success.active { display: block; animation: step-in .4s cubic-bezier(.34,1.56,.64,1); }
+    .modal-success-check {
+      width: 56px; height: 56px; border-radius: 50%;
+      background: linear-gradient(135deg, #4CB092, #3da685);
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 16px; position: relative;
+    }
+    .modal-success-check svg {
+      width: 28px; height: 28px; stroke: #fff; stroke-width: 3;
+      stroke-linecap: round; stroke-linejoin: round; fill: none;
+    }
+    .modal-success-check .check-path {
+      stroke-dasharray: 30; stroke-dashoffset: 30;
+      animation: draw-check .6s .4s ease forwards;
+    }
+    @keyframes draw-check { to { stroke-dashoffset: 0; } }
+    .modal-success-check::after {
+      content: ''; position: absolute; inset: -4px; border-radius: 50%;
+      border: 2px solid rgba(76,176,146,0.2);
+      animation: check-ring .7s .3s ease forwards;
+      opacity: 0;
+    }
+    @keyframes check-ring { 0%{transform:scale(.8);opacity:0} 50%{opacity:1} 100%{transform:scale(1);opacity:1} }
+    .modal-success h3 { margin-bottom: 4px; font-size: 20px; }
+    .modal-success > .modal-sub { margin-bottom: 20px; }
+    .success-steps {
+      display: flex; flex-direction: column; gap: 0;
+      margin: 0 -8px; text-align: left;
+    }
+    .success-step {
+      display: flex; align-items: flex-start; gap: 14px;
+      padding: 14px 12px;
+      opacity: 0; transform: translateY(10px);
+      animation: step-reveal .4s ease forwards;
+      border-radius: 10px;
+      transition: background .2s;
+    }
+    .modal-success .success-step:hover { background: #f9f9f9; }
+    .cta-success .success-step:hover { background: rgba(255,255,255,0.05); }
+    .success-step:nth-child(1) { animation-delay: .8s; }
+    .success-step:nth-child(2) { animation-delay: 1.2s; }
+    .success-step:nth-child(3) { animation-delay: 1.6s; }
+    .success-step:nth-child(4) { animation-delay: 2.0s; }
+    @keyframes step-reveal { to { opacity: 1; transform: none; } }
+    .success-step-icon {
+      width: 36px; height: 36px; border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; font-size: 17px;
+    }
+    .success-step-icon--1 { background: rgba(255,132,18,0.1); }
+    .success-step-icon--2 { background: rgba(0,163,255,0.1); }
+    .success-step-icon--3 { background: rgba(76,176,146,0.1); }
+    .success-step-icon--4 { background: rgba(248,178,0,0.1); }
+    .success-step-text { display: flex; flex-direction: column; gap: 1px; padding-top: 2px; }
+    .success-step-title { font-size: 13.5px; font-weight: 700; color: #1a1a1a; letter-spacing: -0.01em; }
+    .success-step-desc { font-size: 12px; color: #999; line-height: 1.4; }
+    .success-step-connector {
+      width: 2px; height: 10px; background: #eee;
+      margin-left: 29px;
+    }
+    .success-cta {
+      margin-top: 20px; padding-top: 16px; border-top: 1px solid #f0f0f0;
+      opacity: 0; animation: step-reveal .4s 2.5s ease forwards;
+    }
+    .success-cta-btn {
+      display: block; width: 100%; padding: 14px; background: #FF8412; color: #fff;
+      font-size: 15px; font-weight: 700; font-family: inherit; border: none;
+      border-radius: 10px; cursor: pointer; transition: background .2s;
+      text-decoration: none; text-align: center;
+    }
+    .success-cta-btn:hover { background: #e87510; }
+
+    /* ══════════════════════════════════ Results V2 (Alternative) */
+    .results-v2 {
+      width: 100%;
+      background: #ffffff;
+      padding: 100px 32px 80px;
+    }
+    .rv2-inner {
+      max-width: 920px;
+      margin: 0 auto;
+    }
+    .rv2-headline {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: center;
+      text-align: left;
+      margin-bottom: 56px;
+    }
+    .rv2-headline-img {
+      border-radius: 20px;
+      overflow: hidden;
+      aspect-ratio: 4/3;
+    }
+    .rv2-headline-img img {
+      width: 100%; height: 100%; object-fit: cover; display: block;
+    }
+    .rv2-eyebrow {
+      display: inline-block;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #4CB092;
+      background: rgba(76,176,146,0.08);
+      padding: 6px 16px;
+      border-radius: 20px;
+      margin-bottom: 16px;
+    }
+    .rv2-title {
+      font-size: 36px;
+      font-weight: 800;
+      letter-spacing: -0.035em;
+      line-height: 1.15;
+      color: #1a1a1a;
+      margin-bottom: 14px;
+    }
+    .rv2-subtitle {
+      font-size: 16px;
+      color: #888;
+      font-weight: 400;
+      line-height: 1.5;
+    }
+
+    /* Proof cards */
+    .rv2-proof-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      margin-bottom: 48px;
+    }
+    .rv2-proof-card {
+      background: #f9f9fa;
+      border: 1px solid #eeeeef;
+      border-radius: 16px;
+      padding: 32px 24px;
+      text-align: center;
+      transition: border-color .2s, box-shadow .2s;
+    }
+    .rv2-proof-card:hover {
+      border-color: #FF9533;
+      background: #fef9f3;
+      box-shadow: 0 0 0 3px rgba(255,149,51,0.08);
+    }
+    .rv2-proof-card:hover .rv2-proof-number { color: #FF8412; }
+    .rv2-proof-card--highlight {
+      background: #fef9f3;
+      border-color: #FF9533;
+      box-shadow: 0 0 0 3px rgba(255,149,51,0.08);
+    }
+    .rv2-proof-card--highlight:hover {
+      border-color: #FF8412;
+      box-shadow: 0 0 0 3px rgba(255,132,18,0.12);
+    }
+    .rv2-proof-number {
+      font-size: 44px;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      color: #1a1a1a;
+      line-height: 1;
+    }
+    .rv2-proof-card--highlight .rv2-proof-number { color: #FF8412; }
+    .rv2-proof-unit {
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: #aaa;
+      margin-top: 4px;
+      margin-bottom: 12px;
+    }
+    .rv2-proof-desc {
+      font-size: 13.5px;
+      line-height: 1.5;
+      color: #888;
+      font-weight: 400;
+    }
+
+    /* Before/After transformation */
+    .rv2-transform {
+      display: flex;
+      align-items: stretch;
+      gap: 0;
+      border-radius: 16px;
+      overflow: hidden;
+      margin-bottom: 48px;
+      border: 1px solid #eeeeef;
+    }
+    .rv2-transform-side {
+      flex: 1;
+      padding: 32px 28px;
+    }
+    .rv2-before {
+      background: #f5f5f6;
+    }
+    .rv2-after {
+      background: #f0f9f5;
+    }
+    .rv2-transform-label {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #bbb;
+      margin-bottom: 16px;
+    }
+    .rv2-transform-label--after {
+      color: #4CB092;
+    }
+    .rv2-transform-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .rv2-transform-list li {
+      font-size: 14px;
+      font-weight: 500;
+      color: #999;
+      padding-left: 22px;
+      position: relative;
+      line-height: 1.4;
+    }
+    .rv2-transform-list li::before {
+      content: '✕';
+      position: absolute;
+      left: 0;
+      font-size: 11px;
+      font-weight: 700;
+      color: #ccc;
+      top: 2px;
+    }
+    .rv2-transform-list--after li {
+      color: #333;
+    }
+    .rv2-transform-list--after li::before {
+      content: '✓';
+      color: #4CB092;
+      font-size: 13px;
+    }
+    .rv2-transform-arrow {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 8px;
+      background: linear-gradient(to right, #f5f5f6, #f0f9f5);
+    }
+
+    /* Embedded CTA */
+    .rv2-cta-block {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      background: #1a1a1a;
+      border-radius: 16px;
+      padding: 28px 32px;
+    }
+    .rv2-cta-left {
+      flex: 1;
+    }
+    .rv2-cta-text {
+      font-size: 15px;
+      color: rgba(255,255,255,0.8);
+      line-height: 1.5;
+      margin-bottom: 8px;
+    }
+    .rv2-cta-text strong {
+      color: #fff;
+      font-weight: 700;
+    }
+    .rv2-cta-trust {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      color: rgba(255,255,255,0.35);
+      font-weight: 500;
+    }
+    .rv2-cta-btn {
+      flex-shrink: 0;
+      padding: 16px 32px;
+      background: #FF8412;
+      color: #fff;
+      font-size: 15px;
+      font-weight: 700;
+      font-family: inherit;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background .2s, transform .1s;
+      white-space: nowrap;
+    }
+    .rv2-cta-btn:hover { background: #e87510; }
+    .rv2-cta-btn:active { transform: scale(0.98); }
+
+    /* V2 responsive */
+    @media(max-width:920px){
+      .rv2-proof-row{grid-template-columns:1fr}
+      .rv2-transform{flex-direction:column}
+      .rv2-transform-arrow{padding:12px 0;background:linear-gradient(to bottom,#f5f5f6,#f0f9f5)}
+      .rv2-transform-arrow svg{transform:rotate(90deg)}
+    }
+    @media(max-width:600px){
+      .results-v2{padding:72px 20px 60px}
+      .rv2-headline{grid-template-columns:1fr;gap:28px}
+      .rv2-headline-img{order:-1;aspect-ratio:16/9}
+      .rv2-title{font-size:26px;text-align:center}
+      .rv2-subtitle{font-size:14px;text-align:center}
+      .rv2-eyebrow{display:block;text-align:center}
+      .rv2-proof-number{font-size:36px}
+      .rv2-proof-card{padding:24px 20px}
+      .rv2-cta-block{flex-direction:column;text-align:center;padding:24px 20px}
+      .rv2-cta-trust{justify-content:center;flex-wrap:wrap}
+      .rv2-cta-btn{width:100%}
+      .rv2-transform-side{padding:24px 20px}
+    }
+
+    /* ══════════════════════════════════ Results / Data Section */
+    .results-section {
+      width: 100%;
+      background: #fef9f3;
+      padding: 100px 32px 80px;
+    }
+    .results-section > * {
+      max-width: 1140px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .results-heading {
+      text-align: center;
+      font-size: 32px;
+      font-weight: 800;
+      letter-spacing: -0.035em;
+      color: #1a1a1a;
+      margin-bottom: 12px;
+    }
+    .results-sub {
+      text-align: center;
+      font-size: 15px;
+      color: #888;
+      margin-bottom: 56px;
+      font-weight: 400;
+      max-width: 520px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    /* Two-column layout: photo + widget */
+    .results-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+      align-items: start;
+      margin-bottom: 40px;
+    }
+    .results-photo {
+      border-radius: 20px;
+      overflow: hidden;
+      position: relative;
+    }
+    .results-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .results-photo-caption {
+      position: absolute;
+      bottom: 16px;
+      left: 16px;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      padding: 8px 14px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+      color: #1a1a1a;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.12);
+    }
+    .results-photo-caption .caption-result {
+      color: #4CB092;
+      font-weight: 700;
+    }
+    .results-value-points {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-top: 20px;
+      align-items: center;
+    }
+    .value-point {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 14px;
+      font-weight: 500;
+      color: #444;
+    }
+    .value-point-emoji {
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+
+    /* Condition outcome widget */
+    .grade-widget {
+      background: #fff;
+      border-radius: 20px;
+      padding: 28px 28px 24px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 4px 24px rgba(0,0,0,0.03);
+      border: 2px solid #FF9533;
+      display: flex;
+      flex-direction: column;
+    }
+    .grade-widget-title {
+      font-size: 16px;
+      font-weight: 800;
+      letter-spacing: -0.025em;
+      color: #1a1a1a;
+      margin-bottom: 4px;
+    }
+    .grade-widget-sub {
+      font-size: 12.5px;
+      color: #999;
+      margin-bottom: 16px;
+      line-height: 1.45;
+    }
+    .needs-selector {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+    .needs-btn {
+      padding: 9px 14px;
+      border-radius: 10px;
+      border: 1.5px solid #e8e8e8;
+      background: #fafafa;
+      font-family: inherit;
+      font-size: 13px;
+      font-weight: 600;
+      color: #666;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      text-align: left;
+      white-space: nowrap;
+    }
+    .needs-btn:hover { border-color: #ddd; color: #444; background: #f5f5f5; }
+    .needs-btn.active {
+      border-color: #FF8412;
+      background: #FFF5EB;
+      color: #FF8412;
+      box-shadow: 0 0 0 3px rgba(255,132,18,0.1);
+    }
+    .needs-result {
+      background: #f5f5f6;
+      border-radius: 14px;
+      padding: 18px 18px 16px;
+      flex: 1;
+      transition: opacity 0.2s;
+    }
+    .needs-headline-stat {
+      font-size: 42px;
+      font-weight: 800;
+      color: #4CB092;
+      letter-spacing: -0.04em;
+      line-height: 1;
+      margin-bottom: 5px;
+      transition: all 0.3s;
+    }
+    .needs-headline-desc {
+      font-size: 13px;
+      font-weight: 500;
+      color: #555;
+      line-height: 1.4;
+      margin-bottom: 14px;
+    }
+    .needs-sub-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+    .needs-sub-stat {
+      background: #fff;
+      border-radius: 10px;
+      padding: 14px 14px 12px;
+      border: 1px solid #eeeeef;
+    }
+    .needs-sub-stat-num {
+      font-size: 20px;
+      font-weight: 800;
+      color: #1a1a1a;
+      letter-spacing: -0.03em;
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+    .needs-sub-stat-label {
+      font-size: 11.5px;
+      color: #999;
+      font-weight: 500;
+      line-height: 1.4;
+    }
+    .grade-timeline {
+      font-size: 12px;
+      color: #bbb;
+      margin-top: 14px;
+      font-weight: 500;
+      text-align: center;
+    }
+
+    /* Stats stack (right column) */
+    .results-stats-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .result-stat-card {
+      background: #fff;
+      border-radius: 16px;
+      padding: 28px 28px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.04), 0 4px 24px rgba(0,0,0,0.03);
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      flex: 1;
+    }
+    .result-stat-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .result-stat-icon svg { width: 22px; height: 22px; }
+    .result-stat-icon--green { background: rgba(76,176,146,0.1); }
+    .result-stat-icon--orange { background: rgba(255,132,18,0.1); }
+    .result-stat-icon--gold { background: rgba(248,178,0,0.1); }
+    .result-stat-body { display: flex; flex-direction: column; gap: 2px; }
+    .result-stat-number {
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      color: #1a1a1a;
+      line-height: 1.2;
+    }
+    .result-stat-label {
+      font-size: 13px;
+      font-weight: 400;
+      color: #888;
+      line-height: 1.4;
+    }
+
+    /* Trust logos */
+    .trust-logos {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 36px;
+      padding: 28px 0;
+      border-top: 1px solid #eee;
+    }
+    .trust-logos-label {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #bbb;
+      flex-shrink: 0;
+    }
+    .trust-logo-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      color: #999;
+      white-space: nowrap;
+    }
+    .trust-logo-item svg { width: 18px; height: 18px; flex-shrink: 0; opacity: 0.45; }
+
+    /* ══════════════════════════════════ Trust Section */
+    .trust-section {
+      width: 100%; padding: 120px 32px 100px; background: #fef5eb;
+    }
+    .trust-section > * {
+      max-width: 1140px; margin-left: auto; margin-right: auto;
+    }
+    .trust-heading {
+      text-align: center; font-size: 32px; font-weight: 800;
+      letter-spacing: -0.035em; color: #1a1a1a; margin-bottom: 14px;
+    }
+    .trust-subheading {
+      text-align: center; font-size: 15px; color: #999;
+      margin-bottom: 56px; font-weight: 400;
+    }
+    .trust-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;
+    }
+    .trust-card {
+      background: #f9f9fa; border: 1px solid #eeeeef; border-radius: 16px;
+      padding: 32px 28px;
+      display: flex; flex-direction: column; gap: 14px;
+      transition: border-color .2s, box-shadow .2s;
+    }
+    .trust-card:hover {
+      border-color: #ddd;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.04);
+    }
+    .trust-card-icon {
+      width: 44px; height: 44px; border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 20px;
+    }
+    .trust-card:nth-child(1) .trust-card-icon { background: rgba(255,132,18,0.1); }
+    .trust-card:nth-child(2) .trust-card-icon { background: rgba(76,176,146,0.1); }
+    .trust-card:nth-child(3) .trust-card-icon { background: rgba(0,163,255,0.1); }
+    .trust-card:nth-child(4) .trust-card-icon { background: rgba(29,73,227,0.1); }
+    .trust-card:nth-child(5) .trust-card-icon { background: rgba(248,178,0,0.1); }
+    .trust-card:nth-child(6) .trust-card-icon { background: rgba(255,107,107,0.1); }
+    .trust-card-title {
+      font-size: 15px; font-weight: 700; letter-spacing: -0.01em; color: #1a1a1a; line-height: 1.35;
+    }
+    .trust-card-desc {
+      font-size: 13.5px; line-height: 1.6; color: #888; font-weight: 400;
+    }
+
+    /* ══════════════════════════════════ Coverage Section */
+    .coverage-section {
+      width: 100%; padding: 80px 32px; background: #f0f7f4;
+    }
+    .coverage-section > * {
+      max-width: 1140px; margin-left: auto; margin-right: auto;
+    }
+    .coverage-heading {
+      text-align: center; font-size: 24px; font-weight: 800;
+      letter-spacing: -0.03em; color: #1a1a1a; margin-bottom: 6px;
+    }
+    .coverage-sub {
+      text-align: center; font-size: 14px; color: #999; margin-bottom: 32px;
+    }
+    .coverage-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 24px;
+    }
+    .coverage-card {
+      background: #f9f9fa; border-radius: 16px; padding: 28px 28px 24px;
+      border: 1px solid #eeeeef;
+    }
+    .coverage-card-label {
+      font-size: 11px; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.08em; color: #aaa; margin-bottom: 16px;
+    }
+    .coverage-card-items {
+      display: flex; flex-wrap: wrap; gap: 8px;
+    }
+    .coverage-btn {
+      display: inline-flex; align-items: center; gap: 7px;
+      padding: 10px 18px; border-radius: 10px;
+      background: #fff; border: 1.5px solid #e8e8e9;
+      font-family: inherit; font-size: 13.5px; font-weight: 600; color: #444;
+      cursor: pointer; transition: all .2s;
+    }
+    .coverage-btn:hover {
+      border-color: #FF8412; background: #FFF8F0; color: #FF8412;
+    }
+    .coverage-btn-icon {
+      font-size: 15px; line-height: 1;
+    }
+    .coverage-level-btn {
+      padding: 10px 16px; border-radius: 10px;
+      background: #fff; border: 1.5px solid #e8e8e9;
+      font-family: inherit; font-size: 13.5px; font-weight: 600; color: #444;
+      cursor: pointer; transition: all .2s;
+    }
+    .coverage-level-btn:hover {
+      border-color: #4CB092; background: #F0FAF6; color: #3da685;
+    }
+
+    /* ══════════════════════════════════ Success Stories */
+    .stories-section {
+      width: 100%; padding: 80px 0 100px; overflow: hidden;
+      background: #ffffff;
+    }
+    .stories-heading {
+      text-align: center; font-size: 28px; font-weight: 800;
+      letter-spacing: -0.03em; color: #1a1a1a; margin-bottom: 12px;
+      padding: 0 32px;
+    }
+    .stories-subheading {
+      text-align: center; font-size: 15px; color: #6b6b6b;
+      margin-bottom: 40px; font-weight: 400; padding: 0 32px;
+    }
+    .stories-track-wrapper { position: relative; }
+    .stories-track {
+      display: flex; gap: 24px;
+      animation: scroll-stories 90s linear infinite;
+      width: max-content;
+    }
+    .stories-track:hover { animation-play-state: paused; }
+    @keyframes scroll-stories {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+    .story-card {
+      flex-shrink: 0; width: 360px; background: #fff;
+      border-radius: 20px; overflow: hidden;
+      box-shadow: 0 1px 3px rgba(0,0,0,.04), 0 4px 24px rgba(0,0,0,.03);
+      display: flex; flex-direction: column;
+      transition: transform .4s cubic-bezier(.34,1.56,.64,1), box-shadow .4s;
+    }
+    .story-card:hover {
+      transform: translateY(-6px); box-shadow: 0 20px 60px rgba(0,0,0,.1);
+    }
+    .story-image {
+      width: 100%; height: 200px; overflow: hidden; position: relative;
+    }
+    .story-image img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .story-image::after {
+      content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 60px;
+      background: linear-gradient(to top, rgba(0,0,0,0.08), transparent);
+      pointer-events: none;
+    }
+    .story-result {
+      position: absolute; top: 14px; right: 14px;
+      display: inline-flex; align-items: center; gap: 5px;
+      background: rgba(255,255,255,0.95); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+      color: #4CB092; font-size: 11.5px; font-weight: 700;
+      padding: 6px 12px; border-radius: 20px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    .story-body { padding: 24px 24px 28px; display: flex; flex-direction: column; gap: 14px; }
+    .story-tp-badge {
+      display: flex; align-items: center; gap: 5px;
+      font-size: 12px; font-weight: 700; color: #191919; letter-spacing: -0.01em;
+    }
+    .story-tp-badge svg { flex-shrink: 0; }
+    .story-header { display: flex; align-items: center; justify-content: space-between; }
+    .story-meta { display: flex; flex-direction: column; gap: 1px; }
+    .story-name { font-size: 15px; font-weight: 700; color: #1a1a1a; letter-spacing: -0.01em; }
+    .story-detail { font-size: 12.5px; color: #999; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .story-stars { color: #F8B200; font-size: 13px; letter-spacing: 1px; flex-shrink: 0; }
+    .story-quote {
+      font-size: 14px; line-height: 1.65; color: #555; font-weight: 400;
+    }
+    .story-quote::before { content: '\201C'; font-size: 24px; font-weight: 800; color: #e0e0e0; line-height: 0; vertical-align: -6px; margin-right: 2px; }
+    .story-quote::after { content: '\201D'; font-size: 24px; font-weight: 800; color: #e0e0e0; line-height: 0; vertical-align: -6px; margin-left: 1px; }
+    .story-link {
+      display: inline-flex; align-items: center; gap: 5px;
+      font-size: 12.5px; font-weight: 600; color: #aaa;
+      text-decoration: none; transition: color .2s; margin-top: auto;
+    }
+    .story-link:hover { color: #FF8412; }
+    .story-link svg { width: 14px; height: 14px; flex-shrink: 0; }
+
+    /* ══════════════════════════════════ FAQ Section */
+    .faq-section {
+      width: 100%; padding: 80px 32px; background: #eef4f9;
+    }
+    .faq-section > * {
+      max-width: 620px; margin-left: auto; margin-right: auto;
+    }
+    .faq-header { text-align: center; margin-bottom: 16px; }
+    .faq-heading { font-size: 28px; font-weight: 800; letter-spacing: -0.03em; color: #1a1a1a; margin-bottom: 12px; }
+    .faq-subheading { font-size: 15px; color: #6b6b6b; font-weight: 400; margin-bottom: 8px; }
+    .curiosity-meter { display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 40px; }
+    .curiosity-label { font-size: 13px; font-weight: 600; color: #aaa; transition: color .4s; }
+    .curiosity-label.active { color: #FF8412; }
+    .curiosity-track { width: 160px; height: 8px; background: #e8e8e8; border-radius: 4px; overflow: hidden; }
+    .curiosity-fill {
+      height: 100%; width: 0%; border-radius: 4px;
+      background: linear-gradient(90deg,#FF8412,#F8B200,#4CB092,#00A3FF);
+      transition: width .6s cubic-bezier(.34,1.56,.64,1);
+    }
+    .curiosity-emoji { font-size: 20px; transition: transform .4s cubic-bezier(.34,1.56,.64,1); }
+    .faq-list { display: flex; flex-direction: column; gap: 12px; max-width: 100%; }
+    .faq-item {
+      border-radius: 16px; overflow: hidden;
+      transition: background .3s, box-shadow .3s; cursor: pointer; background: #fff;
+    }
+    .faq-item:hover { box-shadow: 0 4px 20px rgba(0,0,0,.04); }
+    .faq-item.open { box-shadow: 0 6px 28px rgba(0,0,0,.06); }
+    .faq-item:nth-child(1){--accent:#FF8412;--bg-light:#FFF7ED}
+    .faq-item:nth-child(2){--accent:#F8B200;--bg-light:#FFF9E6}
+    .faq-item:nth-child(3){--accent:#4CB092;--bg-light:#EEF7F4}
+    .faq-item:nth-child(4){--accent:#00A3FF;--bg-light:#EDF4FF}
+    .faq-item:nth-child(5){--accent:#1D49E3;--bg-light:#EEF0FF}
+    .faq-item:nth-child(6){--accent:#FF8412;--bg-light:#FFF7ED}
+    .faq-item.open { background: var(--bg-light); }
+    .faq-question { display: flex; align-items: center; gap: 14px; padding: 18px 22px; user-select: none; }
+    .faq-emoji { font-size: 24px; flex-shrink: 0; line-height: 1; transition: transform .4s cubic-bezier(.34,1.56,.64,1); }
+    .faq-item:hover .faq-emoji { transform: scale(1.2) rotate(-8deg); }
+    .faq-item.open .faq-emoji { animation: emoji-celebrate .6s cubic-bezier(.34,1.56,.64,1); }
+    @keyframes emoji-celebrate { 0%{transform:scale(1)} 30%{transform:scale(1.4) rotate(-15deg)} 60%{transform:scale(.9) rotate(5deg)} 100%{transform:scale(1.1) rotate(0)} }
+    .faq-question-text { flex: 1; font-size: 15px; font-weight: 600; color: #1a1a1a; letter-spacing: -0.01em; line-height: 1.4; }
+    .faq-toggle {
+      width: 28px; height: 28px; border-radius: 50%; background: #f5f5f5;
+      border: 1.5px solid #e0e0e0; display: flex; align-items: center;
+      justify-content: center; flex-shrink: 0;
+      transition: transform .35s cubic-bezier(.34,1.56,.64,1), background .3s, border-color .3s;
+    }
+    .faq-item.open .faq-toggle { transform: rotate(135deg); background: var(--accent); border-color: var(--accent); }
+    .faq-toggle svg { width: 12px; height: 12px; }
+    .faq-toggle svg line { stroke: #999; stroke-width: 2; }
+    .faq-item.open .faq-toggle svg line { stroke: #fff; }
+    .faq-answer-wrapper { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .4s cubic-bezier(.34,1,.64,1); }
+    .faq-item.open .faq-answer-wrapper { grid-template-rows: 1fr; }
+    .faq-answer-inner { overflow: hidden; }
+    .faq-answer { padding: 0 22px 20px 60px; font-size: 14px; line-height: 1.65; color: #555; }
+    .faq-answer strong { color: #1a1a1a; font-weight: 600; }
+    .faq-completion {
+      text-align: center; margin-top: 24px; padding: 20px; border-radius: 16px;
+      background: #fff; opacity: 0; transform: translateY(10px) scale(.98);
+      transition: opacity .5s, transform .5s cubic-bezier(.34,1.56,.64,1); pointer-events: none;
+    }
+    .faq-completion.visible { opacity: 1; transform: translateY(0) scale(1); pointer-events: auto; }
+    .faq-completion-emoji { font-size: 32px; display: block; margin-bottom: 8px; }
+    .faq-completion.visible .faq-completion-emoji { animation: party 1s ease-in-out; }
+    @keyframes party { 0%{transform:scale(0) rotate(-180deg)} 50%{transform:scale(1.3) rotate(10deg)} 70%{transform:scale(.9) rotate(-5deg)} 100%{transform:scale(1) rotate(0)} }
+    .faq-completion-text { font-size: 14px; font-weight: 600; color: #1a1a1a; }
+    .faq-completion-sub { font-size: 13px; color: #888; margin-top: 4px; }
+
+    /* ══════════════════════════════════ Bottom CTA */
+    .bottom-cta {
+      width: 100%; background: #1a1a1a; padding: 80px 32px 88px;
+      position: relative; overflow: hidden;
+    }
+    .bottom-cta::before {
+      content:''; position:absolute; top:-200px; right:-200px; width:500px; height:500px;
+      background:radial-gradient(circle,rgba(255,132,18,.12) 0%,transparent 70%); pointer-events:none;
+    }
+    .bottom-cta::after {
+      content:''; position:absolute; bottom:-200px; left:-200px; width:500px; height:500px;
+      background:radial-gradient(circle,rgba(0,163,255,.1) 0%,transparent 70%); pointer-events:none;
+    }
+    .bottom-cta-inner { max-width: 640px; margin: 0 auto; position: relative; z-index: 1; text-align: center; }
+    .bottom-cta-emoji { font-size: 44px; margin-bottom: 16px; display: block; }
+    .bottom-cta-heading { font-size: 32px; font-weight: 800; color: #fff; letter-spacing: -0.03em; margin-bottom: 10px; }
+    .bottom-cta-sub { font-size: 15px; color: rgba(255,255,255,.55); margin-bottom: 40px; }
+    .cta-steps { display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 32px; }
+    .cta-step-dot { width: 32px; height: 6px; border-radius: 3px; background: rgba(255,255,255,.15); transition: background .4s, width .4s; }
+    .cta-step-dot.active { background: #FF8412; width: 48px; }
+    .cta-step-dot.done { background: #4CB092; }
+    .subject-picker { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-bottom: 32px; }
+    .subject-pill {
+      padding: 10px 20px; border-radius: 50px;
+      border: 2px solid rgba(255,255,255,.15); background: rgba(255,255,255,.05);
+      color: rgba(255,255,255,.7); font-size: 14px; font-weight: 600;
+      font-family: inherit; cursor: pointer;
+      transition: all .3s cubic-bezier(.34,1.56,.64,1); position: relative; overflow: hidden;
+    }
+    .subject-pill::before { content:''; position:absolute; inset:0; background:var(--pill-color); opacity:0; transition:opacity .3s; border-radius:50px; }
+    .subject-pill:hover { border-color:var(--pill-color); color:#fff; transform:translateY(-2px) scale(1.04); }
+    .subject-pill:hover::before { opacity:.15; }
+    .subject-pill.selected { border-color:var(--pill-color); background:var(--pill-color); color:#fff; transform:scale(1.08); box-shadow:0 4px 20px rgba(0,0,0,.3); }
+    .subject-pill.selected::before { opacity:0; }
+    .subject-pill span { position: relative; z-index: 1; }
+    /* Condition pill colors are applied via inline style="--pill-color:..." */
+    .cta-form-step { display:none; flex-direction:column; gap:12px; max-width:400px; margin:0 auto; }
+    .cta-form-step.active { display:flex; animation:step-in .4s cubic-bezier(.34,1.56,.64,1); }
+    .cta-input {
+      width:100%; padding:14px 18px; font-size:15px; font-weight:500; font-family:inherit;
+      border:2px solid rgba(255,255,255,.15); border-radius:12px;
+      background:rgba(255,255,255,.07); color:#fff; outline:none; transition:border-color .3s, background .3s;
+    }
+    .cta-input::placeholder { color:rgba(255,255,255,.35); }
+    .cta-input:focus { border-color:#FF8412; background:rgba(255,255,255,.1); }
+    .cta-input-row { display:flex; gap:12px; }
+    .cta-input-row .cta-input { flex:1; }
+    .cta-submit {
+      width:100%; padding:16px 24px; background:linear-gradient(135deg,#FF8412,#F8B200);
+      color:#fff; font-size:16px; font-weight:700; font-family:inherit; border:none; border-radius:12px;
+      cursor:pointer; transition:transform .2s, box-shadow .2s; margin-top:4px;
+    }
+    .cta-submit:hover { transform:translateY(-2px); box-shadow:0 8px 32px rgba(255,132,18,.35); }
+    .cta-submit:disabled { opacity:.4; cursor:not-allowed; transform:none; box-shadow:none; }
+    .cta-back-btn { background:none; border:none; color:rgba(255,255,255,.4); font-size:13px; font-weight:500; font-family:inherit; cursor:pointer; margin-top:8px; }
+    .cta-back-btn:hover { color:rgba(255,255,255,.7); }
+    .cta-success { display:none; flex-direction:column; align-items:center; gap:12px; animation:step-in .5s cubic-bezier(.34,1.56,.64,1); }
+    .cta-success.active { display:flex; }
+    .cta-success-emoji { font-size:56px; animation:party .8s ease-in-out; }
+    .cta-success-text { font-size:22px; font-weight:800; color:#fff; }
+    .cta-success-sub { font-size:15px; color:rgba(255,255,255,.6); max-width:360px; line-height:1.5; }
+    #confettiCanvas { position:fixed; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:9999; }
+
+    /* ══════════════════════════════════ Responsive */
+    @media(max-width:920px){
+      .social-proof-inner{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+      .proof-divider{display:none}
+      .hero{flex-direction:column;gap:36px;padding:36px 20px 40px;align-items:center}
+      .hero-image{width:100%;max-width:500px;flex:none}
+      .image-wrapper{height:300px;min-height:300px}
+      .hero-content{flex:none;max-width:100%;text-align:center}
+      .logo{justify-content:center}
+      h1{font-size:32px}
+      .trust-grid{grid-template-columns:1fr 1fr}
+      .results-grid{grid-template-columns:1fr}
+      .results-section{padding:72px 20px 60px}
+      .coverage-grid{grid-template-columns:1fr}
+      .coverage-section{padding:60px 20px}
+      .trust-logos{flex-wrap:wrap;gap:20px;justify-content:center}
+    }
+    @media(max-width:600px){
+      .trust-grid{grid-template-columns:1fr}
+      .trust-card{padding:28px 24px}
+      .trust-section{padding:72px 20px 64px}
+      .faq-section{padding:40px 20px 60px}
+      .bottom-cta{padding:56px 20px 64px}
+      .bottom-cta-heading{font-size:26px}
+      .cta-input-row{flex-direction:column}
+      .modal-input-row{flex-direction:column}
+      .stories-track{gap:16px}
+      .story-card{width:300px}
+      .story-image{height:160px}
+      .image-wrapper{height:240px;min-height:240px}
+      h1{font-size:28px}
+      .subtitle{font-size:14px}
+      .results-heading{font-size:24px}
+      .results-sub{font-size:14px}
+      .grade-widget{padding:28px 20px 24px}
+      .grade-widget-title{font-size:15px}
+      .needs-headline-stat{font-size:40px}
+      .trust-heading{font-size:24px}
+      .stories-heading{font-size:22px}
+      .faq-heading{font-size:22px}
+      .coverage-heading{font-size:20px}
+      .coverage-section{padding:48px 20px}
+      .trust-logos{gap:16px}
+      .trust-logos-label{width:100%;text-align:center}
+      .trust-logo-item{font-size:12px}
+      .promo-banner{padding:10px 16px}
+      .promo-banner p{font-size:12px}
+      .results-photo-caption{font-size:11px;padding:6px 10px}
+    }
+    @media(max-width:480px){
+      .social-proof-bar{padding:14px 16px}
+      .proof-icon{width:32px;height:32px;border-radius:8px}
+      .proof-icon svg{width:15px;height:15px}
+      .proof-number{font-size:13px}
+      .proof-label{font-size:10.5px}
+      .faq-question{padding:16px;gap:10px}
+      .faq-answer{padding:0 16px 18px 50px}
+      .faq-emoji{font-size:20px}
+      .faq-question-text{font-size:14px}
+      .subject-pill{padding:8px 16px;font-size:13px}
+      .modal{margin:16px}
+      .modal-content{padding:28px 20px 28px}
+      h1{font-size:24px}
+      .image-wrapper{height:200px;min-height:200px}
+      .hero{padding:28px 16px 32px}
+      .grade-arrow svg{width:22px;height:22px}
+      .grade-projection{border-radius:10px}
+      .bottom-cta-heading{font-size:22px}
+      .bottom-cta-sub{font-size:13px}
+      .coverage-btn{padding:8px 14px;font-size:12.5px}
+      .coverage-level-btn{padding:8px 12px;font-size:12.5px}
+    }
+    /* ══════════════════════════════════ Condition pills (hero) */
+    .hero-condition-pills {
+      display: flex; flex-wrap: wrap; gap: 8px;
+      margin-bottom: 24px;
+    }
+    .hero-condition-pill {
+      background: rgba(76,176,146,0.1); color: #4CB092;
+      font-size: 12px; font-weight: 600;
+      padding: 4px 10px; border-radius: 20px; white-space: nowrap;
+    }
+
+    /* ══════════════════════════════════ Scroll Animations */
+    html { scroll-behavior: smooth; }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(48px);
+      transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1), transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .reveal-left {
+      opacity: 0;
+      transform: translateX(-60px);
+      transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1), transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .reveal-left.visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
+    .reveal-right {
+      opacity: 0;
+      transform: translateX(60px);
+      transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1), transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .reveal-right.visible {
+      opacity: 1;
+      transform: translateX(0);
+    }
+    .reveal-scale {
+      opacity: 0;
+      transform: scale(0.92);
+      transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .reveal-scale.visible {
+      opacity: 1;
+      transform: scale(1);
+    }
+    .stagger-1 { transition-delay: 0.1s; }
+    .stagger-2 { transition-delay: 0.2s; }
+    .stagger-3 { transition-delay: 0.3s; }
+    .stagger-4 { transition-delay: 0.4s; }
+    .stagger-5 { transition-delay: 0.5s; }
+    .stagger-6 { transition-delay: 0.6s; }
+
+  </style>
+</head>
+<body>
+
+<div class="page-wrapper">
+
+<!-- ════ Dark top band ════ -->
+<div class="top-band">
+
+  <!-- Promo Banner -->
+  <div class="promo-banner">
+    <p><strong>Term 2 spots filling fast</strong> — Limited availability for specialist tutors. <a href="#" id="promoCta">Get started today</a></p>
+  </div>
+
+  <!-- Social Proof Bar -->
+  <div class="social-proof-bar">
+    <div class="social-proof-inner">
+      <div class="proof-item">
+        <div class="proof-icon proof-icon--students"><svg viewBox="0 0 24 24" fill="none"><path d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2" stroke="#FF8412" stroke-width="2" stroke-linecap="round"/><circle cx="9" cy="7" r="4" stroke="#FF8412" stroke-width="2"/><path d="M22 21v-2a4 4 0 00-3-3.87" stroke="#FF8412" stroke-width="2" stroke-linecap="round"/><path d="M16 3.13a4 4 0 010 7.75" stroke="#FF8412" stroke-width="2" stroke-linecap="round"/></svg></div>
+        <div class="proof-text"><span class="proof-number">2,000+</span><span class="proof-label">Students supported</span></div>
+      </div>
+      <div class="proof-divider"></div>
+      <div class="proof-item">
+        <div class="proof-icon proof-icon--tutors"><svg viewBox="0 0 24 24" fill="none"><path d="M22 11.08V12a10 10 0 11-5.93-9.14" stroke="#4CB092" stroke-width="2" stroke-linecap="round"/><path d="M22 4L12 14.01l-3-3" stroke="#4CB092" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div class="proof-text"><span class="proof-number">98.1%</span><span class="proof-label">See noticeable improvement</span></div>
+      </div>
+      <div class="proof-divider"></div>
+      <div class="proof-item">
+        <div class="proof-icon proof-icon--reviews"><svg viewBox="0 0 24 24" fill="none"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26" fill="#F8B200" stroke="#F8B200" stroke-width="1.5" stroke-linejoin="round"/></svg></div>
+        <div class="proof-text"><span class="proof-number">300+</span><span class="proof-label">5-star Google reviews</span></div>
+      </div>
+      <div class="proof-divider"></div>
+      <div class="proof-item">
+        <div class="proof-icon proof-icon--curriculum"><svg viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" stroke="#00A3FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div class="proof-text"><span class="proof-number">Top 2%</span><span class="proof-label">Of Australian tutors</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-image">
+      <div class="image-wrapper">
+        <img src="images/hero-child-tutoring.png" alt="Child with learning differences happily engaged in a 1-on-1 online tutoring session at home" class="active">
+        <img src="images/hero-tutor-profile.png" alt="Warm and approachable Tutero specialist tutor, a real caring educator you would trust with your child">
+        <img src="images/hero-child-outcome.png" alt="Child at kitchen table holding a graded worksheet with a quiet smile, calm pride after a tutoring breakthrough">
+        <div class="hero-dots">
+          <div class="hero-dot active" data-slide="0"></div>
+          <div class="hero-dot" data-slide="1"></div>
+          <div class="hero-dot" data-slide="2"></div>
+        </div>
+        <div class="hero-badge live-badge"><span class="live-dot"></span> Live lesson</div>
+        <div class="hero-badge google-badge">
+          <div class="google-badge-icon"><svg viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 01-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18A10.96 10.96 0 001 12c0 1.77.42 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg></div>
+          <span class="google-badge-score">4.9</span>
+          <div class="google-badge-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+          <span class="google-badge-count">300+ reviews</span>
+        </div>
+      </div>
+    </div>
+    <div class="hero-content">
+      <div class="logo"><img src="images/tutero-logo.svg" alt="Tutero"></div>
+      <h1>1-1 Tutoring for Students with ADHD, Autism, Dyslexia &amp; Learning Challenges</h1>
+      <p class="subtitle">Match your child with a specialist tutor who understands how they learn. Online, from home, with Australia's top 2% of educators.</p>
+      <div class="hero-condition-pills">
+        <span class="hero-condition-pill">&#10003; ADHD</span>
+        <span class="hero-condition-pill">&#10003; Autism / ASD</span>
+        <span class="hero-condition-pill">&#10003; Dyslexia</span>
+        <span class="hero-condition-pill">&#10003; Dyscalculia</span>
+        <span class="hero-condition-pill">&#10003; Dysgraphia</span>
+        <span class="hero-condition-pill">&#10003; ADD</span>
+      </div>
+      <button class="cta-button" id="heroCtaBtn">Find a Specialist Tutor for My Child <span class="arrow">&rarr;</span></button>
+      <div class="hero-guarantee">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="#4CB092" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 12l2 2 4-4" stroke="#4CB092" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Love your first lesson or it's free
+      </div>
+    </div>
+  </section>
+
+  <!-- Scrolling Trust Bar (bottom of section 1) -->
+  <div class="trust-bar">
+    <div class="trust-bar-track">
+      <div class="trust-bar-item"><svg viewBox="0 0 24 24" fill="none"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z" stroke="#4CB092" stroke-width="2"/><path d="M9 12l2 2 4-4" stroke="#4CB092" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Australian curriculum aligned</div>
+      <div class="trust-bar-dot"></div>
+      <div class="trust-bar-item"><svg viewBox="0 0 24 24" fill="none"><path d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2" stroke="#FF8412" stroke-width="2" stroke-linecap="round"/><circle cx="9" cy="7" r="4" stroke="#FF8412" stroke-width="2"/></svg> Specialist learning support tutors</div>
+      <div class="trust-bar-dot"></div>
+      <div class="trust-bar-item"><svg viewBox="0 0 24 24" fill="none"><path d="M20 12V8H6a2 2 0 01-2-2c0-1.1.9-2 2-2h12v4" stroke="#1D49E3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M4 6v12c0 1.1.9 2 2 2h14v-4" stroke="#1D49E3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M18 12a2 2 0 00-2 2c0 1.1.9 2 2 2h4v-4h-4z" stroke="#1D49E3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> No contracts, cancel anytime</div>
+      <div class="trust-bar-dot"></div>
+      <div class="trust-bar-item"><svg viewBox="0 0 24 24" fill="none"><path d="M12 8v8M8 12h8" stroke="#F8B200" stroke-width="2" stroke-linecap="round"/><circle cx="12" cy="12" r="10" stroke="#F8B200" stroke-width="2"/></svg> Students supported with ADHD, dyslexia &amp; ASD</div>
+      <div class="trust-bar-dot"></div>
+      <div class="trust-bar-item"><svg viewBox="0 0 24 24" fill="none"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" stroke="#00A3FF" stroke-width="2" stroke-linecap="round"/><circle cx="12" cy="7" r="4" stroke="#00A3FF" stroke-width="2"/></svg> Personal account manager</div>
+      <div class="trust-bar-dot"></div>
+      <div class="trust-bar-item"><svg viewBox="0 0 24 24" fill="none"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26" fill="#F8B200" stroke="#F8B200" stroke-width="1.5"/></svg> 300+ five-star Google reviews</div>
+      <div class="trust-bar-dot"></div>
+      <div class="trust-bar-item"><svg viewBox="0 0 24 24" fill="none"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="#4CB092" stroke-width="2"/><path d="M9 12l2 2 4-4" stroke="#4CB092" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Love your first lesson or it's free</div>
+      <div class="trust-bar-dot"></div>
+      <div class="trust-bar-item"><svg viewBox="0 0 24 24" fill="none"><path d="M22 11.08V12a10 10 0 11-5.93-9.14" stroke="#FF8412" stroke-width="2" stroke-linecap="round"/><path d="M22 4L12 14.01l-3-3" stroke="#FF8412" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> No upfront payments</div>
+      <!-- Duplicate for seamless loop -->
+      <div class="trust-bar-dot"></div>
+      <div class="trust-bar-item"><svg viewBox="0 0 24 24" fill="none"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z" stroke="#4CB092" stroke-width="2"/><path d="M9 12l2 2 4-4" stroke="#4CB092" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Australian curriculum aligned</div>
+      <div class="trust-bar-dot"></div>
+      <div class="trust-bar-item"><svg viewBox="0 0 24 24" fill="none"><path d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2" stroke="#FF8412" stroke-width="2" stroke-linecap="round"/><circle cx="9" cy="7" r="4" stroke="#FF8412" stroke-width="2"/></svg> Specialist learning support tutors</div>
+      <div class="trust-bar-dot"></div>
+      <div class="trust-bar-item"><svg viewBox="0 0 24 24" fill="none"><path d="M20 12V8H6a2 2 0 01-2-2c0-1.1.9-2 2-2h12v4" stroke="#1D49E3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M4 6v12c0 1.1.9 2 2 2h14v-4" stroke="#1D49E3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M18 12a2 2 0 00-2 2c0 1.1.9 2 2 2h4v-4h-4z" stroke="#1D49E3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> No contracts, cancel anytime</div>
+      <div class="trust-bar-dot"></div>
+      <div class="trust-bar-item"><svg viewBox="0 0 24 24" fill="none"><path d="M12 8v8M8 12h8" stroke="#F8B200" stroke-width="2" stroke-linecap="round"/><circle cx="12" cy="12" r="10" stroke="#F8B200" stroke-width="2"/></svg> Students supported with ADHD, dyslexia &amp; ASD</div>
+      <div class="trust-bar-dot"></div>
+      <div class="trust-bar-item"><svg viewBox="0 0 24 24" fill="none"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" stroke="#00A3FF" stroke-width="2" stroke-linecap="round"/><circle cx="12" cy="7" r="4" stroke="#00A3FF" stroke-width="2"/></svg> Personal account manager</div>
+      <div class="trust-bar-dot"></div>
+      <div class="trust-bar-item"><svg viewBox="0 0 24 24" fill="none"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26" fill="#F8B200" stroke="#F8B200" stroke-width="1.5"/></svg> 300+ five-star Google reviews</div>
+      <div class="trust-bar-dot"></div>
+      <div class="trust-bar-item"><svg viewBox="0 0 24 24" fill="none"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="#4CB092" stroke-width="2"/><path d="M9 12l2 2 4-4" stroke="#4CB092" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Love your first lesson or it's free</div>
+      <div class="trust-bar-dot"></div>
+      <div class="trust-bar-item"><svg viewBox="0 0 24 24" fill="none"><path d="M22 11.08V12a10 10 0 11-5.93-9.14" stroke="#FF8412" stroke-width="2" stroke-linecap="round"/><path d="M22 4L12 14.01l-3-3" stroke="#FF8412" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> No upfront payments</div>
+    </div>
+  </div>
+
+</div><!-- /top-band -->
+
+<!-- ════ Hero Form Modal ════ -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal">
+    <button class="modal-close" id="modalClose">&times;</button>
+    <div class="modal-content">
+      <div id="modalForm">
+        <div class="modal-steps">
+          <div class="modal-step-dot active" data-ms="0"></div>
+          <div class="modal-step-dot" data-ms="1"></div>
+          <div class="modal-step-dot" data-ms="2"></div>
+          <div class="modal-step-dot" data-ms="3"></div>
+        </div>
+        <!-- Step 1: Student info -->
+        <div class="modal-form-step active" id="ms0">
+          <h3>Who needs a specialist tutor?</h3>
+          <p class="modal-sub">We'll match your child with a tutor experienced in their specific learning needs.</p>
+          <input class="modal-input" type="text" id="mStudentName" placeholder="Student's first name" autocomplete="off">
+          <input class="modal-input" type="text" id="mYearLevel" placeholder="Year level (e.g. Year 7)" autocomplete="off">
+          <button class="modal-submit" id="mToStep2" disabled>Continue &rarr;</button>
+          <p class="modal-privacy">&#128274; Free consultation &middot; No commitment required</p>
+        </div>
+        <!-- Step 2: Goal -->
+        <div class="modal-form-step" id="ms1">
+          <h3>What's the main goal for <span id="mGoalName"></span>?</h3>
+          <p class="modal-sub">This helps us find the right tutor.</p>
+          <div class="modal-pills" id="mGoalPills">
+            <button class="modal-pill" data-val="Support with ADHD / attention">Support with ADHD / attention</button>
+            <button class="modal-pill" data-val="Support with Dyslexia / reading">Support with Dyslexia / reading</button>
+            <button class="modal-pill" data-val="Build confidence &amp; reduce anxiety">Build confidence &amp; reduce anxiety</button>
+            <button class="modal-pill" data-val="Catch up on missed learning">Catch up on missed learning</button>
+            <button class="modal-pill" data-val="Prepare for exams">Prepare for exams</button>
+          </div>
+          <button class="modal-back" id="mBack1">&larr; Back</button>
+        </div>
+        <!-- Step 3: Urgency -->
+        <div class="modal-form-step" id="ms2">
+          <h3>How soon do you need a tutor?</h3>
+          <p class="modal-sub">No pressure — just helps us prioritise.</p>
+          <div class="modal-pills" id="mUrgencyPills">
+            <button class="modal-pill" data-val="This week">This week</button>
+            <button class="modal-pill" data-val="Within 2 weeks">Within 2 weeks</button>
+            <button class="modal-pill" data-val="Just exploring">Just exploring</button>
+          </div>
+          <button class="modal-back" id="mBack2">&larr; Back</button>
+        </div>
+        <!-- Step 4: Contact details -->
+        <div class="modal-form-step" id="ms3">
+          <h3>Find <span id="mStudentNameEcho"></span>'s tutor</h3>
+          <p class="modal-sub">Where should we send the tutor match?</p>
+          <input class="modal-input" type="text" id="mParentName" placeholder="Your full name" autocomplete="off">
+          <input class="modal-input" type="email" id="mEmail" placeholder="Email address" autocomplete="off">
+          <input class="modal-input" type="tel" id="mPhone" placeholder="Phone number" autocomplete="off">
+          <button class="modal-submit" id="mSubmit" disabled>Find <span id="mCtaName">your</span>'s tutor &rarr;</button>
+          <button class="modal-back" id="mBack3">&larr; Back</button>
+          <div class="modal-social-proof"><span class="proof-dot"></span> 32 parents enquired this morning</div>
+          <div class="modal-testimonial">"Best decision we made for Sarah's confidence." <strong>— Michelle T.</strong></div>
+        </div>
+      </div>
+      <div class="modal-success" id="modalSuccess">
+        <div class="modal-success-check">
+          <svg viewBox="0 0 24 24"><path class="check-path" d="M6 12l4 4 8-8"/></svg>
+        </div>
+        <h3>You're all set!</h3>
+        <p class="modal-sub">Here's what happens next for <strong id="mSuccessName"></strong>.</p>
+        <div class="success-steps">
+          <div class="success-step">
+            <div class="success-step-icon success-step-icon--1">&#128203;</div>
+            <div class="success-step-text">
+              <span class="success-step-title">We review your request</span>
+              <span class="success-step-desc">Our team matches the best tutor to your child's needs.</span>
+            </div>
+          </div>
+          <div class="success-step">
+            <div class="success-step-icon success-step-icon--2">&#128222;</div>
+            <div class="success-step-text">
+              <span class="success-step-title">We'll call you today</span>
+              <span class="success-step-desc">A quick chat to learn more about your child's goals.</span>
+            </div>
+          </div>
+          <div class="success-step">
+            <div class="success-step-icon success-step-icon--3">&#129309;</div>
+            <div class="success-step-text">
+              <span class="success-step-title">Meet your tutor match</span>
+              <span class="success-step-desc">We'll introduce you to a qualified, vetted tutor.</span>
+            </div>
+          </div>
+          <div class="success-step">
+            <div class="success-step-icon success-step-icon--4">&#127891;</div>
+            <div class="success-step-text">
+              <span class="success-step-title">Start your first lesson</span>
+              <span class="success-step-desc">Love it or your first lesson is completely free.</span>
+            </div>
+          </div>
+        </div>
+        <div class="success-cta">
+          <a href="thank-you.html" class="success-cta-btn">Learn more about what's next &rarr;</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════ Results / Data Section ════ -->
+<section class="results-section">
+  <h2 class="results-heading reveal">Why families with special needs children choose Tutero</h2>
+  <p class="results-sub reveal stagger-1">Specialist support that builds confidence, focus, and results.</p>
+
+  <div class="results-grid">
+    <!-- Condition outcome widget (left) -->
+    <div class="grade-widget reveal-left">
+      <h3 class="grade-widget-title">How can we support your child?</h3>
+      <p class="grade-widget-sub">Select what your child is working through to see typical outcomes.</p>
+      <div class="needs-selector" id="needsSelector">
+        <button class="needs-btn active" data-needs="adhd">&#129504; ADHD</button>
+        <button class="needs-btn" data-needs="dyslexia">&#128214; Dyslexia</button>
+        <button class="needs-btn" data-needs="asd">&#129513; ASD / Autism</button>
+        <button class="needs-btn" data-needs="anxiety">&#128154; Anxiety</button>
+        <button class="needs-btn" data-needs="other">&#128337; Other</button>
+      </div>
+      <div class="needs-result" id="needsResult">
+        <div class="needs-headline-stat" id="needsStat">78%</div>
+        <div class="needs-headline-desc" id="needsDesc">of students with ADHD show improved focus and reduced homework resistance within the first 4 sessions.</div>
+        <div class="needs-sub-stats">
+          <div class="needs-sub-stat">
+            <div class="needs-sub-stat-num" id="needsSubNum1">3–4</div>
+            <div class="needs-sub-stat-label" id="needsSubLabel1">lessons until homework resistance starts to ease for most students</div>
+          </div>
+          <div class="needs-sub-stat">
+            <div class="needs-sub-stat-num">4.9&#9733;</div>
+            <div class="needs-sub-stat-label">average Google rating from Australian parents</div>
+          </div>
+        </div>
+      </div>
+      <p class="grade-timeline" id="needsCaption">Based on Tutero outcomes for students with ADHD, Australia</p>
+    </div>
+
+    <!-- Photo + value points (right) -->
+    <div class="reveal stagger-2">
+      <div class="results-photo">
+        <img src="images/why-families-photo.png" alt="Mum and son on the couch, calm and focused during a Tutero session at home">
+        <div class="results-photo-caption">
+          <span>Liam, Year 6 &middot; ADHD</span> &middot; <span class="caption-result">C &rarr; A in Maths</span>
+        </div>
+      </div>
+      <div class="results-value-points">
+        <div class="value-point"><span class="value-point-emoji">&#129504;</span> Tutors trained in learning differences and adaptive teaching</div>
+        <div class="value-point"><span class="value-point-emoji">&#128203;</span> Lesson reports sent to parents after every session</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Trust logos -->
+  <div class="trust-logos reveal">
+    <span class="trust-logos-label">Backed by</span>
+    <div class="trust-logo-item">
+      <svg viewBox="0 0 24 24" fill="none"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="currentColor" stroke-width="2"/><path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      WWCC Verified
+    </div>
+    <div class="trust-logo-item">
+      <svg viewBox="0 0 24 24" fill="none"><path d="M22 10v6M2 10l10-5 10 5-10 5z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M6 12v5c3 3 9 3 12 0v-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Qualified Teachers
+    </div>
+    <div class="trust-logo-item">
+      <svg viewBox="0 0 24 24" fill="none"><path d="M9 11l3 3L22 4" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      ABN Registered
+    </div>
+    <div class="trust-logo-item">
+      <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/><path d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z" stroke="currentColor" stroke-width="2"/></svg>
+      100% Australian
+    </div>
+    <div class="trust-logo-item">
+      <svg viewBox="0 0 24 24" fill="none"><rect x="3" y="11" width="18" height="11" rx="2" stroke="currentColor" stroke-width="2"/><path d="M7 11V7a5 5 0 0110 0v4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      Data Protected
+    </div>
+  </div>
+</section>
+
+<!-- ════ Results V2 (Alternative) ════ -->
+<section class="results-v2">
+  <div class="rv2-inner">
+
+    <!-- Top: bold stat headline -->
+    <div class="rv2-headline reveal">
+      <div class="rv2-headline-text">
+        <span class="rv2-eyebrow">Based on students with ADHD, dyslexia &amp; ASD</span>
+        <h2 class="rv2-title">94% of students improve<br>within 4 weeks</h2>
+        <p class="rv2-subtitle">Not just grades. Confidence, motivation, and a kid who actually wants to learn.</p>
+      </div>
+      <div class="rv2-headline-img">
+        <img src="images/rv2-student-progress.png" alt="Child at home desk, focused and calm during an online tutoring session with Tutero">
+      </div>
+    </div>
+
+    <!-- Three proof columns -->
+    <div class="rv2-proof-row reveal stagger-1">
+      <div class="rv2-proof-card">
+        <div class="rv2-proof-number">2&#8211;3</div>
+        <div class="rv2-proof-unit">lessons</div>
+        <p class="rv2-proof-desc">until most students start feeling more confident in their subject</p>
+      </div>
+      <div class="rv2-proof-card rv2-proof-card--highlight">
+        <div class="rv2-proof-number">30%</div>
+        <div class="rv2-proof-unit">avg. grade lift</div>
+        <p class="rv2-proof-desc">within 6 months of consistent weekly tutoring sessions</p>
+      </div>
+      <div class="rv2-proof-card">
+        <div class="rv2-proof-number">4.9</div>
+        <div class="rv2-proof-unit">Google rating</div>
+        <p class="rv2-proof-desc">from 300+ verified reviews by Australian parents</p>
+      </div>
+    </div>
+
+    <!-- Before/After transformation strip -->
+    <div class="rv2-transform reveal stagger-2">
+      <div class="rv2-transform-side rv2-before">
+        <span class="rv2-transform-label">Before Tutero</span>
+        <ul class="rv2-transform-list">
+          <li>Homework meltdowns every night</li>
+          <li>Falling further behind because of their learning difference</li>
+          <li>Losing confidence, avoiding class participation</li>
+        </ul>
+      </div>
+      <div class="rv2-transform-arrow">
+        <svg viewBox="0 0 24 24" fill="none" width="32" height="32"><path d="M5 12h14M13 5l6 7-6 7" stroke="#4CB092" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <div class="rv2-transform-side rv2-after">
+        <span class="rv2-transform-label rv2-transform-label--after">After Tutero</span>
+        <ul class="rv2-transform-list rv2-transform-list--after">
+          <li>Strategies tailored to how their brain works</li>
+          <li>Homework done calmly, with growing independence</li>
+          <li>Confident, focused, and back on track at school</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Embedded CTA -->
+    <div class="rv2-cta-block reveal stagger-3">
+      <div class="rv2-cta-left">
+        <p class="rv2-cta-text"><strong>See the difference in your child.</strong> Book a free consultation and we'll match them with a tutor this week.</p>
+        <div class="rv2-cta-trust">
+          <svg viewBox="0 0 24 24" fill="none" width="15" height="15"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="#4CB092" stroke-width="2"/><path d="M9 12l2 2 4-4" stroke="#4CB092" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span>Love your first lesson or it's free &middot; No contracts &middot; Cancel anytime</span>
+        </div>
+      </div>
+      <button class="rv2-cta-btn" onclick="openModal()">Get matched with a tutor &rarr;</button>
+    </div>
+
+  </div>
+</section>
+
+<!-- ════ Coverage Section ════ -->
+<section class="coverage-section">
+  <h3 class="coverage-heading reveal">Support for every learning difference and year level.</h3>
+  <p class="coverage-sub reveal stagger-1">Specialist tutors matched to your child's specific diagnosis and stage of schooling.</p>
+  <div class="coverage-grid reveal stagger-2">
+    <div class="coverage-card">
+      <div class="coverage-card-label">Learning Differences We Support</div>
+      <div class="coverage-card-items">
+        <button class="coverage-btn" onclick="openModal()"><span class="coverage-btn-icon">&#129504;</span> ADHD</button>
+        <button class="coverage-btn" onclick="openModal()"><span class="coverage-btn-icon">&#129513;</span> Autism / ASD</button>
+        <button class="coverage-btn" onclick="openModal()"><span class="coverage-btn-icon">&#128214;</span> Dyslexia</button>
+        <button class="coverage-btn" onclick="openModal()"><span class="coverage-btn-icon">&#128290;</span> Dyscalculia</button>
+        <button class="coverage-btn" onclick="openModal()"><span class="coverage-btn-icon">&#9999;&#65039;</span> Dysgraphia</button>
+        <button class="coverage-btn" onclick="openModal()"><span class="coverage-btn-icon">&#128337;</span> ADD</button>
+        <button class="coverage-btn" onclick="openModal()"><span class="coverage-btn-icon">&#128154;</span> Anxiety</button>
+        <button class="coverage-btn" onclick="openModal()"><span class="coverage-btn-icon">&#128218;</span> Learning Difficulties</button>
+      </div>
+    </div>
+    <div class="coverage-card">
+      <div class="coverage-card-label">Year Levels</div>
+      <div class="coverage-card-items">
+        <button class="coverage-level-btn" onclick="openModalWithYear('Prep')">Prep</button>
+        <button class="coverage-level-btn" onclick="openModalWithYear('Year 1')">Year 1</button>
+        <button class="coverage-level-btn" onclick="openModalWithYear('Year 2')">Year 2</button>
+        <button class="coverage-level-btn" onclick="openModalWithYear('Year 3')">Year 3</button>
+        <button class="coverage-level-btn" onclick="openModalWithYear('Year 4')">Year 4</button>
+        <button class="coverage-level-btn" onclick="openModalWithYear('Year 5')">Year 5</button>
+        <button class="coverage-level-btn" onclick="openModalWithYear('Year 6')">Year 6</button>
+        <button class="coverage-level-btn" onclick="openModalWithYear('Year 7')">Year 7</button>
+        <button class="coverage-level-btn" onclick="openModalWithYear('Year 8')">Year 8</button>
+        <button class="coverage-level-btn" onclick="openModalWithYear('Year 9')">Year 9</button>
+        <button class="coverage-level-btn" onclick="openModalWithYear('Year 10')">Year 10</button>
+        <button class="coverage-level-btn" onclick="openModalWithYear('Year 11')">Year 11</button>
+        <button class="coverage-level-btn" onclick="openModalWithYear('Year 12')">Year 12</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════ Success Stories ════ -->
+<section class="stories-section">
+  <h2 class="stories-heading reveal">What other Tutero families are saying.</h2>
+  <p class="stories-subheading reveal stagger-1">Verified reviews from parents of children with ADHD, dyslexia, ASD and anxiety.</p>
+  <div class="stories-track-wrapper reveal stagger-2">
+    <div class="stories-track" id="storiesTrack">
+      <!-- Set 1 — Real Trustpilot reviews -->
+      <div class="story-card">
+        <div class="story-image">
+          <img src="images/story-jessica-thompson.png" alt="Jessica and her son at home, relieved after finding the right tutor for autism support">
+          <div class="story-result">&#129513; Autism: perfectly matched</div>
+        </div>
+        <div class="story-body">
+          <div class="story-tp-badge">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="24" height="24" rx="4" fill="#00B67A"/><path d="M12 3.5l2.06 6.34H20.5l-5.28 3.84 2.01 6.18L12 16.02l-5.23 3.84 2.01-6.18L3.5 9.84H9.94z" fill="white"/></svg>
+            <span>Trustpilot</span>
+          </div>
+          <div class="story-header">
+            <div class="story-meta"><span class="story-name">Jessica T.</span><span class="story-detail">Australia &middot; Autism</span></div>
+            <div class="story-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+          </div>
+          <p class="story-quote">We were nervous about finding the right tutor for our son who is Autistic. Tutero matched us with the best tutor for our son — she is so patient and understanding of his needs. He's gone from refusing to do homework to actually looking forward to his sessions.</p>
+          <a class="story-link" href="https://www.trustpilot.com/review/www.tutero.com" target="_blank">Read on Trustpilot <svg viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+      </div>
+      <div class="story-card">
+        <div class="story-image">
+          <img src="images/story-carrie-lizzio.png" alt="Carrie and her daughter at the kitchen table, Queensland home, calm after anxious times">
+          <div class="story-result">&#128156; Anxiety &rarr; Confidence</div>
+        </div>
+        <div class="story-body">
+          <div class="story-tp-badge">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="24" height="24" rx="4" fill="#00B67A"/><path d="M12 3.5l2.06 6.34H20.5l-5.28 3.84 2.01 6.18L12 16.02l-5.23 3.84 2.01-6.18L3.5 9.84H9.94z" fill="white"/></svg>
+            <span>Trustpilot</span>
+          </div>
+          <div class="story-header">
+            <div class="story-meta"><span class="story-name">Carrie L.</span><span class="story-detail">Queensland &middot; Anxiety</span></div>
+            <div class="story-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+          </div>
+          <p class="story-quote">It's been a great experience dealing with Tutero — from the quoting experience to being matched with our lovely tutor. Tutero has cared about my daughter's comfort as she suffers with anxiety and has tailored her learning to her needs. Couldn't recommend more highly.</p>
+          <a class="story-link" href="https://www.trustpilot.com/review/www.tutero.com" target="_blank">Read on Trustpilot <svg viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+      </div>
+      <div class="story-card">
+        <div class="story-image">
+          <img src="images/story-leo-filippello.png" alt="Leo and daughter Natalia on the couch, calm and settled after a tutoring session">
+          <div class="story-result">&#128154; Comfort: exactly what Natalia needed</div>
+        </div>
+        <div class="story-body">
+          <div class="story-tp-badge">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="24" height="24" rx="4" fill="#00B67A"/><path d="M12 3.5l2.06 6.34H20.5l-5.28 3.84 2.01 6.18L12 16.02l-5.23 3.84 2.01-6.18L3.5 9.84H9.94z" fill="white"/></svg>
+            <span>Trustpilot</span>
+          </div>
+          <div class="story-header">
+            <div class="story-meta"><span class="story-name">Leo F.</span><span class="story-detail">Australia &middot; Special learning needs</span></div>
+            <div class="story-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+          </div>
+          <p class="story-quote">Maddie is amazing and always so kind and comforting which is what Natalia needs. She has a very caring approach and Natalia feels safe to make mistakes and learn at her own pace. It's exactly the environment we were looking for.</p>
+          <a class="story-link" href="https://www.trustpilot.com/review/www.tutero.com" target="_blank">Read on Trustpilot <svg viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+      </div>
+      <div class="story-card">
+        <div class="story-image">
+          <img src="images/story-warren.png" alt="Warren and son Lawson in the living room, quiet pride at a graded worksheet">
+          <div class="story-result">&#129504; Patience: made all the difference</div>
+        </div>
+        <div class="story-body">
+          <div class="story-tp-badge">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="24" height="24" rx="4" fill="#00B67A"/><path d="M12 3.5l2.06 6.34H20.5l-5.28 3.84 2.01 6.18L12 16.02l-5.23 3.84 2.01-6.18L3.5 9.84H9.94z" fill="white"/></svg>
+            <span>Trustpilot</span>
+          </div>
+          <div class="story-header">
+            <div class="story-meta"><span class="story-name">Warren</span><span class="story-detail">Australia &middot; ADHD support</span></div>
+            <div class="story-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+          </div>
+          <p class="story-quote">My son Lawson's tutor John has been amazingly patient and understanding with him. He takes the time to explain concepts in different ways until they click, never making Lawson feel bad for needing extra help. His confidence has completely turned around.</p>
+          <a class="story-link" href="https://www.trustpilot.com/review/www.tutero.com" target="_blank">Read on Trustpilot <svg viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+      </div>
+      <div class="story-card">
+        <div class="story-image">
+          <img src="images/story-bianca-mcgill.png" alt="Bianca kneeling beside her daughter at the kitchen table, patient and encouraging">
+          <div class="story-result">&#128200; Progress: remarkable</div>
+        </div>
+        <div class="story-body">
+          <div class="story-tp-badge">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="24" height="24" rx="4" fill="#00B67A"/><path d="M12 3.5l2.06 6.34H20.5l-5.28 3.84 2.01 6.18L12 16.02l-5.23 3.84 2.01-6.18L3.5 9.84H9.94z" fill="white"/></svg>
+            <span>Trustpilot</span>
+          </div>
+          <div class="story-header">
+            <div class="story-meta"><span class="story-name">Bianca M.</span><span class="story-detail">Australia &middot; Primary school</span></div>
+            <div class="story-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+          </div>
+          <p class="story-quote">I'm so impressed with the thoughtfulness and patience in working with my daughter. Her tutor really takes the time to understand how she learns best and adapts every session. The progress has been remarkable — I only wish we'd found Tutero sooner.</p>
+          <a class="story-link" href="https://www.trustpilot.com/review/www.tutero.com" target="_blank">Read on Trustpilot <svg viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+      </div>
+      <div class="story-card">
+        <div class="story-image">
+          <img src="images/story-lorraine.png" alt="Lorraine and teenage daughter at the dining table, laptop open, calm and focused">
+          <div class="story-result">&#10024; Confidence: back in class</div>
+        </div>
+        <div class="story-body">
+          <div class="story-tp-badge">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="24" height="24" rx="4" fill="#00B67A"/><path d="M12 3.5l2.06 6.34H20.5l-5.28 3.84 2.01 6.18L12 16.02l-5.23 3.84 2.01-6.18L3.5 9.84H9.94z" fill="white"/></svg>
+            <span>Trustpilot</span>
+          </div>
+          <div class="story-header">
+            <div class="story-meta"><span class="story-name">Lorraine</span><span class="story-detail">Australia &middot; Learning support</span></div>
+            <div class="story-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+          </div>
+          <p class="story-quote">Our tutor has been incredibly supportive and understanding of my daughter's needs. She feels so much more confident in class now and is actually putting her hand up to answer questions — something she never did before. Tutero has been a game changer for our family.</p>
+          <a class="story-link" href="https://www.trustpilot.com/review/www.tutero.com" target="_blank">Read on Trustpilot <svg viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+      </div>
+      <div class="story-card">
+        <div class="story-image">
+          <img src="images/story-lovethetees.png" alt="Mum sitting on the couch with her 12-year-old son, maths book in hand, calm focus">
+          <div class="story-result">&#8734;&#65039; Maths: finally clicked</div>
+        </div>
+        <div class="story-body">
+          <div class="story-tp-badge">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="24" height="24" rx="4" fill="#00B67A"/><path d="M12 3.5l2.06 6.34H20.5l-5.28 3.84 2.01 6.18L12 16.02l-5.23 3.84 2.01-6.18L3.5 9.84H9.94z" fill="white"/></svg>
+            <span>Trustpilot</span>
+          </div>
+          <div class="story-header">
+            <div class="story-meta"><span class="story-name">Lovethetees</span><span class="story-detail">Australia &middot; Maths, Year 7</span></div>
+            <div class="story-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+          </div>
+          <p class="story-quote">Our tutor is kind, caring and smart — with endless patience for our 12-year-old boy. Maths was a real struggle and source of stress at home. Now he comes out of sessions calm and confident. The way she explains things just makes sense to him. It's finally clicked.</p>
+          <a class="story-link" href="https://www.trustpilot.com/review/www.tutero.com" target="_blank">Read on Trustpilot <svg viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+      </div>
+      <div class="story-card">
+        <div class="story-image">
+          <img src="images/story-amanda-tobin.png" alt="Amanda holding up her son's graded test paper in the kitchen, son beside her with quiet pride">
+          <div class="story-result">&#128208; Maths: grade improved</div>
+        </div>
+        <div class="story-body">
+          <div class="story-tp-badge">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="24" height="24" rx="4" fill="#00B67A"/><path d="M12 3.5l2.06 6.34H20.5l-5.28 3.84 2.01 6.18L12 16.02l-5.23 3.84 2.01-6.18L3.5 9.84H9.94z" fill="white"/></svg>
+            <span>Trustpilot</span>
+          </div>
+          <div class="story-header">
+            <div class="story-meta"><span class="story-name">Amanda T.</span><span class="story-detail">Australia &middot; Maths</span></div>
+            <div class="story-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+          </div>
+          <p class="story-quote">Tutero has improved my son's grade and — more importantly — he no longer thinks he is 'bad' at maths. That shift in his self-belief has been everything. His tutor is warm, patient and genuinely invested in his progress. We couldn't be happier.</p>
+          <a class="story-link" href="https://www.trustpilot.com/review/www.tutero.com" target="_blank">Read on Trustpilot <svg viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+      </div>
+      <!-- Duplicate set for seamless loop -->
+      <div class="story-card">
+        <div class="story-image">
+          <img src="images/story-jessica-thompson.png" alt="Jessica and her son at home, relieved after finding the right tutor for autism support">
+          <div class="story-result">&#129513; Autism: perfectly matched</div>
+        </div>
+        <div class="story-body">
+          <div class="story-tp-badge">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="24" height="24" rx="4" fill="#00B67A"/><path d="M12 3.5l2.06 6.34H20.5l-5.28 3.84 2.01 6.18L12 16.02l-5.23 3.84 2.01-6.18L3.5 9.84H9.94z" fill="white"/></svg>
+            <span>Trustpilot</span>
+          </div>
+          <div class="story-header">
+            <div class="story-meta"><span class="story-name">Jessica T.</span><span class="story-detail">Australia &middot; Autism</span></div>
+            <div class="story-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+          </div>
+          <p class="story-quote">We were nervous about finding the right tutor for our son who is Autistic. Tutero matched us with the best tutor for our son — she is so patient and understanding of his needs. He's gone from refusing to do homework to actually looking forward to his sessions.</p>
+          <a class="story-link" href="https://www.trustpilot.com/review/www.tutero.com" target="_blank">Read on Trustpilot <svg viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+      </div>
+      <div class="story-card">
+        <div class="story-image">
+          <img src="images/story-carrie-lizzio.png" alt="Carrie and her daughter at the kitchen table, Queensland home, calm after anxious times">
+          <div class="story-result">&#128156; Anxiety &rarr; Confidence</div>
+        </div>
+        <div class="story-body">
+          <div class="story-tp-badge">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="24" height="24" rx="4" fill="#00B67A"/><path d="M12 3.5l2.06 6.34H20.5l-5.28 3.84 2.01 6.18L12 16.02l-5.23 3.84 2.01-6.18L3.5 9.84H9.94z" fill="white"/></svg>
+            <span>Trustpilot</span>
+          </div>
+          <div class="story-header">
+            <div class="story-meta"><span class="story-name">Carrie L.</span><span class="story-detail">Queensland &middot; Anxiety</span></div>
+            <div class="story-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+          </div>
+          <p class="story-quote">It's been a great experience dealing with Tutero — from the quoting experience to being matched with our lovely tutor. Tutero has cared about my daughter's comfort as she suffers with anxiety and has tailored her learning to her needs. Couldn't recommend more highly.</p>
+          <a class="story-link" href="https://www.trustpilot.com/review/www.tutero.com" target="_blank">Read on Trustpilot <svg viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+      </div>
+      <div class="story-card">
+        <div class="story-image">
+          <img src="images/story-leo-filippello.png" alt="Leo and daughter Natalia on the couch, calm and settled after a tutoring session">
+          <div class="story-result">&#128154; Comfort: exactly what Natalia needed</div>
+        </div>
+        <div class="story-body">
+          <div class="story-tp-badge">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="24" height="24" rx="4" fill="#00B67A"/><path d="M12 3.5l2.06 6.34H20.5l-5.28 3.84 2.01 6.18L12 16.02l-5.23 3.84 2.01-6.18L3.5 9.84H9.94z" fill="white"/></svg>
+            <span>Trustpilot</span>
+          </div>
+          <div class="story-header">
+            <div class="story-meta"><span class="story-name">Leo F.</span><span class="story-detail">Australia &middot; Special learning needs</span></div>
+            <div class="story-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+          </div>
+          <p class="story-quote">Maddie is amazing and always so kind and comforting which is what Natalia needs. She has a very caring approach and Natalia feels safe to make mistakes and learn at her own pace. It's exactly the environment we were looking for.</p>
+          <a class="story-link" href="https://www.trustpilot.com/review/www.tutero.com" target="_blank">Read on Trustpilot <svg viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+      </div>
+      <div class="story-card">
+        <div class="story-image">
+          <img src="images/story-warren.png" alt="Warren and son Lawson in the living room, quiet pride at a graded worksheet">
+          <div class="story-result">&#129504; Patience: made all the difference</div>
+        </div>
+        <div class="story-body">
+          <div class="story-tp-badge">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="24" height="24" rx="4" fill="#00B67A"/><path d="M12 3.5l2.06 6.34H20.5l-5.28 3.84 2.01 6.18L12 16.02l-5.23 3.84 2.01-6.18L3.5 9.84H9.94z" fill="white"/></svg>
+            <span>Trustpilot</span>
+          </div>
+          <div class="story-header">
+            <div class="story-meta"><span class="story-name">Warren</span><span class="story-detail">Australia &middot; ADHD support</span></div>
+            <div class="story-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+          </div>
+          <p class="story-quote">My son Lawson's tutor John has been amazingly patient and understanding with him. He takes the time to explain concepts in different ways until they click, never making Lawson feel bad for needing extra help. His confidence has completely turned around.</p>
+          <a class="story-link" href="https://www.trustpilot.com/review/www.tutero.com" target="_blank">Read on Trustpilot <svg viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+      </div>
+      <div class="story-card">
+        <div class="story-image">
+          <img src="images/story-bianca-mcgill.png" alt="Bianca kneeling beside her daughter at the kitchen table, patient and encouraging">
+          <div class="story-result">&#128200; Progress: remarkable</div>
+        </div>
+        <div class="story-body">
+          <div class="story-tp-badge">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="24" height="24" rx="4" fill="#00B67A"/><path d="M12 3.5l2.06 6.34H20.5l-5.28 3.84 2.01 6.18L12 16.02l-5.23 3.84 2.01-6.18L3.5 9.84H9.94z" fill="white"/></svg>
+            <span>Trustpilot</span>
+          </div>
+          <div class="story-header">
+            <div class="story-meta"><span class="story-name">Bianca M.</span><span class="story-detail">Australia &middot; Primary school</span></div>
+            <div class="story-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+          </div>
+          <p class="story-quote">I'm so impressed with the thoughtfulness and patience in working with my daughter. Her tutor really takes the time to understand how she learns best and adapts every session. The progress has been remarkable — I only wish we'd found Tutero sooner.</p>
+          <a class="story-link" href="https://www.trustpilot.com/review/www.tutero.com" target="_blank">Read on Trustpilot <svg viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+      </div>
+      <div class="story-card">
+        <div class="story-image">
+          <img src="images/story-lorraine.png" alt="Lorraine and teenage daughter at the dining table, laptop open, calm and focused">
+          <div class="story-result">&#10024; Confidence: back in class</div>
+        </div>
+        <div class="story-body">
+          <div class="story-tp-badge">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="24" height="24" rx="4" fill="#00B67A"/><path d="M12 3.5l2.06 6.34H20.5l-5.28 3.84 2.01 6.18L12 16.02l-5.23 3.84 2.01-6.18L3.5 9.84H9.94z" fill="white"/></svg>
+            <span>Trustpilot</span>
+          </div>
+          <div class="story-header">
+            <div class="story-meta"><span class="story-name">Lorraine</span><span class="story-detail">Australia &middot; Learning support</span></div>
+            <div class="story-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+          </div>
+          <p class="story-quote">Our tutor has been incredibly supportive and understanding of my daughter's needs. She feels so much more confident in class now and is actually putting her hand up to answer questions — something she never did before. Tutero has been a game changer for our family.</p>
+          <a class="story-link" href="https://www.trustpilot.com/review/www.tutero.com" target="_blank">Read on Trustpilot <svg viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+      </div>
+      <div class="story-card">
+        <div class="story-image">
+          <img src="images/story-lovethetees.png" alt="Mum sitting on the couch with her 12-year-old son, maths book in hand, calm focus">
+          <div class="story-result">&#8734;&#65039; Maths: finally clicked</div>
+        </div>
+        <div class="story-body">
+          <div class="story-tp-badge">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="24" height="24" rx="4" fill="#00B67A"/><path d="M12 3.5l2.06 6.34H20.5l-5.28 3.84 2.01 6.18L12 16.02l-5.23 3.84 2.01-6.18L3.5 9.84H9.94z" fill="white"/></svg>
+            <span>Trustpilot</span>
+          </div>
+          <div class="story-header">
+            <div class="story-meta"><span class="story-name">Lovethetees</span><span class="story-detail">Australia &middot; Maths, Year 7</span></div>
+            <div class="story-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+          </div>
+          <p class="story-quote">Our tutor is kind, caring and smart — with endless patience for our 12-year-old boy. Maths was a real struggle and source of stress at home. Now he comes out of sessions calm and confident. The way she explains things just makes sense to him. It's finally clicked.</p>
+          <a class="story-link" href="https://www.trustpilot.com/review/www.tutero.com" target="_blank">Read on Trustpilot <svg viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+      </div>
+      <div class="story-card">
+        <div class="story-image">
+          <img src="images/story-amanda-tobin.png" alt="Amanda holding up her son's graded test paper in the kitchen, son beside her with quiet pride">
+          <div class="story-result">&#128208; Maths: grade improved</div>
+        </div>
+        <div class="story-body">
+          <div class="story-tp-badge">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="24" height="24" rx="4" fill="#00B67A"/><path d="M12 3.5l2.06 6.34H20.5l-5.28 3.84 2.01 6.18L12 16.02l-5.23 3.84 2.01-6.18L3.5 9.84H9.94z" fill="white"/></svg>
+            <span>Trustpilot</span>
+          </div>
+          <div class="story-header">
+            <div class="story-meta"><span class="story-name">Amanda T.</span><span class="story-detail">Australia &middot; Maths</span></div>
+            <div class="story-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+          </div>
+          <p class="story-quote">Tutero has improved my son's grade and — more importantly — he no longer thinks he is 'bad' at maths. That shift in his self-belief has been everything. His tutor is warm, patient and genuinely invested in his progress. We couldn't be happier.</p>
+          <a class="story-link" href="https://www.trustpilot.com/review/www.tutero.com" target="_blank">Read on Trustpilot <svg viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════ Trust Section ════ -->
+<section class="trust-section">
+  <h2 class="trust-heading reveal">The Tutero difference</h2>
+  <p class="trust-subheading reveal stagger-1">Built for families navigating learning differences — not a one-size-fits-all tutoring service.</p>
+  <div class="trust-grid reveal-scale">
+    <div class="trust-card">
+      <div class="trust-card-icon">&#129504;</div>
+      <div class="trust-card-title">Tutors trained in learning differences</div>
+      <p class="trust-card-desc">We match your child with educators who have experience working with ADHD, dyslexia, ASD, and other learning challenges. Not just any tutor.</p>
+    </div>
+    <div class="trust-card">
+      <div class="trust-card-icon">&#128203;</div>
+      <div class="trust-card-title">Detailed lesson reports every session</div>
+      <p class="trust-card-desc">After every lesson, your tutor writes a report covering what was covered and your child's progress. You're always in the loop.</p>
+    </div>
+    <div class="trust-card">
+      <div class="trust-card-icon">&#127919;</div>
+      <div class="trust-card-title">Every lesson built around your child</div>
+      <p class="trust-card-desc">Lessons adapt to your child's specific diagnosis, pace, and learning style — not a one-size-fits-all worksheet.</p>
+    </div>
+    <div class="trust-card">
+      <div class="trust-card-icon">&#128154;</div>
+      <div class="trust-card-title">Patient, compassionate educators</div>
+      <p class="trust-card-desc">Our tutors don't just know their subjects — they know how to build rapport with students who've struggled and lost confidence.</p>
+    </div>
+    <div class="trust-card">
+      <div class="trust-card-icon">&#128275;</div>
+      <div class="trust-card-title">No contracts, cancel anytime</div>
+      <p class="trust-card-desc">Stay because it works, not because you're locked in. No upfront deposits. Pay after each lesson.</p>
+    </div>
+    <div class="trust-card">
+      <div class="trust-card-icon">&#128581;</div>
+      <div class="trust-card-title">A real person managing your account</div>
+      <p class="trust-card-desc">A dedicated account manager who knows your child's situation. Call, text, or email — not a chatbot.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ════ FAQ Section ════ -->
+<section class="faq-section">
+  <div class="faq-header">
+    <h2 class="faq-heading reveal">Got questions? We've got answers</h2>
+  </div>
+  <div class="curiosity-meter reveal stagger-1">
+    <span class="curiosity-label" id="curiosityLabel">Curiosity level:</span>
+    <div class="curiosity-track"><div class="curiosity-fill" id="curiosityFill"></div></div>
+    <span class="curiosity-emoji" id="curiosityEmoji">&#129300;</span>
+  </div>
+  <div class="faq-list reveal stagger-2" id="faqList">
+    <div class="faq-item" data-index="0"><div class="faq-question"><span class="faq-emoji">&#129513;</span><span class="faq-question-text">Do your tutors have experience with ADHD, autism, and dyslexia?</span><div class="faq-toggle"><svg viewBox="0 0 12 12"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg></div></div><div class="faq-answer-wrapper"><div class="faq-answer-inner"><p class="faq-answer">Yes — we specifically match students with tutors who have experience supporting their condition. Whether it's ADHD, ASD, dyslexia, dyscalculia, or anxiety, we only pair your child with an educator who understands how they learn and how to keep them engaged.</p></div></div></div>
+    <div class="faq-item" data-index="1"><div class="faq-question"><span class="faq-emoji">&#128176;</span><span class="faq-question-text">How much does it cost?</span><div class="faq-toggle"><svg viewBox="0 0 12 12"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg></div></div><div class="faq-answer-wrapper"><div class="faq-answer-inner"><p class="faq-answer">Lessons start from <strong>$65/hour</strong> for 1-on-1 online tutoring. There are no upfront costs and you pay after each lesson — so there's nothing to lose trying it.</p></div></div></div>
+    <div class="faq-item" data-index="2"><div class="faq-question"><span class="faq-emoji">&#127919;</span><span class="faq-question-text">How do you match my child with the right tutor?</span><div class="faq-toggle"><svg viewBox="0 0 12 12"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg></div></div><div class="faq-answer-wrapper"><div class="faq-answer-inner"><p class="faq-answer">When you enquire, our team learns about your child's specific needs, diagnosis, year level, and goals. We then handpick a tutor from our vetted pool who has the right experience and personality for your child. We don't guess — we match carefully.</p></div></div></div>
+    <div class="faq-item" data-index="3"><div class="faq-question"><span class="faq-emoji">&#9203;&#65039;</span><span class="faq-question-text">How quickly will I see results?</span><div class="faq-toggle"><svg viewBox="0 0 12 12"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg></div></div><div class="faq-answer-wrapper"><div class="faq-answer-inner"><p class="faq-answer">Most parents report a confidence boost within <strong>2–3 lessons</strong>. For students with ADHD or anxiety, just having a patient 1-on-1 environment makes a visible difference early. Grade improvements typically follow within the <strong>first 4–6 weeks</strong>.</p></div></div></div>
+    <div class="faq-item" data-index="4"><div class="faq-question"><span class="faq-emoji">&#128205;</span><span class="faq-question-text">Are lessons online or in-person?</span><div class="faq-toggle"><svg viewBox="0 0 12 12"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg></div></div><div class="faq-answer-wrapper"><div class="faq-answer-inner"><p class="faq-answer">All lessons are <strong>online</strong> via our interactive classroom — whiteboard, screen sharing, and real-time tools. For students with special needs, learning from home in a familiar, calm environment often improves focus and reduces anxiety compared to in-person settings.</p></div></div></div>
+    <div class="faq-item" data-index="5"><div class="faq-question"><span class="faq-emoji">&#128260;</span><span class="faq-question-text">What if the tutor isn't the right fit?</span><div class="faq-toggle"><svg viewBox="0 0 12 12"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg></div></div><div class="faq-answer-wrapper"><div class="faq-answer-inner"><p class="faq-answer">We'll find you a new one — no questions asked. Finding the right match is especially important for children with special needs, and we take that seriously. Just let your account manager know and we'll re-match immediately.</p></div></div></div>
+  </div>
+  <div class="faq-completion" id="faqCompletion">
+    <span class="faq-completion-emoji">&#127881;</span>
+    <div class="faq-completion-text">You're officially a Tutero expert!</div>
+    <div class="faq-completion-sub">Now there's only one thing left to do...</div>
+  </div>
+</section>
+
+<!-- ════ Bottom CTA ════ -->
+<section class="bottom-cta">
+  <canvas id="confettiCanvas"></canvas>
+  <div class="bottom-cta-inner reveal" id="ctaInner">
+    <span class="bottom-cta-emoji">&#129504;</span>
+    <h2 class="bottom-cta-heading">Find the right tutor for your child today</h2>
+    <p class="bottom-cta-sub">Tell us about your child's needs and we'll match them with a specialist who truly understands.</p>
+    <div class="cta-steps">
+      <div class="cta-step-dot active" data-step="0"></div>
+      <div class="cta-step-dot" data-step="1"></div>
+      <div class="cta-step-dot" data-step="2"></div>
+    </div>
+    <div class="cta-form-step active" id="ctaStep0">
+      <p style="color:rgba(255,255,255,.5);font-size:13px;font-weight:600;margin-bottom:4px">Step 1: What does your child need support with?</p>
+      <div class="subject-picker" id="subjectPicker">
+        <button class="subject-pill" data-subject="ADHD / ADD" style="--pill-color:#FF8412"><span>&#129504; ADHD / ADD</span></button>
+        <button class="subject-pill" data-subject="Dyslexia" style="--pill-color:#4CB092"><span>&#128214; Dyslexia</span></button>
+        <button class="subject-pill" data-subject="Dyscalculia" style="--pill-color:#1D49E3"><span>&#128290; Dyscalculia</span></button>
+        <button class="subject-pill" data-subject="Autism / ASD" style="--pill-color:#F8B200"><span>&#129513; Autism / ASD</span></button>
+        <button class="subject-pill" data-subject="Dysgraphia" style="--pill-color:#00A3FF"><span>&#9999;&#65039; Dysgraphia</span></button>
+        <button class="subject-pill" data-subject="Anxiety" style="--pill-color:#FF6B6B"><span>&#128173; Anxiety</span></button>
+        <button class="subject-pill" data-subject="Learning Difficulties" style="--pill-color:#4CB092"><span>&#128218; Learning Difficulties</span></button>
+        <button class="subject-pill" data-subject="Not Sure" style="--pill-color:#888"><span>&#10067; Not Sure</span></button>
+      </div>
+    </div>
+    <div class="cta-form-step" id="ctaStep1">
+      <p style="color:rgba(255,255,255,.5);font-size:13px;font-weight:600;margin-bottom:4px">Step 2: Tell us about your child</p>
+      <input class="cta-input" type="text" id="studentName" placeholder="Student's first name">
+      <input class="cta-input" type="text" id="yearLevel" placeholder="Year level (e.g. Year 7)">
+      <button class="cta-submit" id="toStep3" disabled>Next &rarr;</button>
+      <button class="cta-back-btn" onclick="goToStep(0)">&larr; Back to subjects</button>
+    </div>
+    <div class="cta-form-step" id="ctaStep2">
+      <p style="color:rgba(255,255,255,.5);font-size:13px;font-weight:600;margin-bottom:4px">Step 3: How can we reach you?</p>
+
+      <input class="cta-input" type="text" id="parentName" placeholder="Your full name">
+      <div class="cta-input-row">
+        <input class="cta-input" type="email" id="parentEmail" placeholder="Email">
+        <input class="cta-input" type="tel" id="parentPhone" placeholder="Phone">
+      </div>
+      <button class="cta-submit" id="submitLead" disabled>Find my child's specialist tutor &#127881;</button>
+      <button class="cta-back-btn" onclick="goToStep(1)">&larr; Back</button>
+    </div>
+    <div class="cta-success" id="ctaSuccess">
+      <div class="modal-success-check" style="margin-bottom:16px;">
+        <svg viewBox="0 0 24 24"><path class="check-path" d="M6 12l4 4 8-8" style="stroke:#fff;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;fill:none;stroke-dasharray:30;stroke-dashoffset:30;animation:draw-check .5s .3s ease forwards;"/></svg>
+      </div>
+      <div class="cta-success-text">You're all set!</div>
+      <p class="cta-success-sub" style="margin-bottom:20px;">Here's what happens next for <span id="successName">your child</span>.</p>
+      <div class="success-steps" style="width:100%;max-width:380px;text-align:left;">
+        <div class="success-step" style="color:#fff;">
+          <div class="success-step-icon success-step-icon--1">&#128203;</div>
+          <div class="success-step-text">
+            <span class="success-step-title" style="color:#fff;">We review your request</span>
+            <span class="success-step-desc" style="color:rgba(255,255,255,.5);">Matching the best specialist tutor to your child's needs.</span>
+          </div>
+        </div>
+        <div class="success-step">
+          <div class="success-step-icon success-step-icon--2">&#128222;</div>
+          <div class="success-step-text">
+            <span class="success-step-title" style="color:#fff;">We'll call you today</span>
+            <span class="success-step-desc" style="color:rgba(255,255,255,.5);">A quick chat about your child's goals.</span>
+          </div>
+        </div>
+        <div class="success-step">
+          <div class="success-step-icon success-step-icon--3">&#129309;</div>
+          <div class="success-step-text">
+            <span class="success-step-title" style="color:#fff;">Meet your tutor match</span>
+            <span class="success-step-desc" style="color:rgba(255,255,255,.5);">A qualified, vetted tutor perfect for them.</span>
+          </div>
+        </div>
+        <div class="success-step">
+          <div class="success-step-icon success-step-icon--4">&#127891;</div>
+          <div class="success-step-text">
+            <span class="success-step-title" style="color:#fff;">Start your first lesson</span>
+            <span class="success-step-desc" style="color:rgba(255,255,255,.5);">Love it or your first lesson is free.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</div>
+
+<script>
+  // ── Hero Image Carousel ──
+  (function(){
+    const imgs=document.querySelectorAll('.image-wrapper img');
+    const dots=document.querySelectorAll('.hero-dot');
+    let current=0;
+    function goTo(n){
+      imgs[current].classList.remove('active');
+      dots[current].classList.remove('active');
+      current=n;
+      imgs[current].classList.add('active');
+      dots[current].classList.add('active');
+    }
+    dots.forEach(d=>d.addEventListener('click',()=>goTo(parseInt(d.dataset.slide))));
+    setInterval(()=>goTo((current+1)%imgs.length),5500);
+  })();
+
+
+  // ── FAQ ──
+  const faqItems=document.querySelectorAll('.faq-item'), curiosityFill=document.getElementById('curiosityFill'), curiosityEmoji=document.getElementById('curiosityEmoji'), curiosityLabel=document.getElementById('curiosityLabel'), faqCompletion=document.getElementById('faqCompletion');
+  const openedSet=new Set(), totalFaqs=faqItems.length;
+  const emojiStages=['\u{1F914}','\u{1F9D0}','\u{1F62E}','\u{1F604}','\u{1F929}','\u{1F9E0}','\u{1F393}'];
+  faqItems.forEach(item=>{item.addEventListener('click',()=>{const w=item.classList.contains('open');faqItems.forEach(o=>o.classList.remove('open'));if(!w){item.classList.add('open');openedSet.add(item.dataset.index)}const p=openedSet.size/totalFaqs;curiosityFill.style.width=(p*100)+'%';const ei=Math.min(Math.floor(p*emojiStages.length),emojiStages.length-1);curiosityEmoji.textContent=emojiStages[ei];curiosityEmoji.style.transform='scale(1.3)';setTimeout(()=>curiosityEmoji.style.transform='scale(1)',300);if(openedSet.size>0)curiosityLabel.classList.add('active');})});
+  const faqObserver=new IntersectionObserver((entries)=>{entries.forEach(e=>{if(e.isIntersecting){faqCompletion.classList.add('visible');faqObserver.unobserve(faqCompletion)}})},{threshold:0.5});
+  faqObserver.observe(faqCompletion);
+
+  // ── Hero Modal Form ──
+  const modalOverlay=document.getElementById('modalOverlay');
+  const heroCtaBtn=document.getElementById('heroCtaBtn');
+  const modalClose=document.getElementById('modalClose');
+
+  function openModal(){
+    modalOverlay.classList.add('active');
+    document.getElementById('mStudentName').focus({preventScroll:true});
+  }
+  window.openModal=openModal;
+  window.openModalWithYear=function(year){
+    document.getElementById('mYearLevel').value=year;
+    modalOverlay.classList.add('active');
+    document.getElementById('mStudentName').focus({preventScroll:true});
+  };
+  heroCtaBtn.addEventListener('click',openModal);
+  const promoCta=document.getElementById('promoCta');
+  if(promoCta) promoCta.addEventListener('click',e=>{e.preventDefault();openModal();});
+  modalClose.addEventListener('click',()=>modalOverlay.classList.remove('active'));
+  modalOverlay.addEventListener('click',e=>{if(e.target===modalOverlay)modalOverlay.classList.remove('active')});
+
+  // Modal steps
+  const mSteps=[document.getElementById('ms0'),document.getElementById('ms1'),document.getElementById('ms2'),document.getElementById('ms3')];
+  const mDots=document.querySelectorAll('.modal-step-dot');
+  function mGoTo(n){mSteps.forEach(s=>s.classList.remove('active'));mSteps[n].classList.add('active');mDots.forEach((d,i)=>{d.classList.remove('active','done');if(i<n)d.classList.add('done');if(i===n)d.classList.add('active')})}
+
+  // Auto-capitalise helper
+  function capitalise(str){return str.charAt(0).toUpperCase()+str.slice(1)}
+
+  // Step 1: Student info
+  const mSN=document.getElementById('mStudentName'),mYL=document.getElementById('mYearLevel'),mTo2=document.getElementById('mToStep2');
+  [mSN,mYL].forEach(i=>i.addEventListener('input',()=>{mTo2.disabled=!(mSN.value.trim()&&mYL.value.trim())}));
+  mTo2.addEventListener('click',()=>{
+    const name=capitalise(mSN.value.trim());
+    mSN.value=name;
+    document.getElementById('mGoalName').textContent=name;
+    document.getElementById('mStudentNameEcho').textContent=name;
+    document.getElementById('mCtaName').textContent=name;
+    mGoTo(1);
+  });
+
+  // Step 2: Goal pills (auto-advance)
+  document.querySelectorAll('#mGoalPills .modal-pill').forEach(p=>{
+    p.addEventListener('click',()=>{
+      document.querySelectorAll('#mGoalPills .modal-pill').forEach(x=>x.classList.remove('selected'));
+      p.classList.add('selected');
+      setTimeout(()=>mGoTo(2),350);
+    });
+  });
+  document.getElementById('mBack1').addEventListener('click',()=>mGoTo(0));
+
+  // Step 3: Urgency pills (auto-advance)
+  document.querySelectorAll('#mUrgencyPills .modal-pill').forEach(p=>{
+    p.addEventListener('click',()=>{
+      document.querySelectorAll('#mUrgencyPills .modal-pill').forEach(x=>x.classList.remove('selected'));
+      p.classList.add('selected');
+      setTimeout(()=>mGoTo(3),350);
+    });
+  });
+  document.getElementById('mBack2').addEventListener('click',()=>mGoTo(1));
+
+  // Step 4: Contact details
+  const mPN=document.getElementById('mParentName'),mEM=document.getElementById('mEmail'),mPH=document.getElementById('mPhone'),mSub=document.getElementById('mSubmit');
+  // Phone formatting: detects +61/61 prefix on blur, formats as 0412 345 678
+  // Only light formatting while typing to not fight the cursor
+  let phoneDigits='';
+  mPH.addEventListener('input',()=>{
+    // Strip non-digits but allow + at start
+    let raw=mPH.value;
+    // Extract just digits (and remember if started with +)
+    let hasPlus=raw.trimStart().startsWith('+');
+    let digits=raw.replace(/\D/g,'');
+    // Normalise +61 / 61 prefix immediately so user sees it corrected
+    if(hasPlus&&digits.startsWith('61')){digits='0'+digits.slice(2)}
+    else if(digits.startsWith('610')&&digits.length>10){digits='0'+digits.slice(2)}
+    else if(digits.startsWith('61')&&digits.length>10){digits='0'+digits.slice(2)}
+    if(digits.length>10) digits=digits.slice(0,10);
+    phoneDigits=digits;
+    // Format progressively
+    let formatted=digits;
+    if(digits.length>4&&digits.length<=7) formatted=digits.slice(0,4)+' '+digits.slice(4);
+    else if(digits.length>7) formatted=digits.slice(0,4)+' '+digits.slice(4,7)+' '+digits.slice(7);
+    // Only update if different to avoid cursor jump
+    if(mPH.value!==formatted){
+      const pos=mPH.selectionStart;
+      const diff=formatted.length-mPH.value.length;
+      mPH.value=formatted;
+      mPH.setSelectionRange(pos+diff,pos+diff);
+    }
+  });
+  [mPN,mEM,mPH].forEach(i=>i.addEventListener('input',()=>{
+    mSub.disabled=!(mPN.value.trim()&&mEM.value.trim()&&phoneDigits.length>=10);
+  }));
+  document.getElementById('mBack3').addEventListener('click',()=>mGoTo(2));
+  mSub.addEventListener('click',()=>{
+    document.getElementById('modalForm').style.display='none';
+    document.getElementById('mSuccessName').textContent=capitalise(mSN.value.trim());
+    document.getElementById('modalSuccess').classList.add('active');
+    launchConfetti();
+  });
+
+  // ── Bottom CTA ──
+  let currentStep=0, selectedSubject='';
+  const steps=[document.getElementById('ctaStep0'),document.getElementById('ctaStep1'),document.getElementById('ctaStep2')];
+  const dots=document.querySelectorAll('.cta-step-dot');
+  const success=document.getElementById('ctaSuccess');
+  function goToStep(n){steps.forEach(s=>s.classList.remove('active'));success.classList.remove('active');steps[n].classList.add('active');currentStep=n;dots.forEach((d,i)=>{d.classList.remove('active','done');if(i<n)d.classList.add('done');if(i===n)d.classList.add('active')})}
+  document.querySelectorAll('.subject-pill').forEach(pill=>{pill.addEventListener('click',()=>{document.querySelectorAll('.subject-pill').forEach(p=>p.classList.remove('selected'));pill.classList.add('selected');selectedSubject=pill.dataset.subject;setTimeout(()=>goToStep(1),350)})});
+  const studentName=document.getElementById('studentName'),yearLevel=document.getElementById('yearLevel'),toStep3=document.getElementById('toStep3');
+  [studentName,yearLevel].forEach(i=>i.addEventListener('input',()=>{toStep3.disabled=!(studentName.value.trim()&&yearLevel.value.trim())}));
+  toStep3.addEventListener('click',()=>goToStep(2));
+  const parentName=document.getElementById('parentName'),parentEmail=document.getElementById('parentEmail'),parentPhone=document.getElementById('parentPhone'),submitLead=document.getElementById('submitLead');
+  [parentName,parentEmail,parentPhone].forEach(i=>i.addEventListener('input',()=>{submitLead.disabled=!(parentName.value.trim()&&parentEmail.value.trim()&&parentPhone.value.trim())}));
+  submitLead.addEventListener('click',()=>{steps.forEach(s=>s.classList.remove('active'));document.querySelector('.cta-steps').style.display='none';document.querySelector('.bottom-cta-heading').style.display='none';document.querySelector('.bottom-cta-sub').style.display='none';document.querySelector('.bottom-cta-emoji').style.display='none';document.getElementById('successName').textContent=studentName.value.trim();const _ss=document.getElementById('successSubject');if(_ss)_ss.textContent=selectedSubject;success.classList.add('active');launchConfetti()});
+
+  // ── Scroll Reveal ──
+  const revealEls=document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale');
+  const revealObserver=new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');revealObserver.unobserve(e.target)}});
+  },{threshold:0.15});
+  revealEls.forEach(el=>revealObserver.observe(el));
+
+  // ── Condition Outcome Widget ──
+  const needsData = {
+    adhd:     { stat:'78%',  desc:'of students with ADHD show improved focus and reduced homework resistance within the first 4 sessions.', sub1:'3–4', label1:'lessons until homework resistance starts to ease for most students', caption:'Based on Tutero parent feedback, students with ADHD, Australia' },
+    dyslexia: { stat:'82%',  desc:'of students with dyslexia show improved reading confidence within 6 weeks of consistent tutoring.', sub1:'+12mo', label1:'average reading level gain in the first term for dyslexic students', caption:'Based on Tutero parent feedback, students with dyslexia, Australia' },
+    asd:      { stat:'86%',  desc:'of ASD students feel settled and comfortable with their tutor within the first two sessions.', sub1:'74%', label1:'show improved engagement in learning tasks within the first month', caption:'Based on Tutero parent feedback, students on the autism spectrum, Australia' },
+    anxiety:  { stat:'76%',  desc:'of students with learning anxiety show reduced avoidance behaviour within the first 4 weeks.', sub1:'3–5', label1:'sessions until most students start engaging more actively', caption:'Based on Tutero parent feedback, students with learning anxiety, Australia' },
+    other:    { stat:'81%',  desc:'of students with learning difficulties show noticeable improvement within their first term of tutoring.', sub1:'2+', label1:'average grade levels gained within 6 months', caption:'Based on Tutero parent feedback, students with learning difficulties, Australia' }
+  };
+  const needsBtns=document.querySelectorAll('.needs-btn');
+  const needsStat=document.getElementById('needsStat');
+  const needsDesc=document.getElementById('needsDesc');
+  const needsSubNum1=document.getElementById('needsSubNum1');
+  const needsSubLabel1=document.getElementById('needsSubLabel1');
+  const needsCaption=document.getElementById('needsCaption');
+  const needsResult=document.getElementById('needsResult');
+  needsBtns.forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      needsBtns.forEach(b=>b.classList.remove('active'));
+      btn.classList.add('active');
+      const d=needsData[btn.dataset.needs];
+      needsResult.style.opacity='0';
+      setTimeout(()=>{
+        needsStat.textContent=d.stat;
+        needsDesc.textContent=d.desc;
+        needsSubNum1.textContent=d.sub1;
+        needsSubLabel1.textContent=d.label1;
+        needsCaption.textContent=d.caption;
+        needsResult.style.opacity='1';
+      },180);
+    });
+  });
+
+  // ── Confetti ──
+  function launchConfetti(){const c=document.getElementById('confettiCanvas'),ctx=c.getContext('2d');c.width=window.innerWidth;c.height=window.innerHeight;const cols=['#FF8412','#F8B200','#4CB092','#00A3FF','#1D49E3','#FF6B6B'],ps=[];for(let i=0;i<120;i++)ps.push({x:c.width/2+(Math.random()-.5)*200,y:c.height/2,vx:(Math.random()-.5)*16,vy:Math.random()*-18-4,w:Math.random()*8+4,h:Math.random()*6+3,color:cols[Math.floor(Math.random()*cols.length)],rot:Math.random()*360,rs:(Math.random()-.5)*12,g:.3+Math.random()*.2,o:1});let f=0;function a(){ctx.clearRect(0,0,c.width,c.height);let alive=false;ps.forEach(p=>{p.x+=p.vx;p.vy+=p.g;p.y+=p.vy;p.rot+=p.rs;p.vx*=.99;if(f>40)p.o-=.015;if(p.o<=0)return;alive=true;ctx.save();ctx.translate(p.x,p.y);ctx.rotate(p.rot*Math.PI/180);ctx.globalAlpha=Math.max(0,p.o);ctx.fillStyle=p.color;ctx.fillRect(-p.w/2,-p.h/2,p.w,p.h);ctx.restore()});f++;if(alive)requestAnimationFrame(a);else ctx.clearRect(0,0,c.width,c.height)}a()}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tutero — CAC Reduction Hub</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<!-- Topbar -->
+<header class="topbar">
+  <div class="topbar-left">
+    <img src="assets/tutero-logo.svg" alt="Tutero" class="topbar-logo">
+    <div class="topbar-divider"></div>
+    <span class="topbar-title">CAC Reduction Hub</span>
+  </div>
+  <div class="topbar-right" id="topbarRight"></div>
+</header>
+
+<div class="app-layout">
+
+<!-- Sidebar -->
+<nav class="sidebar" id="sidebar">
+  <div class="sidebar-brand">
+    <div class="sidebar-brand-name">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+      CAC Reduction Hub
+    </div>
+    <div class="sidebar-brand-sub">Tutero Marketing</div>
+  </div>
+  <div class="sidebar-section">
+    <div class="sidebar-section-label">Overview</div>
+    <div class="sidebar-nav">
+      <button class="sidebar-item active" data-view="dashboard">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+        Dashboard
+      </button>
+    </div>
+  </div>
+  <div class="sidebar-section">
+    <div class="sidebar-section-label">Lightning Pages</div>
+    <div class="sidebar-nav">
+      <button class="sidebar-item" data-view="lightning-pages">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+        Page Builder
+        <span class="sidebar-item-badge" id="sidebarLPBCount">0</span>
+      </button>
+    </div>
+  </div>
+  <div class="sidebar-section">
+    <div class="sidebar-section-label">Google Ads</div>
+    <div class="sidebar-nav">
+      <button class="sidebar-item" data-view="cro-priorities">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 20V10M12 20V4M6 20v-6"/></svg>
+        CRO Priorities
+        <span class="sidebar-item-badge" id="sidebarCROCount">0</span>
+      </button>
+      <button class="sidebar-item" data-view="landing-pages">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        Landing Pages
+        <span class="sidebar-item-badge" id="sidebarLPCount">0</span>
+      </button>
+      <button class="sidebar-item" data-view="campaigns">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+        Campaigns
+        <span class="sidebar-item-badge" id="sidebarCampCount">0</span>
+      </button>
+      <button class="sidebar-item" data-view="ad-groups">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4-4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+        Ad Groups
+        <span class="sidebar-item-badge" id="sidebarAGCount">0</span>
+      </button>
+    </div>
+  </div>
+  <div class="sidebar-footer">
+    <span class="tooltip-wrap" style="flex:1"><button class="btn" id="sidebarExport" style="width:100%;justify-content:center;font-size:11px;padding:6px 8px;">Export</button><span class="tooltip">Download all data as a JSON backup file</span></span>
+    <span class="tooltip-wrap" style="flex:1"><button class="btn" id="sidebarImport" style="width:100%;justify-content:center;font-size:11px;padding:6px 8px;">Import</button><span class="tooltip">Restore data from a JSON backup file</span></span>
+  </div>
+</nav>
+
+<!-- Main content -->
+<main class="main">
+
+  <!-- Dashboard View -->
+  <div class="view active" id="view-dashboard">
+    <div class="page-header animate-in">
+      <h1>Dashboard</h1>
+      <p>Overview of your Google Ads landing page infrastructure and campaign performance.</p>
+    </div>
+    <div class="stats-row animate-in delay-1" id="statsRow"></div>
+    <div class="howto animate-in delay-2">
+      <div class="howto-title">How Landing Pages &amp; Ad Groups Work Together</div>
+      <div class="howto-steps">
+        <div class="howto-step">
+          <div class="howto-num">1</div>
+          <h4>Create a landing page</h4>
+          <p>Build a page from the template. Each page gets its own folder in <code style="color:var(--orange);font-family:var(--mono);font-size:11px">/lp/</code>.</p>
+        </div>
+        <div class="howto-step">
+          <div class="howto-num">2</div>
+          <h4>Add ad groups</h4>
+          <p>Create ad groups inside your campaigns. These match your Google Ads structure.</p>
+        </div>
+        <div class="howto-step">
+          <div class="howto-num">3</div>
+          <h4>Link ad groups to pages</h4>
+          <p>One landing page can serve many ad groups. Link them to track which groups drive traffic to which page.</p>
+        </div>
+        <div class="howto-step">
+          <div class="howto-num">4</div>
+          <h4>Track performance</h4>
+          <p>Add desktop, tablet &amp; mobile conversion data to each page to optimise your funnel by device.</p>
+        </div>
+      </div>
+    </div>
+    <div class="tasks-section animate-in delay-3" id="tasksSection">
+      <div class="tasks-header">
+        <span class="tasks-title">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+          Tasks
+        </span>
+        <span class="tasks-progress" id="tasksProgress"></span>
+      </div>
+      <div class="task-list" id="taskList"></div>
+    </div>
+  </div>
+
+  <!-- Lightning Page Builder View -->
+  <div class="view" id="view-lightning-pages">
+    <div class="page-header">
+      <h1>Lightning Page Builder</h1>
+      <p>Create and manage landing page specs. Every Lightning Page follows the same proven template — customize images and copy per page for consistency and speed.</p>
+    </div>
+    <div class="stats-row" id="lpbStatsRow"></div>
+    <div class="section-header" style="margin-top:24px">
+      <h2 class="section-title" style="font-size:14px">Page Specs</h2>
+      <button class="btn" id="addSpecBtn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+        New Page Spec
+      </button>
+    </div>
+    <div class="lp-filters" id="lpbFilters">
+      <input type="text" class="lp-filter-search" id="lpbSearch" placeholder="Search page specs...">
+      <div class="lp-filter-bar">
+        <div class="lp-filter-group">
+          <button class="lp-filter-pill lpb-filter-pill active" data-lpb-filter="all">All</button>
+          <button class="lp-filter-pill lpb-filter-pill" data-lpb-filter="planning">Planning</button>
+          <button class="lp-filter-pill lpb-filter-pill" data-lpb-filter="content">Content</button>
+          <button class="lp-filter-pill lpb-filter-pill" data-lpb-filter="development">Development</button>
+          <button class="lp-filter-pill lpb-filter-pill" data-lpb-filter="live">Live</button>
+        </div>
+      </div>
+      <span class="lp-filter-count" id="lpbFilterCount"></span>
+    </div>
+    <div class="lpb-spec-list" id="lpbSpecList"></div>
+  </div>
+
+  <!-- CRO Priorities View -->
+  <div class="view" id="view-cro-priorities">
+    <div class="page-header">
+      <h1>CRO Priorities</h1>
+      <p>Landing pages that need attention, ranked by impact. Click into a task to investigate and build an analysis.</p>
+    </div>
+    <div class="stats-row" id="croStatsRow"></div>
+    <div class="lp-filters" id="croFilters">
+      <input type="text" class="lp-filter-search" id="croSearch" placeholder="Search landing pages...">
+      <div class="lp-filter-bar">
+        <div class="lp-filter-group">
+          <span class="lp-filter-group-label">Stage</span>
+          <select class="lp-sort-select" id="croStageFilter">
+            <option value="all-open">All Open</option>
+            <option value="needs-review">Needs Review</option>
+            <option value="investigating">Investigating</option>
+            <option value="changes-made">Changes Made</option>
+            <option value="monitoring">Monitoring</option>
+            <option value="resolved">Resolved</option>
+          </select>
+        </div>
+        <span class="lp-stat-sep">|</span>
+        <div class="lp-filter-group">
+          <button class="lp-filter-pill cro-filter-pill active" data-cro-filter="all">All</button>
+          <button class="lp-filter-pill cro-filter-pill" data-cro-filter="critical">Critical</button>
+          <button class="lp-filter-pill cro-filter-pill" data-cro-filter="high">High</button>
+          <button class="lp-filter-pill cro-filter-pill" data-cro-filter="medium">Medium</button>
+        </div>
+        <span class="lp-stat-sep">|</span>
+        <div class="lp-filter-group">
+          <button class="lp-filter-pill cro-filter-pill" data-cro-filter="device-gap">Device Gap</button>
+          <button class="lp-filter-pill cro-filter-pill" data-cro-filter="wasted-spend">Wasted Spend</button>
+        </div>
+        <span class="lp-stat-sep">|</span>
+        <div class="lp-filter-group">
+          <span class="lp-filter-group-label">Location</span>
+          <select class="lp-sort-select" id="croLocationFilter">
+            <option value="all">All Locations</option>
+          </select>
+        </div>
+        <span class="lp-stat-sep">|</span>
+        <div class="lp-filter-group">
+          <span class="lp-filter-group-label">Sort</span>
+          <select class="lp-sort-select" id="croSort">
+            <option value="priority-desc">Priority (high to low)</option>
+            <option value="spend-desc">Spend (high to low)</option>
+            <option value="conv-rate-asc">Conv. Rate (low to high)</option>
+            <option value="conv-rate-desc">Conv. Rate (high to low)</option>
+            <option value="device-gap-desc">Device Gap (largest)</option>
+            <option value="clicks-desc">Clicks (high to low)</option>
+          </select>
+        </div>
+      </div>
+      <span class="lp-filter-count" id="croFilterCount"></span>
+    </div>
+    <div class="cro-priority-list" id="croPriorityList"></div>
+  </div>
+
+  <!-- Landing Pages View -->
+  <div class="view" id="view-landing-pages">
+    <div class="section-header">
+      <h2 class="section-title">Landing Pages</h2>
+      <button class="btn" id="addLPBtn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+        Add Page
+      </button>
+    </div>
+    <div class="lp-filters" id="lpFilters">
+      <input type="text" class="lp-filter-search" id="lpSearch" placeholder="Search landing pages...">
+      <div class="lp-filter-bar">
+        <div class="lp-filter-group">
+          <button class="lp-filter-pill active" data-filter="all">All</button>
+          <button class="lp-filter-pill" data-filter="top">Top 20</button>
+          <button class="lp-filter-pill" data-filter="webflow">Webflow</button>
+          <button class="lp-filter-pill" data-filter="hub">Hub</button>
+          <button class="lp-filter-pill" data-filter="no-conv">No Conversions</button>
+        </div>
+        <span class="lp-stat-sep">|</span>
+        <div class="lp-filter-group">
+          <span class="lp-filter-group-label">Conv. Rate</span>
+          <button class="lp-filter-pill" data-filter="high-conv-mobile">High Mobile</button>
+          <button class="lp-filter-pill" data-filter="high-conv-desktop">High Desktop</button>
+          <button class="lp-filter-pill" data-filter="low-conv-mobile">Low Mobile</button>
+          <button class="lp-filter-pill" data-filter="low-conv-desktop">Low Desktop</button>
+        </div>
+        <span class="lp-stat-sep">|</span>
+        <div class="lp-filter-group">
+          <span class="lp-filter-group-label">Spend</span>
+          <button class="lp-filter-pill" data-filter="high-spend">High Spend</button>
+          <button class="lp-filter-pill" data-filter="low-cpc">Low CPC</button>
+          <button class="lp-filter-pill" data-filter="wasted">Wasted Spend</button>
+        </div>
+        <span class="lp-stat-sep">|</span>
+        <div class="lp-filter-group">
+          <span class="lp-filter-group-label">Sort</span>
+          <select class="lp-sort-select" id="lpSort">
+            <option value="spend-desc">Spend (high to low)</option>
+            <option value="spend-asc">Spend (low to high)</option>
+            <option value="conv-rate-mobile-desc">Mobile Conv. Rate (high)</option>
+            <option value="conv-rate-mobile-asc">Mobile Conv. Rate (low)</option>
+            <option value="conv-rate-desktop-desc">Desktop Conv. Rate (high)</option>
+            <option value="conv-rate-desktop-asc">Desktop Conv. Rate (low)</option>
+            <option value="clicks-desc">Clicks (high to low)</option>
+            <option value="conversions-desc">Conversions (high to low)</option>
+            <option value="cost-per-conv-asc">Cost/Conv. (low to high)</option>
+            <option value="cost-per-conv-desc">Cost/Conv. (high to low)</option>
+            <option value="name-asc">Name (A-Z)</option>
+          </select>
+        </div>
+      </div>
+      <span class="lp-filter-count" id="lpFilterCount"></span>
+    </div>
+    <div class="lp-grid" id="lpGrid"></div>
+    <div class="add-placeholder add-placeholder-lg" id="addLPPlaceholder">
+      <p>+ Add another landing page</p>
+    </div>
+  </div>
+
+  <!-- Campaigns View -->
+  <div class="view" id="view-campaigns">
+    <div class="section-header">
+      <h2 class="section-title">Campaigns</h2>
+      <button class="btn" id="addCampaignBtn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+        Add Campaign
+      </button>
+    </div>
+    <div class="lp-filters" id="campFilters">
+      <input type="text" class="lp-filter-search" id="campSearch" placeholder="Search campaigns...">
+      <div class="lp-filter-bar">
+        <div class="lp-filter-group">
+          <button class="lp-filter-pill camp-filter-pill active" data-camp-filter="all">All</button>
+          <button class="lp-filter-pill camp-filter-pill" data-camp-filter="high-spend">High Spend</button>
+          <button class="lp-filter-pill camp-filter-pill" data-camp-filter="medium-spend">Medium Spend</button>
+          <button class="lp-filter-pill camp-filter-pill" data-camp-filter="low-spend">Low Spend</button>
+        </div>
+        <span class="lp-stat-sep">|</span>
+        <div class="lp-filter-group">
+          <span class="lp-filter-group-label">Performance</span>
+          <button class="lp-filter-pill camp-filter-pill" data-camp-filter="high-conv">High Conv Rate</button>
+          <button class="lp-filter-pill camp-filter-pill" data-camp-filter="low-conv">Low Conv Rate</button>
+          <button class="lp-filter-pill camp-filter-pill" data-camp-filter="high-cpa">High CPA</button>
+          <button class="lp-filter-pill camp-filter-pill" data-camp-filter="low-cpa">Low CPA</button>
+        </div>
+        <span class="lp-stat-sep">|</span>
+        <div class="lp-filter-group">
+          <span class="lp-filter-group-label">Sort</span>
+          <select class="lp-sort-select" id="campSort">
+            <option value="spend-desc">Spend (high to low)</option>
+            <option value="spend-asc">Spend (low to high)</option>
+            <option value="conv-rate-desc">Conv. Rate (high to low)</option>
+            <option value="conv-rate-asc">Conv. Rate (low to high)</option>
+            <option value="conversions-desc">Conversions (high to low)</option>
+            <option value="cpa-asc">CPA (low to high)</option>
+            <option value="cpa-desc">CPA (high to low)</option>
+            <option value="clicks-desc">Clicks (high to low)</option>
+            <option value="name-asc">Name (A-Z)</option>
+          </select>
+        </div>
+      </div>
+      <span class="lp-filter-count" id="campFilterCount"></span>
+    </div>
+    <div class="campaign-list" id="campaignList"></div>
+    <div class="add-placeholder add-placeholder-lg" id="addCampaignPlaceholder">
+      <p>+ Add another campaign</p>
+    </div>
+  </div>
+
+  <!-- Ad Groups View -->
+  <div class="view" id="view-ad-groups">
+    <div class="section-header">
+      <h2 class="section-title">Ad Groups</h2>
+      <button class="btn" id="addAGBtn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+        Add Ad Group
+      </button>
+    </div>
+    <div class="lp-filters" id="agFilters">
+      <input type="text" class="lp-filter-search" id="agSearch" placeholder="Search ad groups...">
+      <div class="lp-filter-bar">
+        <div class="lp-filter-group">
+          <button class="lp-filter-pill ag-filter-pill active" data-ag-filter="all">All</button>
+          <button class="lp-filter-pill ag-filter-pill" data-ag-filter="linked">Linked</button>
+          <button class="lp-filter-pill ag-filter-pill" data-ag-filter="unlinked">Unlinked</button>
+        </div>
+        <span class="lp-stat-sep">|</span>
+        <div class="lp-filter-group">
+          <span class="lp-filter-group-label">Spend</span>
+          <button class="lp-filter-pill ag-filter-pill" data-ag-filter="high-spend">High</button>
+          <button class="lp-filter-pill ag-filter-pill" data-ag-filter="medium-spend">Medium</button>
+          <button class="lp-filter-pill ag-filter-pill" data-ag-filter="low-spend">Low</button>
+        </div>
+        <span class="lp-stat-sep">|</span>
+        <div class="lp-filter-group">
+          <span class="lp-filter-group-label">Performance</span>
+          <button class="lp-filter-pill ag-filter-pill" data-ag-filter="high-conv">High Conv Rate</button>
+          <button class="lp-filter-pill ag-filter-pill" data-ag-filter="low-conv">Low Conv Rate</button>
+          <button class="lp-filter-pill ag-filter-pill" data-ag-filter="no-conv">No Conversions</button>
+        </div>
+        <span class="lp-stat-sep">|</span>
+        <div class="lp-filter-group">
+          <span class="lp-filter-group-label">Campaign</span>
+          <select class="lp-sort-select" id="agCampaignFilter">
+            <option value="all">All Campaigns</option>
+          </select>
+        </div>
+        <span class="lp-stat-sep">|</span>
+        <div class="lp-filter-group">
+          <span class="lp-filter-group-label">Sort</span>
+          <select class="lp-sort-select" id="agSort">
+            <option value="spend-desc">Spend (high to low)</option>
+            <option value="spend-asc">Spend (low to high)</option>
+            <option value="conv-rate-desc">LP Conv. Rate (high)</option>
+            <option value="conv-rate-asc">LP Conv. Rate (low)</option>
+            <option value="campaign-asc">Campaign (A-Z)</option>
+            <option value="name-asc">Name (A-Z)</option>
+          </select>
+        </div>
+      </div>
+      <span class="lp-filter-count" id="agFilterCount"></span>
+    </div>
+    <div class="ag-standalone-list" id="agStandaloneList"></div>
+  </div>
+
+</main>
+
+</div><!-- end app-layout -->
+
+<!-- Modal container (dynamically filled) -->
+<div id="modalContainer"></div>
+
+<!-- Toast container -->
+<div class="toast-container" id="toastContainer"></div>
+
+<script src="js/data.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
