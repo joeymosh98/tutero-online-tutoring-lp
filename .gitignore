@@ -13,3 +13,12 @@
 
 # Claude Code
 .claude/
+
+# Hub / internal tools (not for deployment)
+css/
+js/
+assets/
+scripts/
+data & images/
+inspiration/
+index-monolith-backup.html
