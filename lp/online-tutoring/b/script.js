@@ -42,13 +42,6 @@ function submitLeadData(data) {
   setInterval(()=>goTo((current+1)%imgs.length),5500);
 })();
 
-
-// ── FAQ ──
-const faqItems=document.querySelectorAll('.faq-item'), curiosityFill=document.getElementById('curiosityFill'), curiosityEmoji=document.getElementById('curiosityEmoji'), curiosityLabel=document.getElementById('curiosityLabel');
-const openedSet=new Set(), totalFaqs=faqItems.length;
-const emojiStages=['\u{1F914}','\u{1F9D0}','\u{1F62E}','\u{1F604}','\u{1F929}','\u{1F9E0}','\u{1F393}'];
-faqItems.forEach(item=>{item.addEventListener('click',()=>{const w=item.classList.contains('open');faqItems.forEach(o=>o.classList.remove('open'));if(!w){item.classList.add('open');openedSet.add(item.dataset.index)}const p=openedSet.size/totalFaqs;curiosityFill.style.width=(p*100)+'%';const ei=Math.min(Math.floor(p*emojiStages.length),emojiStages.length-1);curiosityEmoji.textContent=emojiStages[ei];curiosityEmoji.style.transform='scale(1.3)';setTimeout(()=>curiosityEmoji.style.transform='scale(1)',300);if(openedSet.size>0)curiosityLabel.classList.add('active');})});
-
 // ── Hero Modal Form ──
 const modalOverlay=document.getElementById('modalOverlay');
 const heroCtaBtn=document.getElementById('heroCtaBtn');
@@ -169,66 +162,6 @@ mSub.addEventListener('click',()=>{
   document.getElementById('modalSuccess').classList.add('active');
   launchConfetti();
 });
-
-// ── Bottom CTA ──
-let currentStep=0, selectedSubject='';
-const steps=[document.getElementById('ctaStep0'),document.getElementById('ctaStep1'),document.getElementById('ctaStep2')];
-const dots=document.querySelectorAll('.cta-step-dot');
-const success=document.getElementById('ctaSuccess');
-function goToStep(n){steps.forEach(s=>s.classList.remove('active'));success.classList.remove('active');steps[n].classList.add('active');currentStep=n;dots.forEach((d,i)=>{d.classList.remove('active','done');if(i<n)d.classList.add('done');if(i===n)d.classList.add('active')})}
-document.querySelectorAll('.subject-pill').forEach(pill=>{pill.addEventListener('click',()=>{document.querySelectorAll('.subject-pill').forEach(p=>p.classList.remove('selected'));pill.classList.add('selected');selectedSubject=pill.dataset.subject;setTimeout(()=>goToStep(1),350)})});
-const studentName=document.getElementById('studentName'),yearLevel=document.getElementById('yearLevel'),toStep3=document.getElementById('toStep3');
-[studentName,yearLevel].forEach(i=>i.addEventListener('input',()=>{toStep3.disabled=!(studentName.value.trim()&&yearLevel.value.trim())}));
-toStep3.addEventListener('click',()=>goToStep(2));
-const parentName=document.getElementById('parentName'),parentEmail=document.getElementById('parentEmail'),parentPhone=document.getElementById('parentPhone'),submitLead=document.getElementById('submitLead');
-var btmPhone={digits:''};
-parentPhone.addEventListener('input',()=>{formatPhone(parentPhone,btmPhone)});
-[parentName,parentEmail,parentPhone].forEach(i=>i.addEventListener('input',()=>{submitLead.disabled=!(parentName.value.trim()&&isValidEmail(parentEmail.value.trim())&&btmPhone.digits.length>=10)}));
-submitLead.addEventListener('click',()=>{
-  submitLeadData({
-    source: 'bottom_cta',
-    student_name: studentName.value.trim(),
-    year_level: yearLevel.value.trim(),
-    subject: selectedSubject,
-    goal: '',
-    urgency: '',
-    parent_name: parentName.value.trim(),
-    email: parentEmail.value.trim(),
-    phone: parentPhone.value.trim()
-  });
-  steps.forEach(s=>s.classList.remove('active'));document.querySelector('.cta-steps').style.display='none';document.querySelector('.bottom-cta-heading').style.display='none';document.querySelector('.bottom-cta-sub').style.display='none';document.querySelector('.bottom-cta-emoji').style.display='none';document.getElementById('successName').textContent=studentName.value.trim();document.getElementById('successSubject').textContent=selectedSubject;success.classList.add('active');launchConfetti()
-});
-
-// ── Scroll Reveal ──
-const revealEls=document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale');
-const revealObserver=new IntersectionObserver((entries)=>{
-  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');revealObserver.unobserve(e.target)}});
-},{threshold:0.15});
-revealEls.forEach(el=>revealObserver.observe(el));
-
-// ── Grade Selector Widgets ──
-function initGradeWidget(selectorId, nowId, targetId){
-  const container=document.getElementById(selectorId);
-  if(!container) return;
-  const btns=container.querySelectorAll('.grade-btn');
-  const nowEl=document.getElementById(nowId);
-  const targetEl=document.getElementById(targetId);
-  btns.forEach(btn=>{
-    btn.addEventListener('click',()=>{
-      btns.forEach(b=>b.classList.remove('active'));
-      btn.classList.add('active');
-      nowEl.textContent=btn.dataset.grade;
-      targetEl.style.transform='scale(0.8)';
-      targetEl.style.opacity='0';
-      setTimeout(()=>{
-        targetEl.textContent=btn.dataset.target;
-        targetEl.style.transform='scale(1)';
-        targetEl.style.opacity='1';
-      },200);
-    });
-  });
-}
-initGradeWidget('gradeSelector','gradeNow','gradeTarget');
 
 // ── Confetti ──
 function launchConfetti(){const c=document.getElementById('confettiCanvas'),ctx=c.getContext('2d');c.width=window.innerWidth;c.height=window.innerHeight;const cols=['#FF8412','#F8B200','#4CB092','#00A3FF','#1D49E3','#FF6B6B'],ps=[];for(let i=0;i<120;i++)ps.push({x:c.width/2+(Math.random()-.5)*200,y:c.height/2,vx:(Math.random()-.5)*16,vy:Math.random()*-18-4,w:Math.random()*8+4,h:Math.random()*6+3,color:cols[Math.floor(Math.random()*cols.length)],rot:Math.random()*360,rs:(Math.random()-.5)*12,g:.3+Math.random()*.2,o:1});let f=0;function a(){ctx.clearRect(0,0,c.width,c.height);let alive=false;ps.forEach(p=>{p.x+=p.vx;p.vy+=p.g;p.y+=p.vy;p.rot+=p.rs;p.vx*=.99;if(f>40)p.o-=.015;if(p.o<=0)return;alive=true;ctx.save();ctx.translate(p.x,p.y);ctx.rotate(p.rot*Math.PI/180);ctx.globalAlpha=Math.max(0,p.o);ctx.fillStyle=p.color;ctx.fillRect(-p.w/2,-p.h/2,p.w,p.h);ctx.restore()});f++;if(alive)requestAnimationFrame(a);else ctx.clearRect(0,0,c.width,c.height)}a()}
