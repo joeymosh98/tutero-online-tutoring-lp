@@ -30,6 +30,7 @@ function submitLeadData(data) {
 (function(){
   const imgs=document.querySelectorAll('.image-wrapper img');
   const dots=document.querySelectorAll('.hero-dot');
+  const badgeLabel=document.querySelector('.live-badge');
   let current=0;
   function goTo(n){
     imgs[current].classList.remove('active');
@@ -37,6 +38,7 @@ function submitLeadData(data) {
     current=n;
     imgs[current].classList.add('active');
     dots[current].classList.add('active');
+    if(badgeLabel&&imgs[current].dataset.badge){badgeLabel.lastChild.textContent=' '+imgs[current].dataset.badge;}
   }
   dots.forEach(d=>d.addEventListener('click',()=>goTo(parseInt(d.dataset.slide))));
   setInterval(()=>goTo((current+1)%imgs.length),5500);
