@@ -232,5 +232,72 @@ function initGradeWidget(selectorId, nowId, targetId){
 }
 initGradeWidget('gradeSelector','gradeNow','gradeTarget');
 
+// ── Find Your Fit Widget ──
+(function(){
+  var ffYear='', ffSubject='';
+  var testimonials=[
+    {subject:'Maths',years:[7,8,9],name:'Michelle T.',detail:'Mum of Sarah, Year 8',quote:'Sarah went from dreading maths homework to actually asking to do extra practice. Her tutor made all the difference.',result:'Maths: C \u2192 A'},
+    {subject:'Maths',years:[1,2,3,4],name:'Rachel S.',detail:'Mum, Year 3',quote:'My daughter now finishes her homework independently and actually smiles doing it! Her Tutero tutor turned maths into a game.',result:'Confidence restored'},
+    {subject:'Maths',years:[10,11,12],name:'Deb S.',detail:'Mum, NSW',quote:'My son\'s grades have gone up 30% since starting with Tutero 6 months ago. Having 1:1 tutoring helped him clarify core concepts.',result:'Grades: +30% in 6 months'},
+    {subject:'English',years:[3,4,5,6,7],name:'Lisa K.',detail:'Mum of Emma, Year 5',quote:'Emma was falling behind in English and losing confidence fast. After just 6 weeks with Tutero, her teacher commented on the massive improvement.',result:'Reading: +2 years'},
+    {subject:'Science',years:[7,8,9,10],name:'Silv G.',detail:'Parent, Australia',quote:'An amazing program with great tutors. They work together with you to suit the program to your child\'s needs. Highly recommend!',result:'Much better results'},
+    {subject:'general',years:[11,12],name:'Andrew P.',detail:'Dad of Liam, Year 12',quote:'Liam\'s ATAR goal seemed out of reach until he started with Tutero. His tutor helped him build a study plan and nail his weak areas.',result:'ATAR: +5 pts above goal'},
+    {subject:'general',years:[0,1,2,3,4,5,6,7,8,9,10],name:'Carrie L.',detail:'Mum, Queensland',quote:'It\'s been a great experience dealing with Tutero \u2014 from the quoting experience to being matched with our lovely tutor. They\'ve tailored learning to her needs.',result:'Anxiety \u2192 Confidence'}
+  ];
+  var stats={
+    'Maths':'87% of Maths students improve by 2+ grades within 6 months',
+    'English':'91% of English students gain measurable reading & writing improvement',
+    'Science':'85% of Science students report higher confidence and better test scores',
+    'Chemistry':'88% of Chemistry students improve by at least one grade band',
+    'Physics':'86% of Physics students see measurable improvement within a term',
+    'Biology':'84% of Biology students improve their understanding and grades',
+    'Humanities':'89% of Humanities students improve their essay and analysis skills',
+    'Languages':'82% of Languages students gain conversational confidence within 8 weeks'
+  };
+  function yearNum(y){if(y==='Prep')return 0;var m=y.match(/\d+/);return m?parseInt(m[0]):0;}
+  function findTestimonial(subj,yr){
+    var num=yearNum(yr);
+    var best=null,bestScore=-1;
+    testimonials.forEach(function(t){
+      var score=0;
+      if(t.subject===subj)score+=10;
+      else if(t.subject==='general')score+=2;
+      if(t.years.indexOf(num)!==-1)score+=5;
+      if(score>bestScore){bestScore=score;best=t;}
+    });
+    return best;
+  }
+  function update(){
+    if(!ffYear||!ffSubject)return;
+    var t=findTestimonial(ffSubject,ffYear);
+    var stat=stats[ffSubject]||stats['Maths'];
+    document.getElementById('ffStat').textContent='\u{1F4CA} '+stat;
+    document.getElementById('ffQuote').textContent='"'+t.quote+'"';
+    document.getElementById('ffAuthor').textContent=t.name+' \u00B7 '+t.detail+' \u00B7 '+t.result;
+    document.getElementById('ffCta').textContent='Find a '+ffYear+' '+ffSubject+' tutor \u2192';
+    document.getElementById('ffResult').classList.add('visible');
+  }
+  document.querySelectorAll('#ffYearPills .ff-pill').forEach(function(p){
+    p.addEventListener('click',function(){
+      document.querySelectorAll('#ffYearPills .ff-pill').forEach(function(x){x.classList.remove('active')});
+      p.classList.add('active');
+      ffYear=p.dataset.val;
+      update();
+    });
+  });
+  document.querySelectorAll('#ffSubjectPills .ff-pill').forEach(function(p){
+    p.addEventListener('click',function(){
+      document.querySelectorAll('#ffSubjectPills .ff-pill').forEach(function(x){x.classList.remove('active')});
+      p.classList.add('active');
+      ffSubject=p.dataset.val;
+      update();
+    });
+  });
+  document.getElementById('ffCta').addEventListener('click',function(){
+    if(ffYear)document.getElementById('mYearLevel').value=ffYear;
+    openModalWithSubject(ffSubject||'');
+  });
+})();
+
 // ── Confetti ──
 function launchConfetti(){const c=document.getElementById('confettiCanvas'),ctx=c.getContext('2d');c.width=window.innerWidth;c.height=window.innerHeight;const cols=['#FF8412','#F8B200','#4CB092','#00A3FF','#1D49E3','#FF6B6B'],ps=[];for(let i=0;i<120;i++)ps.push({x:c.width/2+(Math.random()-.5)*200,y:c.height/2,vx:(Math.random()-.5)*16,vy:Math.random()*-18-4,w:Math.random()*8+4,h:Math.random()*6+3,color:cols[Math.floor(Math.random()*cols.length)],rot:Math.random()*360,rs:(Math.random()-.5)*12,g:.3+Math.random()*.2,o:1});let f=0;function a(){ctx.clearRect(0,0,c.width,c.height);let alive=false;ps.forEach(p=>{p.x+=p.vx;p.vy+=p.g;p.y+=p.vy;p.rot+=p.rs;p.vx*=.99;if(f>40)p.o-=.015;if(p.o<=0)return;alive=true;ctx.save();ctx.translate(p.x,p.y);ctx.rotate(p.rot*Math.PI/180);ctx.globalAlpha=Math.max(0,p.o);ctx.fillStyle=p.color;ctx.fillRect(-p.w/2,-p.h/2,p.w,p.h);ctx.restore()});f++;if(alive)requestAnimationFrame(a);else ctx.clearRect(0,0,c.width,c.height)}a()}

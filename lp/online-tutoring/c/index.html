@@ -50,7 +50,7 @@
   <section class="hero">
     <div class="hero-image">
       <div class="image-wrapper">
-        <img src="images/kid-at-desk.jpg" alt="Student at desk studying" class="active" data-badge="Live lesson">
+        <img src="images/hero-session.jpg" alt="Live online tutoring session showing whiteboard and tutor on screen" class="active" data-badge="Live lesson">
         <img src="images/teacher-photo.jpg" alt="Tutero tutor ready to teach" data-badge="Qualified teachers &amp; tutors">
         <img src="images/student-tutoring.jpg" alt="Student learning online with a Tutero tutor" data-badge="Homework focus">
         <div class="hero-dots">
@@ -127,6 +127,32 @@
   </div>
 
 </div><!-- /top-band -->
+
+<!-- ════ How It Works ════ -->
+<section class="hiw-section">
+  <div class="hiw-inner reveal">
+    <h2 class="hiw-heading">How it works</h2>
+    <div class="hiw-steps">
+      <div class="hiw-step">
+        <div class="hiw-num">1</div>
+        <div class="hiw-title">Tell us about your child</div>
+        <div class="hiw-desc">Takes just 2 minutes. We'll ask about their year level, subject, and goals.</div>
+      </div>
+      <div class="hiw-connector"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 5l6 7-6 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div class="hiw-step">
+        <div class="hiw-num">2</div>
+        <div class="hiw-title">We hand-pick their tutor</div>
+        <div class="hiw-desc">Matched on subject expertise, teaching style, and personality fit.</div>
+      </div>
+      <div class="hiw-connector"><svg viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 5l6 7-6 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div class="hiw-step">
+        <div class="hiw-num">3</div>
+        <div class="hiw-title">First lesson — love it or it's free</div>
+        <div class="hiw-desc">Zero risk. If your child doesn't love it, you don't pay.</div>
+      </div>
+    </div>
+  </div>
+</section>
 
 <!-- ════ Hero Form Modal ════ -->
 <div class="modal-overlay" id="modalOverlay">
@@ -560,41 +586,52 @@
   </div>
 </section>
 
-<!-- ════ Coverage Section ════ -->
-<section class="coverage-section">
-  <h3 class="coverage-heading reveal">Tutoring for every subject and year level.</h3>
-  <p class="coverage-sub reveal stagger-1">Aligned to the Australian curriculum, Prep through Year 12.</p>
-  <div class="coverage-grid reveal stagger-2">
-    <div class="coverage-card">
-      <div class="coverage-card-label">Subjects</div>
-      <div class="coverage-card-items">
-        <button class="coverage-btn" onclick="openModalWithSubject('Maths')"><span class="coverage-btn-icon">&#120536;</span> Maths</button>
-        <button class="coverage-btn" onclick="openModalWithSubject('English')"><span class="coverage-btn-icon">&#9997;&#65039;</span> English</button>
-        <button class="coverage-btn" onclick="openModalWithSubject('Science')"><span class="coverage-btn-icon">&#128300;</span> Science</button>
-        <button class="coverage-btn" onclick="openModalWithSubject('Chemistry')"><span class="coverage-btn-icon">&#9878;&#65039;</span> Chemistry</button>
-        <button class="coverage-btn" onclick="openModalWithSubject('Physics')"><span class="coverage-btn-icon">&#9889;</span> Physics</button>
-        <button class="coverage-btn" onclick="openModalWithSubject('Biology')"><span class="coverage-btn-icon">&#129440;</span> Biology</button>
-        <button class="coverage-btn" onclick="openModalWithSubject('Humanities')"><span class="coverage-btn-icon">&#127758;</span> Humanities</button>
-        <button class="coverage-btn" onclick="openModalWithSubject('Languages')"><span class="coverage-btn-icon">&#128172;</span> Languages</button>
+<!-- ════ Find Your Fit ════ -->
+<section class="find-fit-section">
+  <h3 class="find-fit-heading reveal">Find your child's perfect fit</h3>
+  <p class="find-fit-sub reveal stagger-1">Select their year level and subject to see real results from families like yours.</p>
+  <div class="find-fit-selectors reveal stagger-2">
+    <div class="find-fit-group">
+      <div class="find-fit-label">Year level</div>
+      <div class="find-fit-pills" id="ffYearPills">
+        <button class="ff-pill" data-val="Prep">Prep</button>
+        <button class="ff-pill" data-val="Year 1">Y1</button>
+        <button class="ff-pill" data-val="Year 2">Y2</button>
+        <button class="ff-pill" data-val="Year 3">Y3</button>
+        <button class="ff-pill" data-val="Year 4">Y4</button>
+        <button class="ff-pill" data-val="Year 5">Y5</button>
+        <button class="ff-pill" data-val="Year 6">Y6</button>
+        <button class="ff-pill" data-val="Year 7">Y7</button>
+        <button class="ff-pill" data-val="Year 8">Y8</button>
+        <button class="ff-pill" data-val="Year 9">Y9</button>
+        <button class="ff-pill" data-val="Year 10">Y10</button>
+        <button class="ff-pill" data-val="Year 11">Y11</button>
+        <button class="ff-pill" data-val="Year 12">Y12</button>
       </div>
     </div>
-    <div class="coverage-card">
-      <div class="coverage-card-label">Year Levels</div>
-      <div class="coverage-card-items">
-        <button class="coverage-level-btn" onclick="openModalWithYear('Prep')">Prep</button>
-        <button class="coverage-level-btn" onclick="openModalWithYear('Year 1')">Year 1</button>
-        <button class="coverage-level-btn" onclick="openModalWithYear('Year 2')">Year 2</button>
-        <button class="coverage-level-btn" onclick="openModalWithYear('Year 3')">Year 3</button>
-        <button class="coverage-level-btn" onclick="openModalWithYear('Year 4')">Year 4</button>
-        <button class="coverage-level-btn" onclick="openModalWithYear('Year 5')">Year 5</button>
-        <button class="coverage-level-btn" onclick="openModalWithYear('Year 6')">Year 6</button>
-        <button class="coverage-level-btn" onclick="openModalWithYear('Year 7')">Year 7</button>
-        <button class="coverage-level-btn" onclick="openModalWithYear('Year 8')">Year 8</button>
-        <button class="coverage-level-btn" onclick="openModalWithYear('Year 9')">Year 9</button>
-        <button class="coverage-level-btn" onclick="openModalWithYear('Year 10')">Year 10</button>
-        <button class="coverage-level-btn" onclick="openModalWithYear('Year 11')">Year 11</button>
-        <button class="coverage-level-btn" onclick="openModalWithYear('Year 12')">Year 12</button>
+    <div class="find-fit-group">
+      <div class="find-fit-label">Subject</div>
+      <div class="find-fit-pills" id="ffSubjectPills">
+        <button class="ff-pill" data-val="Maths">Maths</button>
+        <button class="ff-pill" data-val="English">English</button>
+        <button class="ff-pill" data-val="Science">Science</button>
+        <button class="ff-pill" data-val="Chemistry">Chemistry</button>
+        <button class="ff-pill" data-val="Physics">Physics</button>
+        <button class="ff-pill" data-val="Biology">Biology</button>
+        <button class="ff-pill" data-val="Humanities">Humanities</button>
+        <button class="ff-pill" data-val="Languages">Languages</button>
       </div>
+    </div>
+  </div>
+  <div class="find-fit-result" id="ffResult">
+    <div class="ff-result-inner">
+      <div class="ff-stat" id="ffStat"></div>
+      <div class="ff-testimonial">
+        <div class="ff-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <p class="ff-quote" id="ffQuote"></p>
+        <div class="ff-author" id="ffAuthor"></div>
+      </div>
+      <button class="ff-cta" id="ffCta">Find a tutor &rarr;</button>
     </div>
   </div>
 </section>
