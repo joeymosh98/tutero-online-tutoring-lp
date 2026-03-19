@@ -26,23 +26,7 @@ function submitLeadData(data) {
   console.log('[Lead]', data);
 }
 
-// ── Hero Image Carousel ──
-(function(){
-  const imgs=document.querySelectorAll('.image-wrapper img');
-  const dots=document.querySelectorAll('.hero-dot');
-  const badgeLabel=document.querySelector('.live-badge');
-  let current=0;
-  function goTo(n){
-    imgs[current].classList.remove('active');
-    dots[current].classList.remove('active');
-    current=n;
-    imgs[current].classList.add('active');
-    dots[current].classList.add('active');
-    if(badgeLabel&&imgs[current].dataset.badge){badgeLabel.lastChild.textContent=' '+imgs[current].dataset.badge;}
-  }
-  dots.forEach(d=>d.addEventListener('click',()=>goTo(parseInt(d.dataset.slide))));
-  setInterval(()=>goTo((current+1)%imgs.length),5500);
-})();
+// ── Hero Image (single image, no carousel for variant C) ──
 
 
 // ── FAQ ──
@@ -271,7 +255,8 @@ initGradeWidget('gradeSelector','gradeNow','gradeTarget');
     if(!ffYear||!ffSubject)return;
     var t=findTestimonial(ffSubject,ffYear);
     var stat=stats[ffSubject]||stats['Maths'];
-    document.getElementById('ffStat').textContent='\u{1F4CA} '+stat;
+    var ffStatEl=document.getElementById('ffStat');
+    if(ffStatEl) ffStatEl.textContent='\u{1F4CA} '+stat;
     document.getElementById('ffQuote').textContent='"'+t.quote+'"';
     document.getElementById('ffAuthor').textContent=t.name+' \u00B7 '+t.detail+' \u00B7 '+t.result;
     document.getElementById('ffCta').textContent='Find a '+ffYear+' '+ffSubject+' tutor \u2192';

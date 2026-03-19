@@ -305,6 +305,35 @@
     }
     .hero-guarantee svg { width: 15px; height: 15px; flex-shrink: 0; }
 
+    /* ── Hero Testimonial ── */
+    .hero-testimonial {
+      margin-top: 20px;
+      padding: 16px 20px;
+      background: rgba(255,132,18,0.06);
+      border-left: 3px solid #FF8412;
+      border-radius: 0 10px 10px 0;
+    }
+    .hero-testimonial-stars {
+      color: #F8B200;
+      font-size: 14px;
+      letter-spacing: 1px;
+      margin-bottom: 6px;
+    }
+    .hero-testimonial-quote {
+      font-size: 14px;
+      font-weight: 500;
+      color: #2a2a2a;
+      line-height: 1.5;
+      font-style: italic;
+      margin-bottom: 6px;
+    }
+    .hero-testimonial-author {
+      font-size: 12px;
+      font-weight: 600;
+      color: #777;
+      letter-spacing: -0.01em;
+    }
+
     /* ══════════════════════════════════ Hero Form Modal */
     .modal-overlay {
       display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.6);
@@ -2708,6 +2737,9 @@
       .select-wrapper select{padding:12px 14px;font-size:14px}
       .cta-button{padding:14px 20px;font-size:15px}
       .hero-guarantee{font-size:12px;margin-top:10px}
+      .hero-testimonial{margin-top:16px;padding:14px 16px}
+      .hero-testimonial-quote{font-size:13px}
+      .hero-testimonial-author{font-size:11px}
       .results-heading{font-size:20px}
       .results-sub{font-size:13px}
       .grade-widget{padding:24px 16px 20px}
