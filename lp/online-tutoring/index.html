@@ -6,7 +6,7 @@
   <script>
     (function() {
       var key = 'tutero_ab_variant';
-      var variants = ['a', 'b'];
+      var variants = ['a', 'b', 'c'];
       var variant = localStorage.getItem(key);
       if (!variant || variants.indexOf(variant) === -1) {
         variant = variants[Math.floor(Math.random() * variants.length)];

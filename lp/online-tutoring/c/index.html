@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tutero — Private Tutoring Prep to Year 12</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div class="page-wrapper">
+
+<!-- ════ Dark top band ════ -->
+<div class="top-band">
+
+  <!-- Promo Banner -->
+  <div class="promo-banner">
+    <p><strong>Term 2 spots filling fast</strong> — Limited availability for new students.<br class="mobile-break"> <a href="#" id="promoCta">Get started today</a></p>
+  </div>
+
+  <!-- Social Proof Bar -->
+  <div class="social-proof-bar">
+    <div class="social-proof-inner">
+      <div class="proof-item">
+        <div class="proof-icon proof-icon--students"><svg viewBox="0 0 24 24" fill="none"><path d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2" stroke="#FF8412" stroke-width="2" stroke-linecap="round"/><circle cx="9" cy="7" r="4" stroke="#FF8412" stroke-width="2"/><path d="M22 21v-2a4 4 0 00-3-3.87" stroke="#FF8412" stroke-width="2" stroke-linecap="round"/><path d="M16 3.13a4 4 0 010 7.75" stroke="#FF8412" stroke-width="2" stroke-linecap="round"/></svg></div>
+        <div class="proof-text"><span class="proof-number">3,000+</span><span class="proof-label">Active students</span></div>
+      </div>
+      <div class="proof-divider"></div>
+      <div class="proof-item">
+        <div class="proof-icon proof-icon--tutors"><svg viewBox="0 0 24 24" fill="none"><path d="M2 3h6a4 4 0 014 4v14a3 3 0 00-3-3H2V3z" stroke="#4CB092" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M22 3h-6a4 4 0 00-4 4v14a3 3 0 013-3h7V3z" stroke="#4CB092" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div class="proof-text"><span class="proof-number">600</span><span class="proof-label">Qualified tutors</span></div>
+      </div>
+      <div class="proof-divider"></div>
+      <div class="proof-item">
+        <div class="proof-icon proof-icon--reviews"><svg viewBox="0 0 24 24" fill="none"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26" fill="#F8B200" stroke="#F8B200" stroke-width="1.5" stroke-linejoin="round"/></svg></div>
+        <div class="proof-text"><span class="proof-number">300+</span><span class="proof-label">5-star Google reviews</span></div>
+      </div>
+      <div class="proof-divider"></div>
+      <div class="proof-item">
+        <div class="proof-icon proof-icon--curriculum"><svg viewBox="0 0 24 24" fill="none"><path d="M9 11l3 3L22 4" stroke="#00A3FF" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11" stroke="#00A3FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div class="proof-text"><span class="proof-number">Australian</span><span class="proof-label">Curriculum aligned</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-image">
+      <div class="image-wrapper">
+        <img src="images/kid-at-desk.jpg" alt="Student at desk studying" class="active" data-badge="Live lesson">
+        <img src="images/teacher-photo.jpg" alt="Tutero tutor ready to teach" data-badge="Qualified teachers &amp; tutors">
+        <img src="images/student-tutoring.jpg" alt="Student learning online with a Tutero tutor" data-badge="Homework focus">
+        <div class="hero-dots">
+          <div class="hero-dot active" data-slide="0"></div>
+          <div class="hero-dot" data-slide="1"></div>
+          <div class="hero-dot" data-slide="2"></div>
+        </div>
+        <div class="hero-badge live-badge"><span class="live-dot"></span> Live lesson</div>
+        <div class="hero-badge google-badge">
+          <div class="google-badge-icon"><svg viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 01-2.2 3.32v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.1z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18A10.96 10.96 0 001 12c0 1.77.42 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg></div>
+          <span class="google-badge-score">4.9</span>
+          <div class="google-badge-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+          <span class="google-badge-count">300+ reviews</span>
+        </div>
+      </div>
+    </div>
+    <div class="hero-content">
+      <div class="logo"><img src="images/tutero-logo.svg" alt="Tutero"></div>
+      <h1>Online Tutoring for<br>Students in Prep &#8211; Year 12</h1>
+      <p class="subtitle">Learn with trusted tutors who design every lesson around your goals, level, and schedule.</p>
+      <label class="form-label">What do you want to learn?</label>
+      <div class="select-wrapper">
+        <select id="heroSubject">
+          <option value="maths">Maths</option><option value="english">English</option>
+          <option value="science">Science</option><option value="chemistry">Chemistry</option>
+          <option value="physics">Physics</option><option value="biology">Biology</option>
+          <option value="history">History</option><option value="geography">Geography</option>
+        </select>
+      </div>
+      <button class="cta-button" id="heroCtaBtn">Find your tutor <span class="arrow">&rarr;</span></button>
+      <div class="hero-guarantee">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="#4CB092" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 12l2 2 4-4" stroke="#4CB092" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Love your first lesson or it's free
+      </div>
+    </div>
+  </section>
+
+  <!-- Scrolling Trust Bar (bottom of section 1) -->
+  <div class="trust-bar">
+    <div class="trust-bar-track">
+      <div class="trust-bar-item"><svg viewBox="0 0 24 24" fill="none"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z" stroke="#4CB092" stroke-width="2"/><path d="M9 12l2 2 4-4" stroke="#4CB092" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Australian curriculum aligned</div>
+      <div class="trust-bar-dot"></div>
+      <div class="trust-bar-item"><svg viewBox="0 0 24 24" fill="none"><path d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2" stroke="#FF8412" stroke-width="2" stroke-linecap="round"/><circle cx="9" cy="7" r="4" stroke="#FF8412" stroke-width="2"/></svg> Qualified teachers &amp; tutors</div>
+      <div class="trust-bar-dot"></div>
+      <div class="trust-bar-item"><svg viewBox="0 0 24 24" fill="none"><path d="M20 12V8H6a2 2 0 01-2-2c0-1.1.9-2 2-2h12v4" stroke="#1D49E3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M4 6v12c0 1.1.9 2 2 2h14v-4" stroke="#1D49E3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M18 12a2 2 0 00-2 2c0 1.1.9 2 2 2h4v-4h-4z" stroke="#1D49E3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> No contracts, cancel anytime</div>
+      <div class="trust-bar-dot"></div>
+      <div class="trust-bar-item"><svg viewBox="0 0 24 24" fill="none"><path d="M12 8v8M8 12h8" stroke="#F8B200" stroke-width="2" stroke-linecap="round"/><circle cx="12" cy="12" r="10" stroke="#F8B200" stroke-width="2"/></svg> 200,000+ lessons delivered</div>
+      <div class="trust-bar-dot"></div>
+      <div class="trust-bar-item"><svg viewBox="0 0 24 24" fill="none"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" stroke="#00A3FF" stroke-width="2" stroke-linecap="round"/><circle cx="12" cy="7" r="4" stroke="#00A3FF" stroke-width="2"/></svg> Personal account manager</div>
+      <div class="trust-bar-dot"></div>
+      <div class="trust-bar-item"><svg viewBox="0 0 24 24" fill="none"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26" fill="#F8B200" stroke="#F8B200" stroke-width="1.5"/></svg> 300+ five-star Google reviews</div>
+      <div class="trust-bar-dot"></div>
+      <div class="trust-bar-item"><svg viewBox="0 0 24 24" fill="none"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="#4CB092" stroke-width="2"/><path d="M9 12l2 2 4-4" stroke="#4CB092" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Love your first lesson or it's free</div>
+      <div class="trust-bar-dot"></div>
+      <div class="trust-bar-item"><svg viewBox="0 0 24 24" fill="none"><path d="M22 11.08V12a10 10 0 11-5.93-9.14" stroke="#FF8412" stroke-width="2" stroke-linecap="round"/><path d="M22 4L12 14.01l-3-3" stroke="#FF8412" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> No upfront payments</div>
+      <!-- Duplicate for seamless loop -->
+      <div class="trust-bar-dot"></div>
+      <div class="trust-bar-item"><svg viewBox="0 0 24 24" fill="none"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z" stroke="#4CB092" stroke-width="2"/><path d="M9 12l2 2 4-4" stroke="#4CB092" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Australian curriculum aligned</div>
+      <div class="trust-bar-dot"></div>
+      <div class="trust-bar-item"><svg viewBox="0 0 24 24" fill="none"><path d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2" stroke="#FF8412" stroke-width="2" stroke-linecap="round"/><circle cx="9" cy="7" r="4" stroke="#FF8412" stroke-width="2"/></svg> Qualified teachers &amp; tutors</div>
+      <div class="trust-bar-dot"></div>
+      <div class="trust-bar-item"><svg viewBox="0 0 24 24" fill="none"><path d="M20 12V8H6a2 2 0 01-2-2c0-1.1.9-2 2-2h12v4" stroke="#1D49E3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M4 6v12c0 1.1.9 2 2 2h14v-4" stroke="#1D49E3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M18 12a2 2 0 00-2 2c0 1.1.9 2 2 2h4v-4h-4z" stroke="#1D49E3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> No contracts, cancel anytime</div>
+      <div class="trust-bar-dot"></div>
+      <div class="trust-bar-item"><svg viewBox="0 0 24 24" fill="none"><path d="M12 8v8M8 12h8" stroke="#F8B200" stroke-width="2" stroke-linecap="round"/><circle cx="12" cy="12" r="10" stroke="#F8B200" stroke-width="2"/></svg> 200,000+ lessons delivered</div>
+      <div class="trust-bar-dot"></div>
+      <div class="trust-bar-item"><svg viewBox="0 0 24 24" fill="none"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" stroke="#00A3FF" stroke-width="2" stroke-linecap="round"/><circle cx="12" cy="7" r="4" stroke="#00A3FF" stroke-width="2"/></svg> Personal account manager</div>
+      <div class="trust-bar-dot"></div>
+      <div class="trust-bar-item"><svg viewBox="0 0 24 24" fill="none"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26" fill="#F8B200" stroke="#F8B200" stroke-width="1.5"/></svg> 300+ five-star Google reviews</div>
+      <div class="trust-bar-dot"></div>
+      <div class="trust-bar-item"><svg viewBox="0 0 24 24" fill="none"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="#4CB092" stroke-width="2"/><path d="M9 12l2 2 4-4" stroke="#4CB092" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Love your first lesson or it's free</div>
+      <div class="trust-bar-dot"></div>
+      <div class="trust-bar-item"><svg viewBox="0 0 24 24" fill="none"><path d="M22 11.08V12a10 10 0 11-5.93-9.14" stroke="#FF8412" stroke-width="2" stroke-linecap="round"/><path d="M22 4L12 14.01l-3-3" stroke="#FF8412" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> No upfront payments</div>
+    </div>
+  </div>
+
+</div><!-- /top-band -->
+
+<!-- ════ Hero Form Modal ════ -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal">
+    <button class="modal-close" id="modalClose">&times;</button>
+    <div class="modal-content">
+      <div id="modalForm">
+        <div class="modal-steps">
+          <div class="modal-step-dot active" data-ms="0"></div>
+          <div class="modal-step-dot" data-ms="1"></div>
+          <div class="modal-step-dot" data-ms="2"></div>
+          <div class="modal-step-dot" data-ms="3"></div>
+        </div>
+        <!-- Step 1: Student info -->
+        <div class="modal-form-step active" id="ms0">
+          <h3>Who needs <span id="modalSubject">a</span> tutor?</h3>
+          <p class="modal-sub">We'll match your child with a tutor who's perfect for them.</p>
+          <input class="modal-input" type="text" id="mStudentName" placeholder="Student's first name" autocomplete="off">
+          <input class="modal-input" type="text" id="mYearLevel" placeholder="Year level (e.g. Year 7)" autocomplete="off">
+          <button class="modal-submit" id="mToStep2" disabled>Continue &rarr;</button>
+          <p class="modal-privacy">&#128274; Free consultation &middot; No commitment required</p>
+        </div>
+        <!-- Step 2: Goal -->
+        <div class="modal-form-step" id="ms1">
+          <h3>What's the main goal for <span id="mGoalName"></span>?</h3>
+          <p class="modal-sub">This helps us find the right tutor.</p>
+          <div class="modal-pills" id="mGoalPills">
+            <button class="modal-pill" data-val="Improve grades">Improve grades</button>
+            <button class="modal-pill" data-val="Build confidence">Build confidence</button>
+            <button class="modal-pill" data-val="Exam prep">Exam prep</button>
+            <button class="modal-pill" data-val="Catch up">Catch up</button>
+            <button class="modal-pill" data-val="Get ahead">Get ahead</button>
+          </div>
+          <button class="modal-back" id="mBack1">&larr; Back</button>
+        </div>
+        <!-- Step 3: Urgency -->
+        <div class="modal-form-step" id="ms2">
+          <h3>How soon do you need a tutor?</h3>
+          <p class="modal-sub">No pressure — just helps us prioritise.</p>
+          <div class="modal-pills" id="mUrgencyPills">
+            <button class="modal-pill" data-val="This week">This week</button>
+            <button class="modal-pill" data-val="Within 2 weeks">Within 2 weeks</button>
+            <button class="modal-pill" data-val="Just exploring">Just exploring</button>
+          </div>
+          <button class="modal-back" id="mBack2">&larr; Back</button>
+        </div>
+        <!-- Step 4: Contact details -->
+        <div class="modal-form-step" id="ms3">
+          <h3>Find <span id="mStudentNameEcho"></span>'s tutor</h3>
+          <p class="modal-sub">Where should we send the tutor match?</p>
+          <input class="modal-input" type="text" id="mParentName" placeholder="Your full name" autocomplete="off">
+          <input class="modal-input" type="email" id="mEmail" placeholder="Email address" autocomplete="off">
+          <input class="modal-input" type="tel" id="mPhone" placeholder="Phone number" autocomplete="off">
+          <button class="modal-submit" id="mSubmit" disabled>Find <span id="mCtaName">your</span>'s tutor &rarr;</button>
+          <button class="modal-back" id="mBack3">&larr; Back</button>
+          <div class="modal-social-proof"><span class="proof-dot"></span> 32 parents enquired this morning</div>
+          <div class="modal-testimonial">"Best decision we made for Sarah's confidence." <strong>— Michelle T.</strong></div>
+        </div>
+      </div>
+      <div class="modal-success" id="modalSuccess">
+        <div class="modal-success-check">
+          <svg viewBox="0 0 24 24"><path class="check-path" d="M6 12l4 4 8-8"/></svg>
+        </div>
+        <h3>You're all set!</h3>
+        <p class="modal-sub">Here's what happens next for <strong id="mSuccessName"></strong>.</p>
+        <div class="success-steps">
+          <div class="success-step">
+            <div class="success-step-icon success-step-icon--1">&#128203;</div>
+            <div class="success-step-text">
+              <span class="success-step-title">We review your request</span>
+              <span class="success-step-desc">Our team matches the best tutor to your child's needs.</span>
+            </div>
+          </div>
+          <div class="success-step">
+            <div class="success-step-icon success-step-icon--2">&#128222;</div>
+            <div class="success-step-text">
+              <span class="success-step-title">We'll call you today</span>
+              <span class="success-step-desc">A quick chat to learn more about your child's goals.</span>
+            </div>
+          </div>
+          <div class="success-step">
+            <div class="success-step-icon success-step-icon--3">&#129309;</div>
+            <div class="success-step-text">
+              <span class="success-step-title">Meet your tutor match</span>
+              <span class="success-step-desc">We'll introduce you to a qualified, vetted tutor.</span>
+            </div>
+          </div>
+          <div class="success-step">
+            <div class="success-step-icon success-step-icon--4">&#127891;</div>
+            <div class="success-step-text">
+              <span class="success-step-title">Start your first lesson</span>
+              <span class="success-step-desc">Love it or your first lesson is completely free.</span>
+            </div>
+          </div>
+        </div>
+        <div class="success-cta">
+          <a href="thank-you.html" class="success-cta-btn">Learn more about what's next &rarr;</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════ Success Stories (Section 2) ════ -->
+<section class="stories-section stories-section--s2">
+  <h2 class="stories-heading reveal">Real results from real families</h2>
+  <p class="stories-subheading reveal stagger-1">Verified Trustpilot reviews from parents across Australia.</p>
+  <div class="stories-track-wrapper reveal stagger-2">
+    <div class="stories-track" id="storiesTrack">
+      <!-- Set 1 -->
+      <div class="story-card">
+        <div class="story-image">
+          <img loading="lazy" src="images/kid-at-desk.jpg" alt="Sarah studying">
+          <div class="story-result">&#128200; Maths: C &rarr; A</div>
+        </div>
+        <div class="story-body">
+          <div class="story-header">
+            <div class="story-meta"><span class="story-name">Michelle T.</span><span class="story-detail">Mum of Sarah, Year 8</span></div>
+            <div class="story-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+          </div>
+          <p class="story-quote">Sarah went from dreading maths homework to actually asking to do extra practice. Her tutor made all the difference -- she finally understands the 'why' behind the formulas.</p>
+          <a class="story-link" href="https://www.trustpilot.com/review/www.tutero.com" target="_blank">Read on Trustpilot <svg viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <div class="story-tp"><span class="story-tp-star"><svg viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.27 5.82 22 7 14.14l-5-4.87 6.91-1.01L12 2z" fill="#fff"/></svg></span><span class="story-tp-name">Trustpilot</span><span class="story-tp-rating">4.6 &middot; Excellent</span></div>
+        </div>
+      </div>
+      <div class="story-card">
+        <div class="story-image">
+          <img loading="lazy" src="images/karen-oliver.jpg" alt="Karen and Oliver looking at his results together">
+          <div class="story-result">&#128640; Physics: D+ &rarr; B+</div>
+        </div>
+        <div class="story-body">
+          <div class="story-header">
+            <div class="story-meta"><span class="story-name">Karen M.</span><span class="story-detail">Mum of Oliver, Year 10</span></div>
+            <div class="story-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+          </div>
+          <p class="story-quote">We tried three different tutoring companies before Tutero. The difference is night and day. Oliver's tutor actually gets him -- they've built a real rapport and his results show it.</p>
+          <a class="story-link" href="https://www.trustpilot.com/review/www.tutero.com" target="_blank">Read on Trustpilot <svg viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <div class="story-tp"><span class="story-tp-star"><svg viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.27 5.82 22 7 14.14l-5-4.87 6.91-1.01L12 2z" fill="#fff"/></svg></span><span class="story-tp-name">Trustpilot</span><span class="story-tp-rating">4.6 &middot; Excellent</span></div>
+        </div>
+      </div>
+      <div class="story-card">
+        <div class="story-image">
+          <img loading="lazy" src="images/mia-studying.jpg" alt="Mia studying">
+          <div class="story-result">&#127775; Confidence: sky high</div>
+        </div>
+        <div class="story-body">
+          <div class="story-header">
+            <div class="story-meta"><span class="story-name">Rachel S.</span><span class="story-detail">Mum of Mia, Year 3</span></div>
+            <div class="story-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+          </div>
+          <p class="story-quote">Mia was struggling with basic multiplication and getting anxious before tests. Her Tutero tutor turned maths into a game. She now finishes her homework independently and actually smiles doing it!</p>
+          <a class="story-link" href="https://www.trustpilot.com/review/www.tutero.com" target="_blank">Read on Trustpilot <svg viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <div class="story-tp"><span class="story-tp-star"><svg viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.27 5.82 22 7 14.14l-5-4.87 6.91-1.01L12 2z" fill="#fff"/></svg></span><span class="story-tp-name">Trustpilot</span><span class="story-tp-rating">4.6 &middot; Excellent</span></div>
+        </div>
+      </div>
+      <div class="story-card">
+        <div class="story-image">
+          <img loading="lazy" src="images/liam-studying.jpg" alt="Liam studying">
+          <div class="story-result">&#127891; ATAR: +5 pts above goal</div>
+        </div>
+        <div class="story-body">
+          <div class="story-header">
+            <div class="story-meta"><span class="story-name">Andrew P.</span><span class="story-detail">Dad of Liam, Year 12</span></div>
+            <div class="story-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+          </div>
+          <p class="story-quote">Liam's ATAR goal seemed out of reach until he started with Tutero. His tutor helped him build a study plan and nail his weak areas. He exceeded his target by 5 points.</p>
+          <a class="story-link" href="https://www.trustpilot.com/review/www.tutero.com" target="_blank">Read on Trustpilot <svg viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <div class="story-tp"><span class="story-tp-star"><svg viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.27 5.82 22 7 14.14l-5-4.87 6.91-1.01L12 2z" fill="#fff"/></svg></span><span class="story-tp-name">Trustpilot</span><span class="story-tp-rating">4.6 &middot; Excellent</span></div>
+        </div>
+      </div>
+      <div class="story-card">
+        <div class="story-image">
+          <img loading="lazy" src="images/emma-reading.jpg" alt="Emma reading on the couch at home">
+          <div class="story-result">&#128214; Reading: +2 years</div>
+        </div>
+        <div class="story-body">
+          <div class="story-header">
+            <div class="story-meta"><span class="story-name">Lisa K.</span><span class="story-detail">Mum of Emma, Year 5</span></div>
+            <div class="story-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+          </div>
+          <p class="story-quote">Emma was falling behind in English and losing confidence fast. After just 6 weeks with Tutero, her teacher commented on the massive improvement. She actually enjoys reading now!</p>
+          <a class="story-link" href="https://www.trustpilot.com/review/www.tutero.com" target="_blank">Read on Trustpilot <svg viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <div class="story-tp"><span class="story-tp-star"><svg viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.27 5.82 22 7 14.14l-5-4.87 6.91-1.01L12 2z" fill="#fff"/></svg></span><span class="story-tp-name">Trustpilot</span><span class="story-tp-rating">4.6 &middot; Excellent</span></div>
+        </div>
+      </div>
+      <div class="story-card">
+        <div class="story-image">
+          <img loading="lazy" src="images/carrie-daughter.jpg" alt="Carrie's daughter doing an online tutoring lesson">
+          <div class="story-result">&#128156; Anxiety &rarr; Confidence</div>
+        </div>
+        <div class="story-body">
+          <div class="story-header">
+            <div class="story-meta"><span class="story-name">Carrie L.</span><span class="story-detail">Mum, Queensland</span></div>
+            <div class="story-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+          </div>
+          <p class="story-quote">It's been a great experience dealing with Tutero — from the quoting experience to being matched with our lovely tutor. Tutero has cared about my daughter's comfort as she suffers with anxiety and has tailored her learning to her needs.</p>
+          <a class="story-link" href="https://www.trustpilot.com/review/www.tutero.com" target="_blank">Read on Trustpilot <svg viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <div class="story-tp"><span class="story-tp-star"><svg viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.27 5.82 22 7 14.14l-5-4.87 6.91-1.01L12 2z" fill="#fff"/></svg></span><span class="story-tp-name">Trustpilot</span><span class="story-tp-rating">4.6 &middot; Excellent</span></div>
+        </div>
+      </div>
+      <div class="story-card">
+        <div class="story-image">
+          <img loading="lazy" src="images/silv-son.jpg" alt="Silv's son doing maths homework at the kitchen bench">
+          <div class="story-result">&#128200; Maths: much better</div>
+        </div>
+        <div class="story-body">
+          <div class="story-header">
+            <div class="story-meta"><span class="story-name">Silv G.</span><span class="story-detail">Parent, Australia</span></div>
+            <div class="story-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+          </div>
+          <p class="story-quote">An amazing program with great tutors. They work together with you to suit the program to your needs. It's been very helpful for my son and he is doing much better in maths due to having the support from Tutero. Highly recommend!</p>
+          <a class="story-link" href="https://www.trustpilot.com/review/www.tutero.com" target="_blank">Read on Trustpilot <svg viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <div class="story-tp"><span class="story-tp-star"><svg viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.27 5.82 22 7 14.14l-5-4.87 6.91-1.01L12 2z" fill="#fff"/></svg></span><span class="story-tp-name">Trustpilot</span><span class="story-tp-rating">4.6 &middot; Excellent</span></div>
+        </div>
+      </div>
+      <div class="story-card">
+        <div class="story-image">
+          <img loading="lazy" src="images/deb-son.jpg" alt="Deb's son studying at his desk in the evening">
+          <div class="story-result">&#128200; Grades: +30% in 6 months</div>
+        </div>
+        <div class="story-body">
+          <div class="story-header">
+            <div class="story-meta"><span class="story-name">Deb S.</span><span class="story-detail">Mum, NSW</span></div>
+            <div class="story-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+          </div>
+          <p class="story-quote">My son's grades have gone up 30% since starting with Tutero 6 months ago. As he is shy in class, having 1:1 tutoring has helped him clarify core concepts and now he is much better equipped for HSC.</p>
+          <a class="story-link" href="https://www.trustpilot.com/review/www.tutero.com" target="_blank">Read on Trustpilot <svg viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <div class="story-tp"><span class="story-tp-star"><svg viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.27 5.82 22 7 14.14l-5-4.87 6.91-1.01L12 2z" fill="#fff"/></svg></span><span class="story-tp-name">Trustpilot</span><span class="story-tp-rating">4.6 &middot; Excellent</span></div>
+        </div>
+      </div>
+      <!-- Duplicate set for seamless loop -->
+      <div class="story-card">
+        <div class="story-image">
+          <img loading="lazy" src="images/kid-at-desk.jpg" alt="Sarah studying">
+          <div class="story-result">&#128200; Maths: C &rarr; A</div>
+        </div>
+        <div class="story-body">
+          <div class="story-header">
+            <div class="story-meta"><span class="story-name">Michelle T.</span><span class="story-detail">Mum of Sarah, Year 8</span></div>
+            <div class="story-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+          </div>
+          <p class="story-quote">Sarah went from dreading maths homework to actually asking to do extra practice. Her tutor made all the difference -- she finally understands the 'why' behind the formulas.</p>
+          <a class="story-link" href="https://www.trustpilot.com/review/www.tutero.com" target="_blank">Read on Trustpilot <svg viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <div class="story-tp"><span class="story-tp-star"><svg viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.27 5.82 22 7 14.14l-5-4.87 6.91-1.01L12 2z" fill="#fff"/></svg></span><span class="story-tp-name">Trustpilot</span><span class="story-tp-rating">4.6 &middot; Excellent</span></div>
+        </div>
+      </div>
+      <div class="story-card">
+        <div class="story-image">
+          <img loading="lazy" src="images/karen-oliver.jpg" alt="Karen and Oliver looking at his results together">
+          <div class="story-result">&#128640; Physics: D+ &rarr; B+</div>
+        </div>
+        <div class="story-body">
+          <div class="story-header">
+            <div class="story-meta"><span class="story-name">Karen M.</span><span class="story-detail">Mum of Oliver, Year 10</span></div>
+            <div class="story-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+          </div>
+          <p class="story-quote">We tried three different tutoring companies before Tutero. The difference is night and day. Oliver's tutor actually gets him -- they've built a real rapport and his results show it.</p>
+          <a class="story-link" href="https://www.trustpilot.com/review/www.tutero.com" target="_blank">Read on Trustpilot <svg viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <div class="story-tp"><span class="story-tp-star"><svg viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.27 5.82 22 7 14.14l-5-4.87 6.91-1.01L12 2z" fill="#fff"/></svg></span><span class="story-tp-name">Trustpilot</span><span class="story-tp-rating">4.6 &middot; Excellent</span></div>
+        </div>
+      </div>
+      <div class="story-card">
+        <div class="story-image">
+          <img loading="lazy" src="images/mia-studying.jpg" alt="Mia studying">
+          <div class="story-result">&#127775; Confidence: sky high</div>
+        </div>
+        <div class="story-body">
+          <div class="story-header">
+            <div class="story-meta"><span class="story-name">Rachel S.</span><span class="story-detail">Mum of Mia, Year 3</span></div>
+            <div class="story-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+          </div>
+          <p class="story-quote">Mia was struggling with basic multiplication and getting anxious before tests. Her Tutero tutor turned maths into a game. She now finishes her homework independently and actually smiles doing it!</p>
+          <a class="story-link" href="https://www.trustpilot.com/review/www.tutero.com" target="_blank">Read on Trustpilot <svg viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <div class="story-tp"><span class="story-tp-star"><svg viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.27 5.82 22 7 14.14l-5-4.87 6.91-1.01L12 2z" fill="#fff"/></svg></span><span class="story-tp-name">Trustpilot</span><span class="story-tp-rating">4.6 &middot; Excellent</span></div>
+        </div>
+      </div>
+      <div class="story-card">
+        <div class="story-image">
+          <img loading="lazy" src="images/liam-studying.jpg" alt="Liam studying">
+          <div class="story-result">&#127891; ATAR: +5 pts above goal</div>
+        </div>
+        <div class="story-body">
+          <div class="story-header">
+            <div class="story-meta"><span class="story-name">Andrew P.</span><span class="story-detail">Dad of Liam, Year 12</span></div>
+            <div class="story-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+          </div>
+          <p class="story-quote">Liam's ATAR goal seemed out of reach until he started with Tutero. His tutor helped him build a study plan and nail his weak areas. He exceeded his target by 5 points.</p>
+          <a class="story-link" href="https://www.trustpilot.com/review/www.tutero.com" target="_blank">Read on Trustpilot <svg viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <div class="story-tp"><span class="story-tp-star"><svg viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.27 5.82 22 7 14.14l-5-4.87 6.91-1.01L12 2z" fill="#fff"/></svg></span><span class="story-tp-name">Trustpilot</span><span class="story-tp-rating">4.6 &middot; Excellent</span></div>
+        </div>
+      </div>
+      <div class="story-card">
+        <div class="story-image">
+          <img loading="lazy" src="images/emma-reading.jpg" alt="Emma reading on the couch at home">
+          <div class="story-result">&#128214; Reading: +2 years</div>
+        </div>
+        <div class="story-body">
+          <div class="story-header">
+            <div class="story-meta"><span class="story-name">Lisa K.</span><span class="story-detail">Mum of Emma, Year 5</span></div>
+            <div class="story-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+          </div>
+          <p class="story-quote">Emma was falling behind in English and losing confidence fast. After just 6 weeks with Tutero, her teacher commented on the massive improvement. She actually enjoys reading now!</p>
+          <a class="story-link" href="https://www.trustpilot.com/review/www.tutero.com" target="_blank">Read on Trustpilot <svg viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <div class="story-tp"><span class="story-tp-star"><svg viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.27 5.82 22 7 14.14l-5-4.87 6.91-1.01L12 2z" fill="#fff"/></svg></span><span class="story-tp-name">Trustpilot</span><span class="story-tp-rating">4.6 &middot; Excellent</span></div>
+        </div>
+      </div>
+      <div class="story-card">
+        <div class="story-image">
+          <img loading="lazy" src="images/carrie-daughter.jpg" alt="Carrie's daughter doing an online tutoring lesson">
+          <div class="story-result">&#128156; Anxiety &rarr; Confidence</div>
+        </div>
+        <div class="story-body">
+          <div class="story-header">
+            <div class="story-meta"><span class="story-name">Carrie L.</span><span class="story-detail">Mum, Queensland</span></div>
+            <div class="story-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+          </div>
+          <p class="story-quote">It's been a great experience dealing with Tutero — from the quoting experience to being matched with our lovely tutor. Tutero has cared about my daughter's comfort as she suffers with anxiety and has tailored her learning to her needs.</p>
+          <a class="story-link" href="https://www.trustpilot.com/review/www.tutero.com" target="_blank">Read on Trustpilot <svg viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <div class="story-tp"><span class="story-tp-star"><svg viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.27 5.82 22 7 14.14l-5-4.87 6.91-1.01L12 2z" fill="#fff"/></svg></span><span class="story-tp-name">Trustpilot</span><span class="story-tp-rating">4.6 &middot; Excellent</span></div>
+        </div>
+      </div>
+      <div class="story-card">
+        <div class="story-image">
+          <img loading="lazy" src="images/silv-son.jpg" alt="Silv's son doing maths homework at the kitchen bench">
+          <div class="story-result">&#128200; Maths: much better</div>
+        </div>
+        <div class="story-body">
+          <div class="story-header">
+            <div class="story-meta"><span class="story-name">Silv G.</span><span class="story-detail">Parent, Australia</span></div>
+            <div class="story-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+          </div>
+          <p class="story-quote">An amazing program with great tutors. They work together with you to suit the program to your needs. It's been very helpful for my son and he is doing much better in maths due to having the support from Tutero. Highly recommend!</p>
+          <a class="story-link" href="https://www.trustpilot.com/review/www.tutero.com" target="_blank">Read on Trustpilot <svg viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <div class="story-tp"><span class="story-tp-star"><svg viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.27 5.82 22 7 14.14l-5-4.87 6.91-1.01L12 2z" fill="#fff"/></svg></span><span class="story-tp-name">Trustpilot</span><span class="story-tp-rating">4.6 &middot; Excellent</span></div>
+        </div>
+      </div>
+      <div class="story-card">
+        <div class="story-image">
+          <img loading="lazy" src="images/deb-son.jpg" alt="Deb's son studying at his desk in the evening">
+          <div class="story-result">&#128200; Grades: +30% in 6 months</div>
+        </div>
+        <div class="story-body">
+          <div class="story-header">
+            <div class="story-meta"><span class="story-name">Deb S.</span><span class="story-detail">Mum, NSW</span></div>
+            <div class="story-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+          </div>
+          <p class="story-quote">My son's grades have gone up 30% since starting with Tutero 6 months ago. As he is shy in class, having 1:1 tutoring has helped him clarify core concepts and now he is much better equipped for HSC.</p>
+          <a class="story-link" href="https://www.trustpilot.com/review/www.tutero.com" target="_blank">Read on Trustpilot <svg viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <div class="story-tp"><span class="story-tp-star"><svg viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87L18.18 22 12 18.27 5.82 22 7 14.14l-5-4.87 6.91-1.01L12 2z" fill="#fff"/></svg></span><span class="story-tp-name">Trustpilot</span><span class="story-tp-rating">4.6 &middot; Excellent</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ════ Results / Data Section ════ -->
+<section class="results-section">
+  <h2 class="results-heading reveal">Why Australian families love Tutero</h2>
+  <p class="results-sub reveal stagger-1">Proven results from 200,000+ lessons across every year level.</p>
+
+  <div class="results-grid">
+    <!-- Grade widget (left) -->
+    <div class="grade-widget reveal-left">
+
+
+      <h3 class="grade-widget-title">Watch your child's grades grow with Tutero</h3>
+      <p class="grade-widget-sub">Select their current grade to see the average improvement.</p>
+      <p class="grade-label">Current grade</p>
+      <div class="grade-selector" id="gradeSelector">
+        <button class="grade-btn" data-grade="E" data-target="C+">E</button>
+        <button class="grade-btn active" data-grade="D" data-target="B">D</button>
+        <button class="grade-btn" data-grade="C" data-target="A">C</button>
+        <button class="grade-btn" data-grade="B" data-target="A+">B</button>
+      </div>
+      <div class="grade-projection" id="gradeProjection">
+        <div class="grade-current">
+          <span class="grade-current-label">Now</span>
+          <span class="grade-current-value" id="gradeNow">D</span>
+        </div>
+        <div class="grade-arrow">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M5 12h14M13 5l6 7-6 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span class="grade-arrow-label">30 weeks</span>
+        </div>
+        <div class="grade-projected">
+          <span class="grade-projected-label">Projected</span>
+          <span class="grade-projected-value" id="gradeTarget">B</span>
+        </div>
+      </div>
+      <p class="grade-timeline">Based on average results from 3,000+ Tutero students</p>
+    </div>
+
+    <!-- Photo + value points (right) -->
+    <div class="reveal stagger-2">
+      <div class="results-photo">
+        <img loading="lazy" src="images/results-student.jpg" alt="Tutero student proudly showing improved test results">
+        <div class="results-photo-caption">
+          <span>James, Year 10</span> &middot; <span class="caption-result">C &rarr; A in Maths</span>
+        </div>
+      </div>
+      <div class="results-value-points">
+        <div class="value-point"><span class="value-point-emoji">&#129302;</span> Custom tutor matching for the perfect fit</div>
+        <div class="value-point"><span class="value-point-emoji">&#128241;</span> Lesson reports sent to parents after every class</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Trust logos -->
+  <div class="trust-logos reveal">
+    <span class="trust-logos-label">Backed by</span>
+    <div class="trust-logo-item">
+      <svg viewBox="0 0 24 24" fill="none"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="currentColor" stroke-width="2"/><path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      WWCC Verified
+    </div>
+    <div class="trust-logo-item">
+      <svg viewBox="0 0 24 24" fill="none"><path d="M22 10v6M2 10l10-5 10 5-10 5z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M6 12v5c3 3 9 3 12 0v-5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Qualified Teachers
+    </div>
+    <div class="trust-logo-item">
+      <svg viewBox="0 0 24 24" fill="none"><path d="M9 11l3 3L22 4" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      ABN Registered
+    </div>
+    <div class="trust-logo-item">
+      <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/><path d="M2 12h20M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z" stroke="currentColor" stroke-width="2"/></svg>
+      100% Australian
+    </div>
+    <div class="trust-logo-item">
+      <svg viewBox="0 0 24 24" fill="none"><rect x="3" y="11" width="18" height="11" rx="2" stroke="currentColor" stroke-width="2"/><path d="M7 11V7a5 5 0 0110 0v4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      Data Protected
+    </div>
+  </div>
+</section>
+
+<!-- ════ Coverage Section ════ -->
+<section class="coverage-section">
+  <h3 class="coverage-heading reveal">Tutoring for every subject and year level.</h3>
+  <p class="coverage-sub reveal stagger-1">Aligned to the Australian curriculum, Prep through Year 12.</p>
+  <div class="coverage-grid reveal stagger-2">
+    <div class="coverage-card">
+      <div class="coverage-card-label">Subjects</div>
+      <div class="coverage-card-items">
+        <button class="coverage-btn" onclick="openModalWithSubject('Maths')"><span class="coverage-btn-icon">&#120536;</span> Maths</button>
+        <button class="coverage-btn" onclick="openModalWithSubject('English')"><span class="coverage-btn-icon">&#9997;&#65039;</span> English</button>
+        <button class="coverage-btn" onclick="openModalWithSubject('Science')"><span class="coverage-btn-icon">&#128300;</span> Science</button>
+        <button class="coverage-btn" onclick="openModalWithSubject('Chemistry')"><span class="coverage-btn-icon">&#9878;&#65039;</span> Chemistry</button>
+        <button class="coverage-btn" onclick="openModalWithSubject('Physics')"><span class="coverage-btn-icon">&#9889;</span> Physics</button>
+        <button class="coverage-btn" onclick="openModalWithSubject('Biology')"><span class="coverage-btn-icon">&#129440;</span> Biology</button>
+        <button class="coverage-btn" onclick="openModalWithSubject('Humanities')"><span class="coverage-btn-icon">&#127758;</span> Humanities</button>
+        <button class="coverage-btn" onclick="openModalWithSubject('Languages')"><span class="coverage-btn-icon">&#128172;</span> Languages</button>
+      </div>
+    </div>
+    <div class="coverage-card">
+      <div class="coverage-card-label">Year Levels</div>
+      <div class="coverage-card-items">
+        <button class="coverage-level-btn" onclick="openModalWithYear('Prep')">Prep</button>
+        <button class="coverage-level-btn" onclick="openModalWithYear('Year 1')">Year 1</button>
+        <button class="coverage-level-btn" onclick="openModalWithYear('Year 2')">Year 2</button>
+        <button class="coverage-level-btn" onclick="openModalWithYear('Year 3')">Year 3</button>
+        <button class="coverage-level-btn" onclick="openModalWithYear('Year 4')">Year 4</button>
+        <button class="coverage-level-btn" onclick="openModalWithYear('Year 5')">Year 5</button>
+        <button class="coverage-level-btn" onclick="openModalWithYear('Year 6')">Year 6</button>
+        <button class="coverage-level-btn" onclick="openModalWithYear('Year 7')">Year 7</button>
+        <button class="coverage-level-btn" onclick="openModalWithYear('Year 8')">Year 8</button>
+        <button class="coverage-level-btn" onclick="openModalWithYear('Year 9')">Year 9</button>
+        <button class="coverage-level-btn" onclick="openModalWithYear('Year 10')">Year 10</button>
+        <button class="coverage-level-btn" onclick="openModalWithYear('Year 11')">Year 11</button>
+        <button class="coverage-level-btn" onclick="openModalWithYear('Year 12')">Year 12</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ════ Trust V2 (Editorial Bento) ════ -->
+<section class="trust-v2">
+  <div class="tv2-inner">
+
+    <div class="tv2-header reveal">
+      <h2 class="tv2-header-title">A tutoring experience <span>customised</span> for each family</h2>
+      <p class="tv2-header-sub">Get the full picture of what your child gets with Tutero.</p>
+    </div>
+
+    <!-- Top row: 4 small feature cards with images -->
+    <div class="tv2-features reveal stagger-1">
+      <div class="tv2-feat">
+        <img loading="lazy" src="images/tv2-tutoring.jpg" alt="1:1 online tutoring" class="tv2-feat-img">
+        <div class="tv2-feat-title">Live 1:1 tutoring</div>
+        <div class="tv2-feat-desc">Interactive online lessons with screen sharing and real-time problem solving.</div>
+      </div>
+      <div class="tv2-feat">
+        <img loading="lazy" src="images/tv2-reports.jpg" alt="Progress tracking" class="tv2-feat-img">
+        <div class="tv2-feat-title">Lesson reports</div>
+        <div class="tv2-feat-desc">After every session, see exactly what was covered and what's next.</div>
+      </div>
+      <div class="tv2-feat">
+        <img loading="lazy" src="images/tv2-personalised.jpg" alt="Personalised learning" class="tv2-feat-img">
+        <div class="tv2-feat-title">Personalised lessons</div>
+        <div class="tv2-feat-desc">Built around your child's gaps, pace, and learning style.</div>
+      </div>
+    </div>
+
+    <!-- Bottom bento: featured card + smaller cards -->
+    <div class="tv2-bento reveal stagger-2">
+
+      <!-- Featured cards (side by side) -->
+      <div class="tv2-featured">
+        <img loading="lazy" src="images/tv2-account-mgr.jpg" alt="Your dedicated account manager" class="tv2-featured-img">
+        <div class="tv2-featured-title">Your own account manager</div>
+        <div class="tv2-featured-desc">A real person who knows your child by name. They check in weekly, adjust the plan, and are always a call away. Not a chatbot — a teammate.</div>
+        <a class="tv2-featured-link" onclick="openModal()">Get started <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg></a>
+      </div>
+      <div class="tv2-featured">
+        <img loading="lazy" src="images/tv2-curriculum.jpg" alt="Curriculum aligned" class="tv2-featured-img">
+        <div class="tv2-featured-title">Curriculum aligned</div>
+        <div class="tv2-featured-desc">Mapped to the Australian curriculum, Prep through Year 12. Every lesson connects to what your child is learning at school.</div>
+        <a class="tv2-featured-link" onclick="openModal()">Get matched for free <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg></a>
+      </div>
+
+      <!-- Small cards row -->
+      <div class="tv2-sm-grid">
+        <div class="tv2-sm">
+          <div class="tv2-sm-row">
+            <div class="tv2-sm-icon tv2-sm-icon--orange">&#129489;&#8205;&#127979;</div>
+            <div>
+              <div class="tv2-sm-title">Qualified teachers &amp; tutors</div>
+              <div class="tv2-sm-desc">WWCC verified, subject tested, interview screened</div>
+            </div>
+          </div>
+        </div>
+        <div class="tv2-sm">
+          <div class="tv2-sm-row">
+            <div class="tv2-sm-icon tv2-sm-icon--green">&#128241;</div>
+            <div>
+              <div class="tv2-sm-title">Mobile app for parents</div>
+              <div class="tv2-sm-desc">Track progress, view lesson reports, and message your team</div>
+            </div>
+          </div>
+        </div>
+        <div class="tv2-sm">
+          <div class="tv2-sm-row">
+            <div class="tv2-sm-icon tv2-sm-icon--blue">&#128275;</div>
+            <div>
+              <div class="tv2-sm-title">No contracts, cancel anytime</div>
+              <div class="tv2-sm-desc">Pay as you go — billed after each lesson. No deposits, no packages, no lock-ins. Pause or stop whenever you want.</div>
+            </div>
+          </div>
+        </div>
+        <div class="tv2-sm tv2-sm--quote">
+          <div class="tv2-sm-quote-text">"My son's grades have gone up 30% since starting with Tutero 6 months ago."</div>
+          <div class="tv2-sm-row">
+            <img loading="lazy" src="images/deb-son.jpg" alt="Deb's son" class="tv2-sm-avatar">
+            <div class="tv2-sm-quote-author">Deb S. &middot; Mum, NSW</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="tv2-cta-row reveal stagger-3">
+      <button class="tv2-cta-btn" onclick="openModal()">Get matched for free &rarr;</button>
+      <span class="tv2-cta-micro">Free consultation &middot; No commitment &middot; Cancel anytime</span>
+    </div>
+
+  </div>
+</section>
+
+<!-- ════ FAQ Section ════ -->
+<section class="faq-section">
+  <div class="faq-header">
+    <h2 class="faq-heading reveal">Got questions? We've got answers</h2>
+  </div>
+  <div class="curiosity-meter reveal stagger-1">
+    <span class="curiosity-label" id="curiosityLabel">Curiosity level:</span>
+    <div class="curiosity-track"><div class="curiosity-fill" id="curiosityFill"></div></div>
+    <span class="curiosity-emoji" id="curiosityEmoji">&#129300;</span>
+  </div>
+  <div class="faq-list reveal stagger-2" id="faqList">
+    <div class="faq-item" data-index="0"><div class="faq-question"><span class="faq-emoji">&#127919;</span><span class="faq-question-text">How do you match my child with the right tutor?</span><div class="faq-toggle"><svg viewBox="0 0 12 12"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg></div></div><div class="faq-answer-wrapper"><div class="faq-answer-inner"><p class="faq-answer">We take matching seriously! Our team considers your child's <strong>year level, subjects, learning style, and personality</strong> to find their perfect tutor. It's like assembling a dream team -- we handpick someone who clicks with how your child learns best.</p></div></div></div>
+    <div class="faq-item" data-index="1"><div class="faq-question"><span class="faq-emoji">&#128176;</span><span class="faq-question-text">How much does Tutero cost?</span><div class="faq-toggle"><svg viewBox="0 0 12 12"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg></div></div><div class="faq-answer-wrapper"><div class="faq-answer-inner"><p class="faq-answer">Lessons start from <strong>$50/hour</strong> depending on subject and year level. Every lesson is 1-on-1 and fully personalised. We also offer sibling discounts and flexible packages.</p></div></div></div>
+    <div class="faq-item" data-index="2"><div class="faq-question"><span class="faq-emoji">&#129489;&#8205;&#127979;</span><span class="faq-question-text">What qualifications do your tutors have?</span><div class="faq-toggle"><svg viewBox="0 0 12 12"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg></div></div><div class="faq-answer-wrapper"><div class="faq-answer-inner"><p class="faq-answer">All tutors hold a <strong>Working With Children Check</strong> and go through rigorous screening. They scored in the <strong>top percentiles</strong> in the subjects they teach -- and we train them to make learning fun.</p></div></div></div>
+    <div class="faq-item" data-index="3"><div class="faq-question"><span class="faq-emoji">&#128197;</span><span class="faq-question-text">Can we reschedule or cancel lessons?</span><div class="faq-toggle"><svg viewBox="0 0 12 12"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg></div></div><div class="faq-answer-wrapper"><div class="faq-answer-inner"><p class="faq-answer">Life happens! Reschedule or cancel with <strong>24 hours' notice</strong> at no charge. Learning shouldn't feel like a rigid contract.</p></div></div></div>
+    <div class="faq-item" data-index="4"><div class="faq-question"><span class="faq-emoji">&#128640;</span><span class="faq-question-text">How quickly will I see results?</span><div class="faq-toggle"><svg viewBox="0 0 12 12"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg></div></div><div class="faq-answer-wrapper"><div class="faq-answer-inner"><p class="faq-answer">Most parents see a confidence boost within <strong>2-3 lessons</strong>. Grade improvements follow within the <strong>first month</strong>. We build understanding from the ground up.</p></div></div></div>
+    <div class="faq-item" data-index="5"><div class="faq-question"><span class="faq-emoji">&#127759;</span><span class="faq-question-text">Are lessons online or in-person?</span><div class="faq-toggle"><svg viewBox="0 0 12 12"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg></div></div><div class="faq-answer-wrapper"><div class="faq-answer-inner"><p class="faq-answer">All lessons happen <strong>online via our interactive classroom</strong> -- whiteboard, screen sharing, real-time problem solving. Your child learns from home. Best tutors across Australia, not just your postcode.</p></div></div></div>
+  </div>
+</section>
+
+<!-- ════ Bottom CTA ════ -->
+<section class="bottom-cta">
+  <canvas id="confettiCanvas"></canvas>
+  <div class="bottom-cta-inner reveal" id="ctaInner">
+    <span class="bottom-cta-emoji">&#128640;</span>
+    <h2 class="bottom-cta-heading">Ready to get started?</h2>
+    <p class="bottom-cta-sub">Pick a subject, tell us a bit about your child, and we'll match them with the perfect tutor.</p>
+    <div class="cta-steps">
+      <div class="cta-step-dot active" data-step="0"></div>
+      <div class="cta-step-dot" data-step="1"></div>
+      <div class="cta-step-dot" data-step="2"></div>
+    </div>
+    <div class="cta-form-step active" id="ctaStep0">
+      <p style="color:rgba(255,255,255,.5);font-size:13px;font-weight:600;margin-bottom:4px">Step 1: What subject do they need help with?</p>
+      <div class="subject-picker" id="subjectPicker">
+        <button class="subject-pill" data-subject="maths"><span>&#128290; Maths</span></button>
+        <button class="subject-pill" data-subject="english"><span>&#128214; English</span></button>
+        <button class="subject-pill" data-subject="science"><span>&#128300; Science</span></button>
+        <button class="subject-pill" data-subject="chemistry"><span>&#129514; Chemistry</span></button>
+        <button class="subject-pill" data-subject="physics"><span>&#9883;&#65039; Physics</span></button>
+        <button class="subject-pill" data-subject="biology"><span>&#129516; Biology</span></button>
+        <button class="subject-pill" data-subject="history"><span>&#127984; History</span></button>
+        <button class="subject-pill" data-subject="geography"><span>&#127757; Geography</span></button>
+      </div>
+    </div>
+    <div class="cta-form-step" id="ctaStep1">
+      <p style="color:rgba(255,255,255,.5);font-size:13px;font-weight:600;margin-bottom:4px">Step 2: Tell us about your child</p>
+      <input class="cta-input" type="text" id="studentName" placeholder="Student's first name">
+      <input class="cta-input" type="text" id="yearLevel" placeholder="Year level (e.g. Year 7)">
+      <button class="cta-submit" id="toStep3" disabled>Next &rarr;</button>
+      <button class="cta-back-btn" onclick="goToStep(0)">&larr; Back to subjects</button>
+    </div>
+    <div class="cta-form-step" id="ctaStep2">
+      <p style="color:rgba(255,255,255,.5);font-size:13px;font-weight:600;margin-bottom:4px">Step 3: How can we reach you?</p>
+      <input class="cta-input" type="text" id="parentName" placeholder="Your full name">
+      <div class="cta-input-row">
+        <input class="cta-input" type="email" id="parentEmail" placeholder="Email">
+        <input class="cta-input" type="tel" id="parentPhone" placeholder="Phone">
+      </div>
+      <button class="cta-submit" id="submitLead" disabled>Find my child's tutor &#127881;</button>
+      <button class="cta-back-btn" onclick="goToStep(1)">&larr; Back</button>
+    </div>
+    <div class="cta-success" id="ctaSuccess">
+      <div class="modal-success-check" style="margin-bottom:16px;">
+        <svg viewBox="0 0 24 24"><path class="check-path" d="M6 12l4 4 8-8" style="stroke:#fff;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;fill:none;stroke-dasharray:30;stroke-dashoffset:30;animation:draw-check .5s .3s ease forwards;"/></svg>
+      </div>
+      <div class="cta-success-text">You're all set!</div>
+      <p class="cta-success-sub" style="margin-bottom:20px;">Here's what happens next for <span id="successName">your child</span>.</p>
+      <div class="success-steps" style="width:100%;max-width:380px;text-align:left;">
+        <div class="success-step" style="color:#fff;">
+          <div class="success-step-icon success-step-icon--1">&#128203;</div>
+          <div class="success-step-text">
+            <span class="success-step-title" style="color:#fff;">We review your request</span>
+            <span class="success-step-desc" style="color:rgba(255,255,255,.5);">Matching the best <span id="successSubject"></span> tutor to your child.</span>
+          </div>
+        </div>
+        <div class="success-step">
+          <div class="success-step-icon success-step-icon--2">&#128222;</div>
+          <div class="success-step-text">
+            <span class="success-step-title" style="color:#fff;">We'll call you today</span>
+            <span class="success-step-desc" style="color:rgba(255,255,255,.5);">A quick chat about your child's goals.</span>
+          </div>
+        </div>
+        <div class="success-step">
+          <div class="success-step-icon success-step-icon--3">&#129309;</div>
+          <div class="success-step-text">
+            <span class="success-step-title" style="color:#fff;">Meet your tutor match</span>
+            <span class="success-step-desc" style="color:rgba(255,255,255,.5);">A qualified, vetted tutor perfect for them.</span>
+          </div>
+        </div>
+        <div class="success-step">
+          <div class="success-step-icon success-step-icon--4">&#127891;</div>
+          <div class="success-step-text">
+            <span class="success-step-title" style="color:#fff;">Start your first lesson</span>
+            <span class="success-step-desc" style="color:rgba(255,255,255,.5);">Love it or your first lesson is free.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════ Footer Compliance Bar ════ -->
+<footer class="footer-compliance">
+  <div class="footer-inner">
+    <a class="footer-logo" href="https://tutero.com" aria-label="Tutero">
+      <svg viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="16" fill="#FF8412"/><path d="M10 12h12v2H18v8h-4v-8h-4v-2z" fill="#fff"/></svg>
+      <span>Tutero</span>
+    </a>
+    <div class="footer-links">
+      <a href="https://tutero.com/terms" target="_blank">Terms of Service</a>
+      <a href="https://tutero.com/privacy" target="_blank">Privacy Policy</a>
+    </div>
+    <span class="footer-copy">&copy; 2026 Tutero Pty Ltd. All rights reserved.</span>
+  </div>
+</footer>
+
+</div>
+
+<script src="script.js"></script>
+
+
+</body>
+</html>
