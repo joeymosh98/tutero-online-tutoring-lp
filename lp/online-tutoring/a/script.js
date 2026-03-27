@@ -92,8 +92,10 @@ function mGoTo(n){mSteps.forEach(s=>s.classList.remove('active'));mSteps[n].clas
 function capitalise(str){return str.charAt(0).toUpperCase()+str.slice(1)}
 
 // Step 1: Student info
-const mSN=document.getElementById('mStudentName'),mYL=document.getElementById('mYearLevel'),mTo2=document.getElementById('mToStep2');
-[mSN,mYL].forEach(i=>i.addEventListener('input',()=>{mTo2.disabled=!(mSN.value.trim()&&mYL.value.trim())}));
+const mSN=document.getElementById('mStudentName'),mYL=document.getElementById('mYearLevel'),mST=document.getElementById('mState'),mTo2=document.getElementById('mToStep2');
+function checkStep1(){mTo2.disabled=!(mSN.value.trim()&&mYL.value.trim()&&mST.value)}
+[mSN,mYL].forEach(i=>i.addEventListener('input',checkStep1));
+mST.addEventListener('change',checkStep1);
 mTo2.addEventListener('click',()=>{
   const name=capitalise(mSN.value.trim());
   mSN.value=name;
@@ -159,6 +161,7 @@ mSub.addEventListener('click',()=>{
     source: 'modal',
     student_name: mSN.value.trim(),
     year_level: mYL.value.trim(),
+    state: mST.value,
     subject: (document.getElementById('modalSubject').textContent||'').replace(/^a\s*/,'') || '',
     goal: selectedGoal ? selectedGoal.dataset.val : '',
     urgency: selectedUrgency ? selectedUrgency.dataset.val : '',
@@ -179,8 +182,10 @@ const dots=document.querySelectorAll('.cta-step-dot');
 const success=document.getElementById('ctaSuccess');
 function goToStep(n){steps.forEach(s=>s.classList.remove('active'));success.classList.remove('active');steps[n].classList.add('active');currentStep=n;dots.forEach((d,i)=>{d.classList.remove('active','done');if(i<n)d.classList.add('done');if(i===n)d.classList.add('active')})}
 document.querySelectorAll('.subject-pill').forEach(pill=>{pill.addEventListener('click',()=>{document.querySelectorAll('.subject-pill').forEach(p=>p.classList.remove('selected'));pill.classList.add('selected');selectedSubject=pill.dataset.subject;setTimeout(()=>goToStep(1),350)})});
-const studentName=document.getElementById('studentName'),yearLevel=document.getElementById('yearLevel'),toStep3=document.getElementById('toStep3');
-[studentName,yearLevel].forEach(i=>i.addEventListener('input',()=>{toStep3.disabled=!(studentName.value.trim()&&yearLevel.value.trim())}));
+const studentName=document.getElementById('studentName'),yearLevel=document.getElementById('yearLevel'),btmState=document.getElementById('btmState'),toStep3=document.getElementById('toStep3');
+function checkBtmStep1(){toStep3.disabled=!(studentName.value.trim()&&yearLevel.value.trim()&&btmState.value)}
+[studentName,yearLevel].forEach(i=>i.addEventListener('input',checkBtmStep1));
+btmState.addEventListener('change',checkBtmStep1);
 toStep3.addEventListener('click',()=>goToStep(2));
 const parentName=document.getElementById('parentName'),parentEmail=document.getElementById('parentEmail'),parentPhone=document.getElementById('parentPhone'),submitLead=document.getElementById('submitLead');
 var btmPhone={digits:''};
@@ -191,6 +196,7 @@ submitLead.addEventListener('click',()=>{
     source: 'bottom_cta',
     student_name: studentName.value.trim(),
     year_level: yearLevel.value.trim(),
+    state: btmState.value,
     subject: selectedSubject,
     goal: '',
     urgency: '',

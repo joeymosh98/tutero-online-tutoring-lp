@@ -85,8 +85,10 @@ function mGoTo(n){mSteps.forEach(s=>s.classList.remove('active'));mSteps[n].clas
 function capitalise(str){return str.charAt(0).toUpperCase()+str.slice(1)}
 
 // Step 1: Student info
-const mSN=document.getElementById('mStudentName'),mYL=document.getElementById('mYearLevel'),mTo2=document.getElementById('mToStep2');
-[mSN,mYL].forEach(i=>i.addEventListener('input',()=>{mTo2.disabled=!(mSN.value.trim()&&mYL.value.trim())}));
+const mSN=document.getElementById('mStudentName'),mYL=document.getElementById('mYearLevel'),mST=document.getElementById('mState'),mTo2=document.getElementById('mToStep2');
+function checkStep1(){mTo2.disabled=!(mSN.value.trim()&&mYL.value.trim()&&mST.value)}
+[mSN,mYL].forEach(i=>i.addEventListener('input',checkStep1));
+mST.addEventListener('change',checkStep1);
 mTo2.addEventListener('click',()=>{
   const name=capitalise(mSN.value.trim());
   mSN.value=name;
@@ -152,6 +154,7 @@ mSub.addEventListener('click',()=>{
     source: 'modal',
     student_name: mSN.value.trim(),
     year_level: mYL.value.trim(),
+    state: mST.value,
     subject: (document.getElementById('modalSubject').textContent||'').replace(/^a\s*/,'') || '',
     goal: selectedGoal ? selectedGoal.dataset.val : '',
     urgency: selectedUrgency ? selectedUrgency.dataset.val : '',

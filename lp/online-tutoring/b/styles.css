@@ -282,6 +282,8 @@
       border-right:2px solid #aaa; border-bottom:2px solid #aaa;
       transform:translateY(-60%) rotate(45deg); pointer-events:none;
     }
+    .modal-select-wrapper { margin-bottom: 0; }
+    .modal-select-wrapper select.modal-input { appearance: none; -webkit-appearance: none; cursor: pointer; }
     .cta-button {
       display: flex; align-items: center; justify-content: center; gap: 8px;
       width: 100%; padding: 16px 24px; background: #FF9533; color: #fff;
