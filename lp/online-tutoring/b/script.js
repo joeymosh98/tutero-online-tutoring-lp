@@ -85,10 +85,8 @@ function mGoTo(n){mSteps.forEach(s=>s.classList.remove('active'));mSteps[n].clas
 function capitalise(str){return str.charAt(0).toUpperCase()+str.slice(1)}
 
 // Step 1: Student info
-const mSN=document.getElementById('mStudentName'),mYL=document.getElementById('mYearLevel'),mST=document.getElementById('mState'),mTo2=document.getElementById('mToStep2');
-function checkStep1(){mTo2.disabled=!(mSN.value.trim()&&mYL.value.trim()&&mST.value)}
-[mSN,mYL].forEach(i=>i.addEventListener('input',checkStep1));
-mST.addEventListener('change',checkStep1);
+const mSN=document.getElementById('mStudentName'),mYL=document.getElementById('mYearLevel'),mTo2=document.getElementById('mToStep2');
+[mSN,mYL].forEach(i=>i.addEventListener('input',()=>{mTo2.disabled=!(mSN.value.trim()&&mYL.value.trim())}));
 mTo2.addEventListener('click',()=>{
   const name=capitalise(mSN.value.trim());
   mSN.value=name;
@@ -119,7 +117,7 @@ document.querySelectorAll('#mUrgencyPills .modal-pill').forEach(p=>{
 document.getElementById('mBack2').addEventListener('click',()=>mGoTo(1));
 
 // Step 4: Contact details
-const mPN=document.getElementById('mParentName'),mEM=document.getElementById('mEmail'),mPH=document.getElementById('mPhone'),mSub=document.getElementById('mSubmit');
+const mPN=document.getElementById('mParentName'),mEM=document.getElementById('mEmail'),mPH=document.getElementById('mPhone'),mST=document.getElementById('mState'),mSub=document.getElementById('mSubmit');
 var modalPhone={digits:''};
 var phoneDigits='';
 mPH.addEventListener('input',()=>{formatPhone(mPH,modalPhone);phoneDigits=modalPhone.digits});
@@ -143,9 +141,9 @@ function formatPhone(input,store){
     input.setSelectionRange(pos+diff,pos+diff);
   }
 }
-[mPN,mEM,mPH].forEach(i=>i.addEventListener('input',()=>{
-  mSub.disabled=!(mPN.value.trim()&&isValidEmail(mEM.value.trim())&&phoneDigits.length>=10);
-}));
+function checkStep4(){mSub.disabled=!(mPN.value.trim()&&isValidEmail(mEM.value.trim())&&phoneDigits.length>=10&&mST.value)}
+[mPN,mEM,mPH].forEach(i=>i.addEventListener('input',checkStep4));
+mST.addEventListener('change',checkStep4);
 document.getElementById('mBack3').addEventListener('click',()=>mGoTo(2));
 mSub.addEventListener('click',()=>{
   var selectedGoal=document.querySelector('#mGoalPills .modal-pill.selected');

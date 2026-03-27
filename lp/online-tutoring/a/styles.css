@@ -287,6 +287,7 @@
     .cta-select-wrapper { margin-bottom: 0; }
     .cta-select-wrapper select.cta-input { appearance: none; -webkit-appearance: none; cursor: pointer; color: #fff; }
     .cta-select-wrapper select.cta-input option { color: #1a1a1a; background: #fff; }
+    .cta-select-wrapper::after { border-right-color: rgba(255,255,255,.5); border-bottom-color: rgba(255,255,255,.5); }
     .cta-button {
       display: flex; align-items: center; justify-content: center; gap: 8px;
       width: 100%; padding: 16px 24px; background: #FF9533; color: #fff;
