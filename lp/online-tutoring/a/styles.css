@@ -285,7 +285,12 @@
     .modal-select-wrapper { margin-bottom: 0; }
     .modal-select-wrapper select.modal-input { appearance: none; -webkit-appearance: none; cursor: pointer; }
     .cta-select-wrapper { margin-bottom: 0; }
-    .cta-select-wrapper select.cta-input { appearance: none; -webkit-appearance: none; cursor: pointer; color: #fff; }
+    .cta-select-wrapper select.cta-input {
+      appearance: none; -webkit-appearance: none; cursor: pointer;
+      background: rgba(255,255,255,.07); color: #fff;
+      border: 2px solid rgba(255,255,255,.15); border-radius: 12px;
+    }
+    .cta-select-wrapper select.cta-input:focus { border-color: #FF8412; background: rgba(255,255,255,.1); }
     .cta-select-wrapper select.cta-input option { color: #1a1a1a; background: #fff; }
     .cta-select-wrapper::after { border-right-color: rgba(255,255,255,.5); border-bottom-color: rgba(255,255,255,.5); }
     .cta-button {
