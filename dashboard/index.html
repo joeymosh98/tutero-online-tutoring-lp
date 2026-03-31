@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tutero — Landing Page Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="dash-header">
+    <div class="dash-header-inner">
+      <div class="dash-logo">
+        <img src="../lp/online-tutoring/a/images/tutero-logo.svg" alt="Tutero" class="dash-logo-img">
+        <span class="dash-title">Landing Pages</span>
+      </div>
+      <div class="dash-header-actions">
+        <span class="dash-page-count" id="pageCount"></span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Division Tabs -->
+  <nav class="dash-tabs" id="divisionTabs"></nav>
+
+  <!-- Toolbar -->
+  <div class="dash-toolbar">
+    <div class="dash-toolbar-inner">
+      <div class="dash-search">
+        <svg class="dash-search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/>
+        </svg>
+        <input type="text" id="searchInput" placeholder="Search landing pages..." class="dash-search-input">
+      </div>
+      <div class="dash-dropdowns">
+        <select id="filterStatus" class="dash-select">
+          <option value="all">All statuses</option>
+          <option value="draft">Draft</option>
+          <option value="active">Active</option>
+          <option value="paused">Paused</option>
+          <option value="archived">Archived</option>
+        </select>
+        <select id="filterBuiltWith" class="dash-select">
+          <option value="all">All platforms</option>
+          <option value="custom-html">Custom HTML</option>
+          <option value="webflow">Webflow</option>
+        </select>
+        <select id="filterGrade" class="dash-select">
+          <option value="all">All grades</option>
+          <option value="green">Green</option>
+          <option value="amber">Amber</option>
+          <option value="red">Red</option>
+          <option value="ungraded">Ungraded</option>
+        </select>
+        <select id="sortBy" class="dash-select dash-select--sort">
+          <option value="name-asc">Name A–Z</option>
+          <option value="name-desc">Name Z–A</option>
+          <option value="newest">Newest first</option>
+          <option value="oldest">Oldest first</option>
+          <option value="grade-desc">Grade high–low</option>
+          <option value="grade-asc">Grade low–high</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <!-- Card Grid -->
+  <main class="dash-main">
+    <div class="dash-grid" id="pageGrid"></div>
+    <div class="dash-empty" id="emptyState" style="display:none;">
+      <p>No landing pages match your filters.</p>
+    </div>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
