@@ -61,18 +61,22 @@ function setModalSubject(subject){
   var el=document.getElementById('modalSubject');
   if(subject){el.textContent='a '+subject;}else{el.textContent='a';}
 }
+function clearAllModalErrors(){var s=document.getElementById('ms0');if(s)clearStepErrors(s);var s3=document.getElementById('ms3');if(s3)clearStepErrors(s3)}
 function openModal(){
   setModalSubject();
+  clearAllModalErrors();
   modalOverlay.classList.add('active');
   document.getElementById('mStudentName').focus({preventScroll:true});
 }
 window.openModalWithSubject=function(subject){
   setModalSubject(subject);
+  clearAllModalErrors();
   modalOverlay.classList.add('active');
   document.getElementById('mStudentName').focus({preventScroll:true});
 };
 window.openModalWithYear=function(year){
   setModalSubject();
+  clearAllModalErrors();
   document.getElementById('mYearLevel').value=year;
   modalOverlay.classList.add('active');
   document.getElementById('mStudentName').focus({preventScroll:true});
@@ -92,13 +96,39 @@ function mGoTo(n){mSteps.forEach(s=>s.classList.remove('active'));mSteps[n].clas
 // Auto-capitalise helper
 function capitalise(str){return str.charAt(0).toUpperCase()+str.slice(1)}
 
-// Enter key submits the current step
-function enterToSubmit(stepEl,btnEl){stepEl.querySelectorAll('input,select').forEach(function(el){el.addEventListener('keydown',function(e){if(e.key==='Enter'&&!btnEl.disabled){e.preventDefault();btnEl.click()}})})}
+// ── Inline Validation Helpers ──
+function showFieldError(input){
+  var wrap=input.closest('.field-wrap')||input.closest('.select-wrapper');
+  if(wrap) wrap.classList.add('has-error');
+}
+function clearFieldError(input){
+  var wrap=input.closest('.field-wrap')||input.closest('.select-wrapper');
+  if(wrap) wrap.classList.remove('has-error');
+}
+function clearStepErrors(stepEl){
+  stepEl.querySelectorAll('.has-error').forEach(function(el){el.classList.remove('has-error')});
+}
+function toggleBtn(btn,enabled){
+  if(enabled){btn.classList.remove('btn-disabled')}else{btn.classList.add('btn-disabled')}
+}
+
+// Enter key submits the current step (with validation feedback)
+function enterToSubmit(stepEl,btnEl,validateFn){stepEl.querySelectorAll('input,select').forEach(function(el){el.addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();if(!btnEl.classList.contains('btn-disabled')){btnEl.click()}else if(validateFn){validateFn()}}})})}
 
 // Step 1: Student info
 const mSN=document.getElementById('mStudentName'),mYL=document.getElementById('mYearLevel'),mTo2=document.getElementById('mToStep2');
-[mSN,mYL].forEach(i=>i.addEventListener('input',()=>{mTo2.disabled=!(mSN.value.trim()&&mYL.value.trim())}));
+function validateModalStep0(){
+  var valid=true;
+  if(!mSN.value.trim()){showFieldError(mSN);valid=false}else{clearFieldError(mSN)}
+  if(!mYL.value.trim()){showFieldError(mYL);valid=false}else{clearFieldError(mYL)}
+  return valid;
+}
+[mSN,mYL].forEach(i=>i.addEventListener('input',()=>{
+  toggleBtn(mTo2,mSN.value.trim()&&mYL.value.trim());
+  if(i.value.trim()) clearFieldError(i);
+}));
 mTo2.addEventListener('click',()=>{
+  if(mTo2.classList.contains('btn-disabled')){validateModalStep0();return}
   const name=capitalise(mSN.value.trim());
   mSN.value=name;
   document.getElementById('mGoalName').textContent=name;
@@ -106,7 +136,7 @@ mTo2.addEventListener('click',()=>{
   document.getElementById('mCtaName').textContent=name;
   mGoTo(1);
 });
-enterToSubmit(mSteps[0],mTo2);
+enterToSubmit(mSteps[0],mTo2,validateModalStep0);
 
 // Step 2: Goal pills (auto-advance)
 document.querySelectorAll('#mGoalPills .modal-pill').forEach(p=>{
@@ -153,11 +183,25 @@ function formatPhone(input,store){
     input.setSelectionRange(pos+diff,pos+diff);
   }
 }
-function checkStep4(){mSub.disabled=!(mPN.value.trim()&&isValidEmail(mEM.value.trim())&&phoneDigits.length>=10&&mST.value)}
-[mPN,mEM,mPH].forEach(i=>i.addEventListener('input',checkStep4));
-mST.addEventListener('change',checkStep4);
-document.getElementById('mBack3').addEventListener('click',()=>mGoTo(2));
+function validateModalStep3(){
+  var valid=true;
+  if(!mPN.value.trim()){showFieldError(mPN);valid=false}else{clearFieldError(mPN)}
+  if(!isValidEmail(mEM.value.trim())){showFieldError(mEM);valid=false}else{clearFieldError(mEM)}
+  if(phoneDigits.length<10){showFieldError(mPH);valid=false}else{clearFieldError(mPH)}
+  if(!mST.value){showFieldError(mST);valid=false}else{clearFieldError(mST)}
+  return valid;
+}
+function checkStep4(){toggleBtn(mSub,mPN.value.trim()&&isValidEmail(mEM.value.trim())&&phoneDigits.length>=10&&mST.value)}
+[mPN,mEM,mPH].forEach(i=>i.addEventListener('input',()=>{
+  checkStep4();
+  if(i===mPN&&mPN.value.trim()) clearFieldError(mPN);
+  if(i===mEM&&isValidEmail(mEM.value.trim())) clearFieldError(mEM);
+  if(i===mPH&&phoneDigits.length>=10) clearFieldError(mPH);
+}));
+mST.addEventListener('change',()=>{checkStep4();if(mST.value) clearFieldError(mST)});
+document.getElementById('mBack3').addEventListener('click',()=>{clearStepErrors(mSteps[3]);mGoTo(2)});
 mSub.addEventListener('click',()=>{
+  if(mSub.classList.contains('btn-disabled')){validateModalStep3();return}
   var selectedGoal=document.querySelector('#mGoalPills .modal-pill.selected');
   var selectedUrgency=document.querySelector('#mUrgencyPills .modal-pill.selected');
   submitLeadData({
@@ -177,26 +221,52 @@ mSub.addEventListener('click',()=>{
   document.getElementById('modalSuccess').classList.add('active');
   launchConfetti();
 });
-enterToSubmit(mSteps[3],mSub);
+enterToSubmit(mSteps[3],mSub,validateModalStep3);
 
 // ── Bottom CTA ──
 let currentStep=0, selectedSubject='';
 const steps=[document.getElementById('ctaStep0'),document.getElementById('ctaStep1'),document.getElementById('ctaStep2')];
 const dots=document.querySelectorAll('.cta-step-dot');
 const success=document.getElementById('ctaSuccess');
-function goToStep(n){steps.forEach(s=>s.classList.remove('active'));success.classList.remove('active');steps[n].classList.add('active');currentStep=n;dots.forEach((d,i)=>{d.classList.remove('active','done');if(i<n)d.classList.add('done');if(i===n)d.classList.add('active')})}
+function goToStep(n){steps.forEach(s=>{s.classList.remove('active');clearStepErrors(s)});success.classList.remove('active');steps[n].classList.add('active');currentStep=n;dots.forEach((d,i)=>{d.classList.remove('active','done');if(i<n)d.classList.add('done');if(i===n)d.classList.add('active')})}
 document.querySelectorAll('.subject-pill').forEach(pill=>{pill.addEventListener('click',()=>{document.querySelectorAll('.subject-pill').forEach(p=>p.classList.remove('selected'));pill.classList.add('selected');selectedSubject=pill.dataset.subject;setTimeout(()=>goToStep(1),350)})});
 const studentName=document.getElementById('studentName'),yearLevel=document.getElementById('yearLevel'),toStep3=document.getElementById('toStep3');
-[studentName,yearLevel].forEach(i=>i.addEventListener('input',()=>{toStep3.disabled=!(studentName.value.trim()&&yearLevel.value.trim())}));
-toStep3.addEventListener('click',()=>goToStep(2));
-enterToSubmit(steps[1],toStep3);
+function validateCtaStep1(){
+  var valid=true;
+  if(!studentName.value.trim()){showFieldError(studentName);valid=false}else{clearFieldError(studentName)}
+  if(!yearLevel.value.trim()){showFieldError(yearLevel);valid=false}else{clearFieldError(yearLevel)}
+  return valid;
+}
+[studentName,yearLevel].forEach(i=>i.addEventListener('input',()=>{
+  toggleBtn(toStep3,studentName.value.trim()&&yearLevel.value.trim());
+  if(i.value.trim()) clearFieldError(i);
+}));
+toStep3.addEventListener('click',()=>{
+  if(toStep3.classList.contains('btn-disabled')){validateCtaStep1();return}
+  goToStep(2);
+});
+enterToSubmit(steps[1],toStep3,validateCtaStep1);
 const parentName=document.getElementById('parentName'),parentEmail=document.getElementById('parentEmail'),parentPhone=document.getElementById('parentPhone'),btmState=document.getElementById('btmState'),submitLead=document.getElementById('submitLead');
 var btmPhone={digits:''};
 parentPhone.addEventListener('input',()=>{formatPhone(parentPhone,btmPhone)});
-function checkBtmContact(){submitLead.disabled=!(parentName.value.trim()&&isValidEmail(parentEmail.value.trim())&&btmPhone.digits.length>=10&&btmState.value)}
-[parentName,parentEmail,parentPhone].forEach(i=>i.addEventListener('input',checkBtmContact));
-btmState.addEventListener('change',checkBtmContact);
+function validateCtaStep2(){
+  var valid=true;
+  if(!parentName.value.trim()){showFieldError(parentName);valid=false}else{clearFieldError(parentName)}
+  if(!isValidEmail(parentEmail.value.trim())){showFieldError(parentEmail);valid=false}else{clearFieldError(parentEmail)}
+  if(btmPhone.digits.length<10){showFieldError(parentPhone);valid=false}else{clearFieldError(parentPhone)}
+  if(!btmState.value){showFieldError(btmState);valid=false}else{clearFieldError(btmState)}
+  return valid;
+}
+function checkBtmContact(){toggleBtn(submitLead,parentName.value.trim()&&isValidEmail(parentEmail.value.trim())&&btmPhone.digits.length>=10&&btmState.value)}
+[parentName,parentEmail,parentPhone].forEach(i=>i.addEventListener('input',()=>{
+  checkBtmContact();
+  if(i===parentName&&parentName.value.trim()) clearFieldError(parentName);
+  if(i===parentEmail&&isValidEmail(parentEmail.value.trim())) clearFieldError(parentEmail);
+  if(i===parentPhone&&btmPhone.digits.length>=10) clearFieldError(parentPhone);
+}));
+btmState.addEventListener('change',()=>{checkBtmContact();if(btmState.value) clearFieldError(btmState)});
 submitLead.addEventListener('click',()=>{
+  if(submitLead.classList.contains('btn-disabled')){validateCtaStep2();return}
   submitLeadData({
     source: 'bottom_cta',
     student_name: studentName.value.trim(),
@@ -211,7 +281,7 @@ submitLead.addEventListener('click',()=>{
   });
   steps.forEach(s=>s.classList.remove('active'));document.querySelector('.cta-steps').style.display='none';document.querySelector('.bottom-cta-heading').style.display='none';document.querySelector('.bottom-cta-sub').style.display='none';document.querySelector('.bottom-cta-emoji').style.display='none';document.getElementById('successName').textContent=studentName.value.trim();document.getElementById('successSubject').textContent=selectedSubject;success.classList.add('active');launchConfetti()
 });
-enterToSubmit(steps[2],submitLead);
+enterToSubmit(steps[2],submitLead,validateCtaStep2);
 
 // ── Scroll Reveal ──
 const revealEls=document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale');

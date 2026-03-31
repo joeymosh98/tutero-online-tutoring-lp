@@ -144,9 +144,15 @@
         <div class="modal-form-step active" id="ms0">
           <h3>Who needs <span id="modalSubject">a</span> tutor?</h3>
           <p class="modal-sub">We'll match your child with a tutor who's perfect for them.</p>
-          <input class="modal-input" type="text" id="mStudentName" placeholder="Student's first name" autocomplete="off">
-          <input class="modal-input" type="text" id="mYearLevel" placeholder="Year level (e.g. Year 7)" autocomplete="off">
-          <button class="modal-submit" id="mToStep2" disabled>Continue &rarr;</button>
+          <div class="field-wrap">
+            <input class="modal-input" type="text" id="mStudentName" placeholder="Student's first name" autocomplete="off">
+            <span class="field-error">Please enter the student's first name</span>
+          </div>
+          <div class="field-wrap">
+            <input class="modal-input" type="text" id="mYearLevel" placeholder="Year level (e.g. Year 7)" autocomplete="off">
+            <span class="field-error">Please enter a year level</span>
+          </div>
+          <button class="modal-submit btn-disabled" id="mToStep2">Continue &rarr;</button>
           <p class="modal-privacy">&#128274; Free consultation &middot; No commitment required</p>
         </div>
         <!-- Step 2: Goal -->
@@ -177,9 +183,18 @@
         <div class="modal-form-step" id="ms3">
           <h3>Find <span id="mStudentNameEcho"></span>'s tutor</h3>
           <p class="modal-sub">Where should we send the tutor match?</p>
-          <input class="modal-input" type="text" id="mParentName" placeholder="Your full name" autocomplete="off">
-          <input class="modal-input" type="email" id="mEmail" placeholder="Email address" autocomplete="off">
-          <input class="modal-input" type="tel" id="mPhone" placeholder="Phone number" autocomplete="off">
+          <div class="field-wrap">
+            <input class="modal-input" type="text" id="mParentName" placeholder="Your full name" autocomplete="off">
+            <span class="field-error">Please enter your name</span>
+          </div>
+          <div class="field-wrap">
+            <input class="modal-input" type="email" id="mEmail" placeholder="Email address" autocomplete="off">
+            <span class="field-error">Please enter a valid email address</span>
+          </div>
+          <div class="field-wrap">
+            <input class="modal-input" type="tel" id="mPhone" placeholder="Phone number" autocomplete="off">
+            <span class="field-error">Please enter a 10-digit phone number</span>
+          </div>
           <div class="select-wrapper modal-select-wrapper">
             <select class="modal-input" id="mState">
               <option value="" disabled selected>State / Territory</option>
@@ -192,8 +207,9 @@
               <option value="ACT">Australian Capital Territory</option>
               <option value="NT">Northern Territory</option>
             </select>
+            <span class="field-error">Please select your state</span>
           </div>
-          <button class="modal-submit" id="mSubmit" disabled>Find <span id="mCtaName">your</span>'s tutor &rarr;</button>
+          <button class="modal-submit btn-disabled" id="mSubmit">Find <span id="mCtaName">your</span>'s tutor &rarr;</button>
           <button class="modal-back" id="mBack3">&larr; Back</button>
           <div class="modal-social-proof"><span class="proof-dot"></span> 32 parents enquired this morning</div>
           <div class="modal-testimonial">"Best decision we made for Sarah's confidence." <strong>— Michelle T.</strong></div>
@@ -236,7 +252,7 @@
           </div>
         </div>
         <div class="success-cta">
-          <a href="thank-you.html" class="success-cta-btn">Learn more about what's next &rarr;</a>
+          <a href="/tp/online-tutoring/a/" class="success-cta-btn">Learn more about what's next &rarr;</a>
         </div>
       </div>
     </div>
@@ -752,17 +768,32 @@
     </div>
     <div class="cta-form-step" id="ctaStep1">
       <p style="color:rgba(255,255,255,.5);font-size:13px;font-weight:600;margin-bottom:4px">Step 2: Tell us about your child</p>
-      <input class="cta-input" type="text" id="studentName" placeholder="Student's first name">
-      <input class="cta-input" type="text" id="yearLevel" placeholder="Year level (e.g. Year 7)">
-      <button class="cta-submit" id="toStep3" disabled>Next &rarr;</button>
+      <div class="field-wrap">
+        <input class="cta-input" type="text" id="studentName" placeholder="Student's first name">
+        <span class="field-error">Please enter the student's first name</span>
+      </div>
+      <div class="field-wrap">
+        <input class="cta-input" type="text" id="yearLevel" placeholder="Year level (e.g. Year 7)">
+        <span class="field-error">Please enter a year level</span>
+      </div>
+      <button class="cta-submit btn-disabled" id="toStep3">Next &rarr;</button>
       <button class="cta-back-btn" onclick="goToStep(0)">&larr; Back to subjects</button>
     </div>
     <div class="cta-form-step" id="ctaStep2">
       <p style="color:rgba(255,255,255,.5);font-size:13px;font-weight:600;margin-bottom:4px">Step 3: How can we reach you?</p>
-      <input class="cta-input" type="text" id="parentName" placeholder="Your full name">
+      <div class="field-wrap">
+        <input class="cta-input" type="text" id="parentName" placeholder="Your full name">
+        <span class="field-error">Please enter your name</span>
+      </div>
       <div class="cta-input-row">
-        <input class="cta-input" type="email" id="parentEmail" placeholder="Email">
-        <input class="cta-input" type="tel" id="parentPhone" placeholder="Phone">
+        <div class="field-wrap">
+          <input class="cta-input" type="email" id="parentEmail" placeholder="Email">
+          <span class="field-error">Please enter a valid email</span>
+        </div>
+        <div class="field-wrap">
+          <input class="cta-input" type="tel" id="parentPhone" placeholder="Phone">
+          <span class="field-error">10-digit phone number required</span>
+        </div>
       </div>
       <div class="select-wrapper cta-select-wrapper">
         <select class="cta-input" id="btmState">
@@ -776,8 +807,9 @@
           <option value="ACT">Australian Capital Territory</option>
           <option value="NT">Northern Territory</option>
         </select>
+        <span class="field-error">Please select your state</span>
       </div>
-      <button class="cta-submit" id="submitLead" disabled>Find my child's tutor &#127881;</button>
+      <button class="cta-submit btn-disabled" id="submitLead">Find my child's tutor &#127881;</button>
       <button class="cta-back-btn" onclick="goToStep(1)">&larr; Back</button>
     </div>
     <div class="cta-success" id="ctaSuccess">
