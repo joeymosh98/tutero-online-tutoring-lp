@@ -1,0 +1,66 @@
+{
+  "divisions": [
+    {
+      "id": "tutoring",
+      "name": "Tutoring",
+      "description": "Private tutoring landing pages for parents seeking Prep through Year 12 support.",
+      "icon": "graduation-cap",
+      "color": "orange",
+      "pages": [
+        {
+          "id": "online-tutoring",
+          "name": "Online Tutoring",
+          "description": "Private tutoring for students in Prep through Year 12",
+          "path": "/lp/online-tutoring",
+          "status": "active",
+          "builtWith": "custom-html",
+          "grade": null,
+          "hasSplitter": true,
+          "variants": [
+            {
+              "id": "a",
+              "label": "Full Page",
+              "path": "/lp/online-tutoring/a/"
+            },
+            {
+              "id": "b",
+              "label": "Hero Only",
+              "path": "/lp/online-tutoring/b/"
+            }
+          ],
+          "splitterPath": "/lp/online-tutoring/",
+          "createdAt": "2025-03-01",
+          "tags": ["google-ads", "ab-test"]
+        },
+        {
+          "id": "special-needs-tutoring",
+          "name": "Special Needs Tutoring",
+          "description": "Tutoring for students with ADHD, Dyslexia & ASD",
+          "path": "/lp/special-needs-tutoring",
+          "status": "active",
+          "builtWith": "custom-html",
+          "grade": null,
+          "hasSplitter": false,
+          "variants": [
+            {
+              "id": "a",
+              "label": "Main",
+              "path": "/lp/special-needs-tutoring/a/"
+            }
+          ],
+          "splitterPath": null,
+          "createdAt": "2025-03-15",
+          "tags": ["google-ads", "special-needs"]
+        }
+      ]
+    },
+    {
+      "id": "schools",
+      "name": "Schools",
+      "description": "Landing pages for schools, departments, and institutional partnerships.",
+      "icon": "building",
+      "color": "dark-blue",
+      "pages": []
+    }
+  ]
+}
