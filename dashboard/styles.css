@@ -332,17 +332,101 @@ body {
 
 .lp-card-preview {
   position: relative;
-  height: 220px;
+  height: 240px;
   background: #e9e9ea;
   overflow: hidden;
   border-bottom: 1px solid var(--color-border);
 }
 
-.lp-card-preview iframe {
+/* Panels layout */
+
+.lp-card-preview-panels {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 0 16px;
+  height: 100%;
+  position: relative;
+  z-index: 1;
+}
+
+.lp-preview-panel {
+  display: flex;
+  flex-direction: column;
+  padding-top: 10px;
+}
+
+.lp-preview-panel--desktop {
+  flex: 1;
+  min-width: 0;
+}
+
+.lp-preview-panel--mobile {
+  flex-shrink: 0;
+  width: 100px;
+}
+
+.lp-preview-label {
+  display: block;
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #999;
+  margin-bottom: 6px;
+}
+
+/* Desktop frame */
+
+.lp-preview-frame--desktop {
+  position: relative;
+  width: 100%;
+  height: 190px;
+  overflow: hidden;
+  border-radius: 4px;
+  background: #fff;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+}
+
+.lp-preview-frame--desktop iframe {
   width: 1440px;
   height: 900px;
   border: none;
-  transform: scale(0.264);
+  transform-origin: top left;
+  pointer-events: none;
+}
+
+/* Mobile frame — phone appearance */
+
+.lp-preview-frame--mobile {
+  position: relative;
+  width: 80px;
+  margin: 0 auto;
+  height: 164px;
+  overflow: hidden;
+  border-radius: 12px;
+  background: #fff;
+  border: 3px solid #333;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+}
+
+.lp-preview-frame--mobile::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 30px;
+  height: 4px;
+  background: #333;
+  border-radius: 0 0 4px 4px;
+  z-index: 2;
+}
+
+.lp-preview-frame--mobile iframe {
+  width: 375px;
+  height: 812px;
+  border: none;
   transform-origin: top left;
   pointer-events: none;
 }
@@ -600,5 +684,9 @@ body.division-schools .lp-action-btn:hover {
   .dash-select--sort { border-left: none; padding-left: 12px; }
   .dash-main { padding: 0 16px; margin: 16px auto; }
   .dash-grid { grid-template-columns: 1fr; }
-  .lp-card-preview { height: 180px; }
+  .lp-card-preview { height: 200px; }
+  .lp-card-preview-panels { gap: 10px; padding: 0 10px; }
+  .lp-preview-panel--mobile { width: 80px; }
+  .lp-preview-frame--desktop { height: 156px; }
+  .lp-preview-frame--mobile { height: 140px; }
 }
