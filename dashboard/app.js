@@ -266,6 +266,16 @@
       '<div class="lp-card-preview" data-preview-src="' + previewPath + '">' +
         '<div class="lp-card-preview-loading">Loading preview&hellip;</div>' +
         '<span class="lp-card-status ' + statusClass + '">' + page.status + '</span>' +
+        '<div class="lp-card-preview-panels">' +
+          '<div class="lp-preview-panel lp-preview-panel--desktop">' +
+            '<span class="lp-preview-label">Desktop</span>' +
+            '<div class="lp-preview-frame lp-preview-frame--desktop"></div>' +
+          '</div>' +
+          '<div class="lp-preview-panel lp-preview-panel--mobile">' +
+            '<span class="lp-preview-label">Mobile</span>' +
+            '<div class="lp-preview-frame lp-preview-frame--mobile"></div>' +
+          '</div>' +
+        '</div>' +
       '</div>' +
       '<div class="lp-card-body">' +
         '<h3 class="lp-card-name">' + page.name + '</h3>' +
@@ -331,21 +341,49 @@
   function loadPreview(container) {
     var src = container.getAttribute('data-preview-src');
     if (!src) return;
-    var iframe = document.createElement('iframe');
-    iframe.src = src;
-    iframe.setAttribute('loading', 'lazy');
-    iframe.setAttribute('sandbox', 'allow-same-origin');
-    iframe.setAttribute('tabindex', '-1');
-    iframe.setAttribute('aria-hidden', 'true');
-    iframe.addEventListener('load', function() {
-      var loading = container.querySelector('.lp-card-preview-loading');
-      if (loading) loading.classList.add('hidden');
-    });
+
+    var desktopFrame = container.querySelector('.lp-preview-frame--desktop');
+    var mobileFrame = container.querySelector('.lp-preview-frame--mobile');
+    var loadingEl = container.querySelector('.lp-card-preview-loading');
+    var loadCount = 0;
+
+    function onIframeLoad() {
+      loadCount++;
+      if (loadCount >= 2 && loadingEl) {
+        loadingEl.classList.add('hidden');
+      }
+    }
+
+    // Desktop iframe
+    if (desktopFrame) {
+      var desktopIframe = document.createElement('iframe');
+      desktopIframe.src = src;
+      desktopIframe.setAttribute('loading', 'lazy');
+      desktopIframe.setAttribute('sandbox', 'allow-same-origin');
+      desktopIframe.setAttribute('tabindex', '-1');
+      desktopIframe.setAttribute('aria-hidden', 'true');
+      desktopIframe.addEventListener('load', onIframeLoad);
+      var frameWidth = desktopFrame.offsetWidth || 232;
+      desktopIframe.style.transform = 'scale(' + (frameWidth / 1440) + ')';
+      desktopFrame.appendChild(desktopIframe);
+    }
+
+    // Mobile iframe
+    if (mobileFrame) {
+      var mobileIframe = document.createElement('iframe');
+      mobileIframe.src = src;
+      mobileIframe.setAttribute('loading', 'lazy');
+      mobileIframe.setAttribute('sandbox', 'allow-same-origin');
+      mobileIframe.setAttribute('tabindex', '-1');
+      mobileIframe.setAttribute('aria-hidden', 'true');
+      mobileIframe.addEventListener('load', onIframeLoad);
+      mobileIframe.style.transform = 'scale(0.197)';
+      mobileFrame.appendChild(mobileIframe);
+    }
+
     setTimeout(function() {
-      var loading = container.querySelector('.lp-card-preview-loading');
-      if (loading) loading.classList.add('hidden');
+      if (loadingEl) loadingEl.classList.add('hidden');
     }, 5000);
-    container.insertBefore(iframe, container.firstChild);
   }
 
   // ── Event Listeners ──
