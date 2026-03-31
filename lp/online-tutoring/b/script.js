@@ -26,6 +26,21 @@ function submitLeadData(data) {
   console.log('[Lead]', data);
 }
 
+// ── Thank You Page URL Builder ──
+function buildThankYouUrl(name, subject) {
+  var base = '/tp/online-tutoring/a/';
+  var p = new URLSearchParams();
+  if (name) p.set('studentName', name);
+  if (subject) p.set('subject', subject);
+  var qs = p.toString();
+  return base + (qs ? '?' + qs : '');
+}
+
+function updateThankYouLinks(name, subject) {
+  var url = buildThankYouUrl(name, subject);
+  document.querySelectorAll('.success-cta-btn').forEach(function(a) { a.href = url; });
+}
+
 // ── Hero Image Carousel ──
 (function(){
   const imgs=document.querySelectorAll('.image-wrapper img');
@@ -213,6 +228,7 @@ mSub.addEventListener('click',()=>{
   document.getElementById('mSuccessName').textContent=capitalise(mSN.value.trim());
   document.getElementById('modalSuccess').classList.add('active');
   launchConfetti();
+  updateThankYouLinks(mSN.value.trim(), (document.getElementById('modalSubject').textContent||'').replace(/^a\s*/,''));
 });
 enterToSubmit(mSteps[3],mSub,validateModalStep3);
 

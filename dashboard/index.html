@@ -16,7 +16,10 @@
     <div class="dash-header-inner">
       <div class="dash-logo">
         <img src="../lp/online-tutoring/a/images/tutero-logo.svg" alt="Tutero" class="dash-logo-img">
-        <span class="dash-title">Landing Pages</span>
+        <div class="dash-page-toggle">
+          <button class="dash-toggle-btn active" data-page-type="lp">Landing Pages</button>
+          <button class="dash-toggle-btn" data-page-type="tp">Thank You Pages</button>
+        </div>
       </div>
       <div class="dash-header-actions">
         <span class="dash-page-count" id="pageCount"></span>
@@ -72,7 +75,7 @@
   <main class="dash-main">
     <div class="dash-grid" id="pageGrid"></div>
     <div class="dash-empty" id="emptyState" style="display:none;">
-      <p>No landing pages match your filters.</p>
+      <p>No pages match your filters.</p>
     </div>
   </main>
 

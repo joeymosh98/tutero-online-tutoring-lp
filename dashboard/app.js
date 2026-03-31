@@ -26,9 +26,15 @@
 
   var divisions = [];
   var currentDivision = null;
+  var currentPageType = 'lp'; // 'lp' or 'tp'
   var filters = { status: 'all', builtWith: 'all', grade: 'all' };
   var currentSort = 'name-asc';
   var currentSearch = '';
+
+  function getCurrentPages(division) {
+    if (!division) return [];
+    return currentPageType === 'tp' ? (division.thankYouPages || []) : division.pages;
+  }
 
   // ── DOM refs ──
 
@@ -90,7 +96,7 @@
     inner += divisions.map(function(div) {
       var colors = divisionColors[div.color] || divisionColors['orange'];
       var icon = divisionIcons[div.icon] || '';
-      var count = div.pages.length;
+      var count = getCurrentPages(div).length;
       return '<button class="dash-tab" data-division="' + div.id + '" ' +
         'style="--tab-color:' + colors.solid + ';--tab-color-bg:' + colors.bg + ';">' +
         '<span class="dash-tab-icon">' + icon + '</span>' +
@@ -135,7 +141,7 @@
 
   function getFilteredAndSorted() {
     if (!currentDivision) return [];
-    var pages = currentDivision.pages.slice();
+    var pages = getCurrentPages(currentDivision).slice();
 
     // Filter
     pages = pages.filter(function(page) {
@@ -191,7 +197,7 @@
     if (!currentDivision) return;
 
     // Division with zero pages
-    if (currentDivision.pages.length === 0) {
+    if (getCurrentPages(currentDivision).length === 0) {
       grid.innerHTML = '';
       emptyState.style.display = 'none';
       showDivisionEmpty();
@@ -249,6 +255,27 @@
         '</a>';
     }
 
+    // Linkage badge (LP ↔ TP)
+    var linkedBadge = '';
+    if (currentPageType === 'lp' && page.thankYouPageId && currentDivision.thankYouPages) {
+      var linkedTp = currentDivision.thankYouPages.find(function(tp) { return tp.id === page.thankYouPageId; });
+      if (linkedTp) {
+        linkedBadge = '<a href="' + linkedTp.variants[0].path + '" target="_blank" class="lp-variant-badge lp-linked-badge" title="Thank You Page">' +
+          '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9,11 12,14 15,11"/><line x1="12" y1="14" x2="12" y2="4"/><path d="M20 21H4a2 2 0 01-2-2v-2h20v2a2 2 0 01-2 2z"/></svg>' +
+          '&rarr; Thank You Page' +
+        '</a>';
+      }
+    }
+    if (currentPageType === 'tp' && page.linkedLandingPageId && currentDivision.pages) {
+      var linkedLp = currentDivision.pages.find(function(lp) { return lp.id === page.linkedLandingPageId; });
+      if (linkedLp) {
+        linkedBadge = '<a href="' + linkedLp.variants[0].path + '" target="_blank" class="lp-variant-badge lp-linked-badge" title="Landing Page">' +
+          '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15,13 12,10 9,13"/><line x1="12" y1="10" x2="12" y2="20"/><path d="M20 3H4a2 2 0 00-2 2v2h20V5a2 2 0 00-2-2z"/></svg>' +
+          '&larr; Landing Page' +
+        '</a>';
+      }
+    }
+
     var tags = (page.tags || []).map(function(t) {
       return '<span class="lp-tag">' + t + '</span>';
     }).join('');
@@ -281,7 +308,7 @@
         '<h3 class="lp-card-name">' + page.name + '</h3>' +
         '<p class="lp-card-desc">' + page.description + '</p>' +
         propsRow +
-        '<div class="lp-card-meta">' + variantBadges + splitterBadge + tags + '</div>' +
+        '<div class="lp-card-meta">' + variantBadges + splitterBadge + linkedBadge + tags + '</div>' +
         actions +
       '</div>' +
     '</div>';
@@ -289,16 +316,16 @@
 
   function updateCount() {
     if (!currentDivision) return;
-    var total = currentDivision.pages.length;
-    var active = currentDivision.pages.filter(function(p) { return p.status === 'active'; }).length;
+    var pages = getCurrentPages(currentDivision);
+    var total = pages.length;
+    var active = pages.filter(function(p) { return p.status === 'active'; }).length;
     pageCount.textContent = active + ' active / ' + total + ' total';
   }
 
   // ── Division Empty State ──
 
   function showDivisionEmpty() {
-    var existing = document.getElementById('divisionEmpty');
-    if (existing) { existing.style.display = ''; return; }
+    hideDivisionEmpty();
 
     var colors = divisionColors[currentDivision.color] || divisionColors['orange'];
     var icon = divisionIcons[currentDivision.icon] || divisionIcons['graduation-cap'];
@@ -306,10 +333,11 @@
     var el = document.createElement('div');
     el.id = 'divisionEmpty';
     el.className = 'dash-empty-division';
+    var pageTypeLabel = currentPageType === 'tp' ? 'thank you pages' : 'landing pages';
     el.innerHTML =
       '<div class="dash-empty-division-icon" style="background:' + colors.bg + ';color:' + colors.solid + ';">' + icon + '</div>' +
-      '<h3>No ' + currentDivision.name.toLowerCase() + ' landing pages yet</h3>' +
-      '<p>Landing pages for the ' + currentDivision.name + ' division will appear here once they are created.</p>';
+      '<h3>No ' + currentDivision.name.toLowerCase() + ' ' + pageTypeLabel + ' yet</h3>' +
+      '<p>' + (currentPageType === 'tp' ? 'Thank you pages' : 'Landing pages') + ' for the ' + currentDivision.name + ' division will appear here once they are created.</p>';
 
     grid.parentNode.appendChild(el);
   }
@@ -416,6 +444,29 @@
   // ── Action handlers (delegated) ──
 
   document.addEventListener('click', function(e) {
+    // Page type toggle
+    var toggleBtn = e.target.closest('.dash-toggle-btn');
+    if (toggleBtn) {
+      var newType = toggleBtn.getAttribute('data-page-type');
+      if (newType !== currentPageType) {
+        currentPageType = newType;
+        document.querySelectorAll('.dash-toggle-btn').forEach(function(b) { b.classList.remove('active'); });
+        toggleBtn.classList.add('active');
+        filters = { status: 'all', builtWith: 'all', grade: 'all' };
+        currentSort = 'name-asc';
+        currentSearch = '';
+        searchInput.value = '';
+        filterStatus.value = 'all';
+        filterBuiltWith.value = 'all';
+        filterGrade.value = 'all';
+        sortBy.value = 'name-asc';
+        searchInput.placeholder = currentPageType === 'tp' ? 'Search thank you pages...' : 'Search landing pages...';
+        renderTabs();
+        render();
+      }
+      return;
+    }
+
     // Tab click
     var tab = e.target.closest('.dash-tab');
     if (tab) {
@@ -431,7 +482,7 @@
     var action = btn.getAttribute('data-action');
     var pageId = btn.getAttribute('data-page');
     if (!currentDivision) return;
-    var page = currentDivision.pages.find(function(p) { return p.id === pageId; });
+    var page = getCurrentPages(currentDivision).find(function(p) { return p.id === pageId; });
     if (!page) return;
 
     if (action === 'copy-link') {

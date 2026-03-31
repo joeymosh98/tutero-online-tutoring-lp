@@ -30,7 +30,8 @@
           ],
           "splitterPath": "/lp/online-tutoring/",
           "createdAt": "2025-03-01",
-          "tags": ["google-ads", "ab-test"]
+          "tags": ["google-ads", "ab-test"],
+          "thankYouPageId": "online-tutoring-ty"
         },
         {
           "id": "special-needs-tutoring",
@@ -50,7 +51,31 @@
           ],
           "splitterPath": null,
           "createdAt": "2025-03-15",
-          "tags": ["google-ads", "special-needs"]
+          "tags": ["google-ads", "special-needs"],
+          "thankYouPageId": null
+        }
+      ],
+      "thankYouPages": [
+        {
+          "id": "online-tutoring-ty",
+          "name": "Online Tutoring — Thank You",
+          "description": "Post-conversion page for online tutoring leads",
+          "path": "/tp/online-tutoring",
+          "status": "active",
+          "builtWith": "custom-html",
+          "grade": null,
+          "hasSplitter": false,
+          "variants": [
+            {
+              "id": "a",
+              "label": "Main",
+              "path": "/tp/online-tutoring/a/"
+            }
+          ],
+          "splitterPath": null,
+          "createdAt": "2026-03-31",
+          "tags": ["thank-you"],
+          "linkedLandingPageId": "online-tutoring"
         }
       ]
     },
@@ -60,7 +85,8 @@
       "description": "Landing pages for schools, departments, and institutional partnerships.",
       "icon": "building",
       "color": "dark-blue",
-      "pages": []
+      "pages": [],
+      "thankYouPages": []
     }
   ]
 }

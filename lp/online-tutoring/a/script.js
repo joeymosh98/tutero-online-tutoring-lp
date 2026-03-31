@@ -26,6 +26,21 @@ function submitLeadData(data) {
   console.log('[Lead]', data);
 }
 
+// ── Thank You Page URL Builder ──
+function buildThankYouUrl(name, subject) {
+  var base = '/tp/online-tutoring/a/';
+  var p = new URLSearchParams();
+  if (name) p.set('studentName', name);
+  if (subject) p.set('subject', subject);
+  var qs = p.toString();
+  return base + (qs ? '?' + qs : '');
+}
+
+function updateThankYouLinks(name, subject) {
+  var url = buildThankYouUrl(name, subject);
+  document.querySelectorAll('.success-cta-btn').forEach(function(a) { a.href = url; });
+}
+
 // ── Hero Image Carousel ──
 (function(){
   const imgs=document.querySelectorAll('.image-wrapper img');
@@ -220,6 +235,7 @@ mSub.addEventListener('click',()=>{
   document.getElementById('mSuccessName').textContent=capitalise(mSN.value.trim());
   document.getElementById('modalSuccess').classList.add('active');
   launchConfetti();
+  updateThankYouLinks(mSN.value.trim(), (document.getElementById('modalSubject').textContent||'').replace(/^a\s*/,''));
 });
 enterToSubmit(mSteps[3],mSub,validateModalStep3);
 
@@ -279,7 +295,8 @@ submitLead.addEventListener('click',()=>{
     email: parentEmail.value.trim(),
     phone: parentPhone.value.trim()
   });
-  steps.forEach(s=>s.classList.remove('active'));document.querySelector('.cta-steps').style.display='none';document.querySelector('.bottom-cta-heading').style.display='none';document.querySelector('.bottom-cta-sub').style.display='none';document.querySelector('.bottom-cta-emoji').style.display='none';document.getElementById('successName').textContent=studentName.value.trim();document.getElementById('successSubject').textContent=selectedSubject;success.classList.add('active');launchConfetti()
+  steps.forEach(s=>s.classList.remove('active'));document.querySelector('.cta-steps').style.display='none';document.querySelector('.bottom-cta-heading').style.display='none';document.querySelector('.bottom-cta-sub').style.display='none';document.querySelector('.bottom-cta-emoji').style.display='none';document.getElementById('successName').textContent=studentName.value.trim();document.getElementById('successSubject').textContent=selectedSubject;success.classList.add('active');launchConfetti();
+  updateThankYouLinks(studentName.value.trim(), selectedSubject);
 });
 enterToSubmit(steps[2],submitLead,validateCtaStep2);
 
