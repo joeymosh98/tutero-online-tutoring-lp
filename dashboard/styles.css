@@ -71,6 +71,42 @@ body {
   border-left: 2px solid var(--color-border);
 }
 
+/* Page type toggle (Landing Pages / Thank You Pages) */
+
+.dash-page-toggle {
+  display: inline-flex;
+  background: #f0f0f1;
+  border-radius: var(--radius-sm);
+  padding: 3px;
+  gap: 2px;
+  margin-left: 16px;
+  padding-left: 16px;
+  border-left: 2px solid var(--color-border);
+}
+
+.dash-toggle-btn {
+  padding: 6px 16px;
+  border: none;
+  background: transparent;
+  border-radius: 6px;
+  font-family: var(--font-family);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.dash-toggle-btn:hover {
+  color: var(--color-text-secondary);
+}
+
+.dash-toggle-btn.active {
+  background: var(--color-surface);
+  color: var(--color-text);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+}
+
 .dash-page-count {
   font-size: 14px;
   color: var(--color-text-muted);
@@ -596,6 +632,15 @@ body {
 
 .lp-splitter-badge:hover {
   background: rgba(29, 73, 227, 0.2);
+}
+
+.lp-linked-badge {
+  background: rgba(76, 176, 146, 0.1);
+  color: var(--color-green);
+}
+
+.lp-linked-badge:hover {
+  background: rgba(76, 176, 146, 0.2);
 }
 
 /* Tags */
