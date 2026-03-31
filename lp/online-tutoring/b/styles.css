@@ -283,7 +283,10 @@
       transform:translateY(-60%) rotate(45deg); pointer-events:none;
     }
     .modal-select-wrapper { margin-bottom: 0; }
-    .modal-select-wrapper select.modal-input { appearance: none; -webkit-appearance: none; cursor: pointer; }
+    .modal-select-wrapper select.modal-input {
+      appearance: none; -webkit-appearance: none; cursor: pointer;
+      padding: 13px 16px; font-size: 14px; border: 1.5px solid #e0e0e0; border-radius: 10px;
+    }
     .cta-button {
       display: flex; align-items: center; justify-content: center; gap: 8px;
       width: 100%; padding: 16px 24px; background: #FF9533; color: #fff;
