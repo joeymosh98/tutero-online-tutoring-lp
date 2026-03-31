@@ -206,7 +206,7 @@ function checkStep4(){toggleBtn(mSub,mPN.value.trim()&&isValidEmail(mEM.value.tr
   if(i===mEM&&isValidEmail(mEM.value.trim())) clearFieldError(mEM);
   if(i===mPH&&phoneDigits.length>=10) clearFieldError(mPH);
 }));
-mST.addEventListener('change',()=>{checkStep4();if(mST.value) clearFieldError(mST)});
+mST.addEventListener('change',()=>{checkStep4();if(mST.value){clearFieldError(mST);mST.classList.remove('is-placeholder')}});
 document.getElementById('mBack3').addEventListener('click',()=>{clearStepErrors(mSteps[3]);mGoTo(2)});
 mSub.addEventListener('click',()=>{
   if(mSub.classList.contains('btn-disabled')){validateModalStep3();return}
@@ -231,6 +231,20 @@ mSub.addEventListener('click',()=>{
   updateThankYouLinks(mSN.value.trim(), (document.getElementById('modalSubject').textContent||'').replace(/^a\s*/,''));
 });
 enterToSubmit(mSteps[3],mSub,validateModalStep3);
+
+// ── Social Proof Counter Tick-up ──
+(function(){
+  var el=document.getElementById('proofCount');
+  if(!el) return;
+  var count=parseInt(el.textContent,10);
+  var ticks=0;
+  var timer=setInterval(function(){
+    ticks++;
+    count++;
+    el.textContent=count;
+    if(ticks>=2) clearInterval(timer);
+  },20000);
+})();
 
 // ── Confetti ──
 function launchConfetti(){const c=document.getElementById('confettiCanvas'),ctx=c.getContext('2d');c.width=window.innerWidth;c.height=window.innerHeight;const cols=['#FF8412','#F8B200','#4CB092','#00A3FF','#1D49E3','#FF6B6B'],ps=[];for(let i=0;i<120;i++)ps.push({x:c.width/2+(Math.random()-.5)*200,y:c.height/2,vx:(Math.random()-.5)*16,vy:Math.random()*-18-4,w:Math.random()*8+4,h:Math.random()*6+3,color:cols[Math.floor(Math.random()*cols.length)],rot:Math.random()*360,rs:(Math.random()-.5)*12,g:.3+Math.random()*.2,o:1});let f=0;function a(){ctx.clearRect(0,0,c.width,c.height);let alive=false;ps.forEach(p=>{p.x+=p.vx;p.vy+=p.g;p.y+=p.vy;p.rot+=p.rs;p.vx*=.99;if(f>40)p.o-=.015;if(p.o<=0)return;alive=true;ctx.save();ctx.translate(p.x,p.y);ctx.rotate(p.rot*Math.PI/180);ctx.globalAlpha=Math.max(0,p.o);ctx.fillStyle=p.color;ctx.fillRect(-p.w/2,-p.h/2,p.w,p.h);ctx.restore()});f++;if(alive)requestAnimationFrame(a);else ctx.clearRect(0,0,c.width,c.height)}a()}

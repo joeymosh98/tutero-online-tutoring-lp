@@ -360,6 +360,16 @@
     }
     .modal-input:focus { border-color: #FF8412; }
     .modal-input::placeholder { color: #bbb; }
+    /* Phone flag beside input */
+    .phone-field-wrap { position: relative; }
+    .phone-flag { position: absolute; left: 14px; top: 14px; font-size: 16px; line-height: 1; z-index: 1; pointer-events: none; }
+    .modal-input--phone { padding-left: 38px; }
+    .cta-input--phone { padding-left: 38px; }
+    /* Grey placeholder for unselected select */
+    select.modal-input.is-placeholder { color: #bbb; }
+    select.modal-input.is-placeholder option:not([disabled]) { color: #1a1a1a; }
+    select.cta-input.is-placeholder { color: rgba(255,255,255,.35); }
+    select.cta-input.is-placeholder option:not([disabled]) { color: #1a1a1a; }
     .modal-input-row { display: flex; gap: 10px; }
     .modal-input-row .modal-input { flex: 1; }
     .modal-submit {
