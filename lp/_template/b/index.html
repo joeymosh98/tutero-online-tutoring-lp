@@ -1873,6 +1873,7 @@
     document.getElementById('mStudentName').focus({preventScroll:true});
   };
   heroCtaBtn.addEventListener('click',openModal);
+  if(heroSubject) heroSubject.addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();heroCtaBtn.click()}});
   const promoCta=document.getElementById('promoCta');
   if(promoCta) promoCta.addEventListener('click',e=>{e.preventDefault();openModal();});
   modalClose.addEventListener('click',()=>modalOverlay.classList.remove('active'));

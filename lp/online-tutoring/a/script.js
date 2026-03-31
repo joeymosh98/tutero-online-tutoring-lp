@@ -78,6 +78,7 @@ window.openModalWithYear=function(year){
   document.getElementById('mStudentName').focus({preventScroll:true});
 };
 heroCtaBtn.addEventListener('click',function(){openModalWithSubject(heroSubject.options[heroSubject.selectedIndex].text);});
+heroSubject.addEventListener('keydown',function(e){if(e.key==='Enter'){e.preventDefault();heroCtaBtn.click()}});
 const promoCta=document.getElementById('promoCta');
 if(promoCta) promoCta.addEventListener('click',e=>{e.preventDefault();openModal();});
 modalClose.addEventListener('click',()=>modalOverlay.classList.remove('active'));
