@@ -91,6 +91,9 @@ function mGoTo(n){mSteps.forEach(s=>s.classList.remove('active'));mSteps[n].clas
 // Auto-capitalise helper
 function capitalise(str){return str.charAt(0).toUpperCase()+str.slice(1)}
 
+// Enter key submits the current step
+function enterToSubmit(stepEl,btnEl){stepEl.querySelectorAll('input,select').forEach(function(el){el.addEventListener('keydown',function(e){if(e.key==='Enter'&&!btnEl.disabled){e.preventDefault();btnEl.click()}})})}
+
 // Step 1: Student info
 const mSN=document.getElementById('mStudentName'),mYL=document.getElementById('mYearLevel'),mTo2=document.getElementById('mToStep2');
 [mSN,mYL].forEach(i=>i.addEventListener('input',()=>{mTo2.disabled=!(mSN.value.trim()&&mYL.value.trim())}));
@@ -102,6 +105,7 @@ mTo2.addEventListener('click',()=>{
   document.getElementById('mCtaName').textContent=name;
   mGoTo(1);
 });
+enterToSubmit(mSteps[0],mTo2);
 
 // Step 2: Goal pills (auto-advance)
 document.querySelectorAll('#mGoalPills .modal-pill').forEach(p=>{
@@ -172,6 +176,7 @@ mSub.addEventListener('click',()=>{
   document.getElementById('modalSuccess').classList.add('active');
   launchConfetti();
 });
+enterToSubmit(mSteps[3],mSub);
 
 // ── Bottom CTA ──
 let currentStep=0, selectedSubject='';
@@ -183,6 +188,7 @@ document.querySelectorAll('.subject-pill').forEach(pill=>{pill.addEventListener(
 const studentName=document.getElementById('studentName'),yearLevel=document.getElementById('yearLevel'),toStep3=document.getElementById('toStep3');
 [studentName,yearLevel].forEach(i=>i.addEventListener('input',()=>{toStep3.disabled=!(studentName.value.trim()&&yearLevel.value.trim())}));
 toStep3.addEventListener('click',()=>goToStep(2));
+enterToSubmit(steps[1],toStep3);
 const parentName=document.getElementById('parentName'),parentEmail=document.getElementById('parentEmail'),parentPhone=document.getElementById('parentPhone'),btmState=document.getElementById('btmState'),submitLead=document.getElementById('submitLead');
 var btmPhone={digits:''};
 parentPhone.addEventListener('input',()=>{formatPhone(parentPhone,btmPhone)});
@@ -204,6 +210,7 @@ submitLead.addEventListener('click',()=>{
   });
   steps.forEach(s=>s.classList.remove('active'));document.querySelector('.cta-steps').style.display='none';document.querySelector('.bottom-cta-heading').style.display='none';document.querySelector('.bottom-cta-sub').style.display='none';document.querySelector('.bottom-cta-emoji').style.display='none';document.getElementById('successName').textContent=studentName.value.trim();document.getElementById('successSubject').textContent=selectedSubject;success.classList.add('active');launchConfetti()
 });
+enterToSubmit(steps[2],submitLead);
 
 // ── Scroll Reveal ──
 const revealEls=document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale');
