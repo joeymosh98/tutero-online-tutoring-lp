@@ -2719,7 +2719,7 @@
       .modal-input-row{flex-direction:column}
       .stories-section{padding:60px 0 48px}
       .stories-section--s2{padding-top:48px}
-      .stories-track{gap:14px}
+      .stories-track{gap:14px;animation-duration:45s}
       .story-card{width:280px}
       .story-image{height:150px}
       .story-body{padding:18px 18px 22px;gap:10px}

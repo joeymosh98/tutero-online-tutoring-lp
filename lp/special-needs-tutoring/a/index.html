@@ -1322,7 +1322,7 @@
       .bottom-cta-heading{font-size:26px}
       .cta-input-row{flex-direction:column}
       .modal-input-row{flex-direction:column}
-      .stories-track{gap:16px}
+      .stories-track{gap:16px;animation-duration:45s}
       .story-card{width:300px}
       .story-image{height:160px}
       .image-wrapper{height:240px;min-height:240px}
@@ -1594,9 +1594,9 @@
         <div class="modal-form-step" id="ms3">
           <h3>Find <span id="mStudentNameEcho"></span>'s tutor</h3>
           <p class="modal-sub">Where should we send the tutor match?</p>
-          <input class="modal-input" type="text" id="mParentName" placeholder="Your full name" autocomplete="off">
-          <input class="modal-input" type="email" id="mEmail" placeholder="Email address" autocomplete="off">
-          <input class="modal-input" type="tel" id="mPhone" placeholder="Phone number" autocomplete="off">
+          <input class="modal-input" type="text" id="mParentName" placeholder="e.g. Jane Smith" autocomplete="off">
+          <input class="modal-input" type="email" id="mEmail" placeholder="e.g. jane.smith@email.com" autocomplete="off">
+          <input class="modal-input" type="tel" id="mPhone" placeholder="e.g. 0412 345 678" autocomplete="off">
           <button class="modal-submit" id="mSubmit" disabled>Find <span id="mCtaName">your</span>'s tutor &rarr;</button>
           <button class="modal-back" id="mBack3">&larr; Back</button>
           <div class="modal-social-proof"><span class="proof-dot"></span> 32 parents enquired this morning</div>
@@ -2232,10 +2232,10 @@
     <div class="cta-form-step" id="ctaStep2">
       <p style="color:rgba(255,255,255,.5);font-size:13px;font-weight:600;margin-bottom:4px">Step 3: How can we reach you?</p>
 
-      <input class="cta-input" type="text" id="parentName" placeholder="Your full name">
+      <input class="cta-input" type="text" id="parentName" placeholder="e.g. Jane Smith">
       <div class="cta-input-row">
-        <input class="cta-input" type="email" id="parentEmail" placeholder="Email">
-        <input class="cta-input" type="tel" id="parentPhone" placeholder="Phone">
+        <input class="cta-input" type="email" id="parentEmail" placeholder="e.g. jane.smith@email.com">
+        <input class="cta-input" type="tel" id="parentPhone" placeholder="e.g. 0412 345 678">
       </div>
       <button class="cta-submit" id="submitLead" disabled>Find my child's specialist tutor &#127881;</button>
       <button class="cta-back-btn" onclick="goToStep(1)">&larr; Back</button>
@@ -2275,6 +2275,9 @@
             <span class="success-step-desc" style="color:rgba(255,255,255,.5);">Love it or your first lesson is free.</span>
           </div>
         </div>
+      </div>
+      <div class="success-cta" style="border-top-color: rgba(255,255,255,.15);">
+        <a href="thank-you.html" class="success-cta-btn">Learn more about what's next &rarr;</a>
       </div>
     </div>
   </div>
