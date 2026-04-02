@@ -26,6 +26,11 @@
               "id": "b",
               "label": "Hero Only",
               "path": "/lp/online-tutoring/b/"
+            },
+            {
+              "id": "c",
+              "label": "Quiz Funnel",
+              "path": "/lp/online-tutoring/c/"
             }
           ],
           "splitterPath": "/lp/online-tutoring/",
@@ -70,6 +75,11 @@
               "id": "a",
               "label": "Main",
               "path": "/tp/online-tutoring/a/"
+            },
+            {
+              "id": "b",
+              "label": "Quiz Funnel",
+              "path": "/tp/online-tutoring/b/"
             }
           ],
           "splitterPath": null,
