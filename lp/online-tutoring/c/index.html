@@ -1092,8 +1092,8 @@
       min-height: 20px;
     }
 
-    /* ═══ Forms (Screen 9) ═══ */
-    #s9 { background: var(--light-bg); }
+    /* ═══ Forms (Screen 9 + 10) ═══ */
+    #s9, #s10 { background: var(--light-bg); }
     .form-heading {
       font-size: 22px; font-weight: 800;
       letter-spacing: -0.02em; text-align: center;
@@ -1541,41 +1541,33 @@
         <h2 class="quiz-heading" id="urgencyHeading">When would you like to start?</h2>
         <div class="card-list">
           <button class="qz-card" data-val="asap">
-            <span class="qz-emoji">&#x1F534;</span>
+            <span class="qz-emoji">&#x26A1;</span>
             <div class="qz-text">
               <strong>As soon as possible</strong>
               <span>Need help urgently</span>
             </div>
           </button>
           <button class="qz-card" data-val="this-term">
-            <span class="qz-emoji">&#x1F7E1;</span>
+            <span class="qz-emoji">&#x1F4C5;</span>
             <div class="qz-text">
               <strong>Sometime this term</strong>
               <span>Within the next few weeks</span>
             </div>
           </button>
           <button class="qz-card" data-val="next-term">
-            <span class="qz-emoji">&#x1F7E2;</span>
+            <span class="qz-emoji">&#x1F5D3;&#xFE0F;</span>
             <div class="qz-text">
               <strong>Next term</strong>
               <span>Planning ahead</span>
-            </div>
-          </button>
-          <button class="qz-card" data-val="exploring">
-            <span class="qz-emoji">&#x1F535;</span>
-            <div class="qz-text">
-              <strong>Just exploring</strong>
-              <span>No rush, researching options</span>
             </div>
           </button>
         </div>
       </div>
     </div>
 
-    <!-- Screen 9: Personalized Contact Form + Success -->
+    <!-- Screen 9: Name + Email -->
     <div class="screen" id="s9">
-      <!-- Contact form -->
-      <div class="si si-scroll" id="contactForm">
+      <div class="si si-scroll" id="formStep1">
 
         <!-- Quiz summary -->
         <div class="quiz-summary" id="quizSummary">
@@ -1593,7 +1585,7 @@
         </div>
 
         <h3 id="formHeading" class="form-heading">Where should we send the tutor match?</h3>
-        <p id="formSub" class="form-sub">We'll call you today to discuss the learning plan and find the perfect tutor.</p>
+        <p id="formSub" class="form-sub">We'll be in touch today to discuss the learning plan.</p>
 
         <div class="form-fields">
           <div class="field-wrap">
@@ -1604,6 +1596,25 @@
             <label for="fEmail">Email</label>
             <input type="email" id="fEmail" placeholder="you@email.com" autocomplete="email">
           </div>
+        </div>
+
+        <button class="btn-primary disabled" id="continueBtn">Continue &rarr;</button>
+
+        <div class="live-proof">
+          <span class="live-dot"></span>
+          <span id="proofCount">32</span> parents enquired today
+        </div>
+      </div>
+    </div>
+
+    <!-- Screen 10: Phone + State + Submit -->
+    <div class="screen" id="s10">
+      <div class="si si-scroll" id="formStep2">
+
+        <h3 id="formHeading2" class="form-heading">Best number to reach you on?</h3>
+        <p id="formSub2" class="form-sub">We'll call to discuss your child's tutor match.</p>
+
+        <div class="form-fields">
           <div class="field-wrap">
             <label for="fPhone">Phone</label>
             <input type="tel" id="fPhone" placeholder="0412 345 678" autocomplete="tel">
@@ -1622,11 +1633,6 @@
         <button class="btn-primary disabled" id="submitBtn">Find your child's tutor &rarr;</button>
 
         <p class="urgency-helper" id="urgencyHelper"></p>
-
-        <div class="live-proof">
-          <span class="live-dot"></span>
-          <span id="proofCount">32</span> parents enquired today
-        </div>
 
         <div class="form-quote" id="formTestimonial">
           &ldquo;My son's grades went up 30% in 6 months.&rdquo; &mdash; <strong>Deb S., NSW</strong>

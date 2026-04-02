@@ -2,7 +2,7 @@
 // Tutero Quiz Funnel — Variant C (Lead Generation + Plan on TY Page)
 // Screens: s0 Welcome | s1 Name | s2 Year | s3 Situation | s4 Grades
 //          s5 Confidence | s6 Subject | s7 Struggle | s8 Urgency
-//          s9 Contact Form + Success
+//          s9 Name+Email | s10 Phone+State+Submit + Success
 // ═══════════════════════════════════════════════════════════════
 
 // ── Webhook + API ──
@@ -69,7 +69,7 @@ var S = {
 };
 
 // ═══════════════════════════════════════════════════════════════
-// Screen Navigation (10 screens: s0-s9)
+// Screen Navigation (11 screens: s0-s10)
 // ═══════════════════════════════════════════════════════════════
 var screens = [];
 var cur = 0;
@@ -77,10 +77,10 @@ var header = document.getElementById('qzHeader');
 var backBtn = document.getElementById('backBtn');
 var progressFill = document.getElementById('progressFill');
 var stepLabel = document.getElementById('stepLabel');
-var PROGRESS = [0, 10, 18, 28, 38, 48, 58, 68, 78, 90];
+var PROGRESS = [0, 10, 18, 28, 38, 48, 58, 68, 78, 86, 93];
 
 function initScreens() {
-  for (var i = 0; i <= 9; i++) screens.push(document.getElementById('s' + i));
+  for (var i = 0; i <= 10; i++) screens.push(document.getElementById('s' + i));
 }
 
 function updateChrome(n) {
@@ -95,12 +95,12 @@ function updateChrome(n) {
   progressFill.style.width = (PROGRESS[n] || 0) + '%';
   // Step text
   if (n >= 3 && n <= 8) stepLabel.textContent = (n - 2) + ' of 6';
-  else if (n === 9) stepLabel.textContent = 'Details';
+  else if (n === 9 || n === 10) stepLabel.textContent = 'Details';
   else stepLabel.textContent = '';
 }
 
 function goTo(n) {
-  if (n === cur || n < 0 || n > 9) return;
+  if (n === cur || n < 0 || n > 10) return;
   var fwd = n > cur;
   var old = screens[cur];
   var next = screens[n];
@@ -118,6 +118,12 @@ function goTo(n) {
 
   if (n === 1) {
     setTimeout(function() { document.getElementById('fStudentName').focus(); }, 450);
+  }
+  if (n === 9) {
+    setTimeout(function() { fPN.focus(); }, 450);
+  }
+  if (n === 10) {
+    setTimeout(function() { fPH.focus(); }, 450);
   }
 }
 
@@ -162,8 +168,7 @@ var CONFIDENCE_LABELS = {
 var URGENCY_HELPER_TEXT = {
   'asap': 'We prioritise urgent requests \u2014 expect a call within hours.',
   'this-term': 'We\u2019ll have a tutor matched and ready this week.',
-  'next-term': 'Great planning! We\u2019ll lock in the perfect tutor ahead of time.',
-  'exploring': 'No pressure at all. We\u2019ll share options and you can decide when ready.'
+  'next-term': 'Great planning! We\u2019ll lock in the perfect tutor ahead of time.'
 };
 
 var TUTOR_COUNTS = {
@@ -182,12 +187,13 @@ function personaliseWithName(name) {
   document.getElementById('urgencyHeading').textContent = 'When would you like ' + name + ' to start?';
 }
 
+// Personalise Screen 9 (name + email step)
 function personaliseScreen9() {
   // Dynamic heading
   document.getElementById('formHeading').textContent =
-    'Where should we send ' + S.studentName + '\u2019s ' + S.subject + ' tutor match?';
+    'Almost done! Where should we send ' + S.studentName + '\u2019s tutor match?';
   document.getElementById('formSub').textContent =
-    'We\u2019ll call you today to discuss ' + S.studentName + '\u2019s learning plan and find the perfect tutor.';
+    'We\u2019ll be in touch today to discuss ' + S.studentName + '\u2019s learning plan.';
 
   // Quiz summary tags
   var tags = [
@@ -208,6 +214,15 @@ function personaliseScreen9() {
   document.getElementById('tutorMatchText').innerHTML =
     'We found <strong>' + count + ' ' + escHtml(S.subject) + ' tutors</strong> available for ' +
     escHtml(S.yearLevel) + ' students';
+}
+
+// Personalise Screen 10 (phone + state step)
+function personaliseScreen10() {
+  // Heading
+  document.getElementById('formHeading2').textContent =
+    'Best number to reach you on?';
+  document.getElementById('formSub2').textContent =
+    'We\u2019ll call to discuss ' + S.studentName + '\u2019s ' + S.subject + ' tutor match.';
 
   // Submit button
   document.getElementById('submitBtn').innerHTML =
@@ -463,44 +478,72 @@ yearPills.forEach(function(pill) {
 });
 
 // ═══════════════════════════════════════════════════════════════
-// Screen 9: Contact Details
+// Screen 9: Name + Email (Continue to Screen 10)
 // ═══════════════════════════════════════════════════════════════
 var fPN = document.getElementById('fParentName');
 var fEM = document.getElementById('fEmail');
+var contBtn = document.getElementById('continueBtn');
+
+function checkStep1() {
+  toggleBtn(contBtn, fPN.value.trim() && isValidEmail(fEM.value.trim()));
+}
+
+[fPN, fEM].forEach(function(i) {
+  i.addEventListener('input', function() {
+    checkStep1();
+    if (i === fPN && fPN.value.trim()) clearErr(fPN);
+    if (i === fEM && isValidEmail(fEM.value.trim())) clearErr(fEM);
+  });
+});
+
+contBtn.addEventListener('click', function() {
+  if (contBtn.classList.contains('disabled')) {
+    // Validate and show errors
+    if (!fPN.value.trim()) showErr(fPN); else clearErr(fPN);
+    if (!isValidEmail(fEM.value.trim())) showErr(fEM); else clearErr(fEM);
+    return;
+  }
+  S.parentName = fPN.value.trim();
+  S.email = fEM.value.trim();
+  personaliseScreen10();
+  goTo(10);
+});
+
+// Enter key on step 1 fields
+[fPN, fEM].forEach(function(el) {
+  el.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') { e.preventDefault(); contBtn.click(); }
+  });
+});
+
+// ═══════════════════════════════════════════════════════════════
+// Screen 10: Phone + State + Submit
+// ═══════════════════════════════════════════════════════════════
 var fPH = document.getElementById('fPhone');
 var fST = document.getElementById('fState');
 var subBtn = document.getElementById('submitBtn');
 
-fPH.addEventListener('input', function() { formatPhone(fPH); });
-
-function validateForm() {
-  var ok = true;
-  if (!fPN.value.trim()) { showErr(fPN); ok = false; } else clearErr(fPN);
-  if (!isValidEmail(fEM.value.trim())) { showErr(fEM); ok = false; } else clearErr(fEM);
-  if (S.phoneDigits.length < 10) { showErr(fPH); ok = false; } else clearErr(fPH);
-  if (!fST.value) { showErr(fST); ok = false; } else clearErr(fST);
-  return ok;
+function checkStep2() {
+  toggleBtn(subBtn, S.phoneDigits.length >= 10 && fST.value);
 }
 
-function checkForm() {
-  toggleBtn(subBtn, fPN.value.trim() && isValidEmail(fEM.value.trim()) && S.phoneDigits.length >= 10 && fST.value);
-}
-
-[fPN, fEM, fPH].forEach(function(i) {
-  i.addEventListener('input', function() {
-    checkForm();
-    if (i === fPN && fPN.value.trim()) clearErr(fPN);
-    if (i === fEM && isValidEmail(fEM.value.trim())) clearErr(fEM);
-    if (i === fPH && S.phoneDigits.length >= 10) clearErr(fPH);
-  });
+fPH.addEventListener('input', function() {
+  formatPhone(fPH);
+  checkStep2();
+  if (S.phoneDigits.length >= 10) clearErr(fPH);
 });
 fST.addEventListener('change', function() {
-  checkForm();
+  checkStep2();
   if (fST.value) { clearErr(fST); fST.classList.remove('is-placeholder'); }
 });
 
 subBtn.addEventListener('click', function() {
-  if (subBtn.classList.contains('disabled')) { validateForm(); return; }
+  if (subBtn.classList.contains('disabled')) {
+    // Validate and show errors
+    if (S.phoneDigits.length < 10) showErr(fPH); else clearErr(fPH);
+    if (!fST.value) showErr(fST); else clearErr(fST);
+    return;
+  }
 
   submitLeadData({
     source: 'quiz_funnel',
@@ -519,7 +562,7 @@ subBtn.addEventListener('click', function() {
   });
 
   // Show success state
-  document.getElementById('contactForm').style.display = 'none';
+  document.getElementById('formStep2').style.display = 'none';
   document.getElementById('successName').textContent = S.studentName;
   document.getElementById('successWrap').classList.add('active');
   progressFill.style.width = '100%';
@@ -528,11 +571,9 @@ subBtn.addEventListener('click', function() {
   document.getElementById('tyLink').href = buildThankYouUrl();
 });
 
-// Enter key on form fields
-[fPN, fEM, fPH].forEach(function(el) {
-  el.addEventListener('keydown', function(e) {
-    if (e.key === 'Enter') { e.preventDefault(); subBtn.click(); }
-  });
+// Enter key on step 2 fields
+fPH.addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') { e.preventDefault(); subBtn.click(); }
 });
 
 // ═══════════════════════════════════════════════════════════════
