@@ -1,0 +1,1668 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Find a Tutor | Tutero</title>
+  <meta name="description" content="Answer a few quick questions and get a personalised learning plan for your child. Free, no commitment.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    /* ═══ Variables ═══ */
+    :root {
+      --orange: #FF8412;
+      --orange-hover: #e87510;
+      --green: #4CB092;
+      --blue: #00A3FF;
+      --yellow: #F8B200;
+      --red: #ef4444;
+      --dark: #1a1a1a;
+      --light-bg: #f9f9fa;
+      --gray-100: #f4f4f5;
+      --gray-200: #e5e7eb;
+      --gray-300: #d1d5db;
+      --gray-500: #6b7280;
+      --gray-700: #374151;
+      --ease: cubic-bezier(0.4, 0, 0.2, 1);
+      --header-h: 56px;
+    }
+
+    /* ═══ Reset ═══ */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { height: 100%; overflow: hidden; }
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      color: var(--dark);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ═══ Emoji cursors ═══ */
+    .qz-card, .qz-pill, .year-pill, .btn-primary, .back-btn, .book-arrow, select,
+    .qz-card *, .qz-pill *, .year-pill *, .btn-primary *, .book-arrow *,
+    button, a.btn-primary, [onclick] {
+      cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='32' viewBox='0 0 28 32'%3E%3Ctext y='24' font-size='24'%3E%F0%9F%91%86%3C/text%3E%3C/svg%3E") 14 4, pointer !important;
+    }
+    .qz-card:active, .qz-pill:active, .year-pill:active, .btn-primary:active, .back-btn:active,
+    select:active, button:active, a.btn-primary:active {
+      cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='32' viewBox='0 0 28 32'%3E%3Ctext y='24' font-size='24'%3E%E2%9C%8A%3C/text%3E%3C/svg%3E") 14 4, pointer !important;
+    }
+
+    /* ═══ Header ═══ */
+    .qz-header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 16px;
+      height: var(--header-h);
+      background: transparent;
+      transition: background 0.4s var(--ease), border-color 0.4s var(--ease);
+      border-bottom: 1px solid transparent;
+    }
+    .qz-header.light {
+      background: rgba(255,255,255,0.88);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom-color: rgba(0,0,0,0.06);
+    }
+    .back-btn {
+      width: 36px; height: 36px;
+      display: flex; align-items: center; justify-content: center;
+      background: none; border: none;
+      border-radius: 8px;
+      color: #fff;
+      transition: background 0.2s, color 0.4s;
+    }
+    .back-btn:hover { background: rgba(255,255,255,0.12); }
+    .qz-header.light .back-btn { color: var(--dark); }
+    .qz-header.light .back-btn:hover { background: rgba(0,0,0,0.05); }
+    .header-logo { height: 22px; transition: filter 0.4s; filter: brightness(0) invert(1); }
+    .qz-header.light .header-logo { filter: none; }
+    .step-text {
+      font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.45);
+      min-width: 44px; text-align: right;
+      transition: color 0.4s;
+    }
+    .qz-header.light .step-text { color: var(--gray-500); }
+
+    /* ═══ Progress bar ═══ */
+    .progress-track {
+      position: fixed;
+      top: var(--header-h); left: 0; right: 0;
+      height: 3px;
+      background: rgba(255,255,255,0.1);
+      z-index: 99;
+      transition: background 0.4s;
+    }
+    .qz-header.light ~ .progress-track { background: var(--gray-200); }
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      background: var(--orange);
+      border-radius: 0 2px 2px 0;
+      transition: width 0.5s var(--ease);
+    }
+
+    /* ═══ Funnel + Screens ═══ */
+    .funnel {
+      position: relative;
+      width: 100%; height: 100vh;
+      overflow: hidden;
+    }
+    .screen {
+      position: absolute;
+      inset: 0;
+      transform: translateX(100%);
+      transition: transform 420ms var(--ease);
+      overflow-y: auto;
+      scrollbar-width: none;
+    }
+    .screen::-webkit-scrollbar { display: none; }
+    .screen.active { transform: translateX(0); }
+    .screen.exit-left { transform: translateX(-100%); }
+    .screen.exit-right { transform: translateX(100%); }
+
+    /* Screen inner layout */
+    .si {
+      min-height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: calc(var(--header-h) + 20px) 24px 40px;
+      max-width: 520px;
+      margin: 0 auto;
+    }
+    .si-center { justify-content: center; }
+    .si-scroll { justify-content: flex-start; padding-top: calc(var(--header-h) + 28px); }
+
+    /* ═══ Screen 0 — Welcome ═══ */
+    #s0 { background: var(--dark); }
+    #s0::before {
+      content: '';
+      position: absolute;
+      top: -180px; right: -120px;
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(255,132,18,0.12) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .welcome-logo {
+      height: 28px;
+      filter: brightness(0) invert(1);
+      margin-bottom: 32px;
+      opacity: 0; transform: translateY(12px);
+      animation: fadeUp 0.6s 0.1s var(--ease) forwards;
+    }
+    .proof-pill {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 8px 16px;
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 100px;
+      font-size: 13px; font-weight: 500;
+      color: rgba(255,255,255,0.65);
+      margin-bottom: 28px;
+      opacity: 0; transform: translateY(12px);
+      animation: fadeUp 0.6s 0.2s var(--ease) forwards;
+    }
+    .proof-pill .star { color: var(--yellow); }
+    .welcome-h1 {
+      font-size: 32px; font-weight: 800;
+      color: #fff; text-align: center;
+      line-height: 1.12; letter-spacing: -0.03em;
+      margin-bottom: 14px;
+      opacity: 0; transform: translateY(12px);
+      animation: fadeUp 0.6s 0.3s var(--ease) forwards;
+    }
+    .welcome-sub {
+      font-size: 16px; color: rgba(255,255,255,0.5);
+      text-align: center; line-height: 1.5;
+      margin-bottom: 36px; max-width: 360px;
+      opacity: 0; transform: translateY(12px);
+      animation: fadeUp 0.6s 0.4s var(--ease) forwards;
+    }
+    .welcome-cta {
+      opacity: 0; transform: translateY(12px);
+      animation: fadeUp 0.6s 0.5s var(--ease) forwards;
+      width: 100%; display: flex; justify-content: center;
+    }
+    .trust-line {
+      font-size: 13px; color: rgba(255,255,255,0.3);
+      margin-top: 20px; text-align: center;
+      opacity: 0; transform: translateY(8px);
+      animation: fadeUp 0.5s 0.65s var(--ease) forwards;
+    }
+    .trust-line-light { color: var(--gray-500); }
+
+    /* ═══ Quiz screens ═══ */
+    #s1, #s2, #s3, #s4, #s5, #s6, #s7 { background: var(--light-bg); }
+    .quiz-badge {
+      display: inline-block;
+      font-size: 13px; font-weight: 600;
+      color: var(--orange);
+      background: rgba(255,132,18,0.08);
+      padding: 5px 14px;
+      border-radius: 100px;
+      margin-bottom: 16px;
+    }
+    .quiz-heading {
+      font-size: 26px; font-weight: 800;
+      text-align: center; line-height: 1.18;
+      letter-spacing: -0.025em;
+      margin-bottom: 28px;
+    }
+
+    /* Quiz cards */
+    .card-list {
+      display: flex; flex-direction: column;
+      gap: 12px; width: 100%;
+    }
+    .qz-card {
+      position: relative;
+      display: flex; align-items: center; gap: 14px;
+      width: 100%;
+      padding: 18px 20px;
+      background: #fff;
+      border: 2px solid var(--gray-200);
+      border-radius: 14px;
+      text-align: left;
+      font-family: inherit;
+      transition: border-color 0.2s, background 0.2s, box-shadow 0.2s, transform 0.15s;
+      opacity: 0; transform: translateY(16px);
+      animation: cardIn 0.4s var(--ease) both;
+    }
+    .qz-card:nth-child(1) { animation-delay: 0.08s; }
+    .qz-card:nth-child(2) { animation-delay: 0.14s; }
+    .qz-card:nth-child(3) { animation-delay: 0.20s; }
+    .qz-card:nth-child(4) { animation-delay: 0.26s; }
+    .qz-card:hover {
+      border-color: var(--gray-300);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+      transform: translateY(-1px);
+    }
+    .qz-card.selected {
+      border-color: var(--green) !important;
+      background: #f0faf6;
+    }
+    .qz-card.selected::after {
+      content: '\2713';
+      position: absolute;
+      top: 14px; right: 14px;
+      width: 24px; height: 24px;
+      background: var(--green);
+      color: #fff; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 13px; font-weight: 700;
+      animation: pop 0.3s var(--ease);
+    }
+    .qz-emoji { font-size: 28px; flex-shrink: 0; line-height: 1; }
+    .qz-text { display: flex; flex-direction: column; gap: 2px; }
+    .qz-text strong { font-size: 15px; font-weight: 600; color: var(--dark); }
+    .qz-text span { font-size: 13px; color: var(--gray-500); line-height: 1.4; }
+
+    /* Subject / general pills */
+    .pill-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 10px; width: 100%;
+    }
+    .qz-pill {
+      display: flex; align-items: center; justify-content: center;
+      gap: 8px;
+      padding: 16px 12px;
+      min-height: 56px;
+      background: #fff;
+      border: 2px solid var(--gray-200);
+      border-radius: 12px;
+      font-family: inherit;
+      font-size: 15px; font-weight: 600;
+      color: var(--dark);
+      transition: border-color 0.2s, background 0.2s, transform 0.15s;
+      opacity: 0; transform: translateY(14px);
+      animation: cardIn 0.35s var(--ease) both;
+    }
+    .qz-pill:nth-child(1) { animation-delay: 0.06s; }
+    .qz-pill:nth-child(2) { animation-delay: 0.09s; }
+    .qz-pill:nth-child(3) { animation-delay: 0.12s; }
+    .qz-pill:nth-child(4) { animation-delay: 0.15s; }
+    .qz-pill:nth-child(5) { animation-delay: 0.18s; }
+    .qz-pill:nth-child(6) { animation-delay: 0.21s; }
+    .qz-pill:nth-child(7) { animation-delay: 0.24s; }
+    .qz-pill:nth-child(8) { animation-delay: 0.27s; }
+    .qz-pill:hover { border-color: var(--gray-300); transform: translateY(-1px); }
+    .qz-pill.selected {
+      border-color: var(--green);
+      background: #f0faf6; color: #0d6b52;
+    }
+
+    /* ═══ Screen 1 — Student Name Input ═══ */
+    .name-input-wrap {
+      width: 100%;
+      max-width: 380px;
+      margin-bottom: 24px;
+    }
+    .name-input {
+      width: 100%;
+      padding: 18px 20px;
+      border: 2px solid var(--gray-200);
+      border-radius: 14px;
+      font-family: inherit;
+      font-size: 22px;
+      font-weight: 600;
+      color: var(--dark);
+      background: #fff;
+      text-align: center;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      -webkit-appearance: none;
+    }
+    .name-input:focus {
+      outline: none;
+      border-color: var(--orange);
+      box-shadow: 0 0 0 4px rgba(255,132,18,0.1);
+    }
+    .name-input::placeholder {
+      color: var(--gray-300);
+      font-weight: 400;
+    }
+
+    /* ═══ Screen 2 — Year Level Grid ═══ */
+    .year-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      width: 100%;
+    }
+    .year-pill {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px 8px;
+      background: #fff;
+      border: 2px solid var(--gray-200);
+      border-radius: 12px;
+      font-family: inherit;
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--dark);
+      transition: border-color 0.2s, background 0.2s, transform 0.15s;
+      opacity: 0;
+      transform: translateY(14px);
+      animation: cardIn 0.35s var(--ease) both;
+    }
+    .year-pill:nth-child(1) { animation-delay: 0.04s; }
+    .year-pill:nth-child(2) { animation-delay: 0.06s; }
+    .year-pill:nth-child(3) { animation-delay: 0.08s; }
+    .year-pill:nth-child(4) { animation-delay: 0.10s; }
+    .year-pill:nth-child(5) { animation-delay: 0.12s; }
+    .year-pill:nth-child(6) { animation-delay: 0.14s; }
+    .year-pill:nth-child(7) { animation-delay: 0.16s; }
+    .year-pill:nth-child(8) { animation-delay: 0.18s; }
+    .year-pill:nth-child(9) { animation-delay: 0.20s; }
+    .year-pill:nth-child(10) { animation-delay: 0.22s; }
+    .year-pill:nth-child(11) { animation-delay: 0.24s; }
+    .year-pill:nth-child(12) { animation-delay: 0.26s; }
+    .year-pill:nth-child(13) { animation-delay: 0.28s; }
+    .year-pill:nth-child(14) { animation-delay: 0.30s; }
+    .year-pill:hover {
+      border-color: var(--gray-300);
+      transform: translateY(-1px);
+    }
+    .year-pill.selected {
+      border-color: var(--green);
+      background: #f0faf6;
+      color: #0d6b52;
+    }
+
+    /* ═══ Screen 8 — Loading ═══ */
+    #s8 { background: var(--light-bg); }
+    .loading-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 28px;
+      text-align: center;
+    }
+    .loading-spinner {
+      width: 56px;
+      height: 56px;
+      border: 4px solid var(--gray-200);
+      border-top-color: var(--orange);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+    .loading-heading {
+      font-size: 24px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: var(--dark);
+      line-height: 1.2;
+    }
+    .loading-sub {
+      font-size: 15px;
+      color: var(--gray-500);
+      line-height: 1.5;
+      max-width: 320px;
+      margin-top: -12px;
+    }
+    .loading-steps {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      width: 100%;
+      max-width: 300px;
+      text-align: left;
+    }
+    .loading-step {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--gray-300);
+      transition: color 0.4s;
+    }
+    .loading-step.active {
+      color: var(--dark);
+    }
+    .loading-step.done {
+      color: var(--green);
+    }
+    .loading-step-icon {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      font-weight: 700;
+      background: var(--gray-100);
+      color: var(--gray-300);
+      transition: background 0.4s, color 0.4s;
+      flex-shrink: 0;
+    }
+    .loading-step.active .loading-step-icon {
+      background: rgba(255,132,18,0.1);
+      color: var(--orange);
+    }
+    .loading-step.done .loading-step-icon {
+      background: #ecfdf5;
+      color: var(--green);
+    }
+
+    /* ═══ Screen 9 — Visual Report (Book Format) ═══ */
+    #s9 { background: var(--light-bg); }
+
+    /* Book container & viewport */
+    .book-container {
+      width: 100%;
+      position: relative;
+      overflow: hidden;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    .book-viewport {
+      display: flex;
+      flex: 1;
+      transition: transform 400ms var(--ease);
+      will-change: transform;
+    }
+    .book-page {
+      min-width: 100%;
+      flex-shrink: 0;
+      overflow-y: auto;
+      scrollbar-width: none;
+      padding: 0 0 80px;
+      display: flex;
+      flex-direction: column;
+    }
+    .book-page::-webkit-scrollbar { display: none; }
+    .book-page-inner {
+      width: 100%;
+      max-width: 520px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* Book navigation */
+    .book-nav {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      padding: 16px 24px;
+      background: linear-gradient(to top, var(--light-bg) 60%, transparent);
+      z-index: 10;
+    }
+    .book-arrow {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: 2px solid var(--gray-200);
+      background: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      color: var(--dark);
+      transition: border-color 0.2s, background 0.2s, opacity 0.2s;
+      flex-shrink: 0;
+    }
+    .book-arrow:hover {
+      border-color: var(--gray-300);
+      background: var(--gray-100);
+    }
+    .book-arrow.hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+    .book-dots {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+    .book-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--gray-300);
+      transition: background 0.3s, transform 0.3s;
+    }
+    .book-dot.active {
+      background: var(--orange);
+      transform: scale(1.25);
+    }
+    /* Book page label */
+    .book-page-label {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--gray-500);
+      text-align: center;
+      margin-bottom: 16px;
+    }
+
+    /* Tutor matches page */
+    .tutor-intro {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--dark);
+      text-align: center;
+      margin-bottom: 8px;
+      line-height: 1.3;
+    }
+    .tutor-intro-sub {
+      font-size: 14px;
+      color: var(--gray-500);
+      text-align: center;
+      margin-bottom: 24px;
+      line-height: 1.5;
+    }
+    .tutor-match-card {
+      background: #fff;
+      border: 2px solid var(--gray-200);
+      border-radius: 14px;
+      padding: 20px;
+      margin-bottom: 12px;
+    }
+    .tutor-match-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+    .tutor-match-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: rgba(255,132,18,0.08);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      flex-shrink: 0;
+    }
+    .tutor-match-label {
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--gray-500);
+    }
+    .tutor-match-value {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--dark);
+    }
+    .tutor-match-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .tutor-match-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      padding: 6px 12px;
+      background: #ecfdf5;
+      border: 1px solid #a7f3d0;
+      border-radius: 100px;
+      font-size: 13px;
+      font-weight: 600;
+      color: #065f46;
+    }
+    .tutor-match-badge .check { color: var(--green); font-weight: 700; }
+
+    @media (min-width: 640px) {
+      .book-page-inner { padding: 0 32px; }
+    }
+
+    /* Section 1: Profile Card */
+    .report-profile {
+      width: 100%;
+      background: var(--dark);
+      border-radius: 20px;
+      padding: 28px 24px 24px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 14px;
+    }
+    .report-profile::before {
+      content: '';
+      position: absolute;
+      top: -100px; right: -60px;
+      width: 300px; height: 300px;
+      background: radial-gradient(circle, rgba(255,132,18,0.15) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .report-profile-label {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: rgba(255,255,255,0.35);
+      margin-bottom: 16px;
+    }
+    .report-profile-name {
+      font-size: 24px;
+      font-weight: 800;
+      color: #fff;
+      letter-spacing: -0.02em;
+      margin-bottom: 10px;
+    }
+    .report-tags {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 28px;
+      flex-wrap: wrap;
+    }
+    .report-tag {
+      display: inline-block;
+      padding: 4px 12px;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 100px;
+      font-size: 12px;
+      font-weight: 600;
+      color: rgba(255,255,255,0.6);
+    }
+
+    /* SVG Gauge */
+    .gauge-wrap {
+      position: relative;
+      width: 160px;
+      height: 160px;
+      margin: 0 auto 20px;
+    }
+    .gauge-bg {
+      fill: none;
+      stroke: rgba(255,255,255,0.08);
+      stroke-width: 10;
+    }
+    .gauge-fill {
+      fill: none;
+      stroke: var(--orange);
+      stroke-width: 10;
+      stroke-linecap: round;
+      stroke-dasharray: 408;
+      stroke-dashoffset: 408;
+      transform-origin: center;
+      transform: rotate(-90deg);
+      transition: stroke-dashoffset 1.2s var(--ease);
+    }
+    .gauge-fill.animated {
+      /* set dynamically via JS */
+    }
+    .gauge-label {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+    }
+    .gauge-pct {
+      font-size: 36px;
+      font-weight: 800;
+      color: #fff;
+      line-height: 1;
+      display: block;
+    }
+    .gauge-sub {
+      font-size: 11px;
+      font-weight: 600;
+      color: rgba(255,255,255,0.4);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-top: 4px;
+      display: block;
+    }
+
+    /* Progress spectrum bar */
+    .spectrum-bar {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      width: 100%;
+      max-width: 280px;
+      margin: 0 auto 8px;
+    }
+    .spectrum-label {
+      font-size: 11px;
+      font-weight: 600;
+      color: rgba(255,255,255,0.4);
+      white-space: nowrap;
+      min-width: 0;
+    }
+    .spectrum-track {
+      flex: 1;
+      height: 6px;
+      border-radius: 3px;
+      background: linear-gradient(90deg, var(--red), var(--orange), var(--yellow), var(--green));
+      position: relative;
+    }
+    .spectrum-marker {
+      position: absolute;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      border: 2.5px solid #fff;
+      background: var(--orange);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+      transition: left 1s var(--ease);
+    }
+    .spectrum-target {
+      position: absolute;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 12px;
+      line-height: 1;
+      transition: left 1s var(--ease);
+    }
+    .report-disclaimer {
+      font-size: 11px;
+      color: rgba(255,255,255,0.25);
+      margin-top: 8px;
+    }
+
+    /* Section 2: Skill Bars */
+    .report-section {
+      background: #fff;
+      border: 1px solid var(--gray-200);
+      border-radius: 16px;
+      padding: 20px;
+      margin-bottom: 14px;
+    }
+    .report-section-title {
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--gray-500);
+      margin-bottom: 18px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .report-section-title span {
+      font-size: 16px;
+    }
+    .skill-row {
+      margin-bottom: 18px;
+    }
+    .skill-row:last-child {
+      margin-bottom: 0;
+    }
+    .skill-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 6px;
+    }
+    .skill-name {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--dark);
+    }
+    .skill-pct {
+      font-size: 14px;
+      font-weight: 700;
+    }
+    .skill-track {
+      width: 100%;
+      height: 10px;
+      background: var(--gray-100);
+      border-radius: 5px;
+      overflow: hidden;
+      margin-bottom: 4px;
+    }
+    .skill-fill {
+      height: 100%;
+      border-radius: 5px;
+      width: 0%;
+      transition: width 0.8s var(--ease);
+    }
+    .skill-status {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--gray-500);
+    }
+
+    /* Section 3: Roadmap Timeline */
+    .roadmap-list {
+      position: relative;
+      padding-left: 28px;
+    }
+    .roadmap-line {
+      position: absolute;
+      left: 9px;
+      top: 6px;
+      bottom: 6px;
+      width: 2px;
+      background: var(--gray-200);
+    }
+    .roadmap-node {
+      position: relative;
+      margin-bottom: 24px;
+    }
+    .roadmap-node:last-child {
+      margin-bottom: 0;
+    }
+    .roadmap-dot {
+      position: absolute;
+      left: -28px;
+      top: 2px;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      font-weight: 800;
+      color: #fff;
+    }
+    .roadmap-dot.dot-orange { background: var(--orange); }
+    .roadmap-dot.dot-yellow { background: var(--yellow); }
+    .roadmap-dot.dot-green { background: var(--green); }
+    .roadmap-period {
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-bottom: 4px;
+    }
+    .roadmap-period.text-orange { color: var(--orange); }
+    .roadmap-period.text-yellow { color: #d4960a; }
+    .roadmap-period.text-green { color: #2d8a6f; }
+    .roadmap-title {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--dark);
+      margin-bottom: 2px;
+    }
+    .roadmap-detail {
+      font-size: 13px;
+      color: var(--gray-500);
+      line-height: 1.4;
+    }
+    .roadmap-target {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 24px;
+      padding-top: 16px;
+      border-top: 1px solid var(--gray-100);
+    }
+    .roadmap-target-icon {
+      font-size: 20px;
+    }
+    .roadmap-target-text {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--green);
+    }
+
+    /* Section 4: Weekly Plan + Tutor */
+    .stat-pair {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+    .stat-box {
+      flex: 1;
+      background: var(--gray-100);
+      border-radius: 12px;
+      padding: 16px;
+      text-align: center;
+    }
+    .stat-num {
+      font-size: 32px;
+      font-weight: 800;
+      color: var(--orange);
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+    .stat-label {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--gray-500);
+      line-height: 1.3;
+    }
+    .tutor-card {
+      background: var(--gray-100);
+      border-radius: 12px;
+      padding: 16px;
+    }
+    .tutor-card-title {
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--gray-500);
+      margin-bottom: 12px;
+    }
+    .tutor-trait {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--dark);
+      margin-bottom: 8px;
+    }
+    .tutor-trait:last-child {
+      margin-bottom: 0;
+    }
+    .tutor-check {
+      color: var(--green);
+      font-weight: 700;
+      font-size: 15px;
+      flex-shrink: 0;
+    }
+
+    /* Section 5: Outcome + CTA */
+    .outcome-card {
+      background: linear-gradient(135deg, rgba(76,176,146,0.06) 0%, rgba(0,163,255,0.06) 100%);
+      border: 1px solid rgba(76,176,146,0.15);
+      border-radius: 16px;
+      padding: 24px 20px;
+      text-align: center;
+      margin-bottom: 14px;
+    }
+    .outcome-statement {
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--dark);
+      line-height: 1.45;
+      margin-bottom: 14px;
+    }
+    .outcome-proof {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-size: 13px;
+      color: var(--gray-500);
+      font-weight: 500;
+    }
+    .plan-cta-section {
+      text-align: center;
+      margin-top: 8px;
+    }
+    .plan-cta-sub {
+      font-size: 13px;
+      color: var(--gray-500);
+      margin-top: 12px;
+    }
+    .plan-cta-trust {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      font-size: 13px;
+      color: var(--gray-500);
+      margin-top: 8px;
+    }
+
+    /* Plan error state */
+    .plan-error {
+      text-align: center;
+      padding: 40px 20px;
+    }
+    .plan-error-icon {
+      font-size: 48px;
+      margin-bottom: 16px;
+    }
+    .plan-error h3 {
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .plan-error p {
+      font-size: 15px;
+      color: var(--gray-500);
+      margin-bottom: 24px;
+      line-height: 1.5;
+    }
+
+    /* ═══ Screen 8 — Urgency ═══ */
+    #s8 { background: var(--light-bg); }
+
+    /* ═══ Quiz Summary (Form personalization) ═══ */
+    .quiz-summary {
+      width: 100%;
+      background: #fff;
+      border: 1px solid var(--gray-200);
+      border-radius: 14px;
+      padding: 16px 20px;
+      margin-bottom: 20px;
+    }
+    .quiz-summary-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+    .quiz-summary-icon { font-size: 18px; }
+    .quiz-summary-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--dark);
+    }
+    .quiz-summary-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .tutor-matching-msg {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      width: 100%;
+      padding: 12px 16px;
+      background: rgba(76,176,146,0.06);
+      border: 1px solid rgba(76,176,146,0.15);
+      border-radius: 10px;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--dark);
+      margin-bottom: 24px;
+    }
+    .tutor-matching-icon { font-size: 18px; flex-shrink: 0; }
+    .urgency-helper {
+      font-size: 13px;
+      color: var(--gray-500);
+      text-align: center;
+      margin-top: 12px;
+      line-height: 1.5;
+      min-height: 20px;
+    }
+
+    /* ═══ Forms (Screen 9) ═══ */
+    #s9 { background: var(--light-bg); }
+    .form-heading {
+      font-size: 22px; font-weight: 800;
+      letter-spacing: -0.02em; text-align: center;
+      margin-bottom: 8px;
+    }
+    .form-sub {
+      font-size: 14px; color: var(--gray-500);
+      text-align: center; line-height: 1.5;
+      margin-bottom: 24px;
+    }
+    .form-fields {
+      display: flex; flex-direction: column;
+      gap: 16px; width: 100%; margin-bottom: 20px;
+    }
+    .field-wrap { display: flex; flex-direction: column; gap: 6px; }
+    .field-wrap label {
+      font-size: 13px; font-weight: 600; color: var(--gray-700);
+    }
+    .field-wrap input, .field-wrap select {
+      width: 100%; padding: 14px 16px;
+      border: 2px solid var(--gray-200);
+      border-radius: 10px;
+      font-family: inherit; font-size: 15px;
+      color: var(--dark); background: #fff;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      -webkit-appearance: none; appearance: none;
+    }
+    .field-wrap input:focus, .field-wrap select:focus {
+      outline: none;
+      border-color: var(--orange);
+      box-shadow: 0 0 0 3px rgba(255,132,18,0.1);
+    }
+    .field-wrap.has-error input, .field-wrap.has-error select {
+      border-color: #ef4444;
+      box-shadow: 0 0 0 3px rgba(239,68,68,0.08);
+    }
+    .field-wrap select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='7' fill='none'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236b7280' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 16px center;
+      padding-right: 40px;
+    }
+
+    /* Profile summary tags */
+    .profile-summary {
+      display: flex; flex-wrap: wrap;
+      gap: 8px; justify-content: center;
+      margin-bottom: 20px;
+    }
+    .ptag {
+      display: inline-flex; align-items: center; gap: 5px;
+      padding: 6px 14px;
+      background: #ecfdf5;
+      border: 1px solid #a7f3d0;
+      border-radius: 100px;
+      font-size: 13px; font-weight: 600; color: #065f46;
+    }
+    .ptag .check { color: var(--green); font-weight: 700; }
+    .profile-label {
+      font-size: 14px; font-weight: 600;
+      color: var(--gray-700);
+      margin-bottom: 8px; text-align: center; width: 100%;
+    }
+    .ptag-row {
+      display: flex; flex-wrap: wrap;
+      gap: 8px; justify-content: center;
+    }
+
+    /* ═══ Buttons ═══ */
+    .btn-primary {
+      display: inline-flex; align-items: center; justify-content: center;
+      padding: 16px 32px;
+      background: var(--orange); color: #fff;
+      border: none; border-radius: 12px;
+      font-family: inherit; font-size: 16px; font-weight: 700;
+      letter-spacing: -0.01em;
+      transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+      box-shadow: 0 2px 8px rgba(255,132,18,0.3);
+      width: 100%; max-width: 400px;
+      text-decoration: none;
+    }
+    .btn-primary:hover {
+      background: var(--orange-hover);
+      transform: translateY(-1px);
+      box-shadow: 0 4px 16px rgba(255,132,18,0.35);
+    }
+    .btn-primary:active { transform: translateY(0); }
+    .btn-primary.disabled { opacity: 0.4; pointer-events: none; }
+
+    /* ═══ Live proof + form quote ═══ */
+    .live-proof {
+      display: flex; align-items: center; gap: 6px;
+      font-size: 13px; color: var(--gray-500);
+      margin-top: 16px;
+    }
+    .live-dot {
+      width: 8px; height: 8px;
+      background: var(--green); border-radius: 50%;
+      animation: pulseDot 2s infinite;
+    }
+    .form-quote {
+      margin-top: 20px; padding: 16px;
+      background: #fff; border-radius: 12px;
+      border: 1px solid var(--gray-200);
+      font-size: 14px; font-style: italic;
+      color: var(--gray-700); line-height: 1.55;
+      width: 100%;
+    }
+    .form-quote strong { font-style: normal; }
+
+    /* ═══ Success ═══ */
+    .success-wrap { display: none; }
+    .success-wrap.active {
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      min-height: 100%;
+      padding: calc(var(--header-h) + 32px) 24px 40px;
+      max-width: 520px; margin: 0 auto;
+      text-align: center;
+    }
+    .success-anim { margin-bottom: 24px; }
+    .success-ring {
+      width: 80px; height: 80px; position: relative; margin: 0 auto;
+    }
+    .success-ring svg { width: 80px; height: 80px; }
+    .ring-bg { fill: none; stroke: #ecfdf5; stroke-width: 3; }
+    .ring-fg {
+      fill: none; stroke: var(--green); stroke-width: 3;
+      stroke-linecap: round;
+      stroke-dasharray: 227; stroke-dashoffset: 227;
+      animation: ringDraw 0.7s var(--ease) forwards;
+      transform-origin: center; transform: rotate(-90deg);
+    }
+    .check-mark {
+      position: absolute; top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 36px; height: 36px;
+    }
+    .check-mark path {
+      fill: none; stroke: var(--green);
+      stroke-width: 3; stroke-linecap: round; stroke-linejoin: round;
+      stroke-dasharray: 30; stroke-dashoffset: 30;
+      animation: checkDraw 0.4s var(--ease) 0.5s forwards;
+    }
+    .success-h2 {
+      font-size: 24px; font-weight: 800;
+      letter-spacing: -0.02em; margin-bottom: 8px;
+    }
+    .success-sub { font-size: 15px; color: var(--gray-500); margin-bottom: 28px; }
+    .next-steps {
+      display: flex; flex-direction: column;
+      gap: 10px; width: 100%; max-width: 380px;
+      margin: 0 auto 28px; text-align: left;
+    }
+    .ns-item {
+      display: flex; align-items: center; gap: 14px;
+      padding: 12px 16px;
+      background: #fff; border-radius: 10px;
+      border: 1px solid var(--gray-200);
+      font-size: 14px; color: var(--gray-700);
+      opacity: 0; transform: translateY(10px);
+      animation: fadeUp 0.4s var(--ease) forwards;
+    }
+    .ns-item:nth-child(1) { animation-delay: 0.6s; }
+    .ns-item:nth-child(2) { animation-delay: 0.72s; }
+    .ns-item:nth-child(3) { animation-delay: 0.84s; }
+    .ns-item:nth-child(4) { animation-delay: 0.96s; }
+    .ns-num {
+      width: 28px; height: 28px; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      background: var(--orange); color: #fff;
+      border-radius: 50%; font-size: 13px; font-weight: 700;
+    }
+
+    /* ═══ Confetti ═══ */
+    #confettiCanvas {
+      position: fixed; inset: 0;
+      pointer-events: none; z-index: 200;
+    }
+
+    /* ═══ Animations ═══ */
+    @keyframes fadeUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes cardIn {
+      from { opacity: 0; transform: translateY(16px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes pop {
+      0% { transform: scale(0); }
+      70% { transform: scale(1.15); }
+      100% { transform: scale(1); }
+    }
+    @keyframes pulseDot {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.35; }
+    }
+    @keyframes ringDraw { to { stroke-dashoffset: 0; } }
+    @keyframes checkDraw { to { stroke-dashoffset: 0; } }
+
+    /* ═══ Responsive >= 640px ═══ */
+    @media (min-width: 640px) {
+      .si { max-width: 580px; padding-left: 32px; padding-right: 32px; }
+      .welcome-h1 { font-size: 40px; }
+      .quiz-heading { font-size: 30px; }
+      .pill-grid { grid-template-columns: repeat(4,1fr); }
+      .year-grid { grid-template-columns: repeat(5, 1fr); }
+      .name-input { font-size: 26px; }
+      .form-heading { font-size: 24px; }
+      .report-profile-name { font-size: 28px; }
+      .gauge-wrap { width: 180px; height: 180px; }
+      .gauge-pct { font-size: 40px; }
+    }
+
+    /* ═══ Small phones <= 480px ═══ */
+    @media (max-width: 480px) {
+      .welcome-h1 { font-size: 26px; }
+      .quiz-heading { font-size: 22px; }
+      .qz-card { padding: 14px 16px; }
+      .qz-emoji { font-size: 24px; }
+      .qz-text strong { font-size: 14px; }
+      .btn-primary { padding: 14px 24px; font-size: 15px; }
+      .year-grid { grid-template-columns: repeat(3, 1fr); }
+      .report-profile-name { font-size: 20px; }
+      .loading-heading { font-size: 20px; }
+      .gauge-wrap { width: 140px; height: 140px; }
+      .gauge-pct { font-size: 30px; }
+      .stat-num { font-size: 28px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ═══ Header ═══ -->
+  <header id="qzHeader" class="qz-header">
+    <button id="backBtn" class="back-btn" style="visibility:hidden" aria-label="Go back">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+    </button>
+    <img src="images/tutero-logo.svg" alt="Tutero" class="header-logo">
+    <span id="stepLabel" class="step-text"></span>
+  </header>
+
+  <!-- ═══ Progress bar ═══ -->
+  <div class="progress-track">
+    <div id="progressFill" class="progress-fill"></div>
+  </div>
+
+  <!-- ═══ Funnel ═══ -->
+  <div class="funnel">
+
+    <!-- Screen 0: Welcome -->
+    <div class="screen active" id="s0">
+      <div class="si si-center">
+        <img src="images/tutero-logo.svg" alt="Tutero" class="welcome-logo">
+        <div class="proof-pill">
+          <span class="star">&#9733;</span>
+          4.9 &middot; 300+ Google reviews &middot; 3,000+ students
+        </div>
+        <h1 class="welcome-h1">Let's find the right tutor<br>for your child.</h1>
+        <p class="welcome-sub">Answer a few quick questions and we'll create a personalised learning plan. Takes 60 seconds.</p>
+        <div class="welcome-cta">
+          <button class="btn-primary" id="startBtn">Get started &rarr;</button>
+        </div>
+        <p class="trust-line">Free &middot; No commitment &middot; Australian tutors</p>
+      </div>
+    </div>
+
+    <!-- Screen 1: Student Name -->
+    <div class="screen" id="s1">
+      <div class="si si-center">
+        <span class="quiz-badge">Let's get started</span>
+        <h2 class="quiz-heading">What's your child's first name?</h2>
+        <div class="name-input-wrap">
+          <input type="text" id="fStudentName" class="name-input" placeholder="e.g. Emma" autocomplete="given-name" maxlength="50">
+        </div>
+        <button class="btn-primary disabled" id="nameBtn">Continue &rarr;</button>
+        <p class="trust-line trust-line-light" style="animation:none;opacity:1;transform:none">We use this to personalise the experience</p>
+      </div>
+    </div>
+
+    <!-- Screen 2: Year Level -->
+    <div class="screen" id="s2">
+      <div class="si si-center">
+        <span class="quiz-badge" id="yearBadge">About your child</span>
+        <h2 class="quiz-heading" id="yearHeading">What year level are they in?</h2>
+        <div class="year-grid">
+          <button class="year-pill" data-val="Kindergarten">Kindy</button>
+          <button class="year-pill" data-val="Year 1">Year 1</button>
+          <button class="year-pill" data-val="Year 2">Year 2</button>
+          <button class="year-pill" data-val="Year 3">Year 3</button>
+          <button class="year-pill" data-val="Year 4">Year 4</button>
+          <button class="year-pill" data-val="Year 5">Year 5</button>
+          <button class="year-pill" data-val="Year 6">Year 6</button>
+          <button class="year-pill" data-val="Year 7">Year 7</button>
+          <button class="year-pill" data-val="Year 8">Year 8</button>
+          <button class="year-pill" data-val="Year 9">Year 9</button>
+          <button class="year-pill" data-val="Year 10">Year 10</button>
+          <button class="year-pill" data-val="Year 11">Year 11</button>
+          <button class="year-pill" data-val="Year 12">Year 12</button>
+          <button class="year-pill" data-val="University">Uni</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Screen 3: Situation (Q1 of 5) -->
+    <div class="screen" id="s3">
+      <div class="si si-center">
+        <span class="quiz-badge">Question 1 of 6</span>
+        <h2 class="quiz-heading" id="sitHeading">What best describes your child right now?</h2>
+        <div class="card-list">
+          <button class="qz-card" data-val="falling-behind">
+            <span class="qz-emoji">&#x1F4C9;</span>
+            <div class="qz-text">
+              <strong>Falling behind</strong>
+              <span>Struggling to keep up in class</span>
+            </div>
+          </button>
+          <button class="qz-card" data-val="consistent-practice">
+            <span class="qz-emoji">&#x1F4DA;</span>
+            <div class="qz-text">
+              <strong>Needs consistent practice</strong>
+              <span>Good but needs regular reinforcement</span>
+            </div>
+          </button>
+          <button class="qz-card" data-val="get-ahead">
+            <span class="qz-emoji">&#x1F680;</span>
+            <div class="qz-text">
+              <strong>Wants to get ahead</strong>
+              <span>Capable student aiming higher</span>
+            </div>
+          </button>
+          <button class="qz-card" data-val="exam-prep">
+            <span class="qz-emoji">&#x1F4DD;</span>
+            <div class="qz-text">
+              <strong>Preparing for exams</strong>
+              <span>HSC, ATAR, or key assessments coming up</span>
+            </div>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Screen 4: Current Grades (Q2 of 5) — NEW -->
+    <div class="screen" id="s4">
+      <div class="si si-center">
+        <span class="quiz-badge">Question 2 of 6</span>
+        <h2 class="quiz-heading" id="gradeHeading">How is your child going in school right now?</h2>
+        <div class="card-list">
+          <button class="qz-card" data-val="above">
+            <span class="qz-emoji">&#x1F7E2;</span>
+            <div class="qz-text">
+              <strong>Above average</strong>
+              <span>Mostly A's and B's</span>
+            </div>
+          </button>
+          <button class="qz-card" data-val="average">
+            <span class="qz-emoji">&#x1F7E1;</span>
+            <div class="qz-text">
+              <strong>About average</strong>
+              <span>Mix of B's and C's</span>
+            </div>
+          </button>
+          <button class="qz-card" data-val="below">
+            <span class="qz-emoji">&#x1F7E0;</span>
+            <div class="qz-text">
+              <strong>Below expected</strong>
+              <span>Mostly C's, some D's</span>
+            </div>
+          </button>
+          <button class="qz-card" data-val="well-below">
+            <span class="qz-emoji">&#x1F534;</span>
+            <div class="qz-text">
+              <strong>Well below expected</strong>
+              <span>Mostly D's and E's</span>
+            </div>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Screen 5: Confidence Level (Q3 of 5) — NEW -->
+    <div class="screen" id="s5">
+      <div class="si si-center">
+        <span class="quiz-badge">Question 3 of 6</span>
+        <h2 class="quiz-heading" id="confHeading">How confident is your child about learning?</h2>
+        <div class="card-list">
+          <button class="qz-card" data-val="good">
+            <span class="qz-emoji">&#x1F642;</span>
+            <div class="qz-text">
+              <strong>Generally confident</strong>
+              <span>Happy to try but wants to improve</span>
+            </div>
+          </button>
+          <button class="qz-card" data-val="mixed">
+            <span class="qz-emoji">&#x1F610;</span>
+            <div class="qz-text">
+              <strong>It varies</strong>
+              <span>Some topics are fine, others aren't</span>
+            </div>
+          </button>
+          <button class="qz-card" data-val="low">
+            <span class="qz-emoji">&#x1F61F;</span>
+            <div class="qz-text">
+              <strong>Not very confident</strong>
+              <span>Gets frustrated or avoids it</span>
+            </div>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Screen 6: Subject (Q4 of 5) -->
+    <div class="screen" id="s6">
+      <div class="si si-center">
+        <span class="quiz-badge">Question 4 of 6</span>
+        <h2 class="quiz-heading" id="subjectHeading">What subject do they need most help with?</h2>
+        <div class="pill-grid">
+          <button class="qz-pill" data-val="Maths">&#x1F4D0; Maths</button>
+          <button class="qz-pill" data-val="English">&#x1F4D6; English</button>
+          <button class="qz-pill" data-val="Science">&#x1F52C; Science</button>
+          <button class="qz-pill" data-val="Chemistry">&#x2697;&#xFE0F; Chemistry</button>
+          <button class="qz-pill" data-val="Physics">&#x269B;&#xFE0F; Physics</button>
+          <button class="qz-pill" data-val="Biology">&#x1F9EC; Biology</button>
+          <button class="qz-pill" data-val="History">&#x1F4DC; History</button>
+          <button class="qz-pill" data-val="Other">&#x1F4CB; Other</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Screen 7: Biggest Struggle (Q5 of 5) — NEW / Dynamic -->
+    <div class="screen" id="s7">
+      <div class="si si-center">
+        <span class="quiz-badge">Question 5 of 6</span>
+        <h2 class="quiz-heading" id="struggleHeading">Where do they struggle most?</h2>
+        <div class="card-list" id="strugglePills">
+          <!-- Dynamically populated based on subject selection -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Screen 8: Urgency (Q6 of 6) — NEW -->
+    <div class="screen" id="s8">
+      <div class="si si-center">
+        <span class="quiz-badge">Question 6 of 6</span>
+        <h2 class="quiz-heading" id="urgencyHeading">When would you like to start?</h2>
+        <div class="card-list">
+          <button class="qz-card" data-val="asap">
+            <span class="qz-emoji">&#x1F534;</span>
+            <div class="qz-text">
+              <strong>As soon as possible</strong>
+              <span>Need help urgently</span>
+            </div>
+          </button>
+          <button class="qz-card" data-val="this-term">
+            <span class="qz-emoji">&#x1F7E1;</span>
+            <div class="qz-text">
+              <strong>Sometime this term</strong>
+              <span>Within the next few weeks</span>
+            </div>
+          </button>
+          <button class="qz-card" data-val="next-term">
+            <span class="qz-emoji">&#x1F7E2;</span>
+            <div class="qz-text">
+              <strong>Next term</strong>
+              <span>Planning ahead</span>
+            </div>
+          </button>
+          <button class="qz-card" data-val="exploring">
+            <span class="qz-emoji">&#x1F535;</span>
+            <div class="qz-text">
+              <strong>Just exploring</strong>
+              <span>No rush, researching options</span>
+            </div>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Screen 9: Personalized Contact Form + Success -->
+    <div class="screen" id="s9">
+      <!-- Contact form -->
+      <div class="si si-scroll" id="contactForm">
+
+        <!-- Quiz summary -->
+        <div class="quiz-summary" id="quizSummary">
+          <div class="quiz-summary-header">
+            <span class="quiz-summary-icon">&#x2705;</span>
+            <span class="quiz-summary-title" id="summaryTitle">Summary</span>
+          </div>
+          <div class="quiz-summary-tags" id="summaryTags"></div>
+        </div>
+
+        <!-- Tutor matching message -->
+        <div class="tutor-matching-msg" id="tutorMatchMsg">
+          <span class="tutor-matching-icon">&#x1F50D;</span>
+          <span id="tutorMatchText">Searching for available tutors...</span>
+        </div>
+
+        <h3 id="formHeading" class="form-heading">Where should we send the tutor match?</h3>
+        <p id="formSub" class="form-sub">We'll call you today to discuss the learning plan and find the perfect tutor.</p>
+
+        <div class="form-fields">
+          <div class="field-wrap">
+            <label for="fParentName">Your name</label>
+            <input type="text" id="fParentName" placeholder="e.g. Michelle" autocomplete="name">
+          </div>
+          <div class="field-wrap">
+            <label for="fEmail">Email</label>
+            <input type="email" id="fEmail" placeholder="you@email.com" autocomplete="email">
+          </div>
+          <div class="field-wrap">
+            <label for="fPhone">Phone</label>
+            <input type="tel" id="fPhone" placeholder="0412 345 678" autocomplete="tel">
+          </div>
+          <div class="field-wrap">
+            <label for="fState">State / Territory</label>
+            <select id="fState">
+              <option value="" disabled selected>Select state</option>
+              <option>NSW</option><option>VIC</option><option>QLD</option>
+              <option>SA</option><option>WA</option><option>TAS</option>
+              <option>NT</option><option>ACT</option>
+            </select>
+          </div>
+        </div>
+
+        <button class="btn-primary disabled" id="submitBtn">Find your child's tutor &rarr;</button>
+
+        <p class="urgency-helper" id="urgencyHelper"></p>
+
+        <div class="live-proof">
+          <span class="live-dot"></span>
+          <span id="proofCount">32</span> parents enquired today
+        </div>
+
+        <div class="form-quote" id="formTestimonial">
+          &ldquo;My son's grades went up 30% in 6 months.&rdquo; &mdash; <strong>Deb S., NSW</strong>
+        </div>
+      </div>
+
+      <!-- Success state -->
+      <div class="success-wrap" id="successWrap">
+        <div class="success-anim">
+          <div class="success-ring">
+            <svg viewBox="0 0 80 80">
+              <circle class="ring-bg" cx="40" cy="40" r="36"/>
+              <circle class="ring-fg" cx="40" cy="40" r="36"/>
+            </svg>
+            <svg class="check-mark" viewBox="0 0 36 36">
+              <path d="M10 18l6 6L26 12"/>
+            </svg>
+          </div>
+        </div>
+        <h2 class="success-h2">You're all set!</h2>
+        <p class="success-sub">We're finding the perfect tutor for <span id="successName">your child</span>.</p>
+        <div class="next-steps">
+          <div class="ns-item"><span class="ns-num">1</span><span>We'll review your child's needs</span></div>
+          <div class="ns-item"><span class="ns-num">2</span><span>Match with the best available tutor</span></div>
+          <div class="ns-item"><span class="ns-num">3</span><span>Call you today to confirm the match</span></div>
+          <div class="ns-item"><span class="ns-num">4</span><span>Book your free first lesson</span></div>
+        </div>
+        <a href="/tp/online-tutoring/a/" class="btn-primary" id="tyLink">See what's next &rarr;</a>
+      </div>
+    </div>
+
+  </div><!-- /funnel -->
+
+  <canvas id="confettiCanvas"></canvas>
+
+  <script src="/shared/utm.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

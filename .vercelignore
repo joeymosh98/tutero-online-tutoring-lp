@@ -1,0 +1,6 @@
+.claude/
+.git/
+api/
+dev-server.js
+plan.md
+shared/

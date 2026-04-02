@@ -7,14 +7,14 @@ function submitLeadData(data) {
   data.page = window.location.href;
   data.timestamp = new Date().toISOString();
   data.referrer = document.referrer || '';
-  // UTM params
-  var params = new URLSearchParams(window.location.search);
-  data.utm_source = params.get('utm_source') || '';
-  data.utm_medium = params.get('utm_medium') || '';
-  data.utm_campaign = params.get('utm_campaign') || '';
-  data.utm_term = params.get('utm_term') || '';
-  data.utm_content = params.get('utm_content') || '';
-  data.gclid = params.get('gclid') || '';
+  // UTM params (from shared utility)
+  var utm = window.TuteroUTM ? window.TuteroUTM.get() : {};
+  data.utm_source = utm.utm_source || '';
+  data.utm_medium = utm.utm_medium || '';
+  data.utm_campaign = utm.utm_campaign || '';
+  data.utm_term = utm.utm_term || '';
+  data.utm_content = utm.utm_content || '';
+  data.gclid = utm.gclid || '';
   // Send to webhook
   if (WEBHOOK_URL) {
     fetch(WEBHOOK_URL, {
@@ -32,6 +32,11 @@ function buildThankYouUrl(name, subject) {
   var p = new URLSearchParams();
   if (name) p.set('studentName', name);
   if (subject) p.set('subject', subject);
+  // Forward UTM params to thank you page
+  var utm = window.TuteroUTM ? window.TuteroUTM.get() : {};
+  ['utm_source','utm_medium','utm_campaign','utm_term','utm_content','gclid'].forEach(function(key) {
+    if (utm[key]) p.set(key, utm[key]);
+  });
   var qs = p.toString();
   return base + (qs ? '?' + qs : '');
 }
