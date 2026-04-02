@@ -31,7 +31,7 @@ function submitLeadData(data) {
 }
 
 function buildThankYouUrl() {
-  var base = '/tp/online-tutoring/a/';
+  var base = '/tp/online-tutoring/b/';
   var p = new URLSearchParams();
   if (S.studentName) p.set('studentName', S.studentName);
   if (S.subject) p.set('subject', S.subject);
