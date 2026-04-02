@@ -85,7 +85,29 @@
       "description": "Landing pages for schools, departments, and institutional partnerships.",
       "icon": "building",
       "color": "dark-blue",
-      "pages": [],
+      "pages": [
+        {
+          "id": "tutero-ai",
+          "name": "Tutero AI — Teacher Onboarding",
+          "description": "Interactive onboarding funnel for teachers to create curriculum-aligned resources with AI",
+          "path": "/lp/tutero-ai",
+          "status": "draft",
+          "builtWith": "custom-html",
+          "grade": null,
+          "hasSplitter": false,
+          "variants": [
+            {
+              "id": "a",
+              "label": "Main",
+              "path": "/lp/tutero-ai/a/"
+            }
+          ],
+          "splitterPath": null,
+          "createdAt": "2026-04-02",
+          "tags": ["schools", "ai", "onboarding"],
+          "thankYouPageId": null
+        }
+      ],
       "thankYouPages": []
     }
   ]
