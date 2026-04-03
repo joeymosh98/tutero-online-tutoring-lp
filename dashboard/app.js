@@ -30,6 +30,9 @@
   var filters = { status: 'all', builtWith: 'all', grade: 'all' };
   var currentSort = 'name-asc';
   var currentSearch = '';
+  var isAuthenticated = !!sessionStorage.getItem('cms_token');
+  var editingPage = null; // page object currently being edited
+  var editingDivision = null; // division containing the page being edited
 
   function getCurrentPages(division) {
     if (!division) return [];
@@ -47,6 +50,24 @@
   var filterBuiltWith = document.getElementById('filterBuiltWith');
   var filterGrade = document.getElementById('filterGrade');
   var sortBy = document.getElementById('sortBy');
+  var lockBtn = document.getElementById('lockBtn');
+
+  // Auth modal refs
+  var authModal = document.getElementById('authModal');
+  var authPasswordInput = document.getElementById('authPasswordInput');
+  var authError = document.getElementById('authError');
+  var authSubmitBtn = document.getElementById('authSubmitBtn');
+  var authCancelBtn = document.getElementById('authCancelBtn');
+
+  // Edit modal refs
+  var editModal = document.getElementById('editModal');
+  var editModalTitle = document.getElementById('editModalTitle');
+  var editModalBody = document.getElementById('editModalBody');
+  var editError = document.getElementById('editError');
+  var editSuccess = document.getElementById('editSuccess');
+  var editSaveBtn = document.getElementById('editSaveBtn');
+  var editCancelBtn = document.getElementById('editCancelBtn');
+  var editCloseBtn = document.getElementById('editCloseBtn');
 
   // ── Icons & Colors ──
 
@@ -62,19 +83,58 @@
     'blue': { solid: 'var(--color-blue)', bg: 'rgba(0, 163, 255, 0.1)' }
   };
 
-  // ── Fetch registry ──
+  // ── Auth State ──
 
-  fetch('./landing-pages.json?v=' + Date.now())
-    .then(function(res) { return res.json(); })
-    .then(function(data) {
-      divisions = data.divisions;
-      renderTabs();
-      handleRoute();
-    })
-    .catch(function(err) {
-      console.error('Failed to load landing pages registry:', err);
-      grid.innerHTML = '<p style="padding:40px;color:#888;">Failed to load landing pages. Check that landing-pages.json exists.</p>';
-    });
+  function updateLockBtn() {
+    if (isAuthenticated) {
+      lockBtn.classList.add('unlocked');
+      lockBtn.title = 'Editing unlocked';
+      lockBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 019.9-1"/></svg>';
+    } else {
+      lockBtn.classList.remove('unlocked');
+      lockBtn.title = 'Unlock editing';
+      lockBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>';
+    }
+  }
+
+  updateLockBtn();
+
+  // ── Fetch registry (Blob first, then static JSON fallback) ──
+
+  function loadConfig() {
+    fetch('/api/cms-content?key=landing-pages&v=' + Date.now())
+      .then(function(res) { return res.json(); })
+      .then(function(data) {
+        if (data && data.divisions && data.divisions.length > 0) {
+          divisions = data.divisions;
+          renderTabs();
+          handleRoute();
+        } else {
+          // Blob empty — fall back to static JSON
+          return loadStaticJson();
+        }
+      })
+      .catch(function() {
+        // API error — fall back to static JSON
+        return loadStaticJson();
+      });
+  }
+
+  function loadStaticJson() {
+    return fetch('./landing-pages.json?v=' + Date.now())
+      .then(function(res) { return res.json(); })
+      .then(function(data) {
+        divisions = data.divisions;
+        renderTabs();
+        handleRoute();
+      })
+      .catch(function(err) {
+        console.error('Failed to load landing pages registry:', err);
+        grid.innerHTML = '<p style="padding:40px;color:#888;">Failed to load landing pages. Check that landing-pages.json exists.</p>';
+      });
+  }
+
+  loadConfig();
 
   // ── Routing ──
 
@@ -220,6 +280,10 @@
     updateCount();
   }
 
+  function escapeHtml(str) {
+    return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  }
+
   function renderCard(page) {
     var statusClass = 'lp-card-status--' + page.status;
     var cardClass = page.status === 'archived' ? 'lp-card archived' : 'lp-card';
@@ -243,7 +307,7 @@
     var variantBadges = page.variants.map(function(v) {
       return '<a href="' + v.path + '" target="_blank" class="lp-variant-badge" title="Open Variant ' + v.id.toUpperCase() + '">' +
         '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15,3 21,3 21,9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>' +
-        'Variant ' + v.id.toUpperCase() + (v.label ? ' &mdash; ' + v.label : '') +
+        'Variant ' + v.id.toUpperCase() + (v.label ? ' &mdash; ' + escapeHtml(v.label) : '') +
         '</a>';
     }).join('');
 
@@ -277,14 +341,30 @@
     }
 
     var tags = (page.tags || []).map(function(t) {
-      return '<span class="lp-tag">' + t + '</span>';
+      return '<span class="lp-tag">' + escapeHtml(t) + '</span>';
     }).join('');
+
+    // Notes preview (if exists)
+    var notesHtml = '';
+    if (page.notes) {
+      notesHtml = '<p class="lp-card-notes">' + escapeHtml(page.notes) + '</p>';
+    }
+
+    // Actions — edit button shown when authenticated
+    var editBtn = '';
+    if (isAuthenticated) {
+      editBtn = '<button class="lp-action-btn lp-action-btn--edit" data-action="edit-page" data-page="' + page.id + '" title="Edit properties">' +
+        '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>' +
+        'Edit' +
+      '</button>';
+    }
 
     var actions = '<div class="lp-card-actions">' +
       '<button class="lp-action-btn" data-action="copy-link" data-page="' + page.id + '" title="Copy live URL">' +
         '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>' +
         'Copy Link' +
       '</button>' +
+      editBtn +
       '</div>';
 
     var previewPath = page.variants[0].path;
@@ -294,8 +374,8 @@
     var variantSwitcher = '';
     if (page.variants.length > 1) {
       var tabs = page.variants.map(function(v, i) {
-        return '<button class="lp-variant-tab' + (i === 0 ? ' active' : '') + '" data-variant-index="' + i + '" title="' + (v.label || 'Variant ' + v.id.toUpperCase()) + '">' +
-          v.id.toUpperCase() + ' &mdash; ' + (v.label || '') +
+        return '<button class="lp-variant-tab' + (i === 0 ? ' active' : '') + '" data-variant-index="' + i + '" title="' + escapeHtml(v.label || 'Variant ' + v.id.toUpperCase()) + '">' +
+          v.id.toUpperCase() + ' &mdash; ' + escapeHtml(v.label || '') +
         '</button>';
       }).join('');
       variantSwitcher = '<div class="lp-variant-switcher">' + tabs + '</div>';
@@ -318,8 +398,9 @@
         variantSwitcher +
       '</div>' +
       '<div class="lp-card-body">' +
-        '<h3 class="lp-card-name">' + page.name + '</h3>' +
-        '<p class="lp-card-desc">' + page.description + '</p>' +
+        '<h3 class="lp-card-name">' + escapeHtml(page.name) + '</h3>' +
+        '<p class="lp-card-desc">' + escapeHtml(page.description) + '</p>' +
+        notesHtml +
         propsRow +
         '<div class="lp-card-meta">' + variantBadges + splitterBadge + linkedBadge + tags + '</div>' +
         actions +
@@ -490,6 +571,315 @@
     }, 5000);
   }
 
+  // ── Auth Modal ──
+
+  function showAuthModal() {
+    authPasswordInput.value = '';
+    authError.style.display = 'none';
+    authModal.style.display = 'flex';
+    authPasswordInput.focus();
+  }
+
+  function hideAuthModal() {
+    authModal.style.display = 'none';
+  }
+
+  function submitAuth() {
+    var pw = authPasswordInput.value;
+    if (!pw) return;
+    authSubmitBtn.disabled = true;
+    authSubmitBtn.textContent = 'Checking...';
+
+    fetch('/api/cms-auth', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ password: pw })
+    })
+      .then(function(res) { return res.json(); })
+      .then(function(data) {
+        authSubmitBtn.disabled = false;
+        authSubmitBtn.textContent = 'Unlock';
+        if (data.valid) {
+          sessionStorage.setItem('cms_token', pw);
+          isAuthenticated = true;
+          updateLockBtn();
+          hideAuthModal();
+          render(); // re-render cards to show edit buttons
+        } else {
+          authError.style.display = 'block';
+        }
+      })
+      .catch(function() {
+        authSubmitBtn.disabled = false;
+        authSubmitBtn.textContent = 'Unlock';
+        authError.textContent = 'Connection error. Try again.';
+        authError.style.display = 'block';
+      });
+  }
+
+  lockBtn.addEventListener('click', function() {
+    if (isAuthenticated) {
+      // Lock — clear auth
+      sessionStorage.removeItem('cms_token');
+      isAuthenticated = false;
+      updateLockBtn();
+      render();
+    } else {
+      showAuthModal();
+    }
+  });
+
+  authCancelBtn.addEventListener('click', hideAuthModal);
+  authSubmitBtn.addEventListener('click', submitAuth);
+  authPasswordInput.addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') submitAuth();
+  });
+
+  // Close auth modal on overlay click
+  authModal.addEventListener('click', function(e) {
+    if (e.target === authModal) hideAuthModal();
+  });
+
+  // ── Edit Modal ──
+
+  function findPageInDivisions(pageId) {
+    for (var i = 0; i < divisions.length; i++) {
+      var div = divisions[i];
+      var pages = currentPageType === 'tp' ? (div.thankYouPages || []) : div.pages;
+      for (var j = 0; j < pages.length; j++) {
+        if (pages[j].id === pageId) {
+          return { division: div, page: pages[j], index: j };
+        }
+      }
+    }
+    return null;
+  }
+
+  function openEditModal(pageId) {
+    var found = findPageInDivisions(pageId);
+    if (!found) return;
+    editingPage = found.page;
+    editingDivision = found.division;
+
+    editModalTitle.textContent = 'Edit: ' + editingPage.name;
+    editError.style.display = 'none';
+    editSuccess.style.display = 'none';
+    editSaveBtn.disabled = false;
+    editSaveBtn.textContent = 'Save Changes';
+
+    // Build form
+    var html = '';
+
+    // Page Details section
+    html += '<div class="cms-section-label">Page Details</div>';
+
+    html += '<div class="cms-field">' +
+      '<label class="cms-label" for="editName">Name</label>' +
+      '<input type="text" id="editName" class="cms-input" value="' + escapeHtml(editingPage.name) + '">' +
+    '</div>';
+
+    html += '<div class="cms-field">' +
+      '<label class="cms-label" for="editDesc">Description</label>' +
+      '<input type="text" id="editDesc" class="cms-input" value="' + escapeHtml(editingPage.description) + '">' +
+    '</div>';
+
+    html += '<div class="cms-field">' +
+      '<label class="cms-label" for="editStatus">Status</label>' +
+      '<select id="editStatus" class="cms-select">' +
+        '<option value="active"' + (editingPage.status === 'active' ? ' selected' : '') + '>Active</option>' +
+        '<option value="draft"' + (editingPage.status === 'draft' ? ' selected' : '') + '>Draft</option>' +
+        '<option value="paused"' + (editingPage.status === 'paused' ? ' selected' : '') + '>Paused</option>' +
+        '<option value="archived"' + (editingPage.status === 'archived' ? ' selected' : '') + '>Archived</option>' +
+      '</select>' +
+    '</div>';
+
+    html += '<div class="cms-field">' +
+      '<label class="cms-label" for="editGrade">Grade</label>' +
+      '<select id="editGrade" class="cms-select">' +
+        '<option value=""' + (!editingPage.grade ? ' selected' : '') + '>Ungraded</option>' +
+        '<option value="green"' + (editingPage.grade === 'green' ? ' selected' : '') + '>Green</option>' +
+        '<option value="amber"' + (editingPage.grade === 'amber' ? ' selected' : '') + '>Amber</option>' +
+        '<option value="red"' + (editingPage.grade === 'red' ? ' selected' : '') + '>Red</option>' +
+      '</select>' +
+    '</div>';
+
+    // Tags
+    var currentTags = editingPage.tags || [];
+    html += '<div class="cms-field">' +
+      '<label class="cms-label">Tags</label>' +
+      '<div class="cms-tag-list" id="editTagList">' +
+        currentTags.map(function(t) {
+          return '<span class="cms-tag-pill" data-tag="' + escapeHtml(t) + '">' +
+            escapeHtml(t) +
+            '<button class="cms-tag-remove" data-remove-tag="' + escapeHtml(t) + '">&times;</button>' +
+          '</span>';
+        }).join('') +
+      '</div>' +
+      '<input type="text" id="editTagInput" class="cms-input" placeholder="Add tag and press Enter">' +
+    '</div>';
+
+    // Notes
+    html += '<div class="cms-field">' +
+      '<label class="cms-label" for="editNotes">Notes</label>' +
+      '<textarea id="editNotes" class="cms-textarea" placeholder="Internal notes...">' + escapeHtml(editingPage.notes || '') + '</textarea>' +
+    '</div>';
+
+    // Variant Labels section
+    if (editingPage.variants && editingPage.variants.length > 0) {
+      html += '<div class="cms-section-label">Variant Labels</div>';
+      editingPage.variants.forEach(function(v, i) {
+        html += '<div class="cms-field">' +
+          '<label class="cms-label" for="editVariant' + i + '">Variant ' + v.id.toUpperCase() + ' Label</label>' +
+          '<input type="text" id="editVariant' + i + '" class="cms-input" data-variant-index="' + i + '" value="' + escapeHtml(v.label || '') + '">' +
+        '</div>';
+      });
+    }
+
+    editModalBody.innerHTML = html;
+    editModal.style.display = 'flex';
+
+    // Focus first field
+    var firstInput = editModalBody.querySelector('.cms-input');
+    if (firstInput) firstInput.focus();
+
+    // Tag input handler
+    var tagInput = document.getElementById('editTagInput');
+    tagInput.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        var val = tagInput.value.trim().toLowerCase().replace(/[^a-z0-9-]/g, '');
+        if (!val) return;
+        addTag(val);
+        tagInput.value = '';
+      }
+    });
+  }
+
+  function addTag(tag) {
+    var tagList = document.getElementById('editTagList');
+    // Check if already exists
+    var existing = tagList.querySelector('[data-tag="' + tag + '"]');
+    if (existing) return;
+
+    var pill = document.createElement('span');
+    pill.className = 'cms-tag-pill';
+    pill.setAttribute('data-tag', tag);
+    pill.innerHTML = escapeHtml(tag) + '<button class="cms-tag-remove" data-remove-tag="' + escapeHtml(tag) + '">&times;</button>';
+    tagList.appendChild(pill);
+  }
+
+  function removeTag(tag) {
+    var tagList = document.getElementById('editTagList');
+    var pill = tagList.querySelector('[data-tag="' + tag + '"]');
+    if (pill) pill.remove();
+  }
+
+  function hideEditModal() {
+    editModal.style.display = 'none';
+    editingPage = null;
+    editingDivision = null;
+  }
+
+  function getEditedTags() {
+    var tagList = document.getElementById('editTagList');
+    var pills = tagList.querySelectorAll('.cms-tag-pill');
+    var tags = [];
+    pills.forEach(function(pill) {
+      tags.push(pill.getAttribute('data-tag'));
+    });
+    return tags;
+  }
+
+  function saveEdit() {
+    if (!editingPage || !editingDivision) return;
+
+    // Read form values
+    var newName = document.getElementById('editName').value.trim();
+    var newDesc = document.getElementById('editDesc').value.trim();
+    var newStatus = document.getElementById('editStatus').value;
+    var newGrade = document.getElementById('editGrade').value || null;
+    var newNotes = document.getElementById('editNotes').value.trim() || null;
+    var newTags = getEditedTags();
+
+    if (!newName) {
+      editError.textContent = 'Name is required.';
+      editError.style.display = 'block';
+      return;
+    }
+
+    // Read variant labels
+    var variantInputs = editModalBody.querySelectorAll('[data-variant-index]');
+    var newVariantLabels = {};
+    variantInputs.forEach(function(input) {
+      var idx = parseInt(input.getAttribute('data-variant-index'), 10);
+      newVariantLabels[idx] = input.value.trim();
+    });
+
+    // Apply changes to the in-memory page object
+    editingPage.name = newName;
+    editingPage.description = newDesc;
+    editingPage.status = newStatus;
+    editingPage.grade = newGrade;
+    editingPage.tags = newTags;
+    editingPage.notes = newNotes;
+
+    // Update variant labels
+    if (editingPage.variants) {
+      editingPage.variants.forEach(function(v, i) {
+        if (newVariantLabels[i] !== undefined) {
+          v.label = newVariantLabels[i];
+        }
+      });
+    }
+
+    // Save to API
+    editSaveBtn.disabled = true;
+    editSaveBtn.textContent = 'Saving...';
+    editError.style.display = 'none';
+    editSuccess.style.display = 'none';
+
+    var token = sessionStorage.getItem('cms_token');
+    fetch('/api/cms-save', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + token
+      },
+      body: JSON.stringify({ config: { divisions: divisions } })
+    })
+      .then(function(res) { return res.json(); })
+      .then(function(data) {
+        editSaveBtn.disabled = false;
+        editSaveBtn.textContent = 'Save Changes';
+        if (data.success) {
+          editSuccess.style.display = 'block';
+          setTimeout(function() {
+            hideEditModal();
+            renderTabs();
+            render();
+          }, 800);
+        } else {
+          editError.textContent = data.error || 'Failed to save. Try again.';
+          editError.style.display = 'block';
+        }
+      })
+      .catch(function() {
+        editSaveBtn.disabled = false;
+        editSaveBtn.textContent = 'Save Changes';
+        editError.textContent = 'Connection error. Try again.';
+        editError.style.display = 'block';
+      });
+  }
+
+  editCancelBtn.addEventListener('click', hideEditModal);
+  editCloseBtn.addEventListener('click', hideEditModal);
+  editSaveBtn.addEventListener('click', saveEdit);
+
+  // Close edit modal on overlay click
+  editModal.addEventListener('click', function(e) {
+    if (e.target === editModal) hideEditModal();
+  });
+
   // ── Event Listeners ──
 
   searchInput.addEventListener('input', function() {
@@ -520,6 +910,14 @@
   // ── Action handlers (delegated) ──
 
   document.addEventListener('click', function(e) {
+    // Tag remove button
+    var removeBtn = e.target.closest('.cms-tag-remove');
+    if (removeBtn) {
+      var tag = removeBtn.getAttribute('data-remove-tag');
+      if (tag) removeTag(tag);
+      return;
+    }
+
     // Variant switcher
     var variantTab = e.target.closest('.lp-variant-tab');
     if (variantTab) {
@@ -577,6 +975,10 @@
         btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20,6 9,17 4,12"/></svg> Copied!';
         setTimeout(function() { btn.innerHTML = original; }, 2000);
       });
+    }
+
+    if (action === 'edit-page') {
+      openEditModal(pageId);
     }
   });
 

@@ -30,7 +30,8 @@ var MIME = {
 var PORT = parseInt(process.argv[2] || '8084', 10);
 
 http.createServer(async function(req, res) {
-  var url = req.url.split('?')[0];
+  var parsedUrl = new URL(req.url, 'http://localhost');
+  var url = parsedUrl.pathname;
 
   // Handle API routes
   if (url.startsWith('/api/')) {
@@ -50,6 +51,12 @@ http.createServer(async function(req, res) {
       } catch(e) {
         req.body = {};
       }
+
+      // Parse query params into req.query
+      req.query = {};
+      parsedUrl.searchParams.forEach(function(val, key) {
+        req.query[key] = val;
+      });
 
       // Create mock Vercel res object
       var statusCode = 200;

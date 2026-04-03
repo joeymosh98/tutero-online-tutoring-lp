@@ -24,3 +24,5 @@ inspiration/
 index-monolith-backup.html
 .vercel
 .env*
+node_modules/
+dev-cms/
