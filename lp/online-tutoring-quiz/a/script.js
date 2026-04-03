@@ -1,8 +1,9 @@
 // ═══════════════════════════════════════════════════════════════
 // Tutero Quiz Funnel — Variant A (Lead Generation + Plan on TY Page)
-// Screens: s0 Welcome | s1 Name | s2 Year | s3 Situation | s4 Grades
-//          s5 Confidence | s6 Subject | s7 Struggle | s8 Urgency
-//          s9 Thinking | s10 Phone | s11 Email | s12 Name+State+Submit
+// Screens: s0 Welcome | s1 Who | s2 Name | s3 Year | s4 Situation
+//          s5 Grades | s6 Confidence | s7 Subject | s8 Struggle
+//          s9 Urgency | s10 Thinking | s11 Phone | s12 Email
+//          s13 Name+State (or State-only) + Submit
 // ═══════════════════════════════════════════════════════════════
 
 // ── Webhook + API ──
@@ -53,6 +54,7 @@ function buildThankYouUrl() {
 // State
 // ═══════════════════════════════════════════════════════════════
 var S = {
+  isForSelf: false,
   studentName: '',
   yearLevel: '',
   situation: '',
@@ -70,16 +72,16 @@ var S = {
 };
 
 // ═══════════════════════════════════════════════════════════════
-// Screen Navigation (13 screens: s0-s12)
+// Screen Navigation (14 screens: s0-s13)
 // ═══════════════════════════════════════════════════════════════
-var TOTAL_SCREENS = 12;
+var TOTAL_SCREENS = 13;
 var screens = [];
 var cur = 0;
 var header = document.getElementById('qzHeader');
 var backBtn = document.getElementById('backBtn');
 var progressFill = document.getElementById('progressFill');
 var stepLabel = document.getElementById('stepLabel');
-var PROGRESS = [0, 8, 16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 95];
+var PROGRESS = [0, 5, 12, 19, 26, 34, 42, 50, 58, 66, 74, 82, 89, 95];
 
 function initScreens() {
   for (var i = 0; i <= TOTAL_SCREENS; i++) screens.push(document.getElementById('s' + i));
@@ -92,13 +94,13 @@ function updateChrome(n) {
     header.classList.add('light');
   }
   // Back button — hide on welcome and thinking screen
-  backBtn.style.visibility = (n > 0 && n !== 9) ? 'visible' : 'hidden';
+  backBtn.style.visibility = (n > 0 && n !== 10) ? 'visible' : 'hidden';
   // Progress bar
   progressFill.style.width = (PROGRESS[n] || 0) + '%';
   // Step text
-  if (n >= 3 && n <= 8) stepLabel.textContent = (n - 2) + ' of 6';
-  else if (n === 9) stepLabel.textContent = '';
-  else if (n >= 10 && n <= 12) stepLabel.textContent = 'Almost there';
+  if (n >= 4 && n <= 9) stepLabel.textContent = (n - 3) + ' of 6';
+  else if (n === 10) stepLabel.textContent = '';
+  else if (n >= 11 && n <= 13) stepLabel.textContent = 'Almost there';
   else stepLabel.textContent = '';
 }
 
@@ -119,19 +121,19 @@ function goTo(n) {
   updateChrome(n);
   reanimate(next);
 
-  if (n === 1) {
+  if (n === 2) {
     setTimeout(function() { document.getElementById('fStudentName').focus(); }, 450);
   }
-  if (n === 9) {
+  if (n === 10) {
     runThinkingSequence();
   }
-  if (n === 10) {
+  if (n === 11) {
     setTimeout(function() { fPH.focus(); }, 450);
   }
-  if (n === 11) {
+  if (n === 12) {
     setTimeout(function() { fEM.focus(); }, 450);
   }
-  if (n === 12) {
+  if (n === 13 && !S.isForSelf) {
     setTimeout(function() { fPN.focus(); }, 450);
   }
 }
@@ -164,8 +166,7 @@ var SITUATION_LABELS = {
 var GRADE_LABELS = {
   'above': 'Above average',
   'average': 'About average',
-  'below': 'Below expected',
-  'well-below': 'Well below expected'
+  'below': 'Below expected'
 };
 
 var CONFIDENCE_LABELS = {
@@ -186,18 +187,40 @@ var TUTOR_COUNTS = {
   'History': [4, 7], 'Geography': [3, 6], 'Other': [6, 10]
 };
 
+// Called after "who is this for?" selection
+function personaliseForMode() {
+  if (S.isForSelf) {
+    document.getElementById('nameBadge').textContent = 'About you';
+    document.getElementById('nameHeading').textContent = 'What\u2019s your first name?';
+  } else {
+    document.getElementById('nameBadge').textContent = 'About your child';
+    document.getElementById('nameHeading').textContent = 'What\u2019s your child\u2019s first name?';
+  }
+}
+
+// Called after name is entered
 function personaliseWithName(name) {
-  document.getElementById('yearBadge').textContent = 'About ' + name;
-  document.getElementById('yearHeading').textContent = 'What year level is ' + name + ' in?';
-  document.getElementById('sitHeading').textContent = 'What best describes ' + name + ' right now?';
-  document.getElementById('gradeHeading').textContent = 'How is ' + name + ' going in school right now?';
-  document.getElementById('confHeading').textContent = 'How confident is ' + name + ' about learning?';
-  document.getElementById('subjectHeading').textContent = 'What subject does ' + name + ' need most help with?';
-  document.getElementById('urgencyHeading').textContent = 'When would you like ' + name + ' to start?';
+  if (S.isForSelf) {
+    document.getElementById('yearBadge').textContent = 'About you';
+    document.getElementById('yearHeading').textContent = 'What level are you studying at?';
+    document.getElementById('sitHeading').textContent = 'What best describes you right now?';
+    document.getElementById('gradeHeading').textContent = 'How are you going right now?';
+    document.getElementById('confHeading').textContent = 'How confident are you about learning?';
+    document.getElementById('subjectHeading').textContent = 'What subject do you need most help with?';
+    document.getElementById('urgencyHeading').textContent = 'When would you like to start?';
+  } else {
+    document.getElementById('yearBadge').textContent = 'About ' + name;
+    document.getElementById('yearHeading').textContent = 'What year level is ' + name + ' in?';
+    document.getElementById('sitHeading').textContent = 'What best describes ' + name + ' right now?';
+    document.getElementById('gradeHeading').textContent = 'How is ' + name + ' going in school right now?';
+    document.getElementById('confHeading').textContent = 'How confident is ' + name + ' about learning?';
+    document.getElementById('subjectHeading').textContent = 'What subject does ' + name + ' need most help with?';
+    document.getElementById('urgencyHeading').textContent = 'When would you like ' + name + ' to start?';
+  }
 }
 
 // ═══════════════════════════════════════════════════════════════
-// Thinking Screen (s9) — Animated Sequence + Auto-advance
+// Thinking Screen (s10) — Animated Sequence + Auto-advance
 // ═══════════════════════════════════════════════════════════════
 function runThinkingSequence() {
   var step1 = document.getElementById('thinkStep1');
@@ -212,12 +235,11 @@ function runThinkingSequence() {
   result.classList.remove('visible');
 
   // Personalise text
-  document.getElementById('thinkText1').textContent =
-    'Analysing ' + S.studentName + '\u2019s answers\u2026';
-  document.getElementById('thinkText2').textContent =
-    'Matching with available ' + S.subject + ' tutors\u2026';
-  document.getElementById('thinkText3').textContent =
-    'Building ' + S.studentName + '\u2019s personalised learning plan\u2026';
+  document.getElementById('thinkText1').textContent = 'Reviewing your preferences\u2026';
+  document.getElementById('thinkText2').textContent = 'Searching for ' + S.subject + ' tutors\u2026';
+  document.getElementById('thinkText3').textContent = S.isForSelf
+    ? 'Preparing your personalised plan\u2026'
+    : 'Preparing ' + S.studentName + '\u2019s personalised plan\u2026';
 
   // Calculate tutor count
   var range = TUTOR_COUNTS[S.subject] || TUTOR_COUNTS['Other'];
@@ -244,49 +266,30 @@ function runThinkingSequence() {
   // Auto-advance to phone screen
   setTimeout(function() {
     personaliseContactScreens();
-    goTo(10);
+    goTo(11);
   }, 4600);
 }
 
 // ═══════════════════════════════════════════════════════════════
-// Contact Screen Personalisation (s10 Phone, s11 Email, s12 Final)
+// Contact Screen Personalisation (s11 Phone, s12 Email, s13 Final)
 // ═══════════════════════════════════════════════════════════════
 function personaliseContactScreens() {
-  // Screen 10 — Phone
-  document.getElementById('phoneHeading').textContent =
-    'Great news \u2014 we\u2019ve matched ' + S.tutorCount + ' tutors for ' + S.studentName + '!';
-  document.getElementById('phoneSub').textContent =
-    'Enter your mobile and we\u2019ll call today to confirm the perfect ' + S.subject + ' tutor.';
-  var phoneMicro = document.getElementById('phoneMicro');
-  if (S.urgency === 'asap') {
-    phoneMicro.innerHTML = '&#x26A1; Urgent requests get a callback within 2 hours';
+  // Phone trust line
+  document.getElementById('phoneTrust').textContent =
+    S.isForSelf ? 'We\u2019ll call to discuss your tutor match' : 'We\u2019ll call to discuss ' + S.studentName + '\u2019s tutor match';
+
+  // Final screen — adapt for self vs child
+  if (S.isForSelf) {
+    // Self mode: hide parent name, just show state
+    document.getElementById('parentNameWrap').style.display = 'none';
+    document.getElementById('finalHeading').textContent = 'Which state are you in?';
+    document.getElementById('submitBtn').textContent = 'Find my tutor \u2192';
   } else {
-    phoneMicro.innerHTML = '&#x26A1; We typically call within 2 hours';
+    document.getElementById('parentNameWrap').style.display = '';
+    document.getElementById('finalHeading').textContent = 'And your name?';
+    document.getElementById('submitBtn').innerHTML =
+      'Find ' + escHtml(S.studentName) + '\u2019s tutor \u2192';
   }
-
-  // Screen 11 — Email
-  document.getElementById('emailHeading').textContent =
-    'Where should we send ' + S.studentName + '\u2019s learning plan?';
-  document.getElementById('emailSub').textContent =
-    'We\u2019ll email a personalised breakdown so you can see exactly where ' + S.studentName + ' can improve \u2014 free, no strings attached.';
-
-  // Screen 12 — Final
-  document.getElementById('finalHeading').textContent =
-    'Last step \u2014 who should we ask for when we call?';
-  document.getElementById('finalSub').textContent =
-    'So our education consultant knows who to speak with about ' + S.studentName + '.';
-
-  // Submit button
-  document.getElementById('submitBtn').innerHTML =
-    'Find ' + escHtml(S.studentName) + '\u2019s tutor <span>&rarr;</span>';
-
-  // Urgency helper
-  document.getElementById('urgencyHelper').textContent =
-    URGENCY_HELPER_TEXT[S.urgency] || '';
-
-  // Testimonial
-  var tHtml = SIT_TESTIMONIALS[S.situation] || SIT_TESTIMONIALS['falling-behind'];
-  document.getElementById('formTestimonial').innerHTML = tHtml;
 }
 
 // ═══════════════════════════════════════════════════════════════
@@ -318,7 +321,6 @@ function fireBackgroundPlanGeneration() {
   })
   .then(function(data) {
     if (data.error) throw new Error(data.error);
-    // Store plan in localStorage for thank you page
     try {
       localStorage.setItem('tutero_learning_plan', JSON.stringify({
         plan: data.plan,
@@ -415,8 +417,9 @@ function populateStruggleCards(subject) {
     '<div class="qz-text"><strong>Not sure</strong><span>Skip this question</span></div>';
   container.appendChild(notSure);
   // Update heading
-  document.getElementById('struggleHeading').textContent =
-    'Where does ' + S.studentName + ' struggle most in ' + subject + '?';
+  document.getElementById('struggleHeading').textContent = S.isForSelf
+    ? 'Where do you struggle most in ' + subject + '?'
+    : 'Where does ' + S.studentName + ' struggle most in ' + subject + '?';
   // Bind click handlers
   initStruggleScreen();
 }
@@ -428,7 +431,7 @@ function initStruggleScreen() {
       cards.forEach(function(c) { c.classList.remove('selected'); });
       card.classList.add('selected');
       S.struggleArea = card.dataset.val;
-      setTimeout(function() { goTo(8); }, 320);
+      setTimeout(function() { goTo(9); }, 320);
     });
   });
 }
@@ -495,7 +498,7 @@ function escHtml(str) {
 }
 
 // ═══════════════════════════════════════════════════════════════
-// Screen 1: Student Name
+// Screen 2: Student Name
 // ═══════════════════════════════════════════════════════════════
 var fSN = document.getElementById('fStudentName');
 var nameBtn = document.getElementById('nameBtn');
@@ -509,7 +512,7 @@ nameBtn.addEventListener('click', function() {
   S.studentName = cap(fSN.value.trim());
   fSN.value = S.studentName;
   personaliseWithName(S.studentName);
-  goTo(2);
+  goTo(3);
 });
 
 fSN.addEventListener('keydown', function(e) {
@@ -517,20 +520,20 @@ fSN.addEventListener('keydown', function(e) {
 });
 
 // ═══════════════════════════════════════════════════════════════
-// Screen 2: Year Level (pill grid, auto-advance)
+// Screen 3: Year Level (pill grid, auto-advance)
 // ═══════════════════════════════════════════════════════════════
-var yearPills = document.querySelectorAll('#s2 .year-pill');
+var yearPills = document.querySelectorAll('#s3 .year-pill');
 yearPills.forEach(function(pill) {
   pill.addEventListener('click', function() {
     yearPills.forEach(function(p) { p.classList.remove('selected'); });
     pill.classList.add('selected');
     S.yearLevel = pill.dataset.val;
-    setTimeout(function() { goTo(3); }, 320);
+    setTimeout(function() { goTo(4); }, 320);
   });
 });
 
 // ═══════════════════════════════════════════════════════════════
-// Screen 10: Phone (Continue to Screen 11)
+// Screen 11: Phone (Continue to Screen 12)
 // ═══════════════════════════════════════════════════════════════
 var fPH = document.getElementById('fPhone');
 var phoneBtn = document.getElementById('phoneBtn');
@@ -551,7 +554,7 @@ phoneBtn.addEventListener('click', function() {
     return;
   }
   S.phone = fPH.value.trim();
-  goTo(11);
+  goTo(12);
 });
 
 fPH.addEventListener('keydown', function(e) {
@@ -559,7 +562,7 @@ fPH.addEventListener('keydown', function(e) {
 });
 
 // ═══════════════════════════════════════════════════════════════
-// Screen 11: Email (Continue to Screen 12)
+// Screen 12: Email (Continue to Screen 13)
 // ═══════════════════════════════════════════════════════════════
 var fEM = document.getElementById('fEmail');
 var emailBtn = document.getElementById('emailBtn');
@@ -579,7 +582,7 @@ emailBtn.addEventListener('click', function() {
     return;
   }
   S.email = fEM.value.trim();
-  goTo(12);
+  goTo(13);
 });
 
 fEM.addEventListener('keydown', function(e) {
@@ -587,14 +590,18 @@ fEM.addEventListener('keydown', function(e) {
 });
 
 // ═══════════════════════════════════════════════════════════════
-// Screen 12: Parent Name + State + Submit
+// Screen 13: Parent Name + State (or State-only) + Submit
 // ═══════════════════════════════════════════════════════════════
 var fPN = document.getElementById('fParentName');
 var fST = document.getElementById('fState');
 var subBtn = document.getElementById('submitBtn');
 
 function checkFinal() {
-  toggleBtn(subBtn, fPN.value.trim() && fST.value);
+  if (S.isForSelf) {
+    toggleBtn(subBtn, !!fST.value);
+  } else {
+    toggleBtn(subBtn, fPN.value.trim() && fST.value);
+  }
 }
 
 fPN.addEventListener('input', function() {
@@ -608,16 +615,17 @@ fST.addEventListener('change', function() {
 
 subBtn.addEventListener('click', function() {
   if (subBtn.classList.contains('disabled')) {
-    if (!fPN.value.trim()) showErr(fPN); else clearErr(fPN);
+    if (!S.isForSelf && !fPN.value.trim()) showErr(fPN); else clearErr(fPN);
     if (!fST.value) showErr(fST); else clearErr(fST);
     return;
   }
 
-  S.parentName = fPN.value.trim();
+  S.parentName = S.isForSelf ? S.studentName : fPN.value.trim();
   S.state = fST.value;
 
   submitLeadData({
     source: 'quiz_funnel',
+    is_for_self: S.isForSelf,
     student_name: S.studentName,
     year_level: S.yearLevel,
     state: fST.value,
@@ -646,21 +654,6 @@ subBtn.addEventListener('click', function() {
 fPN.addEventListener('keydown', function(e) {
   if (e.key === 'Enter') { e.preventDefault(); subBtn.click(); }
 });
-
-// ═══════════════════════════════════════════════════════════════
-// Social Proof Counter
-// ═══════════════════════════════════════════════════════════════
-(function() {
-  var el = document.getElementById('proofCount');
-  if (!el) return;
-  var n = parseInt(el.textContent, 10);
-  var t = 0;
-  var timer = setInterval(function() {
-    t++; n++;
-    el.textContent = n;
-    if (t >= 2) clearInterval(timer);
-  }, 20000);
-})();
 
 // ═══════════════════════════════════════════════════════════════
 // Confetti
@@ -720,21 +713,28 @@ updateChrome(0);
 
 // Header back button — skip thinking screen when going back
 backBtn.addEventListener('click', function() {
-  if (cur === 10) goTo(8);       // Skip thinking screen when going back from phone
+  if (cur === 11) goTo(9);       // Skip thinking screen when going back from phone
   else if (cur > 0) goTo(cur - 1);
 });
 
 // Screen 0 -> 1
 document.getElementById('startBtn').addEventListener('click', function() { goTo(1); });
 
+// Screen 1: Who is this for? (auto-advance)
+initCardScreen('s1', 'isForSelf', 2, function() {
+  // Convert to boolean — initCardScreen stores the data-val string
+  S.isForSelf = (S.isForSelf === 'self');
+  personaliseForMode();
+});
+
 // Quiz card screens with auto-advance
-initCardScreen('s3', 'situation', 4);
-initCardScreen('s4', 'currentGrade', 5);
-initCardScreen('s5', 'confidence', 6);
-initCardScreen('s6', 'subject', 7, function() {
+initCardScreen('s4', 'situation', 5);
+initCardScreen('s5', 'currentGrade', 6);
+initCardScreen('s6', 'confidence', 7);
+initCardScreen('s7', 'subject', 8, function() {
   populateStruggleCards(S.subject);
 });
-// s7 (struggle) is handled by initStruggleScreen() called from populateStruggleCards()
-initCardScreen('s8', 'urgency', 9, function() {
+// s8 (struggle) is handled by initStruggleScreen() called from populateStruggleCards()
+initCardScreen('s9', 'urgency', 10, function() {
   fireBackgroundPlanGeneration();
 });

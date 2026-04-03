@@ -197,7 +197,7 @@
     .trust-line-light { color: var(--gray-500); }
 
     /* ═══ Quiz screens ═══ */
-    #s1, #s2, #s3, #s4, #s5, #s6, #s7 { background: var(--light-bg); }
+    #s1, #s2, #s3, #s4, #s5, #s6, #s7, #s8, #s9 { background: var(--light-bg); }
     .quiz-badge {
       display: inline-block;
       font-size: 13px; font-weight: 600;
@@ -374,8 +374,7 @@
       color: #0d6b52;
     }
 
-    /* ═══ Screen 8 — Loading ═══ */
-    #s8 { background: var(--light-bg); }
+    /* ═══ Screen 9 — Urgency ═══ */
     .loading-wrap {
       display: flex;
       flex-direction: column;
@@ -1038,8 +1037,7 @@
       line-height: 1.5;
     }
 
-    /* ═══ Screen 8 — Urgency ═══ */
-    #s8 { background: var(--light-bg); }
+    /* ═══ Urgency ═══ */
 
     /* ═══ Quiz Summary (Form personalization) ═══ */
     .urgency-helper {
@@ -1052,7 +1050,7 @@
     }
 
     /* ═══ Thinking / Transition Screen (s9) ═══ */
-    #s9 { background: #fff; }
+    #s10 { background: #fff; }
     .thinking-wrap {
       display: flex; flex-direction: column;
       align-items: center; justify-content: center;
@@ -1137,7 +1135,7 @@
     }
 
     /* ═══ Forms (Screen 10-12) ═══ */
-    #s10, #s11, #s12 { background: var(--light-bg); }
+    #s11, #s12, #s13 { background: var(--light-bg); }
     .form-heading {
       font-size: 22px; font-weight: 800;
       letter-spacing: -0.02em; text-align: center;
@@ -1403,7 +1401,7 @@
           <span class="star">&#9733;</span>
           4.9 &middot; 300+ Google reviews &middot; 3,000+ students
         </div>
-        <h1 class="welcome-h1">Let's find the right tutor<br>for your child.</h1>
+        <h1 class="welcome-h1">Let's find the right tutor<br>for you.</h1>
         <p class="welcome-sub">Answer a few quick questions and we'll create a personalised learning plan. Takes 60 seconds.</p>
         <div class="welcome-cta">
           <button class="btn-primary" id="startBtn">Get started &rarr;</button>
@@ -1412,11 +1410,35 @@
       </div>
     </div>
 
-    <!-- Screen 1: Student Name -->
+    <!-- Screen 1: Who is this for? -->
     <div class="screen" id="s1">
       <div class="si si-center">
         <span class="quiz-badge">Let's get started</span>
-        <h2 class="quiz-heading">What's your child's first name?</h2>
+        <h2 class="quiz-heading">Who is the tutoring for?</h2>
+        <div class="card-list">
+          <button class="qz-card" data-val="child">
+            <span class="qz-emoji">&#x1F468;&#x200D;&#x1F467;</span>
+            <div class="qz-text">
+              <strong>My child</strong>
+              <span>I'm a parent or guardian</span>
+            </div>
+          </button>
+          <button class="qz-card" data-val="self">
+            <span class="qz-emoji">&#x1F393;</span>
+            <div class="qz-text">
+              <strong>Myself</strong>
+              <span>I want a tutor for my own learning</span>
+            </div>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Screen 2: Student Name -->
+    <div class="screen" id="s2">
+      <div class="si si-center">
+        <span class="quiz-badge" id="nameBadge">About your child</span>
+        <h2 class="quiz-heading" id="nameHeading">What's your child's first name?</h2>
         <div class="name-input-wrap">
           <input type="text" id="fStudentName" class="name-input" placeholder="e.g. Emma" autocomplete="given-name" maxlength="50">
         </div>
@@ -1425,8 +1447,8 @@
       </div>
     </div>
 
-    <!-- Screen 2: Year Level -->
-    <div class="screen" id="s2">
+    <!-- Screen 3: Year Level -->
+    <div class="screen" id="s3">
       <div class="si si-center">
         <span class="quiz-badge" id="yearBadge">About your child</span>
         <h2 class="quiz-heading" id="yearHeading">What year level are they in?</h2>
@@ -1445,12 +1467,13 @@
           <button class="year-pill" data-val="Year 11">Year 11</button>
           <button class="year-pill" data-val="Year 12">Year 12</button>
           <button class="year-pill" data-val="University">Uni</button>
+          <button class="year-pill" data-val="Adult">Adult</button>
         </div>
       </div>
     </div>
 
-    <!-- Screen 3: Situation (Q1 of 5) -->
-    <div class="screen" id="s3">
+    <!-- Screen 4: Situation (Q1 of 6) -->
+    <div class="screen" id="s4">
       <div class="si si-center">
         <span class="quiz-badge">Question 1 of 6</span>
         <h2 class="quiz-heading" id="sitHeading">What best describes your child right now?</h2>
@@ -1487,8 +1510,8 @@
       </div>
     </div>
 
-    <!-- Screen 4: Current Grades (Q2 of 5) — NEW -->
-    <div class="screen" id="s4">
+    <!-- Screen 5: Current Grades (Q2 of 6) -->
+    <div class="screen" id="s5">
       <div class="si si-center">
         <span class="quiz-badge">Question 2 of 6</span>
         <h2 class="quiz-heading" id="gradeHeading">How is your child going in school right now?</h2>
@@ -1511,22 +1534,15 @@
             <span class="qz-emoji">&#x1F7E0;</span>
             <div class="qz-text">
               <strong>Below expected</strong>
-              <span>Mostly C's, some D's</span>
-            </div>
-          </button>
-          <button class="qz-card" data-val="well-below">
-            <span class="qz-emoji">&#x1F534;</span>
-            <div class="qz-text">
-              <strong>Well below expected</strong>
-              <span>Mostly D's and E's</span>
+              <span>Mostly C's and below</span>
             </div>
           </button>
         </div>
       </div>
     </div>
 
-    <!-- Screen 5: Confidence Level (Q3 of 5) — NEW -->
-    <div class="screen" id="s5">
+    <!-- Screen 6: Confidence Level (Q3 of 6) -->
+    <div class="screen" id="s6">
       <div class="si si-center">
         <span class="quiz-badge">Question 3 of 6</span>
         <h2 class="quiz-heading" id="confHeading">How confident is your child about learning?</h2>
@@ -1556,8 +1572,8 @@
       </div>
     </div>
 
-    <!-- Screen 6: Subject (Q4 of 5) -->
-    <div class="screen" id="s6">
+    <!-- Screen 7: Subject (Q4 of 6) -->
+    <div class="screen" id="s7">
       <div class="si si-center">
         <span class="quiz-badge">Question 4 of 6</span>
         <h2 class="quiz-heading" id="subjectHeading">What subject do they need most help with?</h2>
@@ -1574,8 +1590,8 @@
       </div>
     </div>
 
-    <!-- Screen 7: Biggest Struggle (Q5 of 5) — NEW / Dynamic -->
-    <div class="screen" id="s7">
+    <!-- Screen 8: Biggest Struggle (Q5 of 6) — Dynamic -->
+    <div class="screen" id="s8">
       <div class="si si-center">
         <span class="quiz-badge">Question 5 of 6</span>
         <h2 class="quiz-heading" id="struggleHeading">Where do they struggle most?</h2>
@@ -1585,8 +1601,8 @@
       </div>
     </div>
 
-    <!-- Screen 8: Urgency (Q6 of 6) — NEW -->
-    <div class="screen" id="s8">
+    <!-- Screen 9: Urgency (Q6 of 6) -->
+    <div class="screen" id="s9">
       <div class="si si-center">
         <span class="quiz-badge">Question 6 of 6</span>
         <h2 class="quiz-heading" id="urgencyHeading">When would you like to start?</h2>
@@ -1616,22 +1632,22 @@
       </div>
     </div>
 
-    <!-- Screen 9: Thinking / Matching Transition -->
-    <div class="screen" id="s9">
+    <!-- Screen 10: Thinking / Matching Transition -->
+    <div class="screen" id="s10">
       <div class="thinking-wrap">
         <div class="thinking-icon" id="thinkingIcon">&#x1F50D;</div>
         <div class="thinking-steps">
           <div class="thinking-step" id="thinkStep1">
             <span class="thinking-step-icon"><span class="spinner-icon"></span><span class="check-icon">&#10003;</span></span>
-            <span id="thinkText1">Analysing answers&hellip;</span>
+            <span id="thinkText1">Reviewing your preferences&hellip;</span>
           </div>
           <div class="thinking-step" id="thinkStep2">
             <span class="thinking-step-icon"><span class="spinner-icon"></span><span class="check-icon">&#10003;</span></span>
-            <span id="thinkText2">Matching with available tutors&hellip;</span>
+            <span id="thinkText2">Searching for available tutors&hellip;</span>
           </div>
           <div class="thinking-step" id="thinkStep3">
             <span class="thinking-step-icon"><span class="spinner-icon"></span><span class="check-icon">&#10003;</span></span>
-            <span id="thinkText3">Building personalised learning plan&hellip;</span>
+            <span id="thinkText3">Preparing your personalised plan&hellip;</span>
           </div>
         </div>
         <div class="thinking-result" id="thinkingResult">
@@ -1641,62 +1657,46 @@
       </div>
     </div>
 
-    <!-- Screen 10: Phone Number -->
-    <div class="screen" id="s10">
-      <div class="si si-scroll">
-        <h3 id="phoneHeading" class="form-heading">We've found a tutor match!</h3>
-        <p id="phoneSub" class="form-sub">Enter your mobile and we'll call today to confirm the perfect tutor.</p>
-
+    <!-- Screen 11: Phone Number -->
+    <div class="screen" id="s11">
+      <div class="si si-center">
+        <span class="quiz-badge">Almost there</span>
+        <h2 class="quiz-heading" id="phoneHeading">What's the best number to reach you on?</h2>
         <div class="form-fields">
           <div class="field-wrap">
-            <label for="fPhone">Mobile number</label>
             <input type="tel" id="fPhone" placeholder="0412 345 678" autocomplete="tel">
           </div>
         </div>
-
         <button class="btn-primary disabled" id="phoneBtn">Continue &rarr;</button>
-
-        <p class="form-micro" id="phoneMicro">&#x26A1; We typically call within 2 hours</p>
-
-        <div class="live-proof">
-          <span class="live-dot"></span>
-          <span id="proofCount">32</span> parents enquired today
-        </div>
+        <p class="trust-line trust-line-light" style="animation:none;opacity:1;transform:none" id="phoneTrust">We'll call to discuss the tutor match</p>
       </div>
     </div>
 
-    <!-- Screen 11: Email -->
-    <div class="screen" id="s11">
-      <div class="si si-scroll">
-        <h3 id="emailHeading" class="form-heading">Where should we send the learning plan?</h3>
-        <p id="emailSub" class="form-sub">We'll email a personalised breakdown so you can see exactly where to improve.</p>
-
+    <!-- Screen 12: Email -->
+    <div class="screen" id="s12">
+      <div class="si si-center">
+        <span class="quiz-badge">One more</span>
+        <h2 class="quiz-heading" id="emailHeading">What's your email address?</h2>
         <div class="form-fields">
           <div class="field-wrap">
-            <label for="fEmail">Email</label>
             <input type="email" id="fEmail" placeholder="you@email.com" autocomplete="email">
           </div>
         </div>
-
         <button class="btn-primary disabled" id="emailBtn">Continue &rarr;</button>
-
-        <p class="form-micro">&#x1F512; No spam, ever &mdash; just the learning plan</p>
+        <p class="trust-line trust-line-light" style="animation:none;opacity:1;transform:none">For your personalised learning plan &mdash; no spam</p>
       </div>
     </div>
 
-    <!-- Screen 12: Parent Name + State + Submit -->
-    <div class="screen" id="s12">
-      <div class="si si-scroll" id="formFinal">
-        <h3 id="finalHeading" class="form-heading">Last step &mdash; who should we ask for?</h3>
-        <p id="finalSub" class="form-sub">So our education consultant knows who to speak with.</p>
-
+    <!-- Screen 13: Parent Name + State (or State-only for self) + Submit -->
+    <div class="screen" id="s13">
+      <div class="si si-center" id="formFinal">
+        <span class="quiz-badge">Last step</span>
+        <h2 class="quiz-heading" id="finalHeading">And your name?</h2>
         <div class="form-fields">
-          <div class="field-wrap">
-            <label for="fParentName">Your name</label>
+          <div class="field-wrap" id="parentNameWrap">
             <input type="text" id="fParentName" placeholder="e.g. Michelle" autocomplete="name">
           </div>
           <div class="field-wrap">
-            <label for="fState">State / Territory</label>
             <select id="fState">
               <option value="" disabled selected>Select state</option>
               <option>NSW</option><option>VIC</option><option>QLD</option>
@@ -1705,14 +1705,7 @@
             </select>
           </div>
         </div>
-
-        <button class="btn-primary disabled" id="submitBtn">Find your child's tutor &rarr;</button>
-
-        <p class="urgency-helper" id="urgencyHelper"></p>
-
-        <div class="form-quote" id="formTestimonial">
-          &ldquo;My son's grades went up 30% in 6 months.&rdquo; &mdash; <strong>Deb S., NSW</strong>
-        </div>
+        <button class="btn-primary disabled" id="submitBtn">Find your tutor &rarr;</button>
       </div>
 
       <!-- Success state -->
@@ -1729,9 +1722,9 @@
           </div>
         </div>
         <h2 class="success-h2">You're all set!</h2>
-        <p class="success-sub">We're finding the perfect tutor for <span id="successName">your child</span>.</p>
+        <p class="success-sub">We're finding the perfect tutor for <span id="successName">you</span>.</p>
         <div class="next-steps">
-          <div class="ns-item"><span class="ns-num">1</span><span>We'll review your child's needs</span></div>
+          <div class="ns-item"><span class="ns-num">1</span><span>We'll review the learning needs</span></div>
           <div class="ns-item"><span class="ns-num">2</span><span>Match with the best available tutor</span></div>
           <div class="ns-item"><span class="ns-num">3</span><span>Call you today to confirm the match</span></div>
           <div class="ns-item"><span class="ns-num">4</span><span>Book your free first lesson</span></div>
