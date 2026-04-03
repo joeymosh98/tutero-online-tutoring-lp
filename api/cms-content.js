@@ -1,36 +1,34 @@
 // Vercel Serverless Function — Read CMS Config from Vercel Blob
+const setCors = require('./_cors');
 
 module.exports = async function handler(req, res) {
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  setCors(req, res);
 
   if (req.method === 'OPTIONS') return res.status(200).end();
   if (req.method !== 'GET') return res.status(405).json({ error: 'Method not allowed' });
 
-  var key = (req.query && req.query.key) || 'landing-pages';
-  var blobKey = 'cms/' + key + '.json';
+  const key = (req.query && req.query.key) || 'landing-pages';
+  const blobKey = 'cms/' + key + '.json';
 
   try {
     if (process.env.VERCEL) {
-      var blob = require('@vercel/blob');
-      var blobs = await blob.list({ prefix: blobKey, limit: 1 });
+      const blob = require('@vercel/blob');
+      const blobs = await blob.list({ prefix: blobKey, limit: 1 });
       if (blobs.blobs.length === 0) {
         return res.status(200).json({});
       }
-      var response = await fetch(blobs.blobs[0].url);
-      var data = await response.json();
+      const response = await fetch(blobs.blobs[0].url);
+      const data = await response.json();
       res.setHeader('Cache-Control', 'public, s-maxage=10, stale-while-revalidate=30');
       return res.status(200).json(data);
     } else {
-      // Local dev: read from ./dev-cms/
-      var fs = require('fs');
-      var path = require('path');
-      var filePath = path.join(process.cwd(), 'dev-cms', key + '.json');
+      const fs = require('fs');
+      const path = require('path');
+      const filePath = path.join(process.cwd(), 'dev-cms', key + '.json');
       if (!fs.existsSync(filePath)) {
         return res.status(200).json({});
       }
-      var fileData = JSON.parse(fs.readFileSync(filePath, 'utf8'));
+      const fileData = JSON.parse(fs.readFileSync(filePath, 'utf8'));
       return res.status(200).json(fileData);
     }
   } catch (err) {

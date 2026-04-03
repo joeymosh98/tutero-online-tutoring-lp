@@ -1105,7 +1105,7 @@
     <button id="backBtn" class="back-btn" style="visibility:hidden" aria-label="Go back">
       <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
     </button>
-    <img src="images/tutero-logo.svg" alt="Tutero" class="header-logo">
+    <img src="/shared/images/tutero-logo.svg" alt="Tutero" class="header-logo">
     <span id="stepLabel" class="step-text"></span>
   </header>
 
@@ -1121,7 +1121,7 @@
     <div class="screen active" id="s0">
       <canvas id="particleCanvas"></canvas>
       <div class="si si-center">
-        <img src="images/tutero-logo.svg" alt="Tutero" class="welcome-logo">
+        <img src="/shared/images/tutero-logo.svg" alt="Tutero" class="welcome-logo">
         <h1 class="welcome-h1">Create <span class="highlight">any resource.</span><br>In seconds.</h1>
         <p class="welcome-sub">Lessons, worksheets, assessments &mdash; aligned to your curriculum, differentiated for your students.</p>
         <div class="welcome-cta">
@@ -1443,7 +1443,10 @@
   <canvas id="confettiCanvas"></canvas>
 
   <!-- ═══ Scripts ═══ -->
-  <script src="../../../shared/utm.js"></script>
+  <script src="/shared/utm.js"></script>
+  <script src="/shared/form-helpers.js"></script>
+  <script src="/shared/lead.js"></script>
+  <script src="/shared/confetti.js"></script>
   <script src="script.js"></script>
 </body>
 </html>

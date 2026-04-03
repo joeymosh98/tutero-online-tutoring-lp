@@ -76,6 +76,7 @@
           "thankYouPageId": "online-tutoring-quiz-ty"
         }
       ],
+      "marketplacePages": [],
       "thankYouPages": [
         {
           "id": "online-tutoring-ty",
@@ -150,7 +151,8 @@
           "thankYouPageId": null
         }
       ],
-      "thankYouPages": []
+      "thankYouPages": [],
+      "marketplacePages": []
     }
   ]
 }

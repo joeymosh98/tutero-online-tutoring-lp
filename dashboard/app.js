@@ -36,7 +36,9 @@
 
   function getCurrentPages(division) {
     if (!division) return [];
-    return currentPageType === 'tp' ? (division.thankYouPages || []) : division.pages;
+    if (currentPageType === 'tp') return division.thankYouPages || [];
+    if (currentPageType === 'mp') return division.marketplacePages || [];
+    return division.pages;
   }
 
   // ── DOM refs ──
@@ -51,6 +53,7 @@
   var filterGrade = document.getElementById('filterGrade');
   var sortBy = document.getElementById('sortBy');
   var lockBtn = document.getElementById('lockBtn');
+  var pageTypeSelect = document.getElementById('pageTypeSelect');
 
   // Login screen refs
   var loginScreen = document.getElementById('loginScreen');
@@ -427,11 +430,14 @@
     var el = document.createElement('div');
     el.id = 'divisionEmpty';
     el.className = 'dash-empty-division';
-    var pageTypeLabel = currentPageType === 'tp' ? 'thank you pages' : 'landing pages';
+    var pageTypeLabels = { lp: 'landing pages', tp: 'thank you pages', mp: 'marketplace pages' };
+    var pageTypeLabel = pageTypeLabels[currentPageType] || 'pages';
+    var pageTypeCaps = { lp: 'Landing pages', tp: 'Thank you pages', mp: 'Marketplace pages' };
+    var pageTypeCap = pageTypeCaps[currentPageType] || 'Pages';
     el.innerHTML =
       '<div class="dash-empty-division-icon" style="background:' + colors.bg + ';color:' + colors.solid + ';">' + icon + '</div>' +
       '<h3>No ' + currentDivision.name.toLowerCase() + ' ' + pageTypeLabel + ' yet</h3>' +
-      '<p>' + (currentPageType === 'tp' ? 'Thank you pages' : 'Landing pages') + ' for the ' + currentDivision.name + ' division will appear here once they are created.</p>';
+      '<p>' + pageTypeCap + ' for the ' + currentDivision.name + ' division will appear here once they are created.</p>';
 
     grid.parentNode.appendChild(el);
   }
@@ -621,7 +627,7 @@
   function findPageInDivisions(pageId) {
     for (var i = 0; i < divisions.length; i++) {
       var div = divisions[i];
-      var pages = currentPageType === 'tp' ? (div.thankYouPages || []) : div.pages;
+      var pages = getCurrentPages(div);
       for (var j = 0; j < pages.length; j++) {
         if (pages[j].id === pageId) {
           return { division: div, page: pages[j], index: j };
@@ -858,6 +864,25 @@
 
   // ── Event Listeners ──
 
+  pageTypeSelect.addEventListener('change', function() {
+    var newType = this.value;
+    if (newType !== currentPageType) {
+      currentPageType = newType;
+      filters = { status: 'all', builtWith: 'all', grade: 'all' };
+      currentSort = 'name-asc';
+      currentSearch = '';
+      searchInput.value = '';
+      filterStatus.value = 'all';
+      filterBuiltWith.value = 'all';
+      filterGrade.value = 'all';
+      sortBy.value = 'name-asc';
+      var placeholders = { lp: 'Search landing pages...', tp: 'Search thank you pages...', mp: 'Search marketplace pages...' };
+      searchInput.placeholder = placeholders[currentPageType] || 'Search pages...';
+      renderTabs();
+      render();
+    }
+  });
+
   searchInput.addEventListener('input', function() {
     currentSearch = this.value.trim();
     render();
@@ -900,29 +925,6 @@
       var container = variantTab.closest('.lp-card-preview');
       var index = parseInt(variantTab.getAttribute('data-variant-index'), 10);
       if (container && !isNaN(index)) switchVariant(container, index);
-      return;
-    }
-
-    // Page type toggle
-    var toggleBtn = e.target.closest('.dash-toggle-btn');
-    if (toggleBtn) {
-      var newType = toggleBtn.getAttribute('data-page-type');
-      if (newType !== currentPageType) {
-        currentPageType = newType;
-        document.querySelectorAll('.dash-toggle-btn').forEach(function(b) { b.classList.remove('active'); });
-        toggleBtn.classList.add('active');
-        filters = { status: 'all', builtWith: 'all', grade: 'all' };
-        currentSort = 'name-asc';
-        currentSearch = '';
-        searchInput.value = '';
-        filterStatus.value = 'all';
-        filterBuiltWith.value = 'all';
-        filterGrade.value = 'all';
-        sortBy.value = 'name-asc';
-        searchInput.placeholder = currentPageType === 'tp' ? 'Search thank you pages...' : 'Search landing pages...';
-        renderTabs();
-        render();
-      }
       return;
     }
 

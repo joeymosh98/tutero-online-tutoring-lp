@@ -14,7 +14,7 @@
   <!-- Login Screen -->
   <div class="cms-login-screen" id="loginScreen">
     <div class="cms-login-card">
-      <img src="../lp/online-tutoring/a/images/tutero-logo.svg" alt="Tutero" class="cms-login-logo">
+      <img src="/shared/images/tutero-logo.svg" alt="Tutero" class="cms-login-logo">
       <h2 class="cms-login-title">Landing Page Dashboard</h2>
       <p class="cms-login-desc">Enter your password to continue.</p>
       <input type="password" id="authPasswordInput" class="cms-input" placeholder="Password">
@@ -30,11 +30,12 @@
   <header class="dash-header">
     <div class="dash-header-inner">
       <div class="dash-logo">
-        <img src="../lp/online-tutoring/a/images/tutero-logo.svg" alt="Tutero" class="dash-logo-img">
-        <div class="dash-page-toggle">
-          <button class="dash-toggle-btn active" data-page-type="lp">Landing Pages</button>
-          <button class="dash-toggle-btn" data-page-type="tp">Thank You Pages</button>
-        </div>
+        <img src="/shared/images/tutero-logo.svg" alt="Tutero" class="dash-logo-img">
+        <select class="dash-page-type-select" id="pageTypeSelect">
+          <option value="lp">Landing Pages</option>
+          <option value="tp">Thank You Pages</option>
+          <option value="mp">Digital Marketplace</option>
+        </select>
       </div>
       <div class="dash-header-actions">
         <span class="dash-page-count" id="pageCount"></span>

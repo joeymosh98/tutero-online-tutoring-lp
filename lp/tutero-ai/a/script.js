@@ -2,30 +2,6 @@
 // Tutero AI — Teacher Onboarding Funnel (9 Screens: S0–S8)
 // ═══════════════════════════════════════════════════════════════
 
-// ── Webhook ──
-var WEBHOOK_URL = 'https://hook.eu1.make.com/46pou90x59vasab9ljivd78sfazjgztv';
-
-function submitLeadData(data) {
-  data.landing_page = 'Tutero AI - Teacher Onboarding';
-  data.variant = 'a';
-  data.page = window.location.href;
-  data.timestamp = new Date().toISOString();
-  data.referrer = document.referrer || '';
-  var utm = window.TuteroUTM ? window.TuteroUTM.get() : {};
-  data.utm_source = utm.utm_source || '';
-  data.utm_medium = utm.utm_medium || '';
-  data.utm_campaign = utm.utm_campaign || '';
-  data.utm_term = utm.utm_term || '';
-  data.utm_content = utm.utm_content || '';
-  data.gclid = utm.gclid || '';
-  console.log('[Lead]', data);
-  fetch(WEBHOOK_URL, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(data)
-  }).catch(function() {});
-}
-
 // ═══════════════════════════════════════════════════════════════
 // State
 // ═══════════════════════════════════════════════════════════════
@@ -752,7 +728,7 @@ function showDocument() {
 
       setTimeout(function() {
         document.getElementById('genComplete').classList.add('visible');
-        launchConfetti();
+        TuteroConfetti.launch();
         progressFill.style.width = '92%';
       }, 300);
     }, 800);
@@ -917,8 +893,6 @@ document.getElementById('toSignupBtn').addEventListener('click', function() {
   openSignupModal();
 });
 
-function isValidEmail(e) { return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(e); }
-
 function showErr(el) {
   var w = el.closest('.field-wrap');
   if (w) w.classList.add('has-error');
@@ -932,28 +906,28 @@ function toggleBtn(btn, ok) {
 }
 
 function checkS8() {
-  toggleBtn(subBtn, fName.value.trim() && isValidEmail(fEmail.value.trim()));
+  toggleBtn(subBtn, fName.value.trim() && TuteroForms.isValidEmail(fEmail.value.trim()));
 }
 
 [fName, fEmail].forEach(function(i) {
   i.addEventListener('input', function() {
     checkS8();
     if (i === fName && fName.value.trim()) clearErr(fName);
-    if (i === fEmail && isValidEmail(fEmail.value.trim())) clearErr(fEmail);
+    if (i === fEmail && TuteroForms.isValidEmail(fEmail.value.trim())) clearErr(fEmail);
   });
 });
 
 function validateS8() {
   var ok = true;
   if (!fName.value.trim()) { showErr(fName); ok = false; } else clearErr(fName);
-  if (!isValidEmail(fEmail.value.trim())) { showErr(fEmail); ok = false; } else clearErr(fEmail);
+  if (!TuteroForms.isValidEmail(fEmail.value.trim())) { showErr(fEmail); ok = false; } else clearErr(fEmail);
   return ok;
 }
 
 subBtn.addEventListener('click', function() {
   if (subBtn.classList.contains('disabled')) { validateS8(); return; }
 
-  submitLeadData({
+  TuteroLead.submit({
     source: 'onboarding_funnel',
     resource_type: S.resourceType,
     subject: S.subject,
@@ -965,13 +939,13 @@ subBtn.addEventListener('click', function() {
     teacher_name: fName.value.trim(),
     email: fEmail.value.trim(),
     school: fSchool.value.trim()
-  });
+  }, { landingPage: 'Tutero AI - Teacher Onboarding', variant: 'a' });
 
   document.getElementById('signupModalForm').style.display = 'none';
   document.getElementById('successWrap').classList.add('active');
   progressFill.style.width = '100%';
   backBtn.style.visibility = 'hidden';
-  launchConfetti();
+  TuteroConfetti.launch();
 });
 
 // Enter key
@@ -985,68 +959,6 @@ subBtn.addEventListener('click', function() {
 document.getElementById('downloadBtn').addEventListener('click', function() {
   alert('PDF download will be available soon! Create a free account to save your resource now.');
 });
-
-// ═══════════════════════════════════════════════════════════════
-// Confetti (double burst for extra impact)
-// ═══════════════════════════════════════════════════════════════
-function launchConfetti() {
-  var c = document.getElementById('confettiCanvas');
-  var ctx = c.getContext('2d');
-  c.width = window.innerWidth;
-  c.height = window.innerHeight;
-  var cols = ['#FF8412','#F8B200','#4CB092','#00A3FF','#7C3AED','#FF6B6B'];
-  var ps = [];
-
-  function burst(x, y, count) {
-    for (var i = 0; i < count; i++) {
-      ps.push({
-        x: x + (Math.random() - 0.5) * 120,
-        y: y,
-        vx: (Math.random() - 0.5) * 20,
-        vy: Math.random() * -22 - 4,
-        w: Math.random() * 8 + 4,
-        h: Math.random() * 6 + 3,
-        color: cols[Math.floor(Math.random() * cols.length)],
-        rot: Math.random() * 360,
-        rs: (Math.random() - 0.5) * 14,
-        g: 0.3 + Math.random() * 0.2,
-        o: 1
-      });
-    }
-  }
-
-  // Center burst
-  burst(c.width / 2, c.height * 0.42, 90);
-  // Delayed side bursts
-  setTimeout(function() {
-    burst(c.width * 0.25, c.height * 0.5, 30);
-    burst(c.width * 0.75, c.height * 0.5, 30);
-  }, 200);
-
-  var f = 0;
-  function tick() {
-    ctx.clearRect(0, 0, c.width, c.height);
-    var alive = false;
-    ps.forEach(function(p) {
-      p.x += p.vx; p.vy += p.g; p.y += p.vy;
-      p.rot += p.rs; p.vx *= 0.99;
-      if (f > 45) p.o -= 0.012;
-      if (p.o <= 0) return;
-      alive = true;
-      ctx.save();
-      ctx.translate(p.x, p.y);
-      ctx.rotate(p.rot * Math.PI / 180);
-      ctx.globalAlpha = Math.max(0, p.o);
-      ctx.fillStyle = p.color;
-      ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
-      ctx.restore();
-    });
-    f++;
-    if (alive) requestAnimationFrame(tick);
-    else ctx.clearRect(0, 0, c.width, c.height);
-  }
-  tick();
-}
 
 // ═══════════════════════════════════════════════════════════════
 // Floating Particles (Welcome Screen)

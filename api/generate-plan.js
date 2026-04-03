@@ -1,33 +1,20 @@
 // Vercel Serverless Function — Generate Personalised Visual Learning Plan via Claude API
+const setCors = require('./_cors');
 
 module.exports = async function handler(req, res) {
-  // CORS
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  setCors(req, res);
 
   if (req.method === 'OPTIONS') return res.status(200).end();
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
-  // Validate input
-  var body = req.body || {};
-  var studentName = body.studentName;
-  var yearLevel = body.yearLevel;
-  var situation = body.situation;
-  var currentGrade = body.currentGrade;
-  var confidence = body.confidence;
-  var subject = body.subject;
-  var struggleArea = body.struggleArea;
+  const { studentName, yearLevel, situation, currentGrade, confidence, subject, struggleArea } = req.body || {};
 
   if (!studentName || !yearLevel || !situation || !currentGrade || !confidence || !subject || !struggleArea) {
     return res.status(400).json({ error: 'Missing required fields' });
   }
 
-  // Sanitise inputs
-  function sanitise(s) {
-    return String(s).slice(0, 100).replace(/[<>{}\[\]\\]/g, '');
-  }
-  var s = {
+  const sanitise = (s) => String(s).slice(0, 100).replace(/[<>{}\[\]\\]/g, '');
+  const s = {
     studentName: sanitise(studentName),
     yearLevel: sanitise(yearLevel),
     situation: sanitise(situation),
@@ -37,39 +24,35 @@ module.exports = async function handler(req, res) {
     struggleArea: sanitise(struggleArea)
   };
 
-  // Map situation to description
-  var situationLabels = {
+  const situationLabels = {
     'falling-behind': 'falling behind in class and struggling to keep up',
     'consistent-practice': 'doing okay but needs consistent practice and reinforcement',
     'get-ahead': 'a capable student who wants to get ahead and aim higher',
     'exam-prep': 'preparing for important exams (HSC, ATAR, or key assessments)'
   };
-  var situationDesc = situationLabels[s.situation] || s.situation;
+  const situationDesc = situationLabels[s.situation] || s.situation;
 
-  // Map current grade to level range
-  var gradeLevels = {
+  const gradeLevels = {
     'well-below': { range: '30-40', label: 'Well Below Expected', targetLabel: 'Average' },
     'below': { range: '42-52', label: 'Below Expected', targetLabel: 'Above Average' },
     'average': { range: '58-68', label: 'Average', targetLabel: 'High Achiever' },
     'above': { range: '72-82', label: 'Above Average', targetLabel: 'Top of Class' }
   };
-  var gradeInfo = gradeLevels[s.currentGrade] || gradeLevels['average'];
+  const gradeInfo = gradeLevels[s.currentGrade] || gradeLevels['average'];
 
-  // Map confidence to tutor style guidance
-  var confidenceStyles = {
+  const confidenceStyles = {
     'very-low': 'Patient, gentle & encouraging — builds trust before pushing',
     'low': 'Patient & encouraging — celebrates small wins',
     'mixed': 'Supportive but structured — balances encouragement with challenge',
     'good': 'Challenging & ambitious — pushes for excellence'
   };
-  var tutorStyle = confidenceStyles[s.confidence] || confidenceStyles['mixed'];
+  const tutorStyle = confidenceStyles[s.confidence] || confidenceStyles['mixed'];
 
-  // Map struggle area to readable label
-  var struggleLabel = s.struggleArea.replace(/-/g, ' ');
+  const struggleLabel = s.struggleArea.replace(/-/g, ' ');
 
-  var systemPrompt = 'You are an experienced Australian education consultant at Tutero, creating a personalised learning plan for a parent. Write in a warm, professional tone using Australian English spelling. Your output must be valid JSON matching the exact schema provided. Do not include any text outside the JSON object.';
+  const systemPrompt = 'You are an experienced Australian education consultant at Tutero, creating a personalised learning plan for a parent. Write in a warm, professional tone using Australian English spelling. Your output must be valid JSON matching the exact schema provided. Do not include any text outside the JSON object.';
 
-  var userPrompt = 'Create a personalised visual learning plan for:\n' +
+  const userPrompt = 'Create a personalised visual learning plan for:\n' +
     '- Student: ' + s.studentName + '\n' +
     '- Year Level: ' + s.yearLevel + '\n' +
     '- Current Situation: ' + s.studentName + ' is ' + situationDesc + '\n' +
@@ -137,18 +120,18 @@ module.exports = async function handler(req, res) {
     '- Do not use markdown in values\n' +
     '- Return ONLY the JSON object';
 
-  // Call Claude API
-  var ANTHROPIC_API_KEY = process.env.ANTHROPIC_API_KEY;
+  const ANTHROPIC_API_KEY = process.env.ANTHROPIC_API_KEY;
   if (!ANTHROPIC_API_KEY) {
     console.error('ANTHROPIC_API_KEY not configured');
     return res.status(500).json({ error: 'API key not configured' });
   }
 
+  let timeout;
   try {
-    var controller = new AbortController();
-    var timeout = setTimeout(function () { controller.abort(); }, 20000);
+    const controller = new AbortController();
+    timeout = setTimeout(() => { controller.abort(); }, 20000);
 
-    var response = await fetch('https://api.anthropic.com/v1/messages', {
+    const response = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -167,34 +150,32 @@ module.exports = async function handler(req, res) {
     clearTimeout(timeout);
 
     if (!response.ok) {
-      var errBody = await response.text();
+      const errBody = await response.text();
       console.error('Anthropic API error:', response.status, errBody);
       return res.status(502).json({ error: 'AI service unavailable' });
     }
 
-    var data = await response.json();
-    var text = data.content[0].text;
+    const data = await response.json();
+    const text = data.content[0].text;
 
-    // Parse JSON response (handle possible code block wrapping)
-    var plan;
+    let plan;
     try {
-      var cleaned = text.replace(/^```json\s*/, '').replace(/\s*```$/, '').trim();
+      const cleaned = text.replace(/^```json\s*/, '').replace(/\s*```$/, '').trim();
       plan = JSON.parse(cleaned);
     } catch (parseErr) {
       console.error('JSON parse error:', parseErr.message, 'Raw:', text.slice(0, 500));
       return res.status(502).json({ error: 'Invalid response from AI' });
     }
 
-    // Validate required fields
-    var required = ['currentLevel', 'targetLevel', 'levelLabel', 'targetLabel', 'skills', 'roadmap', 'schedule', 'tutorMatch', 'outcomeStatement'];
-    for (var i = 0; i < required.length; i++) {
-      if (!plan[required[i]]) {
-        console.error('Missing field:', required[i]);
+    const required = ['currentLevel', 'targetLevel', 'levelLabel', 'targetLabel', 'skills', 'roadmap', 'schedule', 'tutorMatch', 'outcomeStatement'];
+    for (const field of required) {
+      if (!plan[field]) {
+        console.error('Missing field:', field);
         return res.status(502).json({ error: 'Incomplete plan generated' });
       }
     }
 
-    return res.status(200).json({ plan: plan });
+    return res.status(200).json({ plan });
 
   } catch (err) {
     clearTimeout(timeout);

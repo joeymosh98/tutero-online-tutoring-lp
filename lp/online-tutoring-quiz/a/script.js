@@ -6,49 +6,8 @@
 //          s13 Phone | s14 Email | s15 Name + Submit
 // ═══════════════════════════════════════════════════════════════
 
-// ── Webhook + API ──
-var WEBHOOK_URL = 'https://hook.eu1.make.com/46pou90x59vasab9ljivd78sfazjgztv';
+// ── API ──
 var API_URL = '/api/generate-plan/';
-
-function submitLeadData(data) {
-  data.landing_page = 'Online Tutoring Quiz';
-  data.variant = 'a';
-  data.page = window.location.href;
-  data.timestamp = new Date().toISOString();
-  data.referrer = document.referrer || '';
-  var utm = window.TuteroUTM ? window.TuteroUTM.get() : {};
-  data.utm_source = utm.utm_source || '';
-  data.utm_medium = utm.utm_medium || '';
-  data.utm_campaign = utm.utm_campaign || '';
-  data.utm_term = utm.utm_term || '';
-  data.utm_content = utm.utm_content || '';
-  data.gclid = utm.gclid || '';
-  console.log('[Lead]', data);
-  fetch(WEBHOOK_URL, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(data)
-  }).catch(function() {});
-}
-
-function buildThankYouUrl() {
-  var base = '/tp/online-tutoring-quiz/a/';
-  var p = new URLSearchParams();
-  if (S.studentName) p.set('studentName', S.studentName);
-  if (S.subject) p.set('subject', S.subject);
-  if (S.yearLevel) p.set('yearLevel', S.yearLevel);
-  if (S.situation) p.set('situation', S.situation);
-  if (S.currentGrade) p.set('currentGrade', S.currentGrade);
-  if (S.confidence) p.set('confidence', S.confidence);
-  if (S.struggleArea) p.set('struggleArea', S.struggleArea);
-  if (S.urgency) p.set('urgency', S.urgency);
-  var utm = window.TuteroUTM ? window.TuteroUTM.get() : {};
-  ['utm_source','utm_medium','utm_campaign','utm_term','utm_content','gclid'].forEach(function(k) {
-    if (utm[k]) p.set(k, utm[k]);
-  });
-  var qs = p.toString();
-  return base + (qs ? '?' + qs : '');
-}
 
 // ═══════════════════════════════════════════════════════════════
 // State
@@ -893,37 +852,6 @@ function initCardScreen(id, key, nextScreen, onSelect) {
 // ═══════════════════════════════════════════════════════════════
 // Validation Helpers
 // ═══════════════════════════════════════════════════════════════
-function isValidEmail(e) { return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(e); }
-
-function formatPhone(input) {
-  var raw = input.value;
-  var hasPlus = raw.trimStart().startsWith('+');
-  var d = raw.replace(/\D/g, '');
-  if (hasPlus && d.startsWith('61')) d = '0' + d.slice(2);
-  else if (d.startsWith('61') && d.length > 10) d = '0' + d.slice(2);
-  if (d.length > 10) d = d.slice(0, 10);
-  S.phoneDigits = d;
-  var f = d;
-  if (d.length > 4 && d.length <= 7) f = d.slice(0,4) + ' ' + d.slice(4);
-  else if (d.length > 7) f = d.slice(0,4) + ' ' + d.slice(4,7) + ' ' + d.slice(7);
-  if (input.value !== f) {
-    var pos = input.selectionStart;
-    var diff = f.length - input.value.length;
-    input.value = f;
-    input.setSelectionRange(pos + diff, pos + diff);
-  }
-}
-
-function cap(s) { return s.charAt(0).toUpperCase() + s.slice(1); }
-
-function showErr(el) {
-  var w = el.closest('.field-wrap');
-  if (w) w.classList.add('has-error');
-}
-function clearErr(el) {
-  var w = el.closest('.field-wrap');
-  if (w) w.classList.remove('has-error');
-}
 function toggleBtn(btn, ok) {
   if (ok) btn.classList.remove('disabled'); else btn.classList.add('disabled');
 }
@@ -946,7 +874,7 @@ fSN.addEventListener('input', function() {
 
 nameBtn.addEventListener('click', function() {
   if (nameBtn.classList.contains('disabled')) return;
-  S.studentName = cap(fSN.value.trim());
+  S.studentName = TuteroForms.capitalise(fSN.value.trim());
   fSN.value = S.studentName;
   personaliseWithName(S.studentName);
   goTo(3);
@@ -981,14 +909,14 @@ function checkPhone() {
 }
 
 fPH.addEventListener('input', function() {
-  formatPhone(fPH);
+  S.phoneDigits = TuteroForms.formatPhone(fPH, S);
   checkPhone();
-  if (S.phoneDigits.length >= 10) clearErr(fPH);
+  if (S.phoneDigits.length >= 10) TuteroForms.clearFieldError(fPH);
 });
 
 phoneBtn.addEventListener('click', function() {
   if (phoneBtn.classList.contains('disabled')) {
-    if (S.phoneDigits.length < 10) showErr(fPH); else clearErr(fPH);
+    if (S.phoneDigits.length < 10) TuteroForms.showFieldError(fPH); else TuteroForms.clearFieldError(fPH);
     return;
   }
   S.phone = fPH.value.trim();
@@ -1006,17 +934,17 @@ var fEM = document.getElementById('fEmail');
 var emailBtn = document.getElementById('emailBtn');
 
 function checkEmail() {
-  toggleBtn(emailBtn, isValidEmail(fEM.value.trim()));
+  toggleBtn(emailBtn, TuteroForms.isValidEmail(fEM.value.trim()));
 }
 
 fEM.addEventListener('input', function() {
   checkEmail();
-  if (isValidEmail(fEM.value.trim())) clearErr(fEM);
+  if (TuteroForms.isValidEmail(fEM.value.trim())) TuteroForms.clearFieldError(fEM);
 });
 
 emailBtn.addEventListener('click', function() {
   if (emailBtn.classList.contains('disabled')) {
-    if (!isValidEmail(fEM.value.trim())) showErr(fEM); else clearErr(fEM);
+    if (!TuteroForms.isValidEmail(fEM.value.trim())) TuteroForms.showFieldError(fEM); else TuteroForms.clearFieldError(fEM);
     return;
   }
   S.email = fEM.value.trim();
@@ -1044,18 +972,18 @@ function checkFinal() {
 
 fPN.addEventListener('input', function() {
   checkFinal();
-  if (fPN.value.trim()) clearErr(fPN);
+  if (fPN.value.trim()) TuteroForms.clearFieldError(fPN);
 });
 
 subBtn.addEventListener('click', function() {
   if (subBtn.classList.contains('disabled')) {
-    if (!S.isForSelf && !fPN.value.trim()) showErr(fPN); else clearErr(fPN);
+    if (!S.isForSelf && !fPN.value.trim()) TuteroForms.showFieldError(fPN); else TuteroForms.clearFieldError(fPN);
     return;
   }
 
   S.parentName = S.isForSelf ? S.studentName : fPN.value.trim();
 
-  submitLeadData({
+  TuteroLead.submit({
     source: 'quiz_funnel',
     is_for_self: S.isForSelf,
     student_name: S.studentName,
@@ -1070,7 +998,7 @@ subBtn.addEventListener('click', function() {
     parent_name: S.parentName,
     email: S.email,
     phone: S.phone
-  });
+  }, { landingPage: 'Online Tutoring Quiz', variant: 'a' });
 
   // Show success state
   document.getElementById('formFinal').style.display = 'none';
@@ -1078,64 +1006,14 @@ subBtn.addEventListener('click', function() {
   document.getElementById('successWrap').classList.add('active');
   progressFill.style.width = '100%';
   backBtn.style.visibility = 'hidden';
-  launchConfetti();
-  document.getElementById('tyLink').href = buildThankYouUrl();
+  TuteroConfetti.launch();
+  document.getElementById('tyLink').href = TuteroLead.buildThankYouUrl('/tp/online-tutoring/a/', { studentName: S.studentName, subject: S.subject, yearLevel: S.yearLevel, situation: S.situation, currentGrade: S.currentGrade, confidence: S.confidence, struggleArea: S.struggleArea, urgency: S.urgency });
 });
 
 // Enter key on final fields
 fPN.addEventListener('keydown', function(e) {
   if (e.key === 'Enter') { e.preventDefault(); subBtn.click(); }
 });
-
-// ═══════════════════════════════════════════════════════════════
-// Confetti
-// ═══════════════════════════════════════════════════════════════
-function launchConfetti() {
-  var c = document.getElementById('confettiCanvas');
-  var ctx = c.getContext('2d');
-  c.width = window.innerWidth;
-  c.height = window.innerHeight;
-  var cols = ['#FF8412','#F8B200','#4CB092','#00A3FF','#1D49E3','#FF6B6B'];
-  var ps = [];
-  for (var i = 0; i < 130; i++) {
-    ps.push({
-      x: c.width / 2 + (Math.random() - 0.5) * 260,
-      y: c.height * 0.45,
-      vx: (Math.random() - 0.5) * 18,
-      vy: Math.random() * -20 - 5,
-      w: Math.random() * 8 + 4,
-      h: Math.random() * 6 + 3,
-      color: cols[Math.floor(Math.random() * cols.length)],
-      rot: Math.random() * 360,
-      rs: (Math.random() - 0.5) * 14,
-      g: 0.3 + Math.random() * 0.2,
-      o: 1
-    });
-  }
-  var f = 0;
-  function tick() {
-    ctx.clearRect(0, 0, c.width, c.height);
-    var alive = false;
-    ps.forEach(function(p) {
-      p.x += p.vx; p.vy += p.g; p.y += p.vy;
-      p.rot += p.rs; p.vx *= 0.99;
-      if (f > 45) p.o -= 0.014;
-      if (p.o <= 0) return;
-      alive = true;
-      ctx.save();
-      ctx.translate(p.x, p.y);
-      ctx.rotate(p.rot * Math.PI / 180);
-      ctx.globalAlpha = Math.max(0, p.o);
-      ctx.fillStyle = p.color;
-      ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
-      ctx.restore();
-    });
-    f++;
-    if (alive) requestAnimationFrame(tick);
-    else ctx.clearRect(0, 0, c.width, c.height);
-  }
-  tick();
-}
 
 // ═══════════════════════════════════════════════════════════════
 // Init

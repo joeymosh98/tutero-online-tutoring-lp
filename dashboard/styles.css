@@ -71,40 +71,34 @@ body {
   border-left: 2px solid var(--color-border);
 }
 
-/* Page type toggle (Landing Pages / Thank You Pages) */
+/* Page type selector (Landing Pages / Thank You Pages / Digital Marketplace) */
 
-.dash-page-toggle {
-  display: inline-flex;
-  background: #f0f0f1;
-  border-radius: var(--radius-sm);
-  padding: 3px;
-  gap: 2px;
+.dash-page-type-select {
   margin-left: 16px;
-  padding-left: 16px;
+  padding: 8px 32px 8px 16px;
+  border: 1px solid var(--color-border);
   border-left: 2px solid var(--color-border);
-}
-
-.dash-toggle-btn {
-  padding: 6px 16px;
-  border: none;
-  background: transparent;
-  border-radius: 6px;
+  border-radius: var(--radius-sm);
+  background: var(--color-surface);
   font-family: var(--font-family);
   font-size: 14px;
   font-weight: 600;
-  color: var(--color-text-muted);
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-.dash-toggle-btn:hover {
-  color: var(--color-text-secondary);
-}
-
-.dash-toggle-btn.active {
-  background: var(--color-surface);
   color: var(--color-text);
-  box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+  cursor: pointer;
+  outline: none;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg width='10' height='6' viewBox='0 0 10 6' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L5 5L9 1' stroke='%23888' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  transition: border-color 0.2s;
+}
+
+.dash-page-type-select:hover {
+  border-color: var(--color-text-muted);
+}
+
+.dash-page-type-select:focus {
+  border-color: var(--color-orange);
 }
 
 .dash-page-count {

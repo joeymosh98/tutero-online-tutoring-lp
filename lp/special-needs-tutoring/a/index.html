@@ -1486,7 +1486,7 @@
       </div>
     </div>
     <div class="hero-content">
-      <div class="logo"><img src="images/tutero-logo.svg" alt="Tutero"></div>
+      <div class="logo"><img src="/shared/images/tutero-logo.svg" alt="Tutero"></div>
       <h1>1-1 Tutoring for Students with ADHD, Autism, Dyslexia &amp; Learning Challenges</h1>
       <p class="subtitle">Match your child with a specialist tutor who understands how they learn. Online, from home, with Australia's top 2% of educators.</p>
       <div class="hero-condition-pills">
@@ -2285,6 +2285,10 @@
 
 </div>
 
+<script src="/shared/form-helpers.js"></script>
+<script src="/shared/confetti.js"></script>
+<script src="/shared/scroll-reveal.js"></script>
+
 <script>
   // ── Hero Image Carousel ──
   (function(){
@@ -2337,24 +2341,18 @@
   const mDots=document.querySelectorAll('.modal-step-dot');
   function mGoTo(n){mSteps.forEach(s=>s.classList.remove('active'));mSteps[n].classList.add('active');mDots.forEach((d,i)=>{d.classList.remove('active','done');if(i<n)d.classList.add('done');if(i===n)d.classList.add('active')})}
 
-  // Auto-capitalise helper
-  function capitalise(str){return str.charAt(0).toUpperCase()+str.slice(1)}
-
-  // Enter key submits the current step
-  function enterToSubmit(stepEl,btnEl){stepEl.querySelectorAll('input,select').forEach(function(el){el.addEventListener('keydown',function(e){if(e.key==='Enter'&&!btnEl.disabled){e.preventDefault();btnEl.click()}})})}
-
   // Step 1: Student info
   const mSN=document.getElementById('mStudentName'),mYL=document.getElementById('mYearLevel'),mTo2=document.getElementById('mToStep2');
   [mSN,mYL].forEach(i=>i.addEventListener('input',()=>{mTo2.disabled=!(mSN.value.trim()&&mYL.value.trim())}));
   mTo2.addEventListener('click',()=>{
-    const name=capitalise(mSN.value.trim());
+    const name=TuteroForms.capitalise(mSN.value.trim());
     mSN.value=name;
     document.getElementById('mGoalName').textContent=name;
     document.getElementById('mStudentNameEcho').textContent=name;
     document.getElementById('mCtaName').textContent=name;
     mGoTo(1);
   });
-  enterToSubmit(mSteps[0],mTo2);
+  TuteroForms.enterToSubmit(mSteps[0],mTo2);
 
   // Step 2: Goal pills (auto-advance)
   document.querySelectorAll('#mGoalPills .modal-pill').forEach(p=>{
@@ -2378,44 +2376,19 @@
 
   // Step 4: Contact details
   const mPN=document.getElementById('mParentName'),mEM=document.getElementById('mEmail'),mPH=document.getElementById('mPhone'),mSub=document.getElementById('mSubmit');
-  // Phone formatting: detects +61/61 prefix on blur, formats as 0412 345 678
-  // Only light formatting while typing to not fight the cursor
-  let phoneDigits='';
-  mPH.addEventListener('input',()=>{
-    // Strip non-digits but allow + at start
-    let raw=mPH.value;
-    // Extract just digits (and remember if started with +)
-    let hasPlus=raw.trimStart().startsWith('+');
-    let digits=raw.replace(/\D/g,'');
-    // Normalise +61 / 61 prefix immediately so user sees it corrected
-    if(hasPlus&&digits.startsWith('61')){digits='0'+digits.slice(2)}
-    else if(digits.startsWith('610')&&digits.length>10){digits='0'+digits.slice(2)}
-    else if(digits.startsWith('61')&&digits.length>10){digits='0'+digits.slice(2)}
-    if(digits.length>10) digits=digits.slice(0,10);
-    phoneDigits=digits;
-    // Format progressively
-    let formatted=digits;
-    if(digits.length>4&&digits.length<=7) formatted=digits.slice(0,4)+' '+digits.slice(4);
-    else if(digits.length>7) formatted=digits.slice(0,4)+' '+digits.slice(4,7)+' '+digits.slice(7);
-    // Only update if different to avoid cursor jump
-    if(mPH.value!==formatted){
-      const pos=mPH.selectionStart;
-      const diff=formatted.length-mPH.value.length;
-      mPH.value=formatted;
-      mPH.setSelectionRange(pos+diff,pos+diff);
-    }
-  });
+  const phoneStore = { digits: '' };
+  mPH.addEventListener('input', () => { TuteroForms.formatPhone(mPH, phoneStore); });
   [mPN,mEM,mPH].forEach(i=>i.addEventListener('input',()=>{
-    mSub.disabled=!(mPN.value.trim()&&mEM.value.trim()&&phoneDigits.length>=10);
+    mSub.disabled=!(mPN.value.trim()&&mEM.value.trim()&&phoneStore.digits.length>=10);
   }));
   document.getElementById('mBack3').addEventListener('click',()=>mGoTo(2));
   mSub.addEventListener('click',()=>{
     document.getElementById('modalForm').style.display='none';
-    document.getElementById('mSuccessName').textContent=capitalise(mSN.value.trim());
+    document.getElementById('mSuccessName').textContent=TuteroForms.capitalise(mSN.value.trim());
     document.getElementById('modalSuccess').classList.add('active');
-    launchConfetti();
+    TuteroConfetti.launch();
   });
-  enterToSubmit(mSteps[3],mSub);
+  TuteroForms.enterToSubmit(mSteps[3],mSub);
 
   // ── Bottom CTA ──
   let currentStep=0, selectedSubject='';
@@ -2427,18 +2400,14 @@
   const studentName=document.getElementById('studentName'),yearLevel=document.getElementById('yearLevel'),toStep3=document.getElementById('toStep3');
   [studentName,yearLevel].forEach(i=>i.addEventListener('input',()=>{toStep3.disabled=!(studentName.value.trim()&&yearLevel.value.trim())}));
   toStep3.addEventListener('click',()=>goToStep(2));
-  enterToSubmit(steps[1],toStep3);
+  TuteroForms.enterToSubmit(steps[1],toStep3);
   const parentName=document.getElementById('parentName'),parentEmail=document.getElementById('parentEmail'),parentPhone=document.getElementById('parentPhone'),submitLead=document.getElementById('submitLead');
   [parentName,parentEmail,parentPhone].forEach(i=>i.addEventListener('input',()=>{submitLead.disabled=!(parentName.value.trim()&&parentEmail.value.trim()&&parentPhone.value.trim())}));
-  submitLead.addEventListener('click',()=>{steps.forEach(s=>s.classList.remove('active'));document.querySelector('.cta-steps').style.display='none';document.querySelector('.bottom-cta-heading').style.display='none';document.querySelector('.bottom-cta-sub').style.display='none';document.querySelector('.bottom-cta-emoji').style.display='none';document.getElementById('successName').textContent=studentName.value.trim();const _ss=document.getElementById('successSubject');if(_ss)_ss.textContent=selectedSubject;success.classList.add('active');launchConfetti()});
-  enterToSubmit(steps[2],submitLead);
+  submitLead.addEventListener('click',()=>{steps.forEach(s=>s.classList.remove('active'));document.querySelector('.cta-steps').style.display='none';document.querySelector('.bottom-cta-heading').style.display='none';document.querySelector('.bottom-cta-sub').style.display='none';document.querySelector('.bottom-cta-emoji').style.display='none';document.getElementById('successName').textContent=studentName.value.trim();const _ss=document.getElementById('successSubject');if(_ss)_ss.textContent=selectedSubject;success.classList.add('active');TuteroConfetti.launch()});
+  TuteroForms.enterToSubmit(steps[2],submitLead);
 
   // ── Scroll Reveal ──
-  const revealEls=document.querySelectorAll('.reveal, .reveal-left, .reveal-right, .reveal-scale');
-  const revealObserver=new IntersectionObserver((entries)=>{
-    entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');revealObserver.unobserve(e.target)}});
-  },{threshold:0.15});
-  revealEls.forEach(el=>revealObserver.observe(el));
+  TuteroReveal.init();
 
   // ── Condition Outcome Widget ──
   const needsData = {
@@ -2472,8 +2441,6 @@
     });
   });
 
-  // ── Confetti ──
-  function launchConfetti(){const c=document.getElementById('confettiCanvas'),ctx=c.getContext('2d');c.width=window.innerWidth;c.height=window.innerHeight;const cols=['#FF8412','#F8B200','#4CB092','#00A3FF','#1D49E3','#FF6B6B'],ps=[];for(let i=0;i<120;i++)ps.push({x:c.width/2+(Math.random()-.5)*200,y:c.height/2,vx:(Math.random()-.5)*16,vy:Math.random()*-18-4,w:Math.random()*8+4,h:Math.random()*6+3,color:cols[Math.floor(Math.random()*cols.length)],rot:Math.random()*360,rs:(Math.random()-.5)*12,g:.3+Math.random()*.2,o:1});let f=0;function a(){ctx.clearRect(0,0,c.width,c.height);let alive=false;ps.forEach(p=>{p.x+=p.vx;p.vy+=p.g;p.y+=p.vy;p.rot+=p.rs;p.vx*=.99;if(f>40)p.o-=.015;if(p.o<=0)return;alive=true;ctx.save();ctx.translate(p.x,p.y);ctx.rotate(p.rot*Math.PI/180);ctx.globalAlpha=Math.max(0,p.o);ctx.fillStyle=p.color;ctx.fillRect(-p.w/2,-p.h/2,p.w,p.h);ctx.restore()});f++;if(alive)requestAnimationFrame(a);else ctx.clearRect(0,0,c.width,c.height)}a()}
 </script>
 
 </body>
