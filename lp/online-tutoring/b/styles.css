@@ -363,11 +363,21 @@
     .modal-submit {
       width: 100%; padding: 14px; background: #FF8412; color: #fff;
       font-size: 15px; font-weight: 700; font-family: inherit; border: none;
-      border-radius: 10px; cursor: pointer; transition: background .2s, transform .1s;
-      margin-top: 4px;
+      border-radius: 10px; cursor: pointer; transition: background .5s, transform .1s, box-shadow .5s;
+      margin-top: 4px; position: relative; overflow: hidden;
     }
     .modal-submit:hover { background: #e87510; }
     .modal-submit:disabled, .modal-submit.btn-disabled { opacity: .4; cursor: not-allowed; }
+    .modal-submit.is-loading { background: #FF8412; opacity: 1; pointer-events: none; }
+    .modal-submit.is-success { background: #22c55e; opacity: 1; pointer-events: none; transform: scale(1.03); box-shadow: 0 0 24px rgba(34,197,94,.4); }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    @keyframes submit-pulse { 0%,100% { box-shadow: 0 0 24px rgba(34,197,94,.4); } 50% { box-shadow: 0 0 36px rgba(34,197,94,.6); } }
+    @keyframes reassure-in { from { opacity:0; transform:translateY(12px); } to { opacity:1; transform:translateY(0); } }
+    @keyframes dot-blink { 0%,100%{opacity:0} 50%{opacity:1} }
+    .submit-reassure { text-align:center; animation:reassure-in .5s ease-out both; margin-bottom:8px; }
+    .submit-reassure-text { font-size:15px; font-weight:600; color:#1a1a1a; line-height:1.5; margin-bottom:6px; }
+    .submit-reassure-redirect { font-size:13px; color:#888; font-weight:400; }
+    .submit-reassure-redirect::after { content:''; display:inline-block; width:3px; height:3px; border-radius:50%; background:#888; margin-left:2px; animation:dot-blink 1.2s infinite; }
     /* ── Inline Validation ── */
     .field-wrap { display:flex; flex-direction:column; }
     .field-error { font-size:12px; font-weight:500; color:#e53e3e; margin-top:4px; display:none; line-height:1.3; }
