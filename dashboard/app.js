@@ -288,9 +288,21 @@
       '</div>';
 
     var previewPath = page.variants[0].path;
+    var variantsJson = JSON.stringify(page.variants).replace(/"/g, '&quot;');
+
+    // Variant switcher (only for 2+ variants)
+    var variantSwitcher = '';
+    if (page.variants.length > 1) {
+      var tabs = page.variants.map(function(v, i) {
+        return '<button class="lp-variant-tab' + (i === 0 ? ' active' : '') + '" data-variant-index="' + i + '" title="' + (v.label || 'Variant ' + v.id.toUpperCase()) + '">' +
+          v.id.toUpperCase() + ' &mdash; ' + (v.label || '') +
+        '</button>';
+      }).join('');
+      variantSwitcher = '<div class="lp-variant-switcher">' + tabs + '</div>';
+    }
 
     return '<div class="' + cardClass + '" data-page-id="' + page.id + '">' +
-      '<div class="lp-card-preview" data-preview-src="' + previewPath + '">' +
+      '<div class="lp-card-preview" data-preview-src="' + previewPath + '" data-variants="' + variantsJson + '" data-current-variant="0">' +
         '<div class="lp-card-preview-loading">Loading preview&hellip;</div>' +
         '<span class="lp-card-status ' + statusClass + '">' + page.status + '</span>' +
         '<div class="lp-card-preview-panels">' +
@@ -303,6 +315,7 @@
             '<div class="lp-preview-frame lp-preview-frame--mobile"></div>' +
           '</div>' +
         '</div>' +
+        variantSwitcher +
       '</div>' +
       '<div class="lp-card-body">' +
         '<h3 class="lp-card-name">' + page.name + '</h3>' +
@@ -414,6 +427,69 @@
     }, 5000);
   }
 
+  // ── Variant Switching ──
+
+  function switchVariant(container, index) {
+    var variants = JSON.parse(container.getAttribute('data-variants') || '[]');
+    if (index < 0 || index >= variants.length) return;
+    var currentIndex = parseInt(container.getAttribute('data-current-variant') || '0', 10);
+    if (index === currentIndex) return;
+
+    container.setAttribute('data-current-variant', index);
+    var newSrc = variants[index].path;
+
+    // Update active tab
+    container.querySelectorAll('.lp-variant-tab').forEach(function(tab) {
+      tab.classList.toggle('active', parseInt(tab.getAttribute('data-variant-index'), 10) === index);
+    });
+
+    // Show loading state
+    var loadingEl = container.querySelector('.lp-card-preview-loading');
+    if (loadingEl) loadingEl.classList.remove('hidden');
+
+    var loadCount = 0;
+    function onLoad() {
+      loadCount++;
+      if (loadCount >= 2 && loadingEl) loadingEl.classList.add('hidden');
+    }
+
+    // Replace desktop iframe
+    var desktopFrame = container.querySelector('.lp-preview-frame--desktop');
+    if (desktopFrame) {
+      desktopFrame.innerHTML = '';
+      var desktopIframe = document.createElement('iframe');
+      desktopIframe.src = newSrc;
+      desktopIframe.setAttribute('loading', 'lazy');
+      desktopIframe.setAttribute('sandbox', 'allow-same-origin');
+      desktopIframe.setAttribute('tabindex', '-1');
+      desktopIframe.setAttribute('aria-hidden', 'true');
+      desktopIframe.addEventListener('load', onLoad);
+      var frameWidth = desktopFrame.offsetWidth || 232;
+      desktopIframe.style.transform = 'scale(' + (frameWidth / 1440) + ')';
+      desktopFrame.appendChild(desktopIframe);
+    }
+
+    // Replace mobile iframe
+    var mobileFrame = container.querySelector('.lp-preview-frame--mobile');
+    if (mobileFrame) {
+      mobileFrame.innerHTML = '';
+      var mobileIframe = document.createElement('iframe');
+      mobileIframe.src = newSrc;
+      mobileIframe.setAttribute('loading', 'lazy');
+      mobileIframe.setAttribute('sandbox', 'allow-same-origin');
+      mobileIframe.setAttribute('tabindex', '-1');
+      mobileIframe.setAttribute('aria-hidden', 'true');
+      mobileIframe.addEventListener('load', onLoad);
+      mobileIframe.style.transform = 'scale(0.197)';
+      mobileFrame.appendChild(mobileIframe);
+    }
+
+    // Fallback timeout
+    setTimeout(function() {
+      if (loadingEl) loadingEl.classList.add('hidden');
+    }, 5000);
+  }
+
   // ── Event Listeners ──
 
   searchInput.addEventListener('input', function() {
@@ -444,6 +520,15 @@
   // ── Action handlers (delegated) ──
 
   document.addEventListener('click', function(e) {
+    // Variant switcher
+    var variantTab = e.target.closest('.lp-variant-tab');
+    if (variantTab) {
+      var container = variantTab.closest('.lp-card-preview');
+      var index = parseInt(variantTab.getAttribute('data-variant-index'), 10);
+      if (container && !isNaN(index)) switchVariant(container, index);
+      return;
+    }
+
     // Page type toggle
     var toggleBtn = e.target.closest('.dash-toggle-btn');
     if (toggleBtn) {

@@ -600,6 +600,53 @@ body {
   flex-wrap: wrap;
 }
 
+/* Variant switcher (preview area) */
+
+.lp-variant-switcher {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  padding: 6px 12px;
+  background: linear-gradient(to top, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0) 100%);
+  z-index: 3;
+}
+
+.lp-variant-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 12px;
+  border: none;
+  border-radius: 14px;
+  font-family: var(--font-family);
+  font-size: 11px;
+  font-weight: 700;
+  color: rgba(255,255,255,0.8);
+  background: rgba(255,255,255,0.15);
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.lp-variant-tab:hover {
+  background: rgba(255,255,255,0.3);
+  color: #fff;
+}
+
+.lp-variant-tab.active {
+  background: var(--color-orange);
+  color: #fff;
+}
+
+body.division-schools .lp-variant-tab.active {
+  background: var(--color-dark-blue);
+}
+
 /* Variant badges */
 
 .lp-variant-badge {
