@@ -775,7 +775,58 @@ body.division-schools .lp-action-btn:hover {
   color: var(--color-dark-blue);
 }
 
-/* ── Lock / Unlock Button ── */
+/* ── Login Screen ── */
+
+.cms-login-screen {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background: var(--color-bg);
+  padding: 24px;
+}
+
+.cms-login-card {
+  background: var(--color-surface);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-border);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+  padding: 48px 40px;
+  width: 100%;
+  max-width: 380px;
+  text-align: center;
+}
+
+.cms-login-logo {
+  height: 36px;
+  margin-bottom: 24px;
+}
+
+.cms-login-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--color-text);
+  margin-bottom: 6px;
+}
+
+.cms-login-desc {
+  font-size: 14px;
+  color: var(--color-text-muted);
+  margin-bottom: 24px;
+}
+
+.cms-login-card .cms-input {
+  margin-bottom: 8px;
+  text-align: center;
+}
+
+.cms-login-btn {
+  width: 100%;
+  margin-top: 12px;
+  padding: 12px 20px;
+}
+
+/* ── Logout Button ── */
 
 .dash-lock-btn {
   display: inline-flex;
@@ -793,14 +844,8 @@ body.division-schools .lp-action-btn:hover {
 }
 
 .dash-lock-btn:hover {
-  border-color: var(--color-orange);
-  color: var(--color-orange);
-}
-
-.dash-lock-btn.unlocked {
-  background: rgba(76, 176, 146, 0.1);
-  border-color: var(--color-green);
-  color: var(--color-green);
+  border-color: var(--color-red);
+  color: var(--color-red);
 }
 
 .dash-lock-btn svg {

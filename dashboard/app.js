@@ -52,12 +52,12 @@
   var sortBy = document.getElementById('sortBy');
   var lockBtn = document.getElementById('lockBtn');
 
-  // Auth modal refs
-  var authModal = document.getElementById('authModal');
+  // Login screen refs
+  var loginScreen = document.getElementById('loginScreen');
+  var dashboardContent = document.getElementById('dashboardContent');
   var authPasswordInput = document.getElementById('authPasswordInput');
   var authError = document.getElementById('authError');
   var authSubmitBtn = document.getElementById('authSubmitBtn');
-  var authCancelBtn = document.getElementById('authCancelBtn');
 
   // Edit modal refs
   var editModal = document.getElementById('editModal');
@@ -85,19 +85,16 @@
 
   // ── Auth State ──
 
-  function updateLockBtn() {
-    if (isAuthenticated) {
-      lockBtn.classList.add('unlocked');
-      lockBtn.title = 'Editing unlocked';
-      lockBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 019.9-1"/></svg>';
-    } else {
-      lockBtn.classList.remove('unlocked');
-      lockBtn.title = 'Unlock editing';
-      lockBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>';
-    }
+  function showDashboard() {
+    loginScreen.style.display = 'none';
+    dashboardContent.style.display = '';
+    lockBtn.title = 'Sign out';
   }
 
-  updateLockBtn();
+  // If already authenticated from sessionStorage, show dashboard immediately
+  if (isAuthenticated) {
+    showDashboard();
+  }
 
   // ── Fetch registry (Blob first, then static JSON fallback) ──
 
@@ -134,7 +131,10 @@
       });
   }
 
-  loadConfig();
+  // Only load config if already authenticated
+  if (isAuthenticated) {
+    loadConfig();
+  }
 
   // ── Routing ──
 
@@ -571,24 +571,13 @@
     }, 5000);
   }
 
-  // ── Auth Modal ──
-
-  function showAuthModal() {
-    authPasswordInput.value = '';
-    authError.style.display = 'none';
-    authModal.style.display = 'flex';
-    authPasswordInput.focus();
-  }
-
-  function hideAuthModal() {
-    authModal.style.display = 'none';
-  }
+  // ── Login ──
 
   function submitAuth() {
     var pw = authPasswordInput.value;
     if (!pw) return;
     authSubmitBtn.disabled = true;
-    authSubmitBtn.textContent = 'Checking...';
+    authSubmitBtn.textContent = 'Signing in...';
 
     fetch('/api/cms-auth', {
       method: 'POST',
@@ -598,46 +587,33 @@
       .then(function(res) { return res.json(); })
       .then(function(data) {
         authSubmitBtn.disabled = false;
-        authSubmitBtn.textContent = 'Unlock';
+        authSubmitBtn.textContent = 'Sign In';
         if (data.valid) {
           sessionStorage.setItem('cms_token', pw);
           isAuthenticated = true;
-          updateLockBtn();
-          hideAuthModal();
-          render(); // re-render cards to show edit buttons
+          showDashboard();
+          loadConfig();
         } else {
           authError.style.display = 'block';
         }
       })
       .catch(function() {
         authSubmitBtn.disabled = false;
-        authSubmitBtn.textContent = 'Unlock';
+        authSubmitBtn.textContent = 'Sign In';
         authError.textContent = 'Connection error. Try again.';
         authError.style.display = 'block';
       });
   }
 
+  // Logout button
   lockBtn.addEventListener('click', function() {
-    if (isAuthenticated) {
-      // Lock — clear auth
-      sessionStorage.removeItem('cms_token');
-      isAuthenticated = false;
-      updateLockBtn();
-      render();
-    } else {
-      showAuthModal();
-    }
+    sessionStorage.removeItem('cms_token');
+    window.location.reload();
   });
 
-  authCancelBtn.addEventListener('click', hideAuthModal);
   authSubmitBtn.addEventListener('click', submitAuth);
   authPasswordInput.addEventListener('keydown', function(e) {
     if (e.key === 'Enter') submitAuth();
-  });
-
-  // Close auth modal on overlay click
-  authModal.addEventListener('click', function(e) {
-    if (e.target === authModal) hideAuthModal();
   });
 
   // ── Edit Modal ──
