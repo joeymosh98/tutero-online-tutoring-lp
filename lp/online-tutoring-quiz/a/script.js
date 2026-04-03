@@ -292,10 +292,6 @@ function runThinkingSequence() {
 // Contact Screen Personalisation (s11 Phone, s12 Email, s13 Final)
 // ═══════════════════════════════════════════════════════════════
 function personaliseContactScreens() {
-  // Phone trust line
-  document.getElementById('phoneTrust').textContent =
-    S.isForSelf ? 'We\u2019ll call to discuss your tutor match' : 'We\u2019ll call to discuss ' + S.studentName + '\u2019s tutor match';
-
   // Final screen — adapt for self vs child
   if (S.isForSelf) {
     // Self mode: hide parent name, just show state
