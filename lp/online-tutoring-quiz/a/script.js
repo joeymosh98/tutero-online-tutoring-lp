@@ -192,9 +192,27 @@ function personaliseForMode() {
   if (S.isForSelf) {
     document.getElementById('nameBadge').textContent = 'About you';
     document.getElementById('nameHeading').textContent = 'What\u2019s your first name?';
+    // Situation cards — first person
+    document.getElementById('sitLabel1').textContent = 'Falling behind';
+    document.getElementById('sitSub1').textContent = 'Struggling to keep up in class';
+    document.getElementById('sitLabel2').textContent = 'Need consistent practice';
+    document.getElementById('sitSub2').textContent = 'Doing okay but need more practice';
+    document.getElementById('sitLabel3').textContent = 'Want to get ahead';
+    document.getElementById('sitSub3').textContent = 'Doing well and aiming higher';
+    document.getElementById('sitLabel4').textContent = 'Preparing for exams';
+    document.getElementById('sitSub4').textContent = 'HSC, ATAR, or key assessments coming up';
   } else {
     document.getElementById('nameBadge').textContent = 'About your child';
     document.getElementById('nameHeading').textContent = 'What\u2019s your child\u2019s first name?';
+    // Situation cards — third person (default)
+    document.getElementById('sitLabel1').textContent = 'Falling behind';
+    document.getElementById('sitSub1').textContent = 'Struggling to keep up in class';
+    document.getElementById('sitLabel2').textContent = 'Needs consistent practice';
+    document.getElementById('sitSub2').textContent = 'Good but needs regular reinforcement';
+    document.getElementById('sitLabel3').textContent = 'Wants to get ahead';
+    document.getElementById('sitSub3').textContent = 'Capable student aiming higher';
+    document.getElementById('sitLabel4').textContent = 'Preparing for exams';
+    document.getElementById('sitSub4').textContent = 'HSC, ATAR, or key assessments coming up';
   }
 }
 
