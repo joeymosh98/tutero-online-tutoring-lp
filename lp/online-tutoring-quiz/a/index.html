@@ -380,51 +380,42 @@
       flex-direction: column;
       align-items: center;
       text-align: center;
-      max-width: 400px;
+      max-width: 420px;
       width: 100%;
     }
     .mirror-initial {
-      width: 56px;
-      height: 56px;
-      border-radius: 14px;
-      background: var(--orange);
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #FF8412 0%, #F8B200 100%);
       color: #fff;
-      font-size: 24px;
+      font-size: 26px;
       font-weight: 800;
       display: flex;
       align-items: center;
       justify-content: center;
-      margin-bottom: 20px;
+      margin-bottom: 24px;
       animation: fadeUp 0.5s var(--ease) both;
     }
     .mirror-heading {
+      line-height: 1.35;
       animation: fadeUp 0.5s var(--ease) 0.08s both;
     }
-    .mirror-summary {
-      font-size: 15px;
-      color: var(--gray-500);
-      margin: 4px 0 24px;
-      animation: fadeUp 0.5s var(--ease) 0.14s both;
-    }
-    .mirror-insight {
-      font-size: 15px;
-      line-height: 1.5;
-      color: var(--gray-700);
-      background: rgba(255,132,18,0.05);
-      border: 1px solid rgba(255,132,18,0.12);
-      border-radius: 12px;
-      padding: 16px 20px;
-      margin-bottom: 28px;
-      animation: fadeUp 0.5s var(--ease) 0.22s both;
+    .mirror-body {
+      font-size: 16px;
+      line-height: 1.6;
+      color: #4a4a4a;
+      margin: 12px 0 32px;
+      animation: fadeUp 0.5s var(--ease) 0.16s both;
     }
     .mirror-cta {
-      animation: fadeUp 0.5s var(--ease) 0.30s both;
+      animation: fadeUp 0.5s var(--ease) 0.26s both;
     }
     .mirror-subtext {
       font-size: 13px;
       color: var(--gray-500);
       margin-top: 12px;
-      animation: fadeUp 0.5s var(--ease) 0.36s both;
+      animation: fadeUp 0.5s var(--ease) 0.32s both;
     }
 
     /* ═══ Thinking / Transition Screen (s12) — Dark ═══ */
@@ -632,7 +623,7 @@
     }
     .field-wrap { display: flex; flex-direction: column; gap: 6px; position: relative; }
     .phone-wrap { flex-direction: row; align-items: center; }
-    .phone-flag { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); font-size: 14px; width: 20px; text-align: center; pointer-events: none; z-index: 1; }
+    .phone-flag { position: absolute; left: 14px; top: 0; bottom: 0; display: flex; align-items: center; justify-content: center; font-size: 14px; line-height: 1; width: 20px; pointer-events: none; z-index: 1; }
     .phone-wrap input { padding-left: 48px; }
     .field-wrap label {
       font-size: 13px; font-weight: 600; color: var(--gray-700);
@@ -1061,15 +1052,8 @@
       <div class="si si-center">
         <span class="quiz-badge">Question 4 of 6</span>
         <h2 class="quiz-heading" id="subjectHeading">What subject do they need most help with?</h2>
-        <div class="pill-grid">
-          <button class="qz-pill" data-val="Maths">&#x1F4D0; Maths</button>
-          <button class="qz-pill" data-val="English">&#x1F4D6; English</button>
-          <button class="qz-pill" data-val="Science">&#x1F52C; Science</button>
-          <button class="qz-pill" data-val="Chemistry">&#x2697;&#xFE0F; Chemistry</button>
-          <button class="qz-pill" data-val="Physics">&#x269B;&#xFE0F; Physics</button>
-          <button class="qz-pill" data-val="Biology">&#x1F9EC; Biology</button>
-          <button class="qz-pill" data-val="History">&#x1F4DC; History</button>
-          <button class="qz-pill" data-val="Other">&#x1F4CB; Other</button>
+        <div class="pill-grid" id="subjectPills">
+          <!-- Dynamically populated based on year level -->
         </div>
       </div>
     </div>
@@ -1078,14 +1062,11 @@
     <div class="screen" id="s8">
       <div class="si si-center">
         <div class="mirror-wrap">
-          <div class="mirror-initial" id="mirrorInitial">B</div>
-          <h2 class="quiz-heading mirror-heading" id="mirrorHeading">Got it &mdash; this is for Ben.</h2>
-          <p class="mirror-summary" id="mirrorSummary">Year 8 &middot; Maths &middot; finding it tough</p>
-          <div class="mirror-insight" id="mirrorInsight">
-            Most Year 8 students who are finding it tough just haven&rsquo;t found the right teacher yet.
-          </div>
-          <button class="btn-primary mirror-cta" id="mirrorCta">Help us find Ben&rsquo;s teacher &rarr;</button>
-          <p class="mirror-subtext">A few more questions so we get the match right.</p>
+          <div class="mirror-initial" id="mirrorInitial">T</div>
+          <h2 class="quiz-heading mirror-heading" id="mirrorHeading">Tom&rsquo;s doing well in Maths &mdash; love to see it.</h2>
+          <p class="mirror-body" id="mirrorBody">This is exactly the right time to build on that momentum. The best thing we can do is find a tutor who genuinely gets where Tom is and helps him go further.</p>
+          <button class="btn-primary mirror-cta" id="mirrorCta">Help us find Tom&rsquo;s teacher &rarr;</button>
+          <p class="mirror-subtext">Just a couple more questions.</p>
         </div>
       </div>
     </div>

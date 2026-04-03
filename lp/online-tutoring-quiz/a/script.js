@@ -146,7 +146,7 @@ function goTo(n) {
 }
 
 function reanimate(el) {
-  el.querySelectorAll('.qz-card, .qz-pill, .year-pill, .mirror-initial, .mirror-heading, .mirror-summary, .mirror-insight, .mirror-cta, .mirror-subtext').forEach(function(c) {
+  el.querySelectorAll('.qz-card, .qz-pill, .year-pill, .mirror-initial, .mirror-heading, .mirror-body, .mirror-cta, .mirror-subtext').forEach(function(c) {
     c.style.animation = 'none';
     c.offsetHeight;
     c.style.animation = '';
@@ -161,6 +161,73 @@ var TUTOR_COUNTS = {
   'Chemistry': [6, 10], 'Physics': [5, 9], 'Biology': [5, 8],
   'History': [4, 7], 'Geography': [3, 6], 'Other': [6, 10]
 };
+
+// ═══════════════════════════════════════════════════════════════
+// Subject Options — Dynamic per Year Level Tier
+// ═══════════════════════════════════════════════════════════════
+var SUBJECT_OPTIONS = {
+  primary: [
+    { val: 'Maths', emoji: '\u{1F4D0}' },
+    { val: 'English', emoji: '\u{1F4D6}' },
+    { val: 'Science', emoji: '\u{1F52C}' },
+    { val: 'Other', emoji: '\u{1F4CB}' }
+  ],
+  secondary: [
+    { val: 'Maths', emoji: '\u{1F4D0}' },
+    { val: 'English', emoji: '\u{1F4D6}' },
+    { val: 'Science', emoji: '\u{1F52C}' },
+    { val: 'History', emoji: '\u{1F4DC}' },
+    { val: 'Geography', emoji: '\u{1F5FA}\uFE0F' },
+    { val: 'Other', emoji: '\u{1F4CB}' }
+  ],
+  senior: [
+    { val: 'Maths', emoji: '\u{1F4D0}' },
+    { val: 'English', emoji: '\u{1F4D6}' },
+    { val: 'Science', emoji: '\u{1F52C}' },
+    { val: 'Chemistry', emoji: '\u2697\uFE0F' },
+    { val: 'Physics', emoji: '\u269B\uFE0F' },
+    { val: 'Biology', emoji: '\u{1F9EC}' },
+    { val: 'History', emoji: '\u{1F4DC}' },
+    { val: 'Geography', emoji: '\u{1F5FA}\uFE0F' },
+    { val: 'Other', emoji: '\u{1F4CB}' }
+  ]
+};
+
+function getYearTier(yearLevel) {
+  var primary = ['Kindergarten','Year 1','Year 2','Year 3','Year 4','Year 5','Year 6'];
+  var secondary = ['Year 7','Year 8','Year 9','Year 10'];
+  if (primary.indexOf(yearLevel) !== -1) return 'primary';
+  if (secondary.indexOf(yearLevel) !== -1) return 'secondary';
+  return 'senior';
+}
+
+function populateSubjectPills(yearLevel) {
+  var container = document.getElementById('subjectPills');
+  var tier = getYearTier(yearLevel);
+  var options = SUBJECT_OPTIONS[tier];
+  container.innerHTML = '';
+  options.forEach(function(opt) {
+    var btn = document.createElement('button');
+    btn.className = 'qz-pill';
+    btn.dataset.val = opt.val;
+    btn.innerHTML = opt.emoji + ' ' + opt.val;
+    container.appendChild(btn);
+  });
+  initSubjectScreen();
+}
+
+function initSubjectScreen() {
+  var pills = document.querySelectorAll('#subjectPills .qz-pill');
+  pills.forEach(function(pill) {
+    pill.addEventListener('click', function() {
+      pills.forEach(function(p) { p.classList.remove('selected'); });
+      pill.classList.add('selected');
+      S.subject = pill.dataset.val;
+      populateStruggleCards(S.subject);
+      setTimeout(function() { goTo(8); }, 320);
+    });
+  });
+}
 
 // Called after "who is this for?" selection
 function personaliseForMode() {
@@ -225,41 +292,55 @@ function personaliseWithName(name) {
 // ═══════════════════════════════════════════════════════════════
 function populateMirrorMoment() {
   var name = S.studentName;
-  var initial = name.charAt(0).toUpperCase();
+  var subj = S.subject;
+  var year = S.yearLevel;
+  var sit = S.situation;
+  var self = S.isForSelf;
 
-  // Student initial
-  document.getElementById('mirrorInitial').textContent = initial;
+  // Avatar initial
+  document.getElementById('mirrorInitial').textContent = name.charAt(0).toUpperCase();
 
-  // Headline — child vs self
-  document.getElementById('mirrorHeading').textContent = S.isForSelf
-    ? 'Got it, ' + name + '.'
-    : 'Got it \u2014 this is for ' + name + '.';
+  // Headline + body — warm, conversational, weaves in their data
+  var headline, body;
 
-  // Human-readable situation
-  var sitMap = {
-    'falling-behind': 'finding it tough',
-    'keeping-up': 'keeping up',
-    'get-ahead': 'aiming higher',
-    'exam-prep': 'preparing for exams'
-  };
-  var sitText = sitMap[S.situation] || 'working on it';
+  if (sit === 'falling-behind') {
+    headline = self
+      ? 'You\u2019re finding ' + subj + ' tough right now.'
+      : name + '\u2019s finding ' + subj + ' tough right now.';
+    body = 'That\u2019s really common in ' + year + ' \u2014 and it usually isn\u2019t about ability. '
+      + 'Most students just need someone patient who explains things their way. '
+      + 'That\u2019s exactly what we\u2019ll look for.';
+  } else if (sit === 'keeping-up') {
+    headline = self
+      ? 'You\u2019re keeping up in ' + subj + ' \u2014 that\u2019s great.'
+      : name + '\u2019s keeping up in ' + subj + ' \u2014 that\u2019s great.';
+    body = year + ' is when a little extra support can quietly turn \u2018doing okay\u2019 into something really special. '
+      + 'We want to find someone who sees that potential'
+      + (self ? '.' : ' in ' + name + '.');
+  } else if (sit === 'get-ahead') {
+    headline = self
+      ? 'You\u2019re doing well in ' + subj + ' \u2014 love to see it.'
+      : name + '\u2019s doing well in ' + subj + ' \u2014 love to see it.';
+    body = 'This is exactly the right time to build on that momentum. '
+      + 'The best thing we can do is find a tutor who genuinely gets where '
+      + (self ? 'you are' : name + ' is')
+      + ' and helps ' + (self ? 'you' : 'them') + ' go further.';
+  } else {
+    // exam-prep
+    headline = self
+      ? 'You\u2019re gearing up for exams in ' + subj + '.'
+      : name + '\u2019s gearing up for exams in ' + subj + '.';
+    body = 'Exam season doesn\u2019t have to be stressful. '
+      + 'The right tutor gives ' + (self ? 'you' : name)
+      + ' a clear plan and the confidence to walk in prepared. '
+      + 'Let\u2019s find that person.';
+  }
 
-  // Summary line
-  document.getElementById('mirrorSummary').textContent =
-    S.yearLevel + ' \u00B7 ' + S.subject + ' \u00B7 ' + sitText;
+  document.getElementById('mirrorHeading').textContent = headline;
+  document.getElementById('mirrorBody').textContent = body;
 
-  // Insight card — adapts to situation
-  var insights = {
-    'falling-behind': 'Most ' + S.yearLevel + ' students who are finding it tough just haven\u2019t found the right teacher yet.',
-    'keeping-up': S.yearLevel + ' is when the right teacher turns \u2018okay\u2019 into exceptional.',
-    'get-ahead': 'The best students accelerate fastest with a teacher who truly challenges them.',
-    'exam-prep': 'Exam results come down to strategy as much as knowledge \u2014 the right tutor gives you both.'
-  };
-  document.getElementById('mirrorInsight').textContent =
-    insights[S.situation] || insights['keeping-up'];
-
-  // CTA — child vs self
-  document.getElementById('mirrorCta').innerHTML = S.isForSelf
+  // CTA
+  document.getElementById('mirrorCta').innerHTML = self
     ? 'Help us find your teacher \u2192'
     : 'Help us find ' + escHtml(name) + '\u2019s teacher \u2192';
 }
@@ -884,6 +965,7 @@ yearPills.forEach(function(pill) {
     yearPills.forEach(function(p) { p.classList.remove('selected'); });
     pill.classList.add('selected');
     S.yearLevel = pill.dataset.val;
+    populateSubjectPills(S.yearLevel);
     setTimeout(function() { goTo(4); }, 320);
   });
 });
@@ -1082,9 +1164,7 @@ initCardScreen('s1', 'isForSelf', 2, function() {
 initCardScreen('s4', 'situation', 5);
 initCardScreen('s5', 'currentGrade', 6);
 initCardScreen('s6', 'confidence', 7);
-initCardScreen('s7', 'subject', 8, function() {
-  populateStruggleCards(S.subject);
-});
+// s7 (subject) is handled by initSubjectScreen() called from populateSubjectPills()
 // s9 (struggle) is handled by initStruggleScreen() called from populateStruggleCards()
 initCardScreen('s10', 'urgency', 11);
 
