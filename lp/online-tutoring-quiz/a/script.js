@@ -149,38 +149,6 @@ function reanimate(el) {
 // ═══════════════════════════════════════════════════════════════
 // Personalisation Engine
 // ═══════════════════════════════════════════════════════════════
-var SIT_TESTIMONIALS = {
-  'falling-behind': '\u201CMy son\u2019s grades went up 30% in 6 months.\u201D \u2014 <strong>Deb S., NSW</strong>',
-  'consistent-practice': '\u201CShe finishes homework independently and smiles doing it!\u201D \u2014 <strong>Rachel S.</strong>',
-  'get-ahead': '\u201CHe exceeded his ATAR target by 5 points.\u201D \u2014 <strong>Andrew P.</strong>',
-  'exam-prep': '\u201CThe difference is night and day. Oliver\u2019s tutor gets him.\u201D \u2014 <strong>Karen M.</strong>'
-};
-
-var SITUATION_LABELS = {
-  'falling-behind': 'Falling behind',
-  'consistent-practice': 'Needs practice',
-  'get-ahead': 'Wants to get ahead',
-  'exam-prep': 'Exam prep'
-};
-
-var GRADE_LABELS = {
-  'above': 'Above average',
-  'average': 'About average',
-  'below': 'Below expected'
-};
-
-var CONFIDENCE_LABELS = {
-  'good': 'Generally confident',
-  'mixed': 'Confidence varies',
-  'low': 'Not very confident'
-};
-
-var URGENCY_HELPER_TEXT = {
-  'asap': 'We prioritise urgent requests \u2014 expect a call within hours.',
-  'this-term': 'We\u2019ll have a tutor matched and ready this week.',
-  'next-term': 'Great planning! We\u2019ll lock in the perfect tutor ahead of time.'
-};
-
 var TUTOR_COUNTS = {
   'Maths': [14, 22], 'English': [12, 18], 'Science': [8, 14],
   'Chemistry': [6, 10], 'Physics': [5, 9], 'Biology': [5, 8],
@@ -396,18 +364,17 @@ var STRUGGLE_OPTIONS = {
     { val: 'source-analysis', label: 'Sources', emoji: '\u{1F4DC}' },
     { val: 'cause-effect', label: 'Cause & effect', emoji: '\u{1F504}' }
   ],
+  'Geography': [
+    { val: 'map-skills', label: 'Maps', emoji: '\u{1F5FA}\uFE0F' },
+    { val: 'data-interpretation', label: 'Data', emoji: '\u{1F4CA}' },
+    { val: 'essay-writing', label: 'Essays', emoji: '\u270D\uFE0F' }
+  ],
   'Other': [
     { val: 'understanding-concepts', label: 'Concepts', emoji: '\u{1F9E9}' },
     { val: 'homework-completion', label: 'Homework', emoji: '\u{1F4D3}' },
     { val: 'test-preparation', label: 'Tests', emoji: '\u{1F4DD}' }
   ]
 };
-
-STRUGGLE_OPTIONS['Geography'] = [
-  { val: 'map-skills', label: 'Maps', emoji: '\u{1F5FA}\uFE0F' },
-  { val: 'data-interpretation', label: 'Data', emoji: '\u{1F4CA}' },
-  { val: 'essay-writing', label: 'Essays', emoji: '\u270D\uFE0F' }
-];
 
 function populateStruggleCards(subject) {
   var container = document.getElementById('strugglePills');
