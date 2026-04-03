@@ -454,8 +454,7 @@
       color: var(--green);
     }
 
-    /* ═══ Screen 9 — Visual Report (Book Format) ═══ */
-    #s9 { background: var(--light-bg); }
+    /* ═══ Screen 9 — Thinking Transition ═══ */
 
     /* Book container & viewport */
     .book-container {
@@ -1043,46 +1042,6 @@
     #s8 { background: var(--light-bg); }
 
     /* ═══ Quiz Summary (Form personalization) ═══ */
-    .quiz-summary {
-      width: 100%;
-      background: #fff;
-      border: 1px solid var(--gray-200);
-      border-radius: 14px;
-      padding: 16px 20px;
-      margin-bottom: 20px;
-    }
-    .quiz-summary-header {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      margin-bottom: 12px;
-    }
-    .quiz-summary-icon { font-size: 18px; }
-    .quiz-summary-title {
-      font-size: 14px;
-      font-weight: 700;
-      color: var(--dark);
-    }
-    .quiz-summary-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-    }
-    .tutor-matching-msg {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      width: 100%;
-      padding: 12px 16px;
-      background: rgba(76,176,146,0.06);
-      border: 1px solid rgba(76,176,146,0.15);
-      border-radius: 10px;
-      font-size: 14px;
-      font-weight: 500;
-      color: var(--dark);
-      margin-bottom: 24px;
-    }
-    .tutor-matching-icon { font-size: 18px; flex-shrink: 0; }
     .urgency-helper {
       font-size: 13px;
       color: var(--gray-500);
@@ -1092,8 +1051,93 @@
       min-height: 20px;
     }
 
-    /* ═══ Forms (Screen 9 + 10) ═══ */
-    #s9, #s10 { background: var(--light-bg); }
+    /* ═══ Thinking / Transition Screen (s9) ═══ */
+    #s9 { background: #fff; }
+    .thinking-wrap {
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      min-height: 100%;
+      padding: calc(var(--header-h) + 48px) 24px 40px;
+      max-width: 480px; margin: 0 auto;
+      text-align: center;
+    }
+    .thinking-icon {
+      width: 64px; height: 64px;
+      margin-bottom: 28px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, rgba(255,132,18,0.1), rgba(76,176,146,0.1));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 28px;
+      animation: pulse 2s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.08); }
+    }
+    .thinking-steps {
+      display: flex; flex-direction: column;
+      gap: 16px; width: 100%;
+      margin-bottom: 32px;
+    }
+    .thinking-step {
+      display: flex; align-items: center; gap: 12px;
+      padding: 14px 18px;
+      background: var(--gray-100);
+      border-radius: 12px;
+      font-size: 14px; font-weight: 500;
+      color: var(--gray-500);
+      opacity: 0; transform: translateY(8px);
+      transition: opacity 0.4s var(--ease), transform 0.4s var(--ease), background 0.3s, color 0.3s;
+    }
+    .thinking-step.visible {
+      opacity: 1; transform: translateY(0);
+    }
+    .thinking-step.done {
+      background: #ecfdf5;
+      color: #065f46;
+    }
+    .thinking-step-icon {
+      width: 24px; height: 24px; flex-shrink: 0;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 12px;
+      background: var(--gray-200);
+      color: var(--gray-500);
+      transition: background 0.3s, color 0.3s;
+    }
+    .thinking-step.done .thinking-step-icon {
+      background: var(--green);
+      color: #fff;
+    }
+    .thinking-step .spinner-icon {
+      width: 16px; height: 16px;
+      border: 2px solid var(--gray-300);
+      border-top-color: var(--orange);
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+    }
+    .thinking-step.done .spinner-icon { display: none; }
+    .thinking-step .check-icon { display: none; }
+    .thinking-step.done .check-icon { display: inline; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .thinking-result {
+      opacity: 0; transform: translateY(12px);
+      transition: opacity 0.5s var(--ease), transform 0.5s var(--ease);
+      display: flex; flex-direction: column; align-items: center; gap: 8px;
+    }
+    .thinking-result.visible {
+      opacity: 1; transform: translateY(0);
+    }
+    .thinking-result-count {
+      font-size: 22px; font-weight: 800;
+      color: var(--dark); letter-spacing: -0.02em;
+    }
+    .thinking-result-sub {
+      font-size: 14px; color: var(--gray-500);
+    }
+
+    /* ═══ Forms (Screen 10-12) ═══ */
+    #s10, #s11, #s12 { background: var(--light-bg); }
     .form-heading {
       font-size: 22px; font-weight: 800;
       letter-spacing: -0.02em; text-align: center;
@@ -1203,6 +1247,13 @@
       width: 100%;
     }
     .form-quote strong { font-style: normal; }
+    .form-micro {
+      font-size: 13px;
+      color: var(--gray-500);
+      text-align: center;
+      margin-top: 14px;
+      line-height: 1.5;
+    }
 
     /* ═══ Success ═══ */
     .success-wrap { display: none; }
@@ -1565,40 +1616,47 @@
       </div>
     </div>
 
-    <!-- Screen 9: Name + Email -->
+    <!-- Screen 9: Thinking / Matching Transition -->
     <div class="screen" id="s9">
-      <div class="si si-scroll" id="formStep1">
-
-        <!-- Quiz summary -->
-        <div class="quiz-summary" id="quizSummary">
-          <div class="quiz-summary-header">
-            <span class="quiz-summary-icon">&#x2705;</span>
-            <span class="quiz-summary-title" id="summaryTitle">Summary</span>
+      <div class="thinking-wrap">
+        <div class="thinking-icon" id="thinkingIcon">&#x1F50D;</div>
+        <div class="thinking-steps">
+          <div class="thinking-step" id="thinkStep1">
+            <span class="thinking-step-icon"><span class="spinner-icon"></span><span class="check-icon">&#10003;</span></span>
+            <span id="thinkText1">Analysing answers&hellip;</span>
           </div>
-          <div class="quiz-summary-tags" id="summaryTags"></div>
+          <div class="thinking-step" id="thinkStep2">
+            <span class="thinking-step-icon"><span class="spinner-icon"></span><span class="check-icon">&#10003;</span></span>
+            <span id="thinkText2">Matching with available tutors&hellip;</span>
+          </div>
+          <div class="thinking-step" id="thinkStep3">
+            <span class="thinking-step-icon"><span class="spinner-icon"></span><span class="check-icon">&#10003;</span></span>
+            <span id="thinkText3">Building personalised learning plan&hellip;</span>
+          </div>
         </div>
-
-        <!-- Tutor matching message -->
-        <div class="tutor-matching-msg" id="tutorMatchMsg">
-          <span class="tutor-matching-icon">&#x1F50D;</span>
-          <span id="tutorMatchText">Searching for available tutors...</span>
+        <div class="thinking-result" id="thinkingResult">
+          <span class="thinking-result-count" id="thinkResultCount"></span>
+          <span class="thinking-result-sub" id="thinkResultSub"></span>
         </div>
+      </div>
+    </div>
 
-        <h3 id="formHeading" class="form-heading">Where should we send the tutor match?</h3>
-        <p id="formSub" class="form-sub">We'll be in touch today to discuss the learning plan.</p>
+    <!-- Screen 10: Phone Number -->
+    <div class="screen" id="s10">
+      <div class="si si-scroll">
+        <h3 id="phoneHeading" class="form-heading">We've found a tutor match!</h3>
+        <p id="phoneSub" class="form-sub">Enter your mobile and we'll call today to confirm the perfect tutor.</p>
 
         <div class="form-fields">
           <div class="field-wrap">
-            <label for="fParentName">Your name</label>
-            <input type="text" id="fParentName" placeholder="e.g. Michelle" autocomplete="name">
-          </div>
-          <div class="field-wrap">
-            <label for="fEmail">Email</label>
-            <input type="email" id="fEmail" placeholder="you@email.com" autocomplete="email">
+            <label for="fPhone">Mobile number</label>
+            <input type="tel" id="fPhone" placeholder="0412 345 678" autocomplete="tel">
           </div>
         </div>
 
-        <button class="btn-primary disabled" id="continueBtn">Continue &rarr;</button>
+        <button class="btn-primary disabled" id="phoneBtn">Continue &rarr;</button>
+
+        <p class="form-micro" id="phoneMicro">&#x26A1; We typically call within 2 hours</p>
 
         <div class="live-proof">
           <span class="live-dot"></span>
@@ -1607,17 +1665,35 @@
       </div>
     </div>
 
-    <!-- Screen 10: Phone + State + Submit -->
-    <div class="screen" id="s10">
-      <div class="si si-scroll" id="formStep2">
-
-        <h3 id="formHeading2" class="form-heading">Best number to reach you on?</h3>
-        <p id="formSub2" class="form-sub">We'll call to discuss your child's tutor match.</p>
+    <!-- Screen 11: Email -->
+    <div class="screen" id="s11">
+      <div class="si si-scroll">
+        <h3 id="emailHeading" class="form-heading">Where should we send the learning plan?</h3>
+        <p id="emailSub" class="form-sub">We'll email a personalised breakdown so you can see exactly where to improve.</p>
 
         <div class="form-fields">
           <div class="field-wrap">
-            <label for="fPhone">Phone</label>
-            <input type="tel" id="fPhone" placeholder="0412 345 678" autocomplete="tel">
+            <label for="fEmail">Email</label>
+            <input type="email" id="fEmail" placeholder="you@email.com" autocomplete="email">
+          </div>
+        </div>
+
+        <button class="btn-primary disabled" id="emailBtn">Continue &rarr;</button>
+
+        <p class="form-micro">&#x1F512; No spam, ever &mdash; just the learning plan</p>
+      </div>
+    </div>
+
+    <!-- Screen 12: Parent Name + State + Submit -->
+    <div class="screen" id="s12">
+      <div class="si si-scroll" id="formFinal">
+        <h3 id="finalHeading" class="form-heading">Last step &mdash; who should we ask for?</h3>
+        <p id="finalSub" class="form-sub">So our education consultant knows who to speak with.</p>
+
+        <div class="form-fields">
+          <div class="field-wrap">
+            <label for="fParentName">Your name</label>
+            <input type="text" id="fParentName" placeholder="e.g. Michelle" autocomplete="name">
           </div>
           <div class="field-wrap">
             <label for="fState">State / Territory</label>

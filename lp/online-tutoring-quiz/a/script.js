@@ -1,8 +1,8 @@
 // ═══════════════════════════════════════════════════════════════
-// Tutero Quiz Funnel — Variant C (Lead Generation + Plan on TY Page)
+// Tutero Quiz Funnel — Variant A (Lead Generation + Plan on TY Page)
 // Screens: s0 Welcome | s1 Name | s2 Year | s3 Situation | s4 Grades
 //          s5 Confidence | s6 Subject | s7 Struggle | s8 Urgency
-//          s9 Name+Email | s10 Phone+State+Submit + Success
+//          s9 Thinking | s10 Phone | s11 Email | s12 Name+State+Submit
 // ═══════════════════════════════════════════════════════════════
 
 // ── Webhook + API ──
@@ -65,22 +65,24 @@ var S = {
   email: '',
   phone: '',
   phoneDigits: '',
-  state: ''
+  state: '',
+  tutorCount: 0
 };
 
 // ═══════════════════════════════════════════════════════════════
-// Screen Navigation (11 screens: s0-s10)
+// Screen Navigation (13 screens: s0-s12)
 // ═══════════════════════════════════════════════════════════════
+var TOTAL_SCREENS = 12;
 var screens = [];
 var cur = 0;
 var header = document.getElementById('qzHeader');
 var backBtn = document.getElementById('backBtn');
 var progressFill = document.getElementById('progressFill');
 var stepLabel = document.getElementById('stepLabel');
-var PROGRESS = [0, 10, 18, 28, 38, 48, 58, 68, 78, 86, 93];
+var PROGRESS = [0, 8, 16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 95];
 
 function initScreens() {
-  for (var i = 0; i <= 10; i++) screens.push(document.getElementById('s' + i));
+  for (var i = 0; i <= TOTAL_SCREENS; i++) screens.push(document.getElementById('s' + i));
 }
 
 function updateChrome(n) {
@@ -89,18 +91,19 @@ function updateChrome(n) {
   } else {
     header.classList.add('light');
   }
-  // Back button — hide on welcome
-  backBtn.style.visibility = (n > 0) ? 'visible' : 'hidden';
+  // Back button — hide on welcome and thinking screen
+  backBtn.style.visibility = (n > 0 && n !== 9) ? 'visible' : 'hidden';
   // Progress bar
   progressFill.style.width = (PROGRESS[n] || 0) + '%';
   // Step text
   if (n >= 3 && n <= 8) stepLabel.textContent = (n - 2) + ' of 6';
-  else if (n === 9 || n === 10) stepLabel.textContent = 'Details';
+  else if (n === 9) stepLabel.textContent = '';
+  else if (n >= 10 && n <= 12) stepLabel.textContent = 'Almost there';
   else stepLabel.textContent = '';
 }
 
 function goTo(n) {
-  if (n === cur || n < 0 || n > 10) return;
+  if (n === cur || n < 0 || n > TOTAL_SCREENS) return;
   var fwd = n > cur;
   var old = screens[cur];
   var next = screens[n];
@@ -120,10 +123,16 @@ function goTo(n) {
     setTimeout(function() { document.getElementById('fStudentName').focus(); }, 450);
   }
   if (n === 9) {
-    setTimeout(function() { fPN.focus(); }, 450);
+    runThinkingSequence();
   }
   if (n === 10) {
     setTimeout(function() { fPH.focus(); }, 450);
+  }
+  if (n === 11) {
+    setTimeout(function() { fEM.focus(); }, 450);
+  }
+  if (n === 12) {
+    setTimeout(function() { fPN.focus(); }, 450);
   }
 }
 
@@ -187,42 +196,85 @@ function personaliseWithName(name) {
   document.getElementById('urgencyHeading').textContent = 'When would you like ' + name + ' to start?';
 }
 
-// Personalise Screen 9 (name + email step)
-function personaliseScreen9() {
-  // Dynamic heading
-  document.getElementById('formHeading').textContent =
-    'Almost done! Where should we send ' + S.studentName + '\u2019s tutor match?';
-  document.getElementById('formSub').textContent =
-    'We\u2019ll be in touch today to discuss ' + S.studentName + '\u2019s learning plan.';
+// ═══════════════════════════════════════════════════════════════
+// Thinking Screen (s9) — Animated Sequence + Auto-advance
+// ═══════════════════════════════════════════════════════════════
+function runThinkingSequence() {
+  var step1 = document.getElementById('thinkStep1');
+  var step2 = document.getElementById('thinkStep2');
+  var step3 = document.getElementById('thinkStep3');
+  var result = document.getElementById('thinkingResult');
 
-  // Quiz summary tags
-  var tags = [
-    S.yearLevel,
-    S.subject,
-    SITUATION_LABELS[S.situation] || '',
-    GRADE_LABELS[S.currentGrade] || '',
-    CONFIDENCE_LABELS[S.confidence] || ''
-  ].filter(Boolean);
-  document.getElementById('summaryTags').innerHTML = tags.map(function(t) {
-    return '<span class="ptag"><span class="check">&#10003;</span> ' + escHtml(t) + '</span>';
-  }).join('');
-  document.getElementById('summaryTitle').textContent = 'Summary for ' + S.studentName;
+  // Reset state
+  [step1, step2, step3].forEach(function(s) {
+    s.classList.remove('visible', 'done');
+  });
+  result.classList.remove('visible');
 
-  // Tutor matching message
+  // Personalise text
+  document.getElementById('thinkText1').textContent =
+    'Analysing ' + S.studentName + '\u2019s answers\u2026';
+  document.getElementById('thinkText2').textContent =
+    'Matching with available ' + S.subject + ' tutors\u2026';
+  document.getElementById('thinkText3').textContent =
+    'Building ' + S.studentName + '\u2019s personalised learning plan\u2026';
+
+  // Calculate tutor count
   var range = TUTOR_COUNTS[S.subject] || TUTOR_COUNTS['Other'];
-  var count = range[0] + Math.floor(Math.random() * (range[1] - range[0] + 1));
-  document.getElementById('tutorMatchText').innerHTML =
-    'We found <strong>' + count + ' ' + escHtml(S.subject) + ' tutors</strong> available for ' +
-    escHtml(S.yearLevel) + ' students';
+  S.tutorCount = range[0] + Math.floor(Math.random() * (range[1] - range[0] + 1));
+
+  // Sequence: appear → done, appear → done, appear → done, result
+  setTimeout(function() { step1.classList.add('visible'); }, 200);
+  setTimeout(function() { step1.classList.add('done'); }, 1000);
+
+  setTimeout(function() { step2.classList.add('visible'); }, 1200);
+  setTimeout(function() { step2.classList.add('done'); }, 2200);
+
+  setTimeout(function() { step3.classList.add('visible'); }, 2400);
+  setTimeout(function() { step3.classList.add('done'); }, 3400);
+
+  setTimeout(function() {
+    document.getElementById('thinkResultCount').textContent =
+      S.tutorCount + ' ' + S.subject + ' tutors available';
+    document.getElementById('thinkResultSub').textContent =
+      'for ' + S.yearLevel + ' students in your area';
+    result.classList.add('visible');
+  }, 3600);
+
+  // Auto-advance to phone screen
+  setTimeout(function() {
+    personaliseContactScreens();
+    goTo(10);
+  }, 4600);
 }
 
-// Personalise Screen 10 (phone + state step)
-function personaliseScreen10() {
-  // Heading
-  document.getElementById('formHeading2').textContent =
-    'Best number to reach you on?';
-  document.getElementById('formSub2').textContent =
-    'We\u2019ll call to discuss ' + S.studentName + '\u2019s ' + S.subject + ' tutor match.';
+// ═══════════════════════════════════════════════════════════════
+// Contact Screen Personalisation (s10 Phone, s11 Email, s12 Final)
+// ═══════════════════════════════════════════════════════════════
+function personaliseContactScreens() {
+  // Screen 10 — Phone
+  document.getElementById('phoneHeading').textContent =
+    'Great news \u2014 we\u2019ve matched ' + S.tutorCount + ' tutors for ' + S.studentName + '!';
+  document.getElementById('phoneSub').textContent =
+    'Enter your mobile and we\u2019ll call today to confirm the perfect ' + S.subject + ' tutor.';
+  var phoneMicro = document.getElementById('phoneMicro');
+  if (S.urgency === 'asap') {
+    phoneMicro.innerHTML = '&#x26A1; Urgent requests get a callback within 2 hours';
+  } else {
+    phoneMicro.innerHTML = '&#x26A1; We typically call within 2 hours';
+  }
+
+  // Screen 11 — Email
+  document.getElementById('emailHeading').textContent =
+    'Where should we send ' + S.studentName + '\u2019s learning plan?';
+  document.getElementById('emailSub').textContent =
+    'We\u2019ll email a personalised breakdown so you can see exactly where ' + S.studentName + ' can improve \u2014 free, no strings attached.';
+
+  // Screen 12 — Final
+  document.getElementById('finalHeading').textContent =
+    'Last step \u2014 who should we ask for when we call?';
+  document.getElementById('finalSub').textContent =
+    'So our education consultant knows who to speak with about ' + S.studentName + '.';
 
   // Submit button
   document.getElementById('submitBtn').innerHTML =
@@ -238,7 +290,7 @@ function personaliseScreen10() {
 }
 
 // ═══════════════════════════════════════════════════════════════
-// Background Plan Generation (fires when form screen loads)
+// Background Plan Generation (fires when thinking screen loads)
 // ═══════════════════════════════════════════════════════════════
 function fireBackgroundPlanGeneration() {
   var controller = new AbortController();
@@ -294,51 +346,51 @@ function fireBackgroundPlanGeneration() {
 // ═══════════════════════════════════════════════════════════════
 var STRUGGLE_OPTIONS = {
   'Maths': [
-    { val: 'understanding-concepts', label: 'Understanding concepts' },
-    { val: 'word-problems', label: 'Word problems' },
-    { val: 'algebra-equations', label: 'Algebra & equations' }
+    { val: 'understanding-concepts', label: 'Concepts', emoji: '\u{1F9E9}' },
+    { val: 'word-problems', label: 'Word problems', emoji: '\u{1F4D6}' },
+    { val: 'algebra-equations', label: 'Algebra', emoji: '\u270F\uFE0F' }
   ],
   'English': [
-    { val: 'reading-comprehension', label: 'Reading comprehension' },
-    { val: 'essay-writing', label: 'Essay writing' },
-    { val: 'grammar-punctuation', label: 'Grammar & punctuation' }
+    { val: 'reading-comprehension', label: 'Reading', emoji: '\u{1F4D6}' },
+    { val: 'essay-writing', label: 'Essays', emoji: '\u270D\uFE0F' },
+    { val: 'grammar-punctuation', label: 'Grammar', emoji: '\u{1F4DD}' }
   ],
   'Science': [
-    { val: 'understanding-theory', label: 'Understanding theory' },
-    { val: 'applying-formulas', label: 'Applying formulas' },
-    { val: 'linking-concepts', label: 'Linking concepts' }
+    { val: 'understanding-theory', label: 'Theory', emoji: '\u{1F52C}' },
+    { val: 'applying-formulas', label: 'Formulas', emoji: '\u{1F9EE}' },
+    { val: 'linking-concepts', label: 'Concepts', emoji: '\u{1F517}' }
   ],
   'Chemistry': [
-    { val: 'balancing-equations', label: 'Balancing equations' },
-    { val: 'mole-calculations', label: 'Mole calculations' },
-    { val: 'organic-chemistry', label: 'Organic chemistry' }
+    { val: 'balancing-equations', label: 'Equations', emoji: '\u2696\uFE0F' },
+    { val: 'mole-calculations', label: 'Calculations', emoji: '\u{1F9EE}' },
+    { val: 'organic-chemistry', label: 'Organic', emoji: '\u{1F9EA}' }
   ],
   'Physics': [
-    { val: 'problem-solving', label: 'Problem solving' },
-    { val: 'understanding-formulas', label: 'Understanding formulas' },
-    { val: 'motion-forces', label: 'Motion & forces' }
+    { val: 'problem-solving', label: 'Problem solving', emoji: '\u{1F3AF}' },
+    { val: 'understanding-formulas', label: 'Formulas', emoji: '\u{1F4D0}' },
+    { val: 'motion-forces', label: 'Forces', emoji: '\u{1F680}' }
   ],
   'Biology': [
-    { val: 'cell-biology', label: 'Cell biology' },
-    { val: 'genetics', label: 'Genetics' },
-    { val: 'human-body', label: 'Human body systems' }
+    { val: 'cell-biology', label: 'Cells', emoji: '\u{1F52C}' },
+    { val: 'genetics', label: 'Genetics', emoji: '\u{1F9EC}' },
+    { val: 'human-body', label: 'Body systems', emoji: '\u{1FAC0}' }
   ],
   'History': [
-    { val: 'essay-structure', label: 'Essay structure' },
-    { val: 'source-analysis', label: 'Source analysis' },
-    { val: 'cause-effect', label: 'Cause & effect' }
+    { val: 'essay-structure', label: 'Essays', emoji: '\u270D\uFE0F' },
+    { val: 'source-analysis', label: 'Sources', emoji: '\u{1F4DC}' },
+    { val: 'cause-effect', label: 'Cause & effect', emoji: '\u{1F504}' }
   ],
   'Other': [
-    { val: 'understanding-concepts', label: 'Understanding concepts' },
-    { val: 'homework-completion', label: 'Homework completion' },
-    { val: 'test-preparation', label: 'Test preparation' }
+    { val: 'understanding-concepts', label: 'Concepts', emoji: '\u{1F9E9}' },
+    { val: 'homework-completion', label: 'Homework', emoji: '\u{1F4D3}' },
+    { val: 'test-preparation', label: 'Tests', emoji: '\u{1F4DD}' }
   ]
 };
 
 STRUGGLE_OPTIONS['Geography'] = [
-  { val: 'map-skills', label: 'Map skills' },
-  { val: 'data-interpretation', label: 'Data interpretation' },
-  { val: 'essay-writing', label: 'Essay writing' }
+  { val: 'map-skills', label: 'Maps', emoji: '\u{1F5FA}\uFE0F' },
+  { val: 'data-interpretation', label: 'Data', emoji: '\u{1F4CA}' },
+  { val: 'essay-writing', label: 'Essays', emoji: '\u270D\uFE0F' }
 ];
 
 function populateStruggleCards(subject) {
@@ -350,7 +402,7 @@ function populateStruggleCards(subject) {
     btn.className = 'qz-card';
     btn.dataset.val = opt.val;
     btn.innerHTML =
-      '<span class="qz-emoji">&#x1F4A1;</span>' +
+      '<span class="qz-emoji">' + opt.emoji + '</span>' +
       '<div class="qz-text"><strong>' + opt.label + '</strong></div>';
     container.appendChild(btn);
   });
@@ -478,72 +530,91 @@ yearPills.forEach(function(pill) {
 });
 
 // ═══════════════════════════════════════════════════════════════
-// Screen 9: Name + Email (Continue to Screen 10)
-// ═══════════════════════════════════════════════════════════════
-var fPN = document.getElementById('fParentName');
-var fEM = document.getElementById('fEmail');
-var contBtn = document.getElementById('continueBtn');
-
-function checkStep1() {
-  toggleBtn(contBtn, fPN.value.trim() && isValidEmail(fEM.value.trim()));
-}
-
-[fPN, fEM].forEach(function(i) {
-  i.addEventListener('input', function() {
-    checkStep1();
-    if (i === fPN && fPN.value.trim()) clearErr(fPN);
-    if (i === fEM && isValidEmail(fEM.value.trim())) clearErr(fEM);
-  });
-});
-
-contBtn.addEventListener('click', function() {
-  if (contBtn.classList.contains('disabled')) {
-    // Validate and show errors
-    if (!fPN.value.trim()) showErr(fPN); else clearErr(fPN);
-    if (!isValidEmail(fEM.value.trim())) showErr(fEM); else clearErr(fEM);
-    return;
-  }
-  S.parentName = fPN.value.trim();
-  S.email = fEM.value.trim();
-  personaliseScreen10();
-  goTo(10);
-});
-
-// Enter key on step 1 fields
-[fPN, fEM].forEach(function(el) {
-  el.addEventListener('keydown', function(e) {
-    if (e.key === 'Enter') { e.preventDefault(); contBtn.click(); }
-  });
-});
-
-// ═══════════════════════════════════════════════════════════════
-// Screen 10: Phone + State + Submit
+// Screen 10: Phone (Continue to Screen 11)
 // ═══════════════════════════════════════════════════════════════
 var fPH = document.getElementById('fPhone');
-var fST = document.getElementById('fState');
-var subBtn = document.getElementById('submitBtn');
+var phoneBtn = document.getElementById('phoneBtn');
 
-function checkStep2() {
-  toggleBtn(subBtn, S.phoneDigits.length >= 10 && fST.value);
+function checkPhone() {
+  toggleBtn(phoneBtn, S.phoneDigits.length >= 10);
 }
 
 fPH.addEventListener('input', function() {
   formatPhone(fPH);
-  checkStep2();
+  checkPhone();
   if (S.phoneDigits.length >= 10) clearErr(fPH);
 });
+
+phoneBtn.addEventListener('click', function() {
+  if (phoneBtn.classList.contains('disabled')) {
+    if (S.phoneDigits.length < 10) showErr(fPH); else clearErr(fPH);
+    return;
+  }
+  S.phone = fPH.value.trim();
+  goTo(11);
+});
+
+fPH.addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') { e.preventDefault(); phoneBtn.click(); }
+});
+
+// ═══════════════════════════════════════════════════════════════
+// Screen 11: Email (Continue to Screen 12)
+// ═══════════════════════════════════════════════════════════════
+var fEM = document.getElementById('fEmail');
+var emailBtn = document.getElementById('emailBtn');
+
+function checkEmail() {
+  toggleBtn(emailBtn, isValidEmail(fEM.value.trim()));
+}
+
+fEM.addEventListener('input', function() {
+  checkEmail();
+  if (isValidEmail(fEM.value.trim())) clearErr(fEM);
+});
+
+emailBtn.addEventListener('click', function() {
+  if (emailBtn.classList.contains('disabled')) {
+    if (!isValidEmail(fEM.value.trim())) showErr(fEM); else clearErr(fEM);
+    return;
+  }
+  S.email = fEM.value.trim();
+  goTo(12);
+});
+
+fEM.addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') { e.preventDefault(); emailBtn.click(); }
+});
+
+// ═══════════════════════════════════════════════════════════════
+// Screen 12: Parent Name + State + Submit
+// ═══════════════════════════════════════════════════════════════
+var fPN = document.getElementById('fParentName');
+var fST = document.getElementById('fState');
+var subBtn = document.getElementById('submitBtn');
+
+function checkFinal() {
+  toggleBtn(subBtn, fPN.value.trim() && fST.value);
+}
+
+fPN.addEventListener('input', function() {
+  checkFinal();
+  if (fPN.value.trim()) clearErr(fPN);
+});
 fST.addEventListener('change', function() {
-  checkStep2();
+  checkFinal();
   if (fST.value) { clearErr(fST); fST.classList.remove('is-placeholder'); }
 });
 
 subBtn.addEventListener('click', function() {
   if (subBtn.classList.contains('disabled')) {
-    // Validate and show errors
-    if (S.phoneDigits.length < 10) showErr(fPH); else clearErr(fPH);
+    if (!fPN.value.trim()) showErr(fPN); else clearErr(fPN);
     if (!fST.value) showErr(fST); else clearErr(fST);
     return;
   }
+
+  S.parentName = fPN.value.trim();
+  S.state = fST.value;
 
   submitLeadData({
     source: 'quiz_funnel',
@@ -556,13 +627,13 @@ subBtn.addEventListener('click', function() {
     confidence: S.confidence,
     struggle_area: S.struggleArea,
     urgency: S.urgency,
-    parent_name: fPN.value.trim(),
-    email: fEM.value.trim(),
-    phone: fPH.value.trim()
+    parent_name: S.parentName,
+    email: S.email,
+    phone: S.phone
   });
 
   // Show success state
-  document.getElementById('formStep2').style.display = 'none';
+  document.getElementById('formFinal').style.display = 'none';
   document.getElementById('successName').textContent = S.studentName;
   document.getElementById('successWrap').classList.add('active');
   progressFill.style.width = '100%';
@@ -571,8 +642,8 @@ subBtn.addEventListener('click', function() {
   document.getElementById('tyLink').href = buildThankYouUrl();
 });
 
-// Enter key on step 2 fields
-fPH.addEventListener('keydown', function(e) {
+// Enter key on final fields
+fPN.addEventListener('keydown', function(e) {
   if (e.key === 'Enter') { e.preventDefault(); subBtn.click(); }
 });
 
@@ -647,9 +718,10 @@ function launchConfetti() {
 initScreens();
 updateChrome(0);
 
-// Header back button
+// Header back button — skip thinking screen when going back
 backBtn.addEventListener('click', function() {
-  if (cur > 0) goTo(cur - 1);
+  if (cur === 10) goTo(8);       // Skip thinking screen when going back from phone
+  else if (cur > 0) goTo(cur - 1);
 });
 
 // Screen 0 -> 1
@@ -664,6 +736,5 @@ initCardScreen('s6', 'subject', 7, function() {
 });
 // s7 (struggle) is handled by initStruggleScreen() called from populateStruggleCards()
 initCardScreen('s8', 'urgency', 9, function() {
-  personaliseScreen9();
   fireBackgroundPlanGeneration();
 });
