@@ -197,7 +197,7 @@
     .trust-line-light { color: var(--gray-500); }
 
     /* ═══ Quiz screens ═══ */
-    #s1, #s2, #s3, #s4, #s5, #s6, #s7, #s8, #s9 { background: var(--light-bg); }
+    #s1, #s2, #s3, #s4, #s5, #s6, #s7, #s8, #s9, #s10 { background: var(--light-bg); }
     .quiz-badge {
       display: inline-block;
       font-size: 13px; font-weight: 600;
@@ -374,97 +374,208 @@
       color: #0d6b52;
     }
 
-    /* ═══ Thinking / Transition Screen ═══ */
-    #s10 { background: #fff; }
+    /* ═══ Thinking / Transition Screen (s11) — Dark ═══ */
+    #s11 { background: #0f0f14; overflow: hidden; }
+    #s11::before {
+      content: '';
+      position: absolute;
+      top: -100px; left: 50%; transform: translateX(-50%);
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(76,176,146,0.06) 0%, transparent 60%);
+      pointer-events: none;
+    }
+    .particle-canvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+    }
     .thinking-wrap {
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
       min-height: 100%;
-      padding: calc(var(--header-h) + 48px) 24px 40px;
-      max-width: 480px; margin: 0 auto;
+      padding: calc(var(--header-h) + 32px) 24px 40px;
+      max-width: 480px;
+      margin: 0 auto;
       text-align: center;
     }
-    .thinking-icon {
-      width: 64px; height: 64px;
-      margin-bottom: 28px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, rgba(255,132,18,0.1), rgba(76,176,146,0.1));
-      display: flex; align-items: center; justify-content: center;
-      font-size: 28px;
-      animation: pulse 2s ease-in-out infinite;
+
+    /* Phase label */
+    .phase-label {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: rgba(255,255,255,0.4);
+      margin-bottom: 20px;
+      transition: opacity 0.4s var(--ease);
     }
-    @keyframes pulse {
-      0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.08); }
+
+    /* Progress ring */
+    .progress-ring-wrap {
+      position: relative;
+      width: 120px;
+      height: 120px;
+      margin-bottom: 24px;
     }
-    .thinking-steps {
-      display: flex; flex-direction: column;
-      gap: 16px; width: 100%;
-      margin-bottom: 32px;
+    .progress-ring { width: 120px; height: 120px; }
+    .progress-ring-bg {
+      fill: none;
+      stroke: rgba(255,255,255,0.06);
+      stroke-width: 3.5;
     }
-    .thinking-step {
-      display: flex; align-items: center; gap: 12px;
-      padding: 14px 18px;
-      background: var(--gray-100);
-      border-radius: 12px;
-      font-size: 14px; font-weight: 500;
-      color: var(--gray-500);
-      opacity: 0; transform: translateY(8px);
-      transition: opacity 0.4s var(--ease), transform 0.4s var(--ease), background 0.3s, color 0.3s;
+    .progress-ring-fg {
+      fill: none;
+      stroke: var(--green);
+      stroke-width: 3.5;
+      stroke-linecap: round;
+      stroke-dasharray: 326.73;
+      stroke-dashoffset: 326.73;
+      transform: rotate(-90deg);
+      transform-origin: center;
+      transition: stroke-dashoffset 0.8s var(--ease);
     }
-    .thinking-step.visible {
-      opacity: 1; transform: translateY(0);
-    }
-    .thinking-step.done {
-      background: #ecfdf5;
-      color: #065f46;
-    }
-    .thinking-step-icon {
-      width: 24px; height: 24px; flex-shrink: 0;
-      border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 12px;
-      background: var(--gray-200);
-      color: var(--gray-500);
-      transition: background 0.3s, color 0.3s;
-    }
-    .thinking-step.done .thinking-step-icon {
-      background: var(--green);
+    .progress-pct {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 24px;
+      font-weight: 800;
       color: #fff;
+      letter-spacing: -0.02em;
     }
-    .thinking-step .spinner-icon {
-      width: 16px; height: 16px;
-      border: 2px solid var(--gray-300);
-      border-top-color: var(--orange);
+
+    /* Thinking headline */
+    .thinking-headline {
+      font-size: 20px;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 6px;
+      letter-spacing: -0.01em;
+    }
+    .thinking-subtitle {
+      font-size: 14px;
+      color: rgba(255,255,255,0.35);
+      margin-bottom: 28px;
+    }
+
+    /* Step feed */
+    .thinking-feed {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      width: 100%;
+      margin-bottom: 24px;
+    }
+    .tf-step {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 14px;
+      border-radius: 10px;
+      background: rgba(255,255,255,0.04);
+      font-size: 13px;
+      font-weight: 500;
+      color: rgba(255,255,255,0.4);
+      opacity: 0;
+      max-height: 60px;
+      transform: translateY(8px);
+      transition: opacity 0.5s var(--ease), transform 0.5s var(--ease),
+                  background 0.4s, color 0.4s, max-height 0.4s var(--ease),
+                  padding 0.4s var(--ease), margin-bottom 0.4s var(--ease);
+    }
+    .tf-step.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .tf-step.active {
+      color: rgba(255,255,255,0.85);
+      background: rgba(255,255,255,0.06);
+    }
+    .tf-step.done {
+      color: var(--green);
+      background: rgba(76,176,146,0.08);
+    }
+    .tf-step-icon {
+      width: 20px;
+      flex-shrink: 0;
+      font-size: 15px;
+      line-height: 1;
+      text-align: center;
+    }
+    .tf-step-text {
+      flex: 1;
+      text-align: left;
+    }
+    .tf-step-status {
+      flex-shrink: 0;
+      width: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 700;
+    }
+    .tf-step.done .tf-step-status { color: var(--green); }
+
+    /* Pulsing dot */
+    .tf-dot {
+      width: 6px;
+      height: 6px;
       border-radius: 50%;
-      animation: spin 0.7s linear infinite;
-    }
-    .thinking-step.done .spinner-icon { display: none; }
-    .thinking-step .check-icon { display: none; }
-    .thinking-step.done .check-icon { display: inline; }
-    @keyframes spin { to { transform: rotate(360deg); } }
-
-    .thinking-result {
-      opacity: 0; transform: translateY(12px);
-      transition: opacity 0.5s var(--ease), transform 0.5s var(--ease);
-      display: flex; flex-direction: column; align-items: center; gap: 8px;
-    }
-    .thinking-result.visible {
-      opacity: 1; transform: translateY(0);
-    }
-    .thinking-result-count {
-      font-size: 22px; font-weight: 800;
-      color: var(--dark); letter-spacing: -0.02em;
-    }
-    .thinking-result-sub {
-      font-size: 14px; color: var(--gray-500);
+      background: var(--orange);
+      animation: pulseDot 1s ease-in-out infinite;
     }
 
-    /* ═══ Contact Screens (s11-s13) ═══ */
-    #s11, #s12, #s13 { background: var(--light-bg); }
+    /* Thinking completion card */
+    .thinking-complete {
+      opacity: 0;
+      transform: translateY(16px);
+      transition: opacity 0.7s var(--ease), transform 0.7s var(--ease);
+      padding: 28px 24px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 16px;
+      pointer-events: none;
+      width: 100%;
+    }
+    .thinking-complete.visible {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+    .thinking-complete-icon {
+      font-size: 32px;
+      margin-bottom: 14px;
+    }
+    .thinking-complete-heading {
+      font-size: 17px;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 6px;
+      line-height: 1.4;
+    }
+    .thinking-complete-sub {
+      font-size: 13px;
+      color: rgba(255,255,255,0.4);
+      margin-bottom: 22px;
+      line-height: 1.4;
+    }
+    .thinking-complete .btn-primary {
+      box-shadow: 0 4px 20px rgba(255,132,18,0.35);
+    }
+
+    /* ═══ Contact Screens (s12-s14) ═══ */
+    #s12, #s13, #s14 { background: var(--light-bg); }
     .form-fields {
       display: flex; flex-direction: column;
-      gap: 16px; width: 100%; margin-bottom: 20px;
+      gap: 16px; width: 100%; margin-bottom: 12px;
     }
     .field-wrap { display: flex; flex-direction: column; gap: 6px; position: relative; }
     .phone-wrap { flex-direction: row; align-items: center; }
@@ -496,6 +607,70 @@
       background-repeat: no-repeat;
       background-position: right 16px center;
       padding-right: 40px;
+    }
+
+    /* Results-ready banner */
+    .results-banner {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 16px;
+      background: rgba(76,176,146,0.08);
+      border: 1px solid rgba(76,176,146,0.15);
+      border-radius: 100px;
+      margin-bottom: 20px;
+      font-size: 12px;
+      font-weight: 600;
+      color: #065f46;
+    }
+    .results-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--green);
+      flex-shrink: 0;
+      animation: pulseDot 1.5s ease-in-out infinite;
+    }
+
+    /* Contact progress segments */
+    .contact-progress {
+      display: flex;
+      gap: 5px;
+      width: 100%;
+      max-width: 180px;
+      margin-bottom: 24px;
+    }
+    .cp-seg {
+      flex: 1;
+      height: 4px;
+      border-radius: 2px;
+      background: var(--gray-200);
+      transition: background 0.4s var(--ease);
+    }
+    .cp-seg.active {
+      background: var(--green);
+    }
+
+    /* Contact copy styles */
+    .contact-sub {
+      font-size: 15px;
+      color: var(--gray-500);
+      text-align: center;
+      margin-bottom: 28px;
+      line-height: 1.5;
+    }
+    .contact-hint {
+      font-size: 13px;
+      color: var(--gray-500);
+      text-align: center;
+      margin-bottom: 20px;
+      line-height: 1.4;
+    }
+    .trust-footer {
+      font-size: 12px;
+      color: var(--gray-300);
+      text-align: center;
+      margin-top: 24px;
     }
 
     /* ═══ Buttons ═══ */
@@ -606,6 +781,7 @@
       0%, 100% { opacity: 1; }
       50% { opacity: 0.35; }
     }
+    @keyframes spin { to { transform: rotate(360deg); } }
     @keyframes ringDraw { to { stroke-dashoffset: 0; } }
     @keyframes checkDraw { to { stroke-dashoffset: 0; } }
 
@@ -628,6 +804,11 @@
       .qz-text strong { font-size: 14px; }
       .btn-primary { padding: 14px 24px; font-size: 15px; }
       .year-grid { grid-template-columns: repeat(3, 1fr); }
+      .thinking-headline { font-size: 18px; }
+      .progress-ring-wrap { width: 100px; height: 100px; }
+      .progress-ring { width: 100px; height: 100px; }
+      .progress-pct { font-size: 20px; }
+      .results-banner { font-size: 11px; padding: 6px 12px; }
     }
   </style>
 </head>
@@ -889,79 +1070,132 @@
       </div>
     </div>
 
-    <!-- Screen 10: Thinking / Matching Transition -->
+    <!-- Screen 10: State Selection -->
     <div class="screen" id="s10">
-      <div class="thinking-wrap">
-        <div class="thinking-icon" id="thinkingIcon">&#x1F50D;</div>
-        <div class="thinking-steps">
-          <div class="thinking-step" id="thinkStep1">
-            <span class="thinking-step-icon"><span class="spinner-icon"></span><span class="check-icon">&#10003;</span></span>
-            <span id="thinkText1">Reviewing your preferences&hellip;</span>
-          </div>
-          <div class="thinking-step" id="thinkStep2">
-            <span class="thinking-step-icon"><span class="spinner-icon"></span><span class="check-icon">&#10003;</span></span>
-            <span id="thinkText2">Searching for available tutors&hellip;</span>
-          </div>
-          <div class="thinking-step" id="thinkStep3">
-            <span class="thinking-step-icon"><span class="spinner-icon"></span><span class="check-icon">&#10003;</span></span>
-            <span id="thinkText3">Preparing your personalised plan&hellip;</span>
-          </div>
-        </div>
-        <div class="thinking-result" id="thinkingResult">
-          <span class="thinking-result-count" id="thinkResultCount"></span>
-          <span class="thinking-result-sub" id="thinkResultSub"></span>
+      <div class="si si-center">
+        <span class="quiz-badge" id="stateBadge">Your location</span>
+        <h2 class="quiz-heading" id="stateHeading">Which state are you in?</h2>
+        <div class="pill-grid">
+          <button class="qz-pill" data-val="NSW">NSW</button>
+          <button class="qz-pill" data-val="VIC">VIC</button>
+          <button class="qz-pill" data-val="QLD">QLD</button>
+          <button class="qz-pill" data-val="WA">WA</button>
+          <button class="qz-pill" data-val="SA">SA</button>
+          <button class="qz-pill" data-val="TAS">TAS</button>
+          <button class="qz-pill" data-val="ACT">ACT</button>
+          <button class="qz-pill" data-val="NT">NT</button>
         </div>
       </div>
     </div>
 
-    <!-- Screen 11: Phone Number -->
+    <!-- Screen 11: Thinking / Matching Animation (Dark) -->
     <div class="screen" id="s11">
+      <canvas id="particleCanvas" class="particle-canvas"></canvas>
+      <div class="thinking-wrap">
+        <!-- Phase label -->
+        <div class="phase-label" id="phaseLabel">Preparing</div>
+
+        <!-- SVG progress ring -->
+        <div class="progress-ring-wrap">
+          <svg class="progress-ring" viewBox="0 0 120 120">
+            <circle class="progress-ring-bg" cx="60" cy="60" r="52"/>
+            <circle class="progress-ring-fg" id="progressRingFg" cx="60" cy="60" r="52"/>
+          </svg>
+          <span class="progress-pct" id="progressPct">0%</span>
+        </div>
+
+        <!-- Headline -->
+        <h2 class="thinking-headline" id="thinkingHeadline">Finding the right tutor</h2>
+        <p class="thinking-subtitle" id="thinkingSubtitle"></p>
+
+        <!-- Step feed (populated dynamically) -->
+        <div class="thinking-feed" id="thinkingFeed"></div>
+
+        <!-- Completion card -->
+        <div class="thinking-complete" id="thinkingComplete">
+          <div class="thinking-complete-icon">&#x2728;</div>
+          <h3 class="thinking-complete-heading" id="completeHeading">
+            We've identified excellent tutors and prepared a custom learning plan.
+          </h3>
+          <p class="thinking-complete-sub">Complete the form to see your results.</p>
+          <button class="btn-primary" id="thinkingCta">See your results &rarr;</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Screen 12: Phone Number -->
+    <div class="screen" id="s12">
       <div class="si si-center">
-        <span class="quiz-badge">Almost there</span>
-        <h2 class="quiz-heading" id="phoneHeading">What's your mobile number?</h2>
+        <div class="results-banner">
+          <span class="results-dot"></span>
+          <span id="resultsBannerText12">Results are ready</span>
+        </div>
+        <div class="contact-progress">
+          <div class="cp-seg active"></div>
+          <div class="cp-seg"></div>
+          <div class="cp-seg"></div>
+        </div>
+        <h2 class="quiz-heading">Almost there</h2>
+        <p class="contact-sub" id="phoneSub">Where should we send the tutor matches?</p>
         <div class="form-fields">
           <div class="field-wrap phone-wrap">
             <span class="phone-flag">&#x1F1E6;&#x1F1FA;</span>
             <input type="tel" id="fPhone" placeholder="0412 345 678" autocomplete="tel">
           </div>
         </div>
+        <p class="contact-hint" id="phoneHint">We'll text you when a tutor confirms — usually within 2 hours.</p>
         <button class="btn-primary disabled" id="phoneBtn">Continue &rarr;</button>
+        <p class="trust-footer">&#x1F512; Encrypted &amp; private &middot; No spam, ever &middot; Unsubscribe anytime</p>
       </div>
     </div>
 
-    <!-- Screen 12: Email -->
-    <div class="screen" id="s12">
+    <!-- Screen 13: Email -->
+    <div class="screen" id="s13">
       <div class="si si-center">
-        <span class="quiz-badge">One more</span>
-        <h2 class="quiz-heading" id="emailHeading">What's your email address?</h2>
+        <div class="results-banner">
+          <span class="results-dot"></span>
+          <span id="resultsBannerText13">Results are ready</span>
+        </div>
+        <div class="contact-progress">
+          <div class="cp-seg active"></div>
+          <div class="cp-seg active"></div>
+          <div class="cp-seg"></div>
+        </div>
+        <h2 class="quiz-heading">One more thing</h2>
+        <p class="contact-sub" id="emailSub">We'll send the learning plan here.</p>
         <div class="form-fields">
           <div class="field-wrap">
             <input type="email" id="fEmail" placeholder="you@email.com" autocomplete="email">
           </div>
         </div>
+        <p class="contact-hint" id="emailHint">Personalised plan + tutor profiles — ready to review tonight.</p>
         <button class="btn-primary disabled" id="emailBtn">Continue &rarr;</button>
+        <p class="trust-footer">&#x1F512; Encrypted &amp; private &middot; No spam, ever &middot; Unsubscribe anytime</p>
       </div>
     </div>
 
-    <!-- Screen 13: Parent Name + State (or State-only for self) + Submit -->
-    <div class="screen" id="s13">
+    <!-- Screen 14: Parent Name + Submit -->
+    <div class="screen" id="s14">
       <div class="si si-center" id="formFinal">
-        <span class="quiz-badge">Last step</span>
-        <h2 class="quiz-heading" id="finalHeading">And your name?</h2>
+        <div class="results-banner">
+          <span class="results-dot"></span>
+          <span id="resultsBannerText14">Results are ready</span>
+        </div>
+        <div class="contact-progress">
+          <div class="cp-seg active"></div>
+          <div class="cp-seg active"></div>
+          <div class="cp-seg active"></div>
+        </div>
+        <h2 class="quiz-heading" id="finalHeading">Last step</h2>
+        <p class="contact-sub" id="finalSub">So the tutors know who to expect.</p>
         <div class="form-fields">
           <div class="field-wrap" id="parentNameWrap">
-            <input type="text" id="fParentName" placeholder="e.g. Michelle" autocomplete="name">
-          </div>
-          <div class="field-wrap">
-            <select id="fState">
-              <option value="" disabled selected>Select state</option>
-              <option>NSW</option><option>VIC</option><option>QLD</option>
-              <option>SA</option><option>WA</option><option>TAS</option>
-              <option>NT</option><option>ACT</option>
-            </select>
+            <input type="text" id="fParentName" placeholder="Your first name" autocomplete="name">
           </div>
         </div>
-        <button class="btn-primary disabled" id="submitBtn">Find your tutor &rarr;</button>
+        <p class="contact-hint" id="finalHint">Teachers tell us a warm intro makes the first lesson 2&times; better.</p>
+        <button class="btn-primary disabled" id="submitBtn">Show me the plan &rarr;</button>
+        <p class="trust-footer">&#x1F512; Encrypted &amp; private &middot; No spam, ever &middot; Unsubscribe anytime</p>
       </div>
 
       <!-- Success state -->

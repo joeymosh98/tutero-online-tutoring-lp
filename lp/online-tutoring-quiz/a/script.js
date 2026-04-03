@@ -2,8 +2,8 @@
 // Tutero Quiz Funnel — Variant A (Lead Generation + Plan on TY Page)
 // Screens: s0 Welcome | s1 Who | s2 Name | s3 Year | s4 Situation
 //          s5 Grades | s6 Confidence | s7 Subject | s8 Struggle
-//          s9 Urgency | s10 Thinking | s11 Phone | s12 Email
-//          s13 Name+State (or State-only) + Submit
+//          s9 Urgency | s10 State | s11 Thinking | s12 Phone
+//          s13 Email | s14 Name + Submit
 // ═══════════════════════════════════════════════════════════════
 
 // ── Webhook + API ──
@@ -72,35 +72,36 @@ var S = {
 };
 
 // ═══════════════════════════════════════════════════════════════
-// Screen Navigation (14 screens: s0-s13)
+// Screen Navigation (15 screens: s0-s14)
 // ═══════════════════════════════════════════════════════════════
-var TOTAL_SCREENS = 13;
+var TOTAL_SCREENS = 14;
 var screens = [];
 var cur = 0;
 var header = document.getElementById('qzHeader');
 var backBtn = document.getElementById('backBtn');
 var progressFill = document.getElementById('progressFill');
 var stepLabel = document.getElementById('stepLabel');
-var PROGRESS = [0, 5, 12, 19, 26, 34, 42, 50, 58, 66, 74, 82, 89, 95];
+var PROGRESS = [0, 5, 11, 17, 23, 30, 37, 44, 51, 58, 65, 72, 80, 87, 95];
 
 function initScreens() {
   for (var i = 0; i <= TOTAL_SCREENS; i++) screens.push(document.getElementById('s' + i));
 }
 
 function updateChrome(n) {
-  if (n === 0) {
+  // Dark header on welcome + thinking screens
+  if (n === 0 || n === 11) {
     header.classList.remove('light');
   } else {
     header.classList.add('light');
   }
   // Back button — hide on welcome and thinking screen
-  backBtn.style.visibility = (n > 0 && n !== 10) ? 'visible' : 'hidden';
+  backBtn.style.visibility = (n > 0 && n !== 11) ? 'visible' : 'hidden';
   // Progress bar
   progressFill.style.width = (PROGRESS[n] || 0) + '%';
   // Step text
   if (n >= 4 && n <= 9) stepLabel.textContent = (n - 3) + ' of 6';
-  else if (n === 10) stepLabel.textContent = '';
-  else if (n >= 11 && n <= 13) stepLabel.textContent = 'Almost there';
+  else if (n === 10 || n === 11) stepLabel.textContent = '';
+  else if (n >= 12 && n <= 14) stepLabel.textContent = 'Almost there';
   else stepLabel.textContent = '';
 }
 
@@ -109,6 +110,9 @@ function goTo(n) {
   var fwd = n > cur;
   var old = screens[cur];
   var next = screens[n];
+
+  // Stop particle canvas when leaving thinking screen
+  if (cur === 11) stopParticleCanvas();
 
   old.classList.remove('active');
   old.classList.add(fwd ? 'exit-left' : 'exit-right');
@@ -124,16 +128,16 @@ function goTo(n) {
   if (n === 2) {
     setTimeout(function() { document.getElementById('fStudentName').focus(); }, 450);
   }
-  if (n === 10) {
+  if (n === 11) {
     runThinkingSequence();
   }
-  if (n === 11) {
+  if (n === 12) {
     setTimeout(function() { fPH.focus(); }, 450);
   }
-  if (n === 12) {
+  if (n === 13) {
     setTimeout(function() { fEM.focus(); }, 450);
   }
-  if (n === 13 && !S.isForSelf) {
+  if (n === 14 && !S.isForSelf) {
     setTimeout(function() { fPN.focus(); }, 450);
   }
 }
@@ -160,6 +164,8 @@ function personaliseForMode() {
   if (S.isForSelf) {
     document.getElementById('nameBadge').textContent = 'About you';
     document.getElementById('nameHeading').textContent = 'What\u2019s your first name?';
+    document.getElementById('stateBadge').textContent = 'Your location';
+    document.getElementById('stateHeading').textContent = 'Which state are you in?';
     // Situation cards — first person
     document.getElementById('sitLabel1').textContent = 'Falling behind';
     document.getElementById('sitSub1').textContent = 'Struggling to keep up in class';
@@ -172,6 +178,8 @@ function personaliseForMode() {
   } else {
     document.getElementById('nameBadge').textContent = 'About your child';
     document.getElementById('nameHeading').textContent = 'What\u2019s your child\u2019s first name?';
+    document.getElementById('stateBadge').textContent = 'Their location';
+    document.getElementById('stateHeading').textContent = 'Which state is your child in?';
     // Situation cards — third person (default)
     document.getElementById('sitLabel1').textContent = 'Falling behind';
     document.getElementById('sitSub1').textContent = 'Struggling to keep up in class';
@@ -194,6 +202,8 @@ function personaliseWithName(name) {
     document.getElementById('confHeading').textContent = 'How confident are you about learning?';
     document.getElementById('subjectHeading').textContent = 'What subject do you need most help with?';
     document.getElementById('urgencyHeading').textContent = 'When would you like to start?';
+    document.getElementById('stateHeading').textContent = 'Which state are you in?';
+    document.getElementById('stateBadge').textContent = 'Your location';
   } else {
     document.getElementById('yearBadge').textContent = 'About ' + name;
     document.getElementById('yearHeading').textContent = 'What year level is ' + name + ' in?';
@@ -202,80 +212,400 @@ function personaliseWithName(name) {
     document.getElementById('confHeading').textContent = 'How confident is ' + name + ' about learning?';
     document.getElementById('subjectHeading').textContent = 'What subject does ' + name + ' need most help with?';
     document.getElementById('urgencyHeading').textContent = 'When would you like ' + name + ' to start?';
+    document.getElementById('stateHeading').textContent = 'Which state is ' + name + ' in?';
+    document.getElementById('stateBadge').textContent = name + '\u2019s location';
   }
 }
 
 // ═══════════════════════════════════════════════════════════════
-// Thinking Screen (s10) — Animated Sequence + Auto-advance
+// Data Mapping — Thinking Screen Text Generation
 // ═══════════════════════════════════════════════════════════════
+function getStruggleLabel(val) {
+  for (var subject in STRUGGLE_OPTIONS) {
+    var opts = STRUGGLE_OPTIONS[subject];
+    for (var i = 0; i < opts.length; i++) {
+      if (opts[i].val === val) return opts[i].label.toLowerCase();
+    }
+  }
+  return val ? val.replace(/-/g, ' ') : '';
+}
+
+function getConfidenceStyle(val) {
+  var map = {
+    'good': 'challenging and goal-oriented',
+    'mixed': 'structured and patient',
+    'low': 'patient and encouraging'
+  };
+  return map[val] || 'supportive and adaptive';
+}
+
+function getSituationGoal(val) {
+  var map = {
+    'falling-behind': 'catch up and build a strong foundation',
+    'consistent-practice': 'build consistency and confidence',
+    'get-ahead': 'accelerate and reach their potential',
+    'exam-prep': 'achieve their best possible exam results'
+  };
+  return map[val] || 'reach their learning goals';
+}
+
+function getSituationDesc(val) {
+  var map = {
+    'falling-behind': 'students rebuilding their confidence',
+    'consistent-practice': 'students building strong habits',
+    'get-ahead': 'high-achieving students pushing further',
+    'exam-prep': 'students in intensive exam preparation'
+  };
+  return map[val] || 'students with similar goals';
+}
+
+function getUrgencyText(val) {
+  var map = {
+    'asap': 'immediate',
+    'this-term': 'this-term',
+    'next-term': 'flexible'
+  };
+  return map[val] || 'flexible';
+}
+
+function getGradeReadable(val) {
+  var map = {
+    'above': 'above average \u2014 aiming higher',
+    'average': 'about average \u2014 room to grow',
+    'below': 'below expected \u2014 needs support'
+  };
+  return map[val] || val;
+}
+
+function getStateFullName(val) {
+  var map = {
+    'NSW': 'New South Wales',
+    'VIC': 'Victoria',
+    'QLD': 'Queensland',
+    'SA': 'South Australia',
+    'WA': 'Western Australia',
+    'TAS': 'Tasmania',
+    'NT': 'Northern Territory',
+    'ACT': 'Australian Capital Territory'
+  };
+  return map[val] || val;
+}
+
+// ═══════════════════════════════════════════════════════════════
+// Particle Canvas Background (s11 Thinking Screen)
+// ═══════════════════════════════════════════════════════════════
+var particleAnimId = null;
+
+function initParticleCanvas() {
+  stopParticleCanvas();
+  var canvas = document.getElementById('particleCanvas');
+  if (!canvas) return;
+  var ctx = canvas.getContext('2d');
+  var dpr = window.devicePixelRatio || 1;
+  canvas.width = canvas.offsetWidth * dpr;
+  canvas.height = canvas.offsetHeight * dpr;
+  ctx.scale(dpr, dpr);
+  var w = canvas.offsetWidth;
+  var h = canvas.offsetHeight;
+
+  var count = 50;
+  var connectionDist = 110;
+  var particles = [];
+  for (var i = 0; i < count; i++) {
+    particles.push({
+      x: Math.random() * w,
+      y: Math.random() * h,
+      vx: (Math.random() - 0.5) * 0.3,
+      vy: (Math.random() - 0.5) * 0.3,
+      r: Math.random() * 1.5 + 0.5
+    });
+  }
+
+  function tick() {
+    ctx.clearRect(0, 0, w, h);
+    // Connections
+    for (var i = 0; i < particles.length; i++) {
+      for (var j = i + 1; j < particles.length; j++) {
+        var dx = particles[i].x - particles[j].x;
+        var dy = particles[i].y - particles[j].y;
+        var dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < connectionDist) {
+          ctx.beginPath();
+          ctx.moveTo(particles[i].x, particles[i].y);
+          ctx.lineTo(particles[j].x, particles[j].y);
+          ctx.strokeStyle = 'rgba(76,176,146,' + (0.07 * (1 - dist / connectionDist)) + ')';
+          ctx.lineWidth = 0.5;
+          ctx.stroke();
+        }
+      }
+    }
+    // Particles
+    for (var i = 0; i < particles.length; i++) {
+      var p = particles[i];
+      p.x += p.vx;
+      p.y += p.vy;
+      if (p.x < 0 || p.x > w) p.vx *= -1;
+      if (p.y < 0 || p.y > h) p.vy *= -1;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(255,255,255,0.12)';
+      ctx.fill();
+    }
+    particleAnimId = requestAnimationFrame(tick);
+  }
+  tick();
+}
+
+function stopParticleCanvas() {
+  if (particleAnimId) {
+    cancelAnimationFrame(particleAnimId);
+    particleAnimId = null;
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════
+// Thinking Screen (s11) — Deep Personalised Matching Animation
+// ═══════════════════════════════════════════════════════════════
+function buildThinkingPhases() {
+  var namePos = S.isForSelf ? 'your' : S.studentName + '\u2019s';
+  var nameSubject = S.isForSelf ? 'You' : S.studentName;
+  var struggleLabel = getStruggleLabel(S.struggleArea);
+  var showStruggle = S.struggleArea && S.struggleArea !== 'not-sure';
+
+  return [
+    {
+      label: 'Understanding',
+      duration: 5000,
+      steps: [
+        { text: 'Analysing ' + namePos + ' learning profile', icon: '\uD83E\uDDE0' },
+        { text: S.yearLevel + ' ' + S.subject + ' \u2014 mapping curriculum requirements', icon: '\uD83D\uDCD8' },
+        showStruggle
+          ? { text: 'Noting focus area: ' + struggleLabel, icon: '\uD83C\uDFAF' }
+          : null,
+        { text: 'Current performance: ' + getGradeReadable(S.currentGrade), icon: '\uD83D\uDCCA' }
+      ].filter(Boolean)
+    },
+    {
+      label: 'Searching',
+      duration: 6000,
+      steps: [
+        { text: 'Scanning 200+ verified tutors across Australia', icon: '\uD83D\uDD0D' },
+        { text: 'Filtering for tutors in ' + getStateFullName(S.state), icon: '\uD83D\uDDFA\uFE0F' },
+        { text: 'Matching ' + getUrgencyText(S.urgency) + ' availability windows', icon: '\uD83D\uDD52' },
+        { text: 'Prioritising tutors experienced with ' + S.yearLevel + ' students', icon: '\u2B50' }
+      ]
+    },
+    {
+      label: 'Matching',
+      duration: 6500,
+      steps: [
+        { text: 'Evaluating teaching style compatibility', icon: '\u2764\uFE0F' },
+        { text: nameSubject + ' would benefit from someone ' + getConfidenceStyle(S.confidence), icon: '\u2728' },
+        { text: 'Cross-referencing success rates for ' + getSituationDesc(S.situation), icon: '\uD83D\uDCC8' },
+        { text: 'Considering ' + namePos + ' goal: ' + getSituationGoal(S.situation), icon: '\uD83C\uDFC1' }
+      ]
+    },
+    {
+      label: 'Building Plan',
+      duration: 5000,
+      steps: [
+        { text: 'Designing a personalised ' + S.subject + ' pathway', icon: '\uD83D\uDEE4\uFE0F' },
+        { text: 'Structuring progression for ' + S.yearLevel + ' curriculum', icon: '\uD83D\uDCDA' },
+        { text: 'Preparing tutor recommendations for ' + nameSubject, icon: '\u2705' }
+      ]
+    }
+  ];
+}
+
 function runThinkingSequence() {
-  var step1 = document.getElementById('thinkStep1');
-  var step2 = document.getElementById('thinkStep2');
-  var step3 = document.getElementById('thinkStep3');
-  var result = document.getElementById('thinkingResult');
+  initParticleCanvas();
 
-  // Reset state
-  [step1, step2, step3].forEach(function(s) {
-    s.classList.remove('visible', 'done');
+  var namePos = S.isForSelf ? 'your' : S.studentName + '\u2019s';
+  var nameSubject = S.isForSelf ? 'you' : S.studentName;
+
+  // Headline + subtitle
+  document.getElementById('thinkingHeadline').textContent =
+    'Finding the right tutor for ' + nameSubject;
+  document.getElementById('thinkingSubtitle').textContent =
+    S.yearLevel + ' ' + S.subject + ' \u00B7 ' + getStateFullName(S.state);
+
+  // Completion card text
+  document.getElementById('completeHeading').textContent =
+    'We\u2019ve identified excellent tutors for ' + nameSubject + ' and prepared a custom learning plan.';
+  var ctaBtn = document.getElementById('thinkingCta');
+  ctaBtn.textContent = 'See ' + namePos + ' results \u2192';
+
+  // Build phases
+  var phases = buildThinkingPhases();
+  var feed = document.getElementById('thinkingFeed');
+  feed.innerHTML = '';
+
+  // Progress ring setup
+  var circumference = 2 * Math.PI * 52; // ~326.73
+  var ring = document.getElementById('progressRingFg');
+  var pctEl = document.getElementById('progressPct');
+  var phaseEl = document.getElementById('phaseLabel');
+  var complete = document.getElementById('thinkingComplete');
+  complete.classList.remove('visible');
+  ring.style.strokeDashoffset = circumference;
+  pctEl.textContent = '0%';
+
+  // Flatten steps with timing
+  var allSteps = [];
+  phases.forEach(function(phase) {
+    var stepTime = phase.duration / phase.steps.length;
+    phase.steps.forEach(function(step) {
+      allSteps.push({
+        text: step.text,
+        icon: step.icon,
+        phaseLabel: phase.label,
+        delay: stepTime
+      });
+    });
   });
-  result.classList.remove('visible');
 
-  // Personalise text
-  document.getElementById('thinkText1').textContent = 'Reviewing your preferences\u2026';
-  document.getElementById('thinkText2').textContent = 'Searching for ' + S.subject + ' tutors\u2026';
-  document.getElementById('thinkText3').textContent = S.isForSelf
-    ? 'Preparing your personalised plan\u2026'
-    : 'Preparing ' + S.studentName + '\u2019s personalised plan\u2026';
+  var totalTime = allSteps.reduce(function(sum, s) { return sum + s.delay; }, 0);
+  var elapsed = 0;
+  var maxVisible = 5;
+  var stepEls = [];
+  var thinkingTimeouts = [];
+
+  function updateProgress(fraction) {
+    var clamped = Math.min(Math.max(fraction, 0), 1);
+    ring.style.strokeDashoffset = circumference * (1 - clamped);
+    pctEl.textContent = Math.round(clamped * 100) + '%';
+  }
+
+  function runStep(index) {
+    if (index >= allSteps.length) {
+      // All done — completion
+      updateProgress(1);
+      phaseEl.textContent = 'Complete';
+      // Mark last step as done
+      if (stepEls.length > 0) {
+        var last = stepEls[stepEls.length - 1];
+        last.classList.remove('active');
+        last.classList.add('done');
+        var lastStatus = last.querySelector('.tf-step-status');
+        if (lastStatus) lastStatus.innerHTML = '\u2713';
+      }
+      thinkingTimeouts.push(setTimeout(function() {
+        complete.classList.add('visible');
+      }, 800));
+      return;
+    }
+
+    var step = allSteps[index];
+    phaseEl.textContent = step.phaseLabel;
+
+    // Mark previous step as done
+    if (index > 0 && stepEls[index - 1]) {
+      stepEls[index - 1].classList.remove('active');
+      stepEls[index - 1].classList.add('done');
+      var prev = stepEls[index - 1].querySelector('.tf-step-status');
+      if (prev) prev.innerHTML = '\u2713';
+    }
+
+    // Create step element
+    var el = document.createElement('div');
+    el.className = 'tf-step';
+    el.innerHTML =
+      '<span class="tf-step-icon">' + step.icon + '</span>' +
+      '<span class="tf-step-text">' + escHtml(step.text) + '</span>' +
+      '<span class="tf-step-status"><span class="tf-dot"></span></span>';
+    feed.appendChild(el);
+    stepEls.push(el);
+
+    // Fade in
+    requestAnimationFrame(function() {
+      requestAnimationFrame(function() {
+        el.classList.add('visible', 'active');
+      });
+    });
+
+    // Fade out old steps
+    if (stepEls.length > maxVisible) {
+      var old = stepEls[stepEls.length - maxVisible - 1];
+      old.style.opacity = '0';
+      old.style.maxHeight = '0';
+      old.style.padding = '0';
+      old.style.marginBottom = '0';
+      old.style.overflow = 'hidden';
+    }
+
+    // Update progress
+    elapsed += step.delay;
+    updateProgress(elapsed / totalTime);
+
+    // Next step
+    thinkingTimeouts.push(setTimeout(function() { runStep(index + 1); }, step.delay));
+  }
 
   // Calculate tutor count
   var range = TUTOR_COUNTS[S.subject] || TUTOR_COUNTS['Other'];
   S.tutorCount = range[0] + Math.floor(Math.random() * (range[1] - range[0] + 1));
 
-  // Sequence: appear → done, appear → done, appear → done, result
-  setTimeout(function() { step1.classList.add('visible'); }, 200);
-  setTimeout(function() { step1.classList.add('done'); }, 1000);
+  // Begin sequence after short delay
+  updateProgress(0);
+  thinkingTimeouts.push(setTimeout(function() { runStep(0); }, 600));
 
-  setTimeout(function() { step2.classList.add('visible'); }, 1200);
-  setTimeout(function() { step2.classList.add('done'); }, 2200);
-
-  setTimeout(function() { step3.classList.add('visible'); }, 2400);
-  setTimeout(function() { step3.classList.add('done'); }, 3400);
-
-  setTimeout(function() {
-    document.getElementById('thinkResultCount').textContent =
-      S.tutorCount + ' ' + S.subject + ' tutors available';
-    document.getElementById('thinkResultSub').textContent =
-      'for ' + S.yearLevel + ' students in your area';
-    result.classList.add('visible');
-  }, 3600);
-
-  // Auto-advance to phone screen
-  setTimeout(function() {
-    personaliseContactScreens();
-    goTo(11);
-  }, 4600);
+  // Store timeouts for cleanup
+  window._thinkingTimeouts = thinkingTimeouts;
 }
 
 // ═══════════════════════════════════════════════════════════════
-// Contact Screen Personalisation (s11 Phone, s12 Email, s13 Final)
+// Contact Screen Personalisation (s12 Phone, s13 Email, s14 Final)
 // ═══════════════════════════════════════════════════════════════
 function personaliseContactScreens() {
-  // Final screen — adapt for self vs child
+  var name = S.isForSelf ? 'you' : S.studentName;
+  var namePos = S.isForSelf ? 'your' : S.studentName + '\u2019s';
+  var NamePos = S.isForSelf ? 'Your' : S.studentName + '\u2019s';
+
+  // Results banner text (same on all 3 screens)
+  var bannerText = NamePos + ' results are ready \u2014 ' +
+    S.yearLevel + ' ' + S.subject + ' tutors in ' + getStateFullName(S.state);
+  ['12','13','14'].forEach(function(n) {
+    var el = document.getElementById('resultsBannerText' + n);
+    if (el) el.textContent = bannerText;
+  });
+
+  // Screen 12 — Phone
+  document.getElementById('phoneSub').textContent =
+    'Where should we send ' + namePos + ' tutor matches?';
+  document.getElementById('phoneHint').textContent =
+    'We\u2019ll text you when a tutor confirms \u2014 usually within 2 hours.';
+
+  // Screen 13 — Email
+  document.getElementById('emailSub').textContent =
+    'We\u2019ll send ' + namePos + ' learning plan here.';
+  document.getElementById('emailHint').textContent =
+    NamePos + ' personalised plan + tutor profiles \u2014 ready to review tonight.';
+
+  // Screen 14 — Name + Submit
   if (S.isForSelf) {
-    // Self mode: hide parent name, just show state
     document.getElementById('parentNameWrap').style.display = 'none';
-    document.getElementById('finalHeading').textContent = 'Which state are you in?';
-    document.getElementById('submitBtn').textContent = 'Find my tutor \u2192';
+    document.getElementById('finalHeading').textContent = 'You\u2019re all set';
+    document.getElementById('finalSub').textContent =
+      'Hit the button below to see your matched tutors and learning plan.';
+    document.getElementById('finalHint').style.display = 'none';
+    document.getElementById('submitBtn').textContent = 'Show me my plan \u2192';
+    // Enable button immediately for self mode (no fields)
+    toggleBtn(document.getElementById('submitBtn'), true);
   } else {
     document.getElementById('parentNameWrap').style.display = '';
-    document.getElementById('finalHeading').textContent = 'And your name?';
+    document.getElementById('finalHeading').textContent = 'Last step';
+    document.getElementById('finalSub').textContent =
+      'So ' + S.studentName + '\u2019s tutors know who to expect.';
+    document.getElementById('finalHint').style.display = '';
+    document.getElementById('finalHint').textContent =
+      'Teachers tell us a warm intro makes the first lesson 2\u00D7 better.';
     document.getElementById('submitBtn').innerHTML =
-      'Find ' + escHtml(S.studentName) + '\u2019s tutor \u2192';
+      'Show me ' + escHtml(S.studentName) + '\u2019s plan \u2192';
   }
 }
 
 // ═══════════════════════════════════════════════════════════════
-// Background Plan Generation (fires when thinking screen loads)
+// Background Plan Generation (fires when state screen advances)
 // ═══════════════════════════════════════════════════════════════
 function fireBackgroundPlanGeneration() {
   var controller = new AbortController();
@@ -514,7 +844,7 @@ yearPills.forEach(function(pill) {
 });
 
 // ═══════════════════════════════════════════════════════════════
-// Screen 11: Phone (Continue to Screen 12)
+// Screen 12: Phone (Continue to Screen 13)
 // ═══════════════════════════════════════════════════════════════
 var fPH = document.getElementById('fPhone');
 var phoneBtn = document.getElementById('phoneBtn');
@@ -535,7 +865,7 @@ phoneBtn.addEventListener('click', function() {
     return;
   }
   S.phone = fPH.value.trim();
-  goTo(12);
+  goTo(13);
 });
 
 fPH.addEventListener('keydown', function(e) {
@@ -543,7 +873,7 @@ fPH.addEventListener('keydown', function(e) {
 });
 
 // ═══════════════════════════════════════════════════════════════
-// Screen 12: Email (Continue to Screen 13)
+// Screen 13: Email (Continue to Screen 14)
 // ═══════════════════════════════════════════════════════════════
 var fEM = document.getElementById('fEmail');
 var emailBtn = document.getElementById('emailBtn');
@@ -563,7 +893,7 @@ emailBtn.addEventListener('click', function() {
     return;
   }
   S.email = fEM.value.trim();
-  goTo(13);
+  goTo(14);
 });
 
 fEM.addEventListener('keydown', function(e) {
@@ -571,17 +901,17 @@ fEM.addEventListener('keydown', function(e) {
 });
 
 // ═══════════════════════════════════════════════════════════════
-// Screen 13: Parent Name + State (or State-only) + Submit
+// Screen 14: Parent Name (or direct submit for self) + Submit
 // ═══════════════════════════════════════════════════════════════
 var fPN = document.getElementById('fParentName');
-var fST = document.getElementById('fState');
 var subBtn = document.getElementById('submitBtn');
 
 function checkFinal() {
   if (S.isForSelf) {
-    toggleBtn(subBtn, !!fST.value);
+    // Self mode: no fields needed, button always enabled
+    toggleBtn(subBtn, true);
   } else {
-    toggleBtn(subBtn, fPN.value.trim() && fST.value);
+    toggleBtn(subBtn, !!fPN.value.trim());
   }
 }
 
@@ -589,27 +919,21 @@ fPN.addEventListener('input', function() {
   checkFinal();
   if (fPN.value.trim()) clearErr(fPN);
 });
-fST.addEventListener('change', function() {
-  checkFinal();
-  if (fST.value) { clearErr(fST); fST.classList.remove('is-placeholder'); }
-});
 
 subBtn.addEventListener('click', function() {
   if (subBtn.classList.contains('disabled')) {
     if (!S.isForSelf && !fPN.value.trim()) showErr(fPN); else clearErr(fPN);
-    if (!fST.value) showErr(fST); else clearErr(fST);
     return;
   }
 
   S.parentName = S.isForSelf ? S.studentName : fPN.value.trim();
-  S.state = fST.value;
 
   submitLeadData({
     source: 'quiz_funnel',
     is_for_self: S.isForSelf,
     student_name: S.studentName,
     year_level: S.yearLevel,
-    state: fST.value,
+    state: S.state,
     subject: S.subject,
     situation: S.situation,
     current_grade: S.currentGrade,
@@ -692,9 +1016,9 @@ function launchConfetti() {
 initScreens();
 updateChrome(0);
 
-// Header back button — skip thinking screen when going back
+// Header back button — skip thinking + state screen when going back
 backBtn.addEventListener('click', function() {
-  if (cur === 11) goTo(9);       // Skip thinking screen when going back from phone
+  if (cur === 12) goTo(9);         // Skip thinking + state when going back from phone
   else if (cur > 0) goTo(cur - 1);
 });
 
@@ -716,6 +1040,15 @@ initCardScreen('s7', 'subject', 8, function() {
   populateStruggleCards(S.subject);
 });
 // s8 (struggle) is handled by initStruggleScreen() called from populateStruggleCards()
-initCardScreen('s9', 'urgency', 10, function() {
+initCardScreen('s9', 'urgency', 10);
+
+// Screen 10: State selection (auto-advance to thinking screen)
+initCardScreen('s10', 'state', 11, function() {
   fireBackgroundPlanGeneration();
+});
+
+// Thinking screen CTA button
+document.getElementById('thinkingCta').addEventListener('click', function() {
+  personaliseContactScreens();
+  goTo(12);
 });
