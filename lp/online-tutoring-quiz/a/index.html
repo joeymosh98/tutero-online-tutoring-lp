@@ -197,7 +197,7 @@
     .trust-line-light { color: var(--gray-500); }
 
     /* ═══ Quiz screens ═══ */
-    #s1, #s2, #s3, #s4, #s5, #s6, #s7, #s8, #s9, #s10 { background: var(--light-bg); }
+    #s1, #s2, #s3, #s4, #s5, #s6, #s7, #s8, #s9, #s10, #s11 { background: var(--light-bg); }
     .quiz-badge {
       display: inline-block;
       font-size: 13px; font-weight: 600;
@@ -374,9 +374,62 @@
       color: #0d6b52;
     }
 
-    /* ═══ Thinking / Transition Screen (s11) — Dark ═══ */
-    #s11 { background: #0f0f14; overflow: hidden; }
-    #s11::before {
+    /* ═══ Mirror Moment (s8) ═══ */
+    .mirror-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      max-width: 400px;
+      width: 100%;
+    }
+    .mirror-initial {
+      width: 56px;
+      height: 56px;
+      border-radius: 14px;
+      background: var(--orange);
+      color: #fff;
+      font-size: 24px;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+      animation: fadeUp 0.5s var(--ease) both;
+    }
+    .mirror-heading {
+      animation: fadeUp 0.5s var(--ease) 0.08s both;
+    }
+    .mirror-summary {
+      font-size: 15px;
+      color: var(--gray-500);
+      margin: 4px 0 24px;
+      animation: fadeUp 0.5s var(--ease) 0.14s both;
+    }
+    .mirror-insight {
+      font-size: 15px;
+      line-height: 1.5;
+      color: var(--gray-700);
+      background: rgba(255,132,18,0.05);
+      border: 1px solid rgba(255,132,18,0.12);
+      border-radius: 12px;
+      padding: 16px 20px;
+      margin-bottom: 28px;
+      animation: fadeUp 0.5s var(--ease) 0.22s both;
+    }
+    .mirror-cta {
+      animation: fadeUp 0.5s var(--ease) 0.30s both;
+    }
+    .mirror-subtext {
+      font-size: 13px;
+      color: var(--gray-500);
+      margin-top: 12px;
+      animation: fadeUp 0.5s var(--ease) 0.36s both;
+    }
+
+    /* ═══ Thinking / Transition Screen (s12) — Dark ═══ */
+    #s12 { background: #130f24; overflow: hidden; }
+    #s12::before {
       content: '';
       position: absolute;
       top: -100px; left: 50%; transform: translateX(-50%);
@@ -572,15 +625,15 @@
     }
 
     /* ═══ Contact Screens (s12-s14) ═══ */
-    #s12, #s13, #s14 { background: var(--light-bg); }
+    #s13, #s14, #s15 { background: var(--light-bg); }
     .form-fields {
       display: flex; flex-direction: column;
       gap: 16px; width: 100%; margin-bottom: 12px;
     }
     .field-wrap { display: flex; flex-direction: column; gap: 6px; position: relative; }
     .phone-wrap { flex-direction: row; align-items: center; }
-    .phone-flag { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); font-size: 18px; pointer-events: none; z-index: 1; }
-    .phone-wrap input { padding-left: 46px; }
+    .phone-flag { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); font-size: 14px; width: 20px; text-align: center; pointer-events: none; z-index: 1; }
+    .phone-wrap input { padding-left: 48px; }
     .field-wrap label {
       font-size: 13px; font-weight: 600; color: var(--gray-700);
     }
@@ -666,13 +719,6 @@
       margin-bottom: 20px;
       line-height: 1.4;
     }
-    .trust-footer {
-      font-size: 12px;
-      color: var(--gray-300);
-      text-align: center;
-      margin-top: 24px;
-    }
-
     /* ═══ Buttons ═══ */
     .btn-primary {
       display: inline-flex; align-items: center; justify-content: center;
@@ -1028,8 +1074,24 @@
       </div>
     </div>
 
-    <!-- Screen 8: Biggest Struggle (Q5 of 6) — Dynamic -->
+    <!-- Screen 8: Mirror Moment -->
     <div class="screen" id="s8">
+      <div class="si si-center">
+        <div class="mirror-wrap">
+          <div class="mirror-initial" id="mirrorInitial">B</div>
+          <h2 class="quiz-heading mirror-heading" id="mirrorHeading">Got it &mdash; this is for Ben.</h2>
+          <p class="mirror-summary" id="mirrorSummary">Year 8 &middot; Maths &middot; finding it tough</p>
+          <div class="mirror-insight" id="mirrorInsight">
+            Most Year 8 students who are finding it tough just haven&rsquo;t found the right teacher yet.
+          </div>
+          <button class="btn-primary mirror-cta" id="mirrorCta">Help us find Ben&rsquo;s teacher &rarr;</button>
+          <p class="mirror-subtext">A few more questions so we get the match right.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Screen 9: Biggest Struggle (Q5 of 6) — Dynamic -->
+    <div class="screen" id="s9">
       <div class="si si-center">
         <span class="quiz-badge">Question 5 of 6</span>
         <h2 class="quiz-heading" id="struggleHeading">Where do they struggle most?</h2>
@@ -1039,8 +1101,8 @@
       </div>
     </div>
 
-    <!-- Screen 9: Urgency (Q6 of 6) -->
-    <div class="screen" id="s9">
+    <!-- Screen 10: Urgency (Q6 of 6) -->
+    <div class="screen" id="s10">
       <div class="si si-center">
         <span class="quiz-badge">Question 6 of 6</span>
         <h2 class="quiz-heading" id="urgencyHeading">When would you like to start?</h2>
@@ -1070,8 +1132,8 @@
       </div>
     </div>
 
-    <!-- Screen 10: State Selection -->
-    <div class="screen" id="s10">
+    <!-- Screen 11: State Selection -->
+    <div class="screen" id="s11">
       <div class="si si-center">
         <span class="quiz-badge" id="stateBadge">Your location</span>
         <h2 class="quiz-heading" id="stateHeading">Which state are you in?</h2>
@@ -1088,8 +1150,8 @@
       </div>
     </div>
 
-    <!-- Screen 11: Thinking / Matching Animation (Dark) -->
-    <div class="screen" id="s11">
+    <!-- Screen 12: Thinking / Matching Animation (Dark) -->
+    <div class="screen" id="s12">
       <canvas id="particleCanvas" class="particle-canvas"></canvas>
       <div class="thinking-wrap">
         <!-- Phase label -->
@@ -1123,12 +1185,12 @@
       </div>
     </div>
 
-    <!-- Screen 12: Phone Number -->
-    <div class="screen" id="s12">
+    <!-- Screen 13: Phone Number -->
+    <div class="screen" id="s13">
       <div class="si si-center">
         <div class="results-banner">
           <span class="results-dot"></span>
-          <span id="resultsBannerText12">Results are ready</span>
+          <span id="resultsBannerText13">Results are ready</span>
         </div>
         <div class="contact-progress">
           <div class="cp-seg active"></div>
@@ -1145,16 +1207,15 @@
         </div>
         <p class="contact-hint" id="phoneHint">We'll text you when a tutor confirms — usually within 2 hours.</p>
         <button class="btn-primary disabled" id="phoneBtn">Continue &rarr;</button>
-        <p class="trust-footer">&#x1F512; Encrypted &amp; private &middot; No spam, ever &middot; Unsubscribe anytime</p>
       </div>
     </div>
 
-    <!-- Screen 13: Email -->
-    <div class="screen" id="s13">
+    <!-- Screen 14: Email -->
+    <div class="screen" id="s14">
       <div class="si si-center">
         <div class="results-banner">
           <span class="results-dot"></span>
-          <span id="resultsBannerText13">Results are ready</span>
+          <span id="resultsBannerText14">Results are ready</span>
         </div>
         <div class="contact-progress">
           <div class="cp-seg active"></div>
@@ -1170,16 +1231,15 @@
         </div>
         <p class="contact-hint" id="emailHint">Personalised plan + tutor profiles — ready to review tonight.</p>
         <button class="btn-primary disabled" id="emailBtn">Continue &rarr;</button>
-        <p class="trust-footer">&#x1F512; Encrypted &amp; private &middot; No spam, ever &middot; Unsubscribe anytime</p>
       </div>
     </div>
 
-    <!-- Screen 14: Parent Name + Submit -->
-    <div class="screen" id="s14">
+    <!-- Screen 15: Parent Name + Submit -->
+    <div class="screen" id="s15">
       <div class="si si-center" id="formFinal">
         <div class="results-banner">
           <span class="results-dot"></span>
-          <span id="resultsBannerText14">Results are ready</span>
+          <span id="resultsBannerText15">Results are ready</span>
         </div>
         <div class="contact-progress">
           <div class="cp-seg active"></div>
@@ -1195,7 +1255,6 @@
         </div>
         <p class="contact-hint" id="finalHint">Teachers tell us a warm intro makes the first lesson 2&times; better.</p>
         <button class="btn-primary disabled" id="submitBtn">Show me the plan &rarr;</button>
-        <p class="trust-footer">&#x1F512; Encrypted &amp; private &middot; No spam, ever &middot; Unsubscribe anytime</p>
       </div>
 
       <!-- Success state -->
