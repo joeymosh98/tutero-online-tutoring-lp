@@ -10,8 +10,8 @@ var WEBHOOK_URL = 'https://hook.eu1.make.com/46pou90x59vasab9ljivd78sfazjgztv';
 var API_URL = '/api/generate-plan/';
 
 function submitLeadData(data) {
-  data.landing_page = 'Online Tutoring Australia - Quiz Funnel';
-  data.variant = 'c';
+  data.landing_page = 'Online Tutoring Quiz';
+  data.variant = 'a';
   data.page = window.location.href;
   data.timestamp = new Date().toISOString();
   data.referrer = document.referrer || '';
@@ -31,7 +31,7 @@ function submitLeadData(data) {
 }
 
 function buildThankYouUrl() {
-  var base = '/tp/online-tutoring/b/';
+  var base = '/tp/online-tutoring-quiz/a/';
   var p = new URLSearchParams();
   if (S.studentName) p.set('studentName', S.studentName);
   if (S.subject) p.set('subject', S.subject);

@@ -26,11 +26,6 @@
               "id": "b",
               "label": "Hero Only",
               "path": "/lp/online-tutoring/b/"
-            },
-            {
-              "id": "c",
-              "label": "Quiz Funnel",
-              "path": "/lp/online-tutoring/c/"
             }
           ],
           "splitterPath": "/lp/online-tutoring/",
@@ -58,6 +53,27 @@
           "createdAt": "2025-03-15",
           "tags": ["google-ads", "special-needs"],
           "thankYouPageId": null
+        },
+        {
+          "id": "online-tutoring-quiz",
+          "name": "Online Tutoring Quiz",
+          "description": "Interactive quiz funnel for online tutoring lead generation",
+          "path": "/lp/online-tutoring-quiz",
+          "status": "active",
+          "builtWith": "custom-html",
+          "grade": null,
+          "hasSplitter": false,
+          "variants": [
+            {
+              "id": "a",
+              "label": "Main",
+              "path": "/lp/online-tutoring-quiz/a/"
+            }
+          ],
+          "splitterPath": null,
+          "createdAt": "2026-04-03",
+          "tags": ["google-ads", "quiz-funnel"],
+          "thankYouPageId": "online-tutoring-quiz-ty"
         }
       ],
       "thankYouPages": [
@@ -75,17 +91,33 @@
               "id": "a",
               "label": "Main",
               "path": "/tp/online-tutoring/a/"
-            },
-            {
-              "id": "b",
-              "label": "Quiz Funnel",
-              "path": "/tp/online-tutoring/b/"
             }
           ],
           "splitterPath": null,
           "createdAt": "2026-03-31",
           "tags": ["thank-you"],
           "linkedLandingPageId": "online-tutoring"
+        },
+        {
+          "id": "online-tutoring-quiz-ty",
+          "name": "Online Tutoring Quiz — Thank You",
+          "description": "Post-conversion page with personalised learning plan for quiz funnel leads",
+          "path": "/tp/online-tutoring-quiz",
+          "status": "active",
+          "builtWith": "custom-html",
+          "grade": null,
+          "hasSplitter": false,
+          "variants": [
+            {
+              "id": "a",
+              "label": "Main",
+              "path": "/tp/online-tutoring-quiz/a/"
+            }
+          ],
+          "splitterPath": null,
+          "createdAt": "2026-04-03",
+          "tags": ["thank-you", "quiz-funnel"],
+          "linkedLandingPageId": "online-tutoring-quiz"
         }
       ]
     },
