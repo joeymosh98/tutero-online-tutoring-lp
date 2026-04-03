@@ -1150,7 +1150,10 @@
       display: flex; flex-direction: column;
       gap: 16px; width: 100%; margin-bottom: 20px;
     }
-    .field-wrap { display: flex; flex-direction: column; gap: 6px; }
+    .field-wrap { display: flex; flex-direction: column; gap: 6px; position: relative; }
+    .phone-wrap { flex-direction: row; align-items: center; }
+    .phone-flag { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); font-size: 20px; pointer-events: none; z-index: 1; }
+    .phone-wrap input { padding-left: 44px; }
     .field-wrap label {
       font-size: 13px; font-weight: 600; color: var(--gray-700);
     }
@@ -1663,7 +1666,8 @@
         <span class="quiz-badge">Almost there</span>
         <h2 class="quiz-heading" id="phoneHeading">What's your mobile number?</h2>
         <div class="form-fields">
-          <div class="field-wrap">
+          <div class="field-wrap phone-wrap">
+            <span class="phone-flag">&#x1F1E6;&#x1F1FA;</span>
             <input type="tel" id="fPhone" placeholder="0412 345 678" autocomplete="tel">
           </div>
         </div>
