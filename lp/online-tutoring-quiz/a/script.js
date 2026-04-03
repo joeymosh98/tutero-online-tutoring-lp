@@ -413,6 +413,14 @@ function populateStruggleCards(subject) {
   var container = document.getElementById('strugglePills');
   var options = STRUGGLE_OPTIONS[subject] || STRUGGLE_OPTIONS['Other'];
   container.innerHTML = '';
+  // "Not sure" first
+  var notSure = document.createElement('button');
+  notSure.className = 'qz-card';
+  notSure.dataset.val = 'not-sure';
+  notSure.innerHTML =
+    '<span class="qz-emoji">&#x1F937;</span>' +
+    '<div class="qz-text"><strong>Not sure</strong><span>Skip this question</span></div>';
+  container.appendChild(notSure);
   options.forEach(function(opt) {
     var btn = document.createElement('button');
     btn.className = 'qz-card';
@@ -422,14 +430,6 @@ function populateStruggleCards(subject) {
       '<div class="qz-text"><strong>' + opt.label + '</strong></div>';
     container.appendChild(btn);
   });
-  // Always add "Not sure" option
-  var notSure = document.createElement('button');
-  notSure.className = 'qz-card';
-  notSure.dataset.val = 'not-sure';
-  notSure.innerHTML =
-    '<span class="qz-emoji">&#x1F937;</span>' +
-    '<div class="qz-text"><strong>Not sure</strong><span>Skip this question</span></div>';
-  container.appendChild(notSure);
   // Update heading
   document.getElementById('struggleHeading').textContent = S.isForSelf
     ? 'Where do you struggle most in ' + subject + '?'
