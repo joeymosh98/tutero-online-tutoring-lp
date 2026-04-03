@@ -64,7 +64,7 @@
 
   // ── Fetch registry ──
 
-  fetch('./landing-pages.json')
+  fetch('./landing-pages.json?v=' + Date.now())
     .then(function(res) { return res.json(); })
     .then(function(data) {
       divisions = data.divisions;
