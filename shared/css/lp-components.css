@@ -126,6 +126,7 @@
       width: 16px;
       height: 16px;
       flex-shrink: 0;
+      color: var(--color-green);
     }
     .trust-bar-dot {
       width: 4px; height: 4px; border-radius: 50%;
@@ -155,10 +156,10 @@
       display: flex; align-items: center; justify-content: center; flex-shrink: 0;
     }
     .proof-icon svg { width: 16px; height: 16px; }
-    .proof-icon--students { background: rgba(255,132,18,0.15); }
-    .proof-icon--tutors { background: rgba(76,176,146,0.15); }
-    .proof-icon--reviews { background: rgba(248,178,0,0.15); }
-    .proof-icon--curriculum { background: rgba(0,163,255,0.15); }
+    .proof-icon--students { background: rgba(255,132,18,0.15); color: var(--color-primary); }
+    .proof-icon--tutors { background: rgba(76,176,146,0.15); color: var(--color-green); }
+    .proof-icon--reviews { background: rgba(248,178,0,0.15); color: var(--color-yellow); }
+    .proof-icon--curriculum { background: rgba(0,163,255,0.15); color: var(--color-blue); }
     .proof-text { display: flex; flex-direction: column; gap: 0; }
     .proof-number { font-size: 13.5px; font-weight: 700; color: #fff; letter-spacing: -0.02em; line-height: 1.3; }
     .proof-label { font-size: 11px; font-weight: 500; color: rgba(255,255,255,0.45); line-height: 1.3; }
