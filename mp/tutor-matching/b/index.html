@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>QA — Tutor Match | Tutero</title>
+  <link rel="icon" href="/shared/images/tutero-logo.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=DM+Serif+Display&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../a/styles.css">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    /* Dev toolbar */
+    .dev-bar {
+      position: fixed; bottom: 0; left: 0; right: 0; z-index: 9999;
+      display: flex; align-items: center; gap: 8px;
+      padding: 8px 16px;
+      background: rgba(0,0,0,0.85); backdrop-filter: blur(8px);
+      font-family: 'DM Sans', system-ui, sans-serif; font-size: 12px; color: #aaa;
+    }
+    .dev-bar span { margin-right: 4px; color: #666; }
+    .dev-btn {
+      padding: 5px 12px; border: 1px solid #444; border-radius: 6px;
+      background: transparent; color: #ccc; font-family: inherit; font-size: 12px;
+      cursor: pointer; transition: all 0.15s;
+    }
+    .dev-btn:hover { background: #333; color: #fff; border-color: #666; }
+    .dev-btn.active { background: #3B9B62; color: #fff; border-color: #3B9B62; }
+    .dev-sep { width: 1px; height: 20px; background: #333; margin: 0 4px; }
+    .dev-bar label { color: #888; cursor: pointer; display: flex; align-items: center; gap: 4px; }
+    .dev-bar input[type="checkbox"] { accent-color: #3B9B62; }
+  </style>
+</head>
+<body>
+  <div class="funnel">
+
+    <!-- SCREEN 1: Top Recommendations -->
+    <section class="screen active" id="screen-match">
+      <div class="match-wrap">
+
+        <!-- Header -->
+        <div class="reco-header">
+          <p class="reco-eyebrow">Top recommendations</p>
+          <h1 class="reco-headline" id="matchHeadline">The best tutors for Emma</h1>
+          <p class="reco-subtitle" id="matchSubtitle">Based on Year 8 Maths · 200+ reviewed</p>
+        </div>
+
+        <!-- Recommendation #1 — Gold -->
+        <div class="reco-card reco-card--gold">
+          <div class="reco-medal-row">
+            <div class="reco-medal reco-medal--gold">1</div>
+            <span class="reco-label">Best Match</span>
+          </div>
+
+          <div class="reco-profile">
+            <img class="reco-photo reco-photo--lg" id="tutor1Photo" src="/lp/special-needs-tutoring/a/images/hero-tutor-profile.png" alt="Sarah R.">
+            <div class="reco-info">
+              <h3 class="reco-name" id="tutor1Name">Sarah R.</h3>
+              <p class="reco-tagline" id="tutor1Tagline">Year 7–12 Maths specialist · 6 years experience</p>
+            </div>
+          </div>
+
+          <div class="reco-suitability">
+            <div class="reco-suit-header">
+              <span class="reco-suit-label">Suitability</span>
+              <span class="reco-suit-pct" id="tutor1Pct">97%</span>
+            </div>
+            <div class="reco-suit-track">
+              <div class="reco-suit-fill" id="tutor1Bar" style="width:0%"></div>
+            </div>
+          </div>
+
+          <div class="reco-stats">
+            <div class="reco-stat">
+              <div class="reco-stat-value" id="tutor1Years">6</div>
+              <div class="reco-stat-label">Years</div>
+            </div>
+            <div class="reco-stat">
+              <div class="reco-stat-value" id="tutor1Students">84</div>
+              <div class="reco-stat-label">Students</div>
+            </div>
+            <div class="reco-stat">
+              <div class="reco-stat-value" id="tutor1Grade">1.5</div>
+              <div class="reco-stat-label">Avg grade jump</div>
+            </div>
+          </div>
+
+          <div class="reco-why">
+            <div class="reco-why-item">
+              <span class="reco-why-check">✓</span>
+              <span id="why1"></span>
+            </div>
+            <div class="reco-why-item">
+              <span class="reco-why-check">✓</span>
+              <span id="why2"></span>
+            </div>
+            <div class="reco-why-item">
+              <span class="reco-why-check">✓</span>
+              <span id="why3"></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Recommendation #2 — Silver -->
+        <div class="reco-card reco-card--silver">
+          <div class="reco-medal-row">
+            <div class="reco-medal reco-medal--silver">2</div>
+            <span class="reco-label">Runner Up</span>
+          </div>
+
+          <div class="reco-compact">
+            <img class="reco-photo reco-photo--sm" id="tutor2Photo" src="/shared/images/teacher-photo.jpg" alt="Emily K.">
+            <div class="reco-compact-info">
+              <h3 class="reco-compact-name" id="tutor2Name">Emily K.</h3>
+              <p class="reco-compact-tagline" id="tutor2Tagline">Year 7–10 Maths specialist · 5 years experience</p>
+              <p class="reco-compact-stats" id="tutor2Stats">5 yrs · 62 students · 1.2 avg grade jump</p>
+            </div>
+            <div class="reco-compact-score">
+              <span class="reco-compact-pct" id="tutor2Pct">91</span>
+              <span class="reco-compact-pct-label">% suit.</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Offer banner -->
+        <div class="offer-banner">
+          <div class="offer-left">
+            <span class="offer-discount">60% off</span>
+            <span class="offer-text" id="offerText">Emma's first lesson</span>
+          </div>
+          <div class="offer-timer">
+            <span class="timer-text">Held for <strong id="countdownTimer">14:00</strong></span>
+          </div>
+        </div>
+
+        <!-- CTA -->
+        <button class="btn-primary btn-green" id="bookBtn">Book Sarah's first lesson — 60% off</button>
+        <p class="no-contract">No contracts. Cancel Tutero anytime.</p>
+        <div class="divider"></div>
+        <button class="link-secondary" id="otherMatchesLink">Not the right fit? See other matches</button>
+      </div>
+    </section>
+
+    <!-- SCREEN 2: Checkout -->
+    <section class="screen" id="screen-checkout">
+      <div class="checkout-wrap">
+        <div class="offer-bar">
+          <span class="offer-bar-text"><strong>60% off</strong> held for <strong id="checkoutTimer">14:00</strong></span>
+        </div>
+
+        <div class="checkout-grid">
+          <div class="checkout-action">
+            <div class="checkout-card" id="slotPicker">
+              <h3 class="checkout-card-title" id="slotPickerTitle">Pick a time for Emma's first lesson</h3>
+              <div class="slot-grid" id="slotGrid"></div>
+            </div>
+
+            <div class="checkout-card" id="paymentView" style="display:none">
+              <div class="selected-slot-banner">
+                <span id="selectedSlotText"></span>
+                <button class="change-btn" id="changeSlotBtn">Change</button>
+              </div>
+              <h3 class="checkout-card-title">Complete your booking</h3>
+              <div class="price-breakdown">
+                <div class="price-row">
+                  <span>1-hour tutoring session</span>
+                  <span class="price-full" id="priceFull">$79.00</span>
+                </div>
+                <div class="price-row price-row--discount">
+                  <span>First lesson discount (60%)</span>
+                  <span class="price-saving" id="priceSaving">−$47.40</span>
+                </div>
+                <div class="price-divider"></div>
+                <div class="price-row price-row--total">
+                  <span>Due today</span>
+                  <span class="price-due" id="priceDue">$31.60</span>
+                </div>
+              </div>
+              <label class="stripe-label">Card details</label>
+              <div id="stripeCardElement" class="stripe-element"></div>
+              <div id="stripeCardErrors" class="stripe-error"></div>
+              <div class="stripe-badge">🔒 Secured with 256-bit encryption · Processed by Stripe</div>
+              <button class="btn-primary btn-green" id="payBtn" disabled>
+                <span class="btn-text" id="payBtnText">Confirm &amp; pay $31.60</span>
+                <span class="btn-spinner" id="payBtnSpinner" style="display:none">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+                    <circle cx="12" cy="12" r="10" stroke="rgba(255,255,255,0.3)" stroke-width="3"/>
+                    <path d="M12 2a10 10 0 0 1 10 10" stroke="#fff" stroke-width="3" stroke-linecap="round"/>
+                  </svg>
+                </span>
+              </button>
+              <p class="no-contract">No contracts. Cancel Tutero anytime.</p>
+              <div class="after-booking">
+                <h4 class="after-booking-title">After you book</h4>
+                <ol class="after-booking-list">
+                  <li>Your tutor receives your child's profile</li>
+                  <li>Confirmation sent to your email</li>
+                  <li>Your tutor sends a personal intro message</li>
+                  <li>Progress report after lesson 1</li>
+                </ol>
+              </div>
+            </div>
+          </div>
+
+          <div class="checkout-trust">
+            <div class="trust-block tutor-profile-card">
+              <div class="tutor-profile-header">
+                <div class="mini-avatar" id="miniAvatar">
+                  <span class="tutor-initials" id="miniInitials">SR</span>
+                </div>
+                <div class="mini-info">
+                  <strong id="miniTutorName">Sarah R.</strong>
+                  <span class="mini-match" id="miniMatch">96% match · #1 pick</span>
+                </div>
+              </div>
+              <div class="tutor-stats-grid">
+                <div class="stat-item">
+                  <span class="stat-number" id="statYears">6</span>
+                  <span class="stat-label">Years teaching</span>
+                </div>
+                <div class="stat-item">
+                  <span class="stat-number" id="statStudents">84</span>
+                  <span class="stat-label">Students taught</span>
+                </div>
+                <div class="stat-item">
+                  <span class="stat-number" id="statImprove">1.5</span>
+                  <span class="stat-label">Avg grade jump</span>
+                </div>
+              </div>
+              <div class="tutor-details">
+                <div class="detail-row">
+                  <span class="detail-icon">🎓</span>
+                  <span class="detail-text" id="detailEducation">B.Ed (Mathematics), University of Sydney</span>
+                </div>
+                <div class="detail-row">
+                  <span class="detail-icon">✅</span>
+                  <span class="detail-text">Working with Children Check verified</span>
+                </div>
+                <div class="detail-row">
+                  <span class="detail-icon">⚡</span>
+                  <span class="detail-text" id="detailResponse">Typically responds within 2 hours</span>
+                </div>
+              </div>
+            </div>
+            <div class="trust-block guarantee-block">
+              <h4 class="guarantee-title">The Tutero Guarantee</h4>
+              <div class="guarantee-item"><span class="gi-check">✓</span> Expert-matched tutor for your child</div>
+              <div class="guarantee-item"><span class="gi-check">✓</span> Personalised learning plan from lesson 1</div>
+              <div class="guarantee-item"><span class="gi-check">✓</span> Switch tutors anytime, no questions asked</div>
+              <div class="guarantee-item"><span class="gi-check">✓</span> 100% money-back guarantee</div>
+            </div>
+            <div class="trust-block review-card">
+              <div class="review-stars">★★★★★</div>
+              <p class="review-text">"Within two weeks, my daughter went from dreading Maths homework to actually asking to do extra practice. Her tutor just gets her."</p>
+              <div class="review-author">
+                <strong>Karen M.</strong>
+                <span>Parent of Year 8 student</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="booking-success" id="bookingSuccess">
+        <canvas id="confettiCanvas"></canvas>
+        <div class="success-content">
+          <div class="success-check-ring">
+            <svg viewBox="0 0 80 80">
+              <circle class="s-ring-bg" cx="40" cy="40" r="36"/>
+              <circle class="s-ring-fg" cx="40" cy="40" r="36"/>
+            </svg>
+            <svg class="s-checkmark" viewBox="0 0 36 36">
+              <path d="M8 18l8 8 12-14"/>
+            </svg>
+          </div>
+          <h2 class="success-h2" id="successHeading">You're booked!</h2>
+          <p class="success-sub" id="successSub"></p>
+          <div class="success-details" id="successDetails"></div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- Dev toolbar -->
+  <div class="dev-bar">
+    <span>QA</span>
+    <button class="dev-btn active" onclick="devGoTo(0)">Match</button>
+    <button class="dev-btn" onclick="devGoTo(1)">Checkout</button>
+    <div class="dev-sep"></div>
+    <button class="dev-btn" onclick="devReset()">Reset</button>
+    <label><input type="checkbox" id="devAnimToggle" checked> Animations</label>
+  </div>
+
+  <script src="/shared/utm.js"></script>
+  <script src="/shared/confetti.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

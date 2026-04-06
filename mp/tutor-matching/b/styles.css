@@ -1,0 +1,274 @@
+/* ═══ Recommendation Cards — /b/ variant only ═══ */
+
+/* Header */
+.reco-header {
+  text-align: center;
+  margin-bottom: 28px;
+}
+.reco-eyebrow {
+  font-size: 12px; font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--green);
+  margin-bottom: 8px;
+}
+.reco-headline {
+  font-family: var(--font-display);
+  font-size: 28px; font-weight: 400;
+  line-height: 1.2;
+  color: var(--dark);
+  margin-bottom: 6px;
+}
+.reco-subtitle {
+  font-size: 14px;
+  color: var(--secondary);
+}
+
+/* Base card */
+.reco-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  margin-bottom: 16px;
+}
+
+/* Gold card — #1 pick */
+.reco-card--gold {
+  border-left: 4px solid #D4A843;
+  background: linear-gradient(135deg, rgba(212,168,67,0.03) 0%, var(--card-bg) 40%);
+  box-shadow: 0 2px 12px rgba(212,168,67,0.08);
+}
+
+/* Silver card — #2 pick */
+.reco-card--silver {
+  padding: 20px 24px;
+}
+
+/* Medal row */
+.reco-medal-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+.reco-card--silver .reco-medal-row {
+  margin-bottom: 0;
+}
+
+.reco-medal {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px; font-weight: 800;
+  color: #fff;
+  flex-shrink: 0;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+}
+.reco-medal--gold {
+  background: linear-gradient(145deg, #FFD700 0%, #D4A843 100%);
+}
+.reco-medal--silver {
+  background: linear-gradient(145deg, #D8D8D8 0%, #A8A8A8 100%);
+}
+
+.reco-label {
+  font-size: 11px; font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+.reco-card--gold .reco-label { color: #B8912A; }
+.reco-card--silver .reco-label { color: var(--secondary); }
+
+/* Tutor profile area — gold card */
+.reco-profile {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.reco-photo {
+  flex-shrink: 0;
+  border-radius: 12px;
+  object-fit: cover;
+}
+.reco-photo--lg {
+  width: 120px; height: 120px;
+}
+.reco-photo--sm {
+  width: 80px; height: 80px;
+  border-radius: 10px;
+}
+
+.reco-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-width: 0;
+}
+.reco-name {
+  font-size: 20px; font-weight: 700;
+  color: var(--dark);
+  margin-bottom: 4px;
+}
+.reco-tagline {
+  font-size: 14px;
+  color: var(--secondary);
+  line-height: 1.4;
+}
+
+/* Suitability bar */
+.reco-suitability {
+  margin-bottom: 18px;
+}
+.reco-suit-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 8px;
+}
+.reco-suit-label {
+  font-size: 12px; font-weight: 600;
+  color: var(--secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.reco-suit-pct {
+  font-size: 22px; font-weight: 800;
+  color: var(--green);
+  line-height: 1;
+}
+.reco-suit-track {
+  width: 100%;
+  height: 8px;
+  background: var(--border-light);
+  border-radius: 4px;
+  overflow: hidden;
+}
+.reco-suit-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--green) 0%, #4DB87A 100%);
+  border-radius: 4px;
+  transition: width 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Stats row */
+.reco-stats {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  margin-bottom: 18px;
+  padding: 12px 0;
+  border-top: 1px solid var(--border-light);
+  border-bottom: 1px solid var(--border-light);
+}
+.reco-stat {
+  flex: 1;
+  text-align: center;
+}
+.reco-stat + .reco-stat {
+  border-left: 1px solid var(--border-light);
+}
+.reco-stat-value {
+  font-size: 18px; font-weight: 800;
+  color: var(--dark);
+  line-height: 1;
+  margin-bottom: 2px;
+}
+.reco-stat-label {
+  font-size: 11px; font-weight: 500;
+  color: var(--secondary);
+}
+
+/* Why list (gold card) */
+.reco-why {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.reco-why-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 14px;
+  line-height: 1.45;
+  color: var(--dark);
+}
+.reco-why-check {
+  width: 20px; height: 20px;
+  border-radius: 50%;
+  background: var(--green-light);
+  color: var(--green);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 700;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+/* Silver card — compact layout */
+.reco-compact {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 16px;
+}
+.reco-compact-info {
+  flex: 1;
+  min-width: 0;
+}
+.reco-compact-name {
+  font-size: 17px; font-weight: 700;
+  color: var(--dark);
+  margin-bottom: 2px;
+}
+.reco-compact-tagline {
+  font-size: 13px;
+  color: var(--secondary);
+  line-height: 1.3;
+  margin-bottom: 6px;
+}
+.reco-compact-stats {
+  font-size: 12px;
+  color: var(--muted);
+}
+.reco-compact-score {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-shrink: 0;
+  padding: 8px 14px;
+  background: var(--green-light);
+  border-radius: 10px;
+}
+.reco-compact-pct {
+  font-size: 20px; font-weight: 800;
+  color: var(--green);
+  line-height: 1;
+}
+.reco-compact-pct-label {
+  font-size: 10px; font-weight: 600;
+  color: var(--green);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+/* Override match-wrap for wider cards */
+#screen-match .match-wrap {
+  max-width: 540px;
+}
+
+/* ═══ Desktop ═══ */
+@media (min-width: 768px) {
+  .reco-headline { font-size: 32px; }
+  .reco-photo--lg { width: 140px; height: 140px; }
+  #screen-match .match-wrap { max-width: 580px; }
+}
+
+/* ═══ Small phones ═══ */
+@media (max-width: 380px) {
+  .reco-headline { font-size: 24px; }
+  .reco-photo--lg { width: 100px; height: 100px; }
+  .reco-photo--sm { width: 64px; height: 64px; }
+  .reco-name { font-size: 18px; }
+  .reco-profile { gap: 14px; }
+}
