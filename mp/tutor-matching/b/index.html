@@ -3,11 +3,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>QA — Tutor Match | Tutero</title>
+  <meta name="robots" content="noindex, nofollow">
   <link rel="icon" href="/shared/images/tutero-logo.svg" type="image/svg+xml">
+  <meta name="theme-color" content="#FF8412">
+  <title>QA — Tutor Match | Tutero</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&family=DM+Serif+Display&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/shared/css/tokens.css">
+  <link rel="stylesheet" href="/shared/css/reset.css">
+  <link rel="stylesheet" href="/shared/css/funnel-base.css">
   <link rel="stylesheet" href="../a/styles.css">
   <link rel="stylesheet" href="styles.css">
   <style>
@@ -110,7 +115,7 @@
           </div>
 
           <div class="reco-compact">
-            <img class="reco-photo reco-photo--sm" id="tutor2Photo" src="/shared/images/teacher-photo.jpg" alt="Emily K.">
+            <img loading="lazy" class="reco-photo reco-photo--sm" id="tutor2Photo" src="/shared/images/teacher-photo.jpg" alt="Emily K.">
             <div class="reco-compact-info">
               <h3 class="reco-compact-name" id="tutor2Name">Emily K.</h3>
               <p class="reco-compact-tagline" id="tutor2Tagline">Year 7–10 Maths specialist · 5 years experience</p>
@@ -293,8 +298,11 @@
     <label><input type="checkbox" id="devAnimToggle" checked> Animations</label>
   </div>
 
-  <script src="/shared/utm.js"></script>
-  <script src="/shared/confetti.js"></script>
-  <script src="script.js"></script>
+  <script defer src="/shared/analytics.js"></script>
+<script defer src="/shared/utm.js"></script>
+  <script defer src="/shared/form-helpers.js"></script>
+  <script defer src="/shared/confetti.js"></script>
+  <script defer src="/shared/data.js"></script>
+  <script defer src="script.js"></script>
 </body>
 </html>

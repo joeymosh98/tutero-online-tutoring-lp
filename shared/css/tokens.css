@@ -1,0 +1,61 @@
+/* ═══ Design Tokens ═══
+   Shared CSS custom properties for the Tutero landing page platform.
+   Pages can override any of these in their own :root block.
+
+   ── Breakpoint Convention ──
+   CSS custom properties can't be used in @media queries, so these are documented here:
+   480px  (sm)  — Small phones
+   640px  (md)  — Large phones, small tablets
+   920px  (lg)  — Tablets, small desktops
+   1140px (xl)  — Full desktop (matches --max-width)
+
+   Usage:  @media (max-width: 920px) { ... }
+*/
+
+:root {
+  /* Brand — Orange (default LP theme) */
+  --color-primary: #FF8412;
+  --color-primary-hover: #e87510;
+  --color-primary-cta: #FF9533;
+  --color-green: #4CB092;
+  --color-blue: #00A3FF;
+  --color-yellow: #F8B200;
+  --color-red: #ef4444;
+  --color-indigo: #1D49E3;
+
+  /* Neutrals */
+  --color-dark: #1a1a1a;
+  --color-body: #6b6b6b;
+  --color-muted: #888;
+  --color-border: #e0e0e0;
+  --color-bg: #f4f4f5;
+  --color-bg-section: #f9f9fa;
+  --color-bg-trust-bar: #f0f0f1;
+  --color-bg-dark: #1a1a1a;
+  --color-bg-thinking: #130f24;
+
+  /* Typography */
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-display: var(--font-body);
+
+  /* Spacing */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+  --space-2xl: 48px;
+
+  /* Radii */
+  --radius-sm: 8px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-xl: 20px;
+
+  /* Transitions */
+  --ease: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  /* Layout */
+  --max-width: 1140px;
+}

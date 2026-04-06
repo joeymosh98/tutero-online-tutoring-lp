@@ -364,91 +364,19 @@ function getGradeReadable(val) {
   return map[val] || val;
 }
 
-function getStateFullName(val) {
-  var map = {
-    'NSW': 'New South Wales',
-    'VIC': 'Victoria',
-    'QLD': 'Queensland',
-    'SA': 'South Australia',
-    'WA': 'Western Australia',
-    'TAS': 'Tasmania',
-    'NT': 'Northern Territory',
-    'ACT': 'Australian Capital Territory'
-  };
-  return map[val] || val;
-}
+var getStateFullName = TuteroData.getStateFullName;
 
 // ═══════════════════════════════════════════════════════════════
 // Particle Canvas Background (s12 Thinking Screen)
 // ═══════════════════════════════════════════════════════════════
-var particleAnimId = null;
-
 function initParticleCanvas() {
-  stopParticleCanvas();
-  var canvas = document.getElementById('particleCanvas');
-  if (!canvas) return;
-  var ctx = canvas.getContext('2d');
-  var dpr = window.devicePixelRatio || 1;
-  canvas.width = canvas.offsetWidth * dpr;
-  canvas.height = canvas.offsetHeight * dpr;
-  ctx.scale(dpr, dpr);
-  var w = canvas.offsetWidth;
-  var h = canvas.offsetHeight;
-
-  var count = 50;
-  var connectionDist = 110;
-  var particles = [];
-  for (var i = 0; i < count; i++) {
-    particles.push({
-      x: Math.random() * w,
-      y: Math.random() * h,
-      vx: (Math.random() - 0.5) * 0.3,
-      vy: (Math.random() - 0.5) * 0.3,
-      r: Math.random() * 1.5 + 0.5
-    });
-  }
-
-  function tick() {
-    ctx.clearRect(0, 0, w, h);
-    // Connections
-    for (var i = 0; i < particles.length; i++) {
-      for (var j = i + 1; j < particles.length; j++) {
-        var dx = particles[i].x - particles[j].x;
-        var dy = particles[i].y - particles[j].y;
-        var dist = Math.sqrt(dx * dx + dy * dy);
-        if (dist < connectionDist) {
-          ctx.beginPath();
-          ctx.moveTo(particles[i].x, particles[i].y);
-          ctx.lineTo(particles[j].x, particles[j].y);
-          ctx.strokeStyle = 'rgba(120,90,220,' + (0.07 * (1 - dist / connectionDist)) + ')';
-          ctx.lineWidth = 0.5;
-          ctx.stroke();
-        }
-      }
-    }
-    // Particles
-    for (var i = 0; i < particles.length; i++) {
-      var p = particles[i];
-      p.x += p.vx;
-      p.y += p.vy;
-      if (p.x < 0 || p.x > w) p.vx *= -1;
-      if (p.y < 0 || p.y > h) p.vy *= -1;
-      ctx.beginPath();
-      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-      ctx.fillStyle = 'rgba(180,160,255,0.15)';
-      ctx.fill();
-    }
-    particleAnimId = requestAnimationFrame(tick);
-  }
-  tick();
+  TuteroThinking.initParticleCanvas('particleCanvas', {
+    lineColor: '120,90,220',
+    dotColor: 'rgba(180,160,255,0.15)'
+  });
 }
 
-function stopParticleCanvas() {
-  if (particleAnimId) {
-    cancelAnimationFrame(particleAnimId);
-    particleAnimId = null;
-  }
-}
+var stopParticleCanvas = TuteroThinking.stopParticleCanvas;
 
 // ═══════════════════════════════════════════════════════════════
 // Thinking Screen (s12) — Deep Personalised Matching Animation
@@ -506,138 +434,33 @@ function buildThinkingPhases() {
 
 function runThinkingSequence() {
   initParticleCanvas();
-
   var namePos = S.isForSelf ? 'your' : S.studentName + '\u2019s';
   var nameSubject = S.isForSelf ? 'you' : S.studentName;
-
-  // Headline + subtitle
-  document.getElementById('thinkingHeadline').textContent =
-    'Finding the perfect tutor for ' + nameSubject;
-  document.getElementById('thinkingSubtitle').textContent =
-    S.yearLevel + ' ' + S.subject + ' \u00B7 ' + getStateFullName(S.state);
-
-  // Completion card text
-  document.getElementById('completeHeading').textContent =
-    'We found great tutors for ' + nameSubject + '. Let\u2019s get you connected.';
-  var ctaBtn = document.getElementById('thinkingCta');
-  ctaBtn.textContent = 'See ' + namePos + ' matches \u2192';
-
-  // Build phases
-  var phases = buildThinkingPhases();
-  var feed = document.getElementById('thinkingFeed');
-  feed.innerHTML = '';
-
-  // Progress ring setup
-  var circumference = 2 * Math.PI * 52; // ~326.73
-  var ring = document.getElementById('progressRingFg');
-  var pctEl = document.getElementById('progressPct');
-  var phaseEl = document.getElementById('phaseLabel');
-  var complete = document.getElementById('thinkingComplete');
-  complete.classList.remove('visible');
-  ring.style.strokeDashoffset = circumference;
-  pctEl.textContent = '0%';
-
-  // Flatten steps with timing
-  var allSteps = [];
-  phases.forEach(function(phase) {
-    var stepTime = phase.duration / phase.steps.length;
-    phase.steps.forEach(function(step) {
-      allSteps.push({
-        text: step.text,
-        icon: step.icon,
-        phaseLabel: phase.label,
-        delay: stepTime
-      });
-    });
-  });
-
-  var totalTime = allSteps.reduce(function(sum, s) { return sum + s.delay; }, 0);
-  var elapsed = 0;
-  var maxVisible = 5;
-  var stepEls = [];
-  var thinkingTimeouts = [];
-
-  function updateProgress(fraction) {
-    var clamped = Math.min(Math.max(fraction, 0), 1);
-    ring.style.strokeDashoffset = circumference * (1 - clamped);
-    pctEl.textContent = Math.round(clamped * 100) + '%';
-  }
-
-  function runStep(index) {
-    if (index >= allSteps.length) {
-      // All done — completion
-      updateProgress(1);
-      phaseEl.textContent = 'All done!';
-      // Mark last step as done
-      if (stepEls.length > 0) {
-        var last = stepEls[stepEls.length - 1];
-        last.classList.remove('active');
-        last.classList.add('done');
-        var lastStatus = last.querySelector('.tf-step-status');
-        if (lastStatus) lastStatus.innerHTML = '\u2713';
-      }
-      thinkingTimeouts.push(setTimeout(function() {
-        complete.classList.add('visible');
-      }, 800));
-      return;
-    }
-
-    var step = allSteps[index];
-    phaseEl.textContent = step.phaseLabel;
-
-    // Mark previous step as done
-    if (index > 0 && stepEls[index - 1]) {
-      stepEls[index - 1].classList.remove('active');
-      stepEls[index - 1].classList.add('done');
-      var prev = stepEls[index - 1].querySelector('.tf-step-status');
-      if (prev) prev.innerHTML = '\u2713';
-    }
-
-    // Create step element
-    var el = document.createElement('div');
-    el.className = 'tf-step';
-    el.innerHTML =
-      '<span class="tf-step-icon">' + step.icon + '</span>' +
-      '<span class="tf-step-text">' + escHtml(step.text) + '</span>' +
-      '<span class="tf-step-status"><span class="tf-dot"></span></span>';
-    feed.appendChild(el);
-    stepEls.push(el);
-
-    // Fade in
-    requestAnimationFrame(function() {
-      requestAnimationFrame(function() {
-        el.classList.add('visible', 'active');
-      });
-    });
-
-    // Fade out old steps
-    if (stepEls.length > maxVisible) {
-      var old = stepEls[stepEls.length - maxVisible - 1];
-      old.style.opacity = '0';
-      old.style.maxHeight = '0';
-      old.style.padding = '0';
-      old.style.marginBottom = '0';
-      old.style.overflow = 'hidden';
-    }
-
-    // Update progress
-    elapsed += step.delay;
-    updateProgress(elapsed / totalTime);
-
-    // Next step
-    thinkingTimeouts.push(setTimeout(function() { runStep(index + 1); }, step.delay));
-  }
 
   // Calculate tutor count
   var range = TUTOR_COUNTS[S.subject] || TUTOR_COUNTS['Other'];
   S.tutorCount = range[0] + Math.floor(Math.random() * (range[1] - range[0] + 1));
 
-  // Begin sequence after short delay
-  updateProgress(0);
-  thinkingTimeouts.push(setTimeout(function() { runStep(0); }, 600));
-
-  // Store timeouts for cleanup
-  window._thinkingTimeouts = thinkingTimeouts;
+  TuteroThinking.runSequence({
+    phases: buildThinkingPhases(),
+    elements: {
+      feed: 'thinkingFeed',
+      ring: 'progressRingFg',
+      pct: 'progressPct',
+      phaseLabel: 'phaseLabel',
+      headline: 'thinkingHeadline',
+      subtitle: 'thinkingSubtitle',
+      complete: 'thinkingComplete',
+      completeHeading: 'completeHeading',
+      completeCta: 'thinkingCta'
+    },
+    text: {
+      headline: 'Finding the perfect tutor for ' + nameSubject,
+      subtitle: S.yearLevel + ' ' + S.subject + ' \u00B7 ' + getStateFullName(S.state),
+      completeHeading: 'We found great tutors for ' + nameSubject + '. Let\u2019s get you connected.',
+      completeCta: 'See ' + namePos + ' matches \u2192'
+    }
+  });
 }
 
 // ═══════════════════════════════════════════════════════════════
@@ -856,11 +679,7 @@ function toggleBtn(btn, ok) {
   if (ok) btn.classList.remove('disabled'); else btn.classList.add('disabled');
 }
 
-function escHtml(str) {
-  var div = document.createElement('div');
-  div.textContent = str;
-  return div.innerHTML;
-}
+var escHtml = TuteroData.escHtml;
 
 // ═══════════════════════════════════════════════════════════════
 // Screen 2: Student Name

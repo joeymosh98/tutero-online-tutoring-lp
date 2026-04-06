@@ -1,0 +1,50 @@
+/* ═══ Reset + Base ═══ */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  font-family: var(--font-body);
+  background: var(--color-bg);
+  color: var(--color-dark);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ═══ Emoji Cursors ═══
+   Generic selectors — pages can add page-specific selectors in their own CSS. */
+button, [onclick], select, a[href],
+.cta-button, .cta-button *,
+.modal-submit, .modal-close, .modal-back,
+.cta-submit, .cta-back-btn,
+.subject-pill, .modal-pill,
+.trust-card, .trust-card *,
+.story-card, .story-card *,
+.grade-btn, .faq-item, .faq-item *,
+.faq-question, .faq-toggle,
+.promo-banner, .hero-dot,
+.select-wrapper select, a.story-link,
+.qz-card, .qz-pill, .year-pill,
+.btn-primary, .back-btn, .book-arrow,
+.qz-card *, .qz-pill *, .year-pill *,
+.btn-primary *, .book-arrow *,
+a.btn-primary,
+.slot-btn, .reco-card, .link-secondary,
+.change-btn, .dev-btn {
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='32' viewBox='0 0 28 32'%3E%3Ctext y='24' font-size='24'%3E%F0%9F%91%86%3C/text%3E%3C/svg%3E") 14 4, pointer !important;
+}
+button:active, [onclick]:active, select:active, a[href]:active,
+.cta-button:active, .modal-submit:active, .modal-close:active, .modal-back:active,
+.cta-submit:active, .cta-back-btn:active,
+.subject-pill:active, .modal-pill:active,
+.trust-card:active, .trust-card:active *,
+.story-card:active, .story-card:active *,
+.grade-btn:active, .faq-item:active, .faq-item:active *,
+.faq-question:active, .faq-toggle:active,
+.promo-banner:active, .hero-dot:active,
+.select-wrapper select:active, a.story-link:active,
+.qz-card:active, .qz-pill:active, .year-pill:active,
+.btn-primary:active, .back-btn:active,
+a.btn-primary:active,
+.slot-btn:active, .reco-card:active, .link-secondary:active,
+.change-btn:active, .dev-btn:active {
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='32' viewBox='0 0 28 32'%3E%3Ctext y='24' font-size='24'%3E%E2%9C%8A%3C/text%3E%3C/svg%3E") 14 4, pointer !important;
+}

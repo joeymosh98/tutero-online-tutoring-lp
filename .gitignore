@@ -15,14 +15,15 @@
 .claude/
 
 # Hub / internal tools (not for deployment)
-css/
-js/
-assets/
-scripts/
-data & images/
-inspiration/
+/css/
+/js/
+/assets/
+/scripts/
+/data & images/
+/inspiration/
 index-monolith-backup.html
 .vercel
 .env*
+!.env.example
 node_modules/
 dev-cms/

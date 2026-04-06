@@ -2,7 +2,18 @@
 (function() {
   'use strict';
 
-  var WEBHOOK_URL = 'https://hook.eu1.make.com/46pou90x59vasab9ljivd78sfazjgztv';
+  var SUBMIT_URL = '/api/submit-lead/';
+
+  function doFetch(payload) {
+    return fetch(SUBMIT_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: payload
+    }).then(function(res) {
+      if (!res.ok) throw new Error('Server error: ' + res.status);
+      return { success: true };
+    });
+  }
 
   function submit(data, config) {
     data.landing_page = config.landingPage || '';
@@ -17,14 +28,35 @@
     data.utm_term = utm.utm_term || '';
     data.utm_content = utm.utm_content || '';
     data.gclid = utm.gclid || '';
-    if (WEBHOOK_URL) {
-      fetch(WEBHOOK_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data)
-      }).catch(function() {});
-    }
-    console.log('[Lead]', data);
+
+    var payload = JSON.stringify(data);
+
+    return doFetch(payload).then(function(result) {
+      if (window.TuteroAnalytics) window.TuteroAnalytics.trackLead(data);
+      return result;
+    }).catch(function() {
+      // Retry once after 2 seconds
+      return new Promise(function(resolve) {
+        setTimeout(function() {
+          doFetch(payload).then(function(result) {
+            if (window.TuteroAnalytics) window.TuteroAnalytics.trackLead(data);
+            resolve(result);
+          }).catch(function(err) {
+            resolve({ success: false, error: err.message });
+          });
+        }, 2000);
+      });
+    });
+  }
+
+  function showError(el) {
+    var parent = el.parentNode;
+    if (parent.querySelector('.lead-error')) return;
+    var msg = document.createElement('div');
+    msg.className = 'lead-error';
+    msg.textContent = 'Something went wrong. Please try again or call us on 1300 888 937.';
+    parent.insertBefore(msg, el.nextSibling);
+    setTimeout(function() { if (msg.parentNode) msg.remove(); }, 8000);
   }
 
   function buildThankYouUrl(base, params) {
@@ -47,6 +79,7 @@
 
   window.TuteroLead = {
     submit: submit,
+    showError: showError,
     buildThankYouUrl: buildThankYouUrl,
     updateThankYouLinks: updateThankYouLinks
   };

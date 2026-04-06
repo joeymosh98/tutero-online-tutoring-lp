@@ -1,65 +1,16 @@
 // ═══════════════════════════════════════════════════════════════
 // Tutero Landing Page — Online Tutoring Variant A
-// Uses: TuteroForms, TuteroLead, TuteroConfetti, TuteroReveal (from /shared/)
+// Uses: TuteroForms, TuteroLead, TuteroConfetti, TuteroReveal,
+//       TuteroSubmit, TuteroCarousel (from /shared/)
 // ═══════════════════════════════════════════════════════════════
 
 var LEAD_CONFIG = { landingPage: 'Online Tutoring Australia - Claude Code', variant: 'a' };
 var REDIRECT_URL = 'https://www.tutero.com/au/form/submission-confirmed';
 
-function animateSubmit(btn) {
-  var step = btn.closest('.modal-form-step') || btn.closest('[id^="ctaStep"]');
-  // Phase 1: Loading spinner
-  btn.classList.add('is-loading');
-  btn.innerHTML = '<span style="display:inline-flex;align-items:center;gap:8px"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" style="animation:spin .7s linear infinite"><circle cx="12" cy="12" r="10" stroke="rgba(255,255,255,.35)" stroke-width="3"/><path d="M12 2a10 10 0 0 1 10 10" stroke="#fff" stroke-width="3" stroke-linecap="round"/></svg> Submitting\u2026</span>';
-  setTimeout(function() {
-    // Phase 2: Green success button
-    btn.classList.remove('is-loading');
-    btn.classList.add('is-success');
-    btn.innerHTML = '<span style="display:inline-flex;align-items:center;gap:8px"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="11" fill="rgba(255,255,255,.2)"/><path d="M7 13l3 3 7-7" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg> All set!</span>';
-    btn.style.animation = 'submit-pulse 1.2s ease-in-out infinite';
-    // Phase 3: Fade out form fields, show reassuring message
-    setTimeout(function() {
-      // Fade out everything in the step except the button
-      if (step) {
-        Array.prototype.forEach.call(step.children, function(child) {
-          if (child !== btn) { child.style.transition = 'opacity .4s, transform .4s'; child.style.opacity = '0'; child.style.transform = 'translateY(-8px)'; }
-        });
-      }
-      setTimeout(function() {
-        // Hide faded elements and insert message
-        if (step) {
-          Array.prototype.forEach.call(step.children, function(child) {
-            if (child !== btn) child.style.display = 'none';
-          });
-        }
-        var msg = document.createElement('div');
-        msg.className = 'submit-reassure';
-        msg.innerHTML = '<p class="submit-reassure-text">Our team is already on it \u2014 we\u2019re finding the perfect tutor match for your child.</p><p class="submit-reassure-redirect">Redirecting you to our website\u2026</p>';
-        btn.parentNode.insertBefore(msg, btn);
-        // Phase 4: Redirect
-        setTimeout(function() { window.location.href = REDIRECT_URL; }, 2400);
-      }, 400);
-    }, 900);
-  }, 1200);
-}
+function animateSubmit(btn) { TuteroSubmit.animateSubmit(btn, REDIRECT_URL); }
 
 // ── Hero Image Carousel ──
-(function() {
-  var imgs = document.querySelectorAll('.image-wrapper img');
-  var dots = document.querySelectorAll('.hero-dot');
-  var badgeLabel = document.querySelector('.live-badge');
-  var current = 0;
-  function goTo(n) {
-    imgs[current].classList.remove('active');
-    dots[current].classList.remove('active');
-    current = n;
-    imgs[current].classList.add('active');
-    dots[current].classList.add('active');
-    if (badgeLabel && imgs[current].dataset.badge) badgeLabel.lastChild.textContent = ' ' + imgs[current].dataset.badge;
-  }
-  dots.forEach(function(d) { d.addEventListener('click', function() { goTo(parseInt(d.dataset.slide)); }); });
-  setInterval(function() { goTo((current + 1) % imgs.length); }, 5500);
-})();
+TuteroCarousel.init();
 
 // ── FAQ Curiosity Meter ──
 var faqItems = document.querySelectorAll('.faq-item');

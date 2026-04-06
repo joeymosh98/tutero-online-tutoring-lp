@@ -13,5 +13,5 @@ module.exports = async function handler(req, res) {
   }
 
   const valid = password === process.env.CMS_PASSWORD;
-  return res.status(200).json({ valid });
+  return res.status(200).json({ success: true, valid });
 };

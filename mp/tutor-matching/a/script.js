@@ -112,11 +112,7 @@ function goTo(n) {
 // ═══════════════════════════════════════════════════════════════
 // Helpers
 // ═══════════════════════════════════════════════════════════════
-function escHtml(str) {
-  var d = document.createElement('div');
-  d.textContent = str;
-  return d.innerHTML;
-}
+var escHtml = TuteroData.escHtml;
 
 function getStruggleLabel(val) {
   var map = {
@@ -133,14 +129,7 @@ function getStruggleLabel(val) {
   return map[val] || val.replace(/-/g, ' ');
 }
 
-function getStateFullName(val) {
-  var map = {
-    'NSW': 'New South Wales', 'VIC': 'Victoria', 'QLD': 'Queensland',
-    'SA': 'South Australia', 'WA': 'Western Australia', 'TAS': 'Tasmania',
-    'NT': 'Northern Territory', 'ACT': 'Australian Capital Territory'
-  };
-  return map[val] || val;
-}
+var getStateFullName = TuteroData.getStateFullName;
 
 // ═══════════════════════════════════════════════════════════════
 // Personalisation — inject student name into all dynamic text
@@ -211,70 +200,14 @@ function personalise() {
 // ═══════════════════════════════════════════════════════════════
 // SCREEN 1: Thinking / AI Matching Animation
 // ═══════════════════════════════════════════════════════════════
-var particleAnimId = null;
-
 function initParticleCanvas() {
-  stopParticleCanvas();
-  var canvas = document.getElementById('particleCanvas');
-  if (!canvas) return;
-  var ctx = canvas.getContext('2d');
-  var dpr = window.devicePixelRatio || 1;
-  canvas.width = canvas.offsetWidth * dpr;
-  canvas.height = canvas.offsetHeight * dpr;
-  ctx.scale(dpr, dpr);
-  var w = canvas.offsetWidth;
-  var h = canvas.offsetHeight;
-  var count = 50;
-  var connectionDist = 110;
-  var particles = [];
-  for (var i = 0; i < count; i++) {
-    particles.push({
-      x: Math.random() * w,
-      y: Math.random() * h,
-      vx: (Math.random() - 0.5) * 0.3,
-      vy: (Math.random() - 0.5) * 0.3,
-      r: Math.random() * 1.5 + 0.5
-    });
-  }
-  function tick() {
-    ctx.clearRect(0, 0, w, h);
-    for (var i = 0; i < particles.length; i++) {
-      for (var j = i + 1; j < particles.length; j++) {
-        var dx = particles[i].x - particles[j].x;
-        var dy = particles[i].y - particles[j].y;
-        var dist = Math.sqrt(dx * dx + dy * dy);
-        if (dist < connectionDist) {
-          ctx.beginPath();
-          ctx.moveTo(particles[i].x, particles[i].y);
-          ctx.lineTo(particles[j].x, particles[j].y);
-          ctx.strokeStyle = 'rgba(59,155,98,' + (0.07 * (1 - dist / connectionDist)) + ')';
-          ctx.lineWidth = 0.5;
-          ctx.stroke();
-        }
-      }
-    }
-    for (var i = 0; i < particles.length; i++) {
-      var p = particles[i];
-      p.x += p.vx;
-      p.y += p.vy;
-      if (p.x < 0 || p.x > w) p.vx *= -1;
-      if (p.y < 0 || p.y > h) p.vy *= -1;
-      ctx.beginPath();
-      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-      ctx.fillStyle = 'rgba(59,155,98,0.15)';
-      ctx.fill();
-    }
-    particleAnimId = requestAnimationFrame(tick);
-  }
-  tick();
+  TuteroThinking.initParticleCanvas('particleCanvas', {
+    lineColor: '59,155,98',
+    dotColor: 'rgba(59,155,98,0.15)'
+  });
 }
 
-function stopParticleCanvas() {
-  if (particleAnimId) {
-    cancelAnimationFrame(particleAnimId);
-    particleAnimId = null;
-  }
-}
+var stopParticleCanvas = TuteroThinking.stopParticleCanvas;
 
 function buildThinkingPhases() {
   var name = State.student.name;
@@ -326,105 +259,25 @@ function buildThinkingPhases() {
 function runThinkingSequence() {
   initParticleCanvas();
 
-  var phases = buildThinkingPhases();
-  var feed = document.getElementById('thinkingFeed');
-  feed.innerHTML = '';
-
-  var circumference = 2 * Math.PI * 52;
-  var ring = document.getElementById('progressRingFg');
-  var pctEl = document.getElementById('progressPct');
-  var phaseEl = document.getElementById('phaseLabel');
-  ring.style.strokeDashoffset = circumference;
-  pctEl.textContent = '0%';
-
-  // Flatten steps
-  var allSteps = [];
-  phases.forEach(function(phase) {
-    var stepTime = phase.duration / phase.steps.length;
-    phase.steps.forEach(function(step) {
-      allSteps.push({
-        text: step.text,
-        icon: step.icon,
-        phaseLabel: phase.label,
-        delay: stepTime
-      });
-    });
+  TuteroThinking.runSequence({
+    phases: buildThinkingPhases(),
+    elements: {
+      feed: 'thinkingFeed',
+      ring: 'progressRingFg',
+      pct: 'progressPct',
+      phaseLabel: 'phaseLabel',
+      headline: 'thinkingHeadline',
+      subtitle: 'thinkingSubtitle'
+    },
+    text: {
+      headline: 'Finding ' + State.student + '\u2019s perfect tutor',
+      subtitle: State.yearLevel + ' ' + State.subject + ' \u00B7 ' + getStateFullName(State.state),
+      completionLabel: 'Complete'
+    },
+    onComplete: function() {
+      goTo(1);
+    }
   });
-
-  var totalTime = allSteps.reduce(function(sum, s) { return sum + s.delay; }, 0);
-  var elapsed = 0;
-  var maxVisible = 5;
-  var stepEls = [];
-  var timeouts = [];
-
-  function updateProgress(fraction) {
-    var clamped = Math.min(Math.max(fraction, 0), 1);
-    ring.style.strokeDashoffset = circumference * (1 - clamped);
-    pctEl.textContent = Math.round(clamped * 100) + '%';
-  }
-
-  function runStep(index) {
-    if (index >= allSteps.length) {
-      updateProgress(1);
-      phaseEl.textContent = 'Complete';
-      if (stepEls.length > 0) {
-        var last = stepEls[stepEls.length - 1];
-        last.classList.remove('active');
-        last.classList.add('done');
-        var lastStatus = last.querySelector('.tf-step-status');
-        if (lastStatus) lastStatus.innerHTML = '\u2713';
-      }
-      // Auto-advance after 1.2s
-      timeouts.push(setTimeout(function() { goTo(1); }, 1200));
-      return;
-    }
-
-    var step = allSteps[index];
-    phaseEl.textContent = step.phaseLabel;
-
-    // Mark previous done
-    if (index > 0 && stepEls[index - 1]) {
-      stepEls[index - 1].classList.remove('active');
-      stepEls[index - 1].classList.add('done');
-      var prev = stepEls[index - 1].querySelector('.tf-step-status');
-      if (prev) prev.innerHTML = '\u2713';
-    }
-
-    // Create step element
-    var el = document.createElement('div');
-    el.className = 'tf-step';
-    el.innerHTML =
-      '<span class="tf-step-icon">' + step.icon + '</span>' +
-      '<span class="tf-step-text">' + escHtml(step.text) + '</span>' +
-      '<span class="tf-step-status"><span class="tf-dot"></span></span>';
-    feed.appendChild(el);
-    stepEls.push(el);
-
-    requestAnimationFrame(function() {
-      requestAnimationFrame(function() {
-        el.classList.add('visible', 'active');
-      });
-    });
-
-    // Fade out old steps
-    if (stepEls.length > maxVisible) {
-      var old = stepEls[stepEls.length - maxVisible - 1];
-      old.style.opacity = '0';
-      old.style.maxHeight = '0';
-      old.style.padding = '0';
-      old.style.marginBottom = '0';
-      old.style.overflow = 'hidden';
-    }
-
-    elapsed += step.delay;
-    updateProgress(elapsed / totalTime);
-
-    timeouts.push(setTimeout(function() { runStep(index + 1); }, step.delay));
-  }
-
-  updateProgress(0);
-  timeouts.push(setTimeout(function() { runStep(0); }, 600));
-  window._thinkingTimeouts = timeouts;
 }
 
 // ═══════════════════════════════════════════════════════════════

@@ -3,35 +3,17 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" href="/shared/images/tutero-logo.svg" type="image/svg+xml">
+  <meta name="theme-color" content="#FF8412">
   <title>Tutero — Special Needs Tutoring for ADHD, Dyslexia &amp; ASD</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/shared/css/tokens.css">
+  <link rel="stylesheet" href="/shared/css/reset.css">
+  <link rel="stylesheet" href="/shared/css/lp-components.css">
   <style>
-    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-    .cta-button, .cta-button *, .modal-submit, .modal-close, .modal-back, .cta-submit, .cta-back-btn,
-    .subject-pill, .modal-pill, .trust-card, .trust-card *, .story-card, .story-card *, .grade-btn, .needs-btn,
-    .faq-item, .faq-item *, .faq-question, .faq-toggle,
-    .hero-dot, .select-wrapper select, a.story-link,
-    .promo-banner,
-    .hero-dot, button, [onclick] {
-      cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='32' viewBox='0 0 28 32'%3E%3Ctext y='24' font-size='24'%3E%F0%9F%91%86%3C/text%3E%3C/svg%3E") 14 4, pointer !important;
-    }
-    .cta-button:active, .modal-submit:active, .modal-close:active, .modal-back:active, .cta-submit:active, .cta-back-btn:active,
-    .subject-pill:active, .modal-pill:active, .trust-card:active, .trust-card:active *, .story-card:active, .story-card:active *, .grade-btn:active, .needs-btn:active,
-    .faq-item:active, .faq-item:active *, .faq-question:active, .faq-toggle:active,
-    .promo-banner:active,
-    .hero-dot:active, .select-wrapper select:active, a.story-link:active,
-    button:active, [onclick]:active {
-      cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='32' viewBox='0 0 28 32'%3E%3Ctext y='24' font-size='24'%3E%E2%9C%8A%3C/text%3E%3C/svg%3E") 14 4, pointer !important;
-    }
-
-    body {
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-      background: #f4f4f5;
-      color: #1a1a1a;
-    }
-
     .page-wrapper {
       display: flex;
       flex-direction: column;
@@ -1443,22 +1425,22 @@
   <div class="social-proof-bar">
     <div class="social-proof-inner">
       <div class="proof-item">
-        <div class="proof-icon proof-icon--students"><svg viewBox="0 0 24 24" fill="none"><path d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2" stroke="#FF8412" stroke-width="2" stroke-linecap="round"/><circle cx="9" cy="7" r="4" stroke="#FF8412" stroke-width="2"/><path d="M22 21v-2a4 4 0 00-3-3.87" stroke="#FF8412" stroke-width="2" stroke-linecap="round"/><path d="M16 3.13a4 4 0 010 7.75" stroke="#FF8412" stroke-width="2" stroke-linecap="round"/></svg></div>
+        <div class="proof-icon proof-icon--students"><svg viewBox="0 0 24 24" fill="none"><path d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="9" cy="7" r="4" stroke="currentColor" stroke-width="2"/><path d="M22 21v-2a4 4 0 00-3-3.87" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M16 3.13a4 4 0 010 7.75" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></div>
         <div class="proof-text"><span class="proof-number">2,000+</span><span class="proof-label">Students supported</span></div>
       </div>
       <div class="proof-divider"></div>
       <div class="proof-item">
-        <div class="proof-icon proof-icon--tutors"><svg viewBox="0 0 24 24" fill="none"><path d="M22 11.08V12a10 10 0 11-5.93-9.14" stroke="#4CB092" stroke-width="2" stroke-linecap="round"/><path d="M22 4L12 14.01l-3-3" stroke="#4CB092" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div class="proof-icon proof-icon--tutors"><svg viewBox="0 0 24 24" fill="none"><path d="M22 11.08V12a10 10 0 11-5.93-9.14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M22 4L12 14.01l-3-3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
         <div class="proof-text"><span class="proof-number">98.1%</span><span class="proof-label">See noticeable improvement</span></div>
       </div>
       <div class="proof-divider"></div>
       <div class="proof-item">
-        <div class="proof-icon proof-icon--reviews"><svg viewBox="0 0 24 24" fill="none"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26" fill="#F8B200" stroke="#F8B200" stroke-width="1.5" stroke-linejoin="round"/></svg></div>
+        <div class="proof-icon proof-icon--reviews"><svg viewBox="0 0 24 24" fill="none"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26" fill="currentColor" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg></div>
         <div class="proof-text"><span class="proof-number">300+</span><span class="proof-label">5-star Google reviews</span></div>
       </div>
       <div class="proof-divider"></div>
       <div class="proof-item">
-        <div class="proof-icon proof-icon--curriculum"><svg viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" stroke="#00A3FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div class="proof-icon proof-icon--curriculum"><svg viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
         <div class="proof-text"><span class="proof-number">Top 2%</span><span class="proof-label">Of Australian tutors</span></div>
       </div>
     </div>
@@ -1469,8 +1451,8 @@
     <div class="hero-image">
       <div class="image-wrapper">
         <img src="images/hero-child-tutoring.png" alt="Child with learning differences happily engaged in a 1-on-1 online tutoring session at home" class="active">
-        <img src="images/hero-tutor-profile.png" alt="Warm and approachable Tutero specialist tutor, a real caring educator you would trust with your child">
-        <img src="images/hero-child-outcome.png" alt="Child at kitchen table holding a graded worksheet with a quiet smile, calm pride after a tutoring breakthrough">
+        <img loading="lazy" src="images/hero-tutor-profile.png" alt="Warm and approachable Tutero specialist tutor, a real caring educator you would trust with your child">
+        <img loading="lazy" src="images/hero-child-outcome.png" alt="Child at kitchen table holding a graded worksheet with a quiet smile, calm pride after a tutoring breakthrough">
         <div class="hero-dots">
           <div class="hero-dot active" data-slide="0"></div>
           <div class="hero-dot" data-slide="1"></div>
@@ -1499,7 +1481,7 @@
       </div>
       <button class="cta-button" id="heroCtaBtn">Find a Specialist Tutor for My Child <span class="arrow">&rarr;</span></button>
       <div class="hero-guarantee">
-        <svg viewBox="0 0 24 24" fill="none"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="#4CB092" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 12l2 2 4-4" stroke="#4CB092" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <svg viewBox="0 0 24 24" fill="none"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
         Love your first lesson or it's free
       </div>
     </div>
@@ -1508,38 +1490,38 @@
   <!-- Scrolling Trust Bar (bottom of section 1) -->
   <div class="trust-bar">
     <div class="trust-bar-track">
-      <div class="trust-bar-item"><svg viewBox="0 0 24 24" fill="none"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z" stroke="#4CB092" stroke-width="2"/><path d="M9 12l2 2 4-4" stroke="#4CB092" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Australian curriculum aligned</div>
+      <div class="trust-bar-item"><svg viewBox="0 0 24 24" fill="none"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z" stroke="currentColor" stroke-width="2"/><path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Australian curriculum aligned</div>
       <div class="trust-bar-dot"></div>
-      <div class="trust-bar-item"><svg viewBox="0 0 24 24" fill="none"><path d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2" stroke="#FF8412" stroke-width="2" stroke-linecap="round"/><circle cx="9" cy="7" r="4" stroke="#FF8412" stroke-width="2"/></svg> Specialist learning support tutors</div>
+      <div class="trust-bar-item"><svg viewBox="0 0 24 24" fill="none"><path d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="9" cy="7" r="4" stroke="currentColor" stroke-width="2"/></svg> Specialist learning support tutors</div>
       <div class="trust-bar-dot"></div>
-      <div class="trust-bar-item"><svg viewBox="0 0 24 24" fill="none"><path d="M20 12V8H6a2 2 0 01-2-2c0-1.1.9-2 2-2h12v4" stroke="#1D49E3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M4 6v12c0 1.1.9 2 2 2h14v-4" stroke="#1D49E3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M18 12a2 2 0 00-2 2c0 1.1.9 2 2 2h4v-4h-4z" stroke="#1D49E3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> No contracts, cancel anytime</div>
+      <div class="trust-bar-item"><svg viewBox="0 0 24 24" fill="none"><path d="M20 12V8H6a2 2 0 01-2-2c0-1.1.9-2 2-2h12v4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M4 6v12c0 1.1.9 2 2 2h14v-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M18 12a2 2 0 00-2 2c0 1.1.9 2 2 2h4v-4h-4z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> No contracts, cancel anytime</div>
       <div class="trust-bar-dot"></div>
-      <div class="trust-bar-item"><svg viewBox="0 0 24 24" fill="none"><path d="M12 8v8M8 12h8" stroke="#F8B200" stroke-width="2" stroke-linecap="round"/><circle cx="12" cy="12" r="10" stroke="#F8B200" stroke-width="2"/></svg> Students supported with ADHD, dyslexia &amp; ASD</div>
+      <div class="trust-bar-item"><svg viewBox="0 0 24 24" fill="none"><path d="M12 8v8M8 12h8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/></svg> Students supported with ADHD, dyslexia &amp; ASD</div>
       <div class="trust-bar-dot"></div>
-      <div class="trust-bar-item"><svg viewBox="0 0 24 24" fill="none"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" stroke="#00A3FF" stroke-width="2" stroke-linecap="round"/><circle cx="12" cy="7" r="4" stroke="#00A3FF" stroke-width="2"/></svg> Personal account manager</div>
+      <div class="trust-bar-item"><svg viewBox="0 0 24 24" fill="none"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="12" cy="7" r="4" stroke="currentColor" stroke-width="2"/></svg> Personal account manager</div>
       <div class="trust-bar-dot"></div>
-      <div class="trust-bar-item"><svg viewBox="0 0 24 24" fill="none"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26" fill="#F8B200" stroke="#F8B200" stroke-width="1.5"/></svg> 300+ five-star Google reviews</div>
+      <div class="trust-bar-item"><svg viewBox="0 0 24 24" fill="none"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26" fill="currentColor" stroke="currentColor" stroke-width="1.5"/></svg> 300+ five-star Google reviews</div>
       <div class="trust-bar-dot"></div>
-      <div class="trust-bar-item"><svg viewBox="0 0 24 24" fill="none"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="#4CB092" stroke-width="2"/><path d="M9 12l2 2 4-4" stroke="#4CB092" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Love your first lesson or it's free</div>
+      <div class="trust-bar-item"><svg viewBox="0 0 24 24" fill="none"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="currentColor" stroke-width="2"/><path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Love your first lesson or it's free</div>
       <div class="trust-bar-dot"></div>
-      <div class="trust-bar-item"><svg viewBox="0 0 24 24" fill="none"><path d="M22 11.08V12a10 10 0 11-5.93-9.14" stroke="#FF8412" stroke-width="2" stroke-linecap="round"/><path d="M22 4L12 14.01l-3-3" stroke="#FF8412" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> No upfront payments</div>
+      <div class="trust-bar-item"><svg viewBox="0 0 24 24" fill="none"><path d="M22 11.08V12a10 10 0 11-5.93-9.14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M22 4L12 14.01l-3-3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> No upfront payments</div>
       <!-- Duplicate for seamless loop -->
       <div class="trust-bar-dot"></div>
-      <div class="trust-bar-item"><svg viewBox="0 0 24 24" fill="none"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z" stroke="#4CB092" stroke-width="2"/><path d="M9 12l2 2 4-4" stroke="#4CB092" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Australian curriculum aligned</div>
+      <div class="trust-bar-item"><svg viewBox="0 0 24 24" fill="none"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z" stroke="currentColor" stroke-width="2"/><path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Australian curriculum aligned</div>
       <div class="trust-bar-dot"></div>
-      <div class="trust-bar-item"><svg viewBox="0 0 24 24" fill="none"><path d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2" stroke="#FF8412" stroke-width="2" stroke-linecap="round"/><circle cx="9" cy="7" r="4" stroke="#FF8412" stroke-width="2"/></svg> Specialist learning support tutors</div>
+      <div class="trust-bar-item"><svg viewBox="0 0 24 24" fill="none"><path d="M16 21v-2a4 4 0 00-4-4H6a4 4 0 00-4 4v2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="9" cy="7" r="4" stroke="currentColor" stroke-width="2"/></svg> Specialist learning support tutors</div>
       <div class="trust-bar-dot"></div>
-      <div class="trust-bar-item"><svg viewBox="0 0 24 24" fill="none"><path d="M20 12V8H6a2 2 0 01-2-2c0-1.1.9-2 2-2h12v4" stroke="#1D49E3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M4 6v12c0 1.1.9 2 2 2h14v-4" stroke="#1D49E3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M18 12a2 2 0 00-2 2c0 1.1.9 2 2 2h4v-4h-4z" stroke="#1D49E3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> No contracts, cancel anytime</div>
+      <div class="trust-bar-item"><svg viewBox="0 0 24 24" fill="none"><path d="M20 12V8H6a2 2 0 01-2-2c0-1.1.9-2 2-2h12v4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M4 6v12c0 1.1.9 2 2 2h14v-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M18 12a2 2 0 00-2 2c0 1.1.9 2 2 2h4v-4h-4z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> No contracts, cancel anytime</div>
       <div class="trust-bar-dot"></div>
-      <div class="trust-bar-item"><svg viewBox="0 0 24 24" fill="none"><path d="M12 8v8M8 12h8" stroke="#F8B200" stroke-width="2" stroke-linecap="round"/><circle cx="12" cy="12" r="10" stroke="#F8B200" stroke-width="2"/></svg> Students supported with ADHD, dyslexia &amp; ASD</div>
+      <div class="trust-bar-item"><svg viewBox="0 0 24 24" fill="none"><path d="M12 8v8M8 12h8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/></svg> Students supported with ADHD, dyslexia &amp; ASD</div>
       <div class="trust-bar-dot"></div>
-      <div class="trust-bar-item"><svg viewBox="0 0 24 24" fill="none"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" stroke="#00A3FF" stroke-width="2" stroke-linecap="round"/><circle cx="12" cy="7" r="4" stroke="#00A3FF" stroke-width="2"/></svg> Personal account manager</div>
+      <div class="trust-bar-item"><svg viewBox="0 0 24 24" fill="none"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="12" cy="7" r="4" stroke="currentColor" stroke-width="2"/></svg> Personal account manager</div>
       <div class="trust-bar-dot"></div>
-      <div class="trust-bar-item"><svg viewBox="0 0 24 24" fill="none"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26" fill="#F8B200" stroke="#F8B200" stroke-width="1.5"/></svg> 300+ five-star Google reviews</div>
+      <div class="trust-bar-item"><svg viewBox="0 0 24 24" fill="none"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26" fill="currentColor" stroke="currentColor" stroke-width="1.5"/></svg> 300+ five-star Google reviews</div>
       <div class="trust-bar-dot"></div>
-      <div class="trust-bar-item"><svg viewBox="0 0 24 24" fill="none"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="#4CB092" stroke-width="2"/><path d="M9 12l2 2 4-4" stroke="#4CB092" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Love your first lesson or it's free</div>
+      <div class="trust-bar-item"><svg viewBox="0 0 24 24" fill="none"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="currentColor" stroke-width="2"/><path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Love your first lesson or it's free</div>
       <div class="trust-bar-dot"></div>
-      <div class="trust-bar-item"><svg viewBox="0 0 24 24" fill="none"><path d="M22 11.08V12a10 10 0 11-5.93-9.14" stroke="#FF8412" stroke-width="2" stroke-linecap="round"/><path d="M22 4L12 14.01l-3-3" stroke="#FF8412" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> No upfront payments</div>
+      <div class="trust-bar-item"><svg viewBox="0 0 24 24" fill="none"><path d="M22 11.08V12a10 10 0 11-5.93-9.14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M22 4L12 14.01l-3-3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> No upfront payments</div>
     </div>
   </div>
 
@@ -1640,7 +1622,7 @@
           </div>
         </div>
         <div class="success-cta">
-          <a href="thank-you.html" class="success-cta-btn">Learn more about what's next &rarr;</a>
+          <a href="/tp/online-tutoring/a/" class="success-cta-btn">Learn more about what's next &rarr;</a>
         </div>
       </div>
     </div>
@@ -1684,7 +1666,7 @@
     <!-- Photo + value points (right) -->
     <div class="reveal stagger-2">
       <div class="results-photo">
-        <img src="images/why-families-photo.png" alt="Mum and son on the couch, calm and focused during a Tutero session at home">
+        <img loading="lazy" src="images/why-families-photo.png" alt="Mum and son on the couch, calm and focused during a Tutero session at home">
         <div class="results-photo-caption">
           <span>Liam, Year 6 &middot; ADHD</span> &middot; <span class="caption-result">C &rarr; A in Maths</span>
         </div>
@@ -1734,7 +1716,7 @@
         <p class="rv2-subtitle">Not just grades. Confidence, motivation, and a kid who actually wants to learn.</p>
       </div>
       <div class="rv2-headline-img">
-        <img src="images/rv2-student-progress.png" alt="Child at home desk, focused and calm during an online tutoring session with Tutero">
+        <img loading="lazy" src="images/rv2-student-progress.png" alt="Child at home desk, focused and calm during an online tutoring session with Tutero">
       </div>
     </div>
 
@@ -1768,7 +1750,7 @@
         </ul>
       </div>
       <div class="rv2-transform-arrow">
-        <svg viewBox="0 0 24 24" fill="none" width="32" height="32"><path d="M5 12h14M13 5l6 7-6 7" stroke="#4CB092" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <svg viewBox="0 0 24 24" fill="none" width="32" height="32"><path d="M5 12h14M13 5l6 7-6 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </div>
       <div class="rv2-transform-side rv2-after">
         <span class="rv2-transform-label rv2-transform-label--after">After Tutero</span>
@@ -1785,7 +1767,7 @@
       <div class="rv2-cta-left">
         <p class="rv2-cta-text"><strong>See the difference in your child.</strong> Book a free consultation and we'll match them with a tutor this week.</p>
         <div class="rv2-cta-trust">
-          <svg viewBox="0 0 24 24" fill="none" width="15" height="15"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="#4CB092" stroke-width="2"/><path d="M9 12l2 2 4-4" stroke="#4CB092" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <svg viewBox="0 0 24 24" fill="none" width="15" height="15"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="currentColor" stroke-width="2"/><path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
           <span>Love your first lesson or it's free &middot; No contracts &middot; Cancel anytime</span>
         </div>
       </div>
@@ -1843,7 +1825,7 @@
       <!-- Set 1 — Real Trustpilot reviews -->
       <div class="story-card">
         <div class="story-image">
-          <img src="images/story-jessica-thompson.png" alt="Jessica and her son at home, relieved after finding the right tutor for autism support">
+          <img loading="lazy" src="images/story-jessica-thompson.png" alt="Jessica and her son at home, relieved after finding the right tutor for autism support">
           <div class="story-result">&#129513; Autism: perfectly matched</div>
         </div>
         <div class="story-body">
@@ -1861,7 +1843,7 @@
       </div>
       <div class="story-card">
         <div class="story-image">
-          <img src="images/story-carrie-lizzio.png" alt="Carrie and her daughter at the kitchen table, Queensland home, calm after anxious times">
+          <img loading="lazy" src="images/story-carrie-lizzio.png" alt="Carrie and her daughter at the kitchen table, Queensland home, calm after anxious times">
           <div class="story-result">&#128156; Anxiety &rarr; Confidence</div>
         </div>
         <div class="story-body">
@@ -1879,7 +1861,7 @@
       </div>
       <div class="story-card">
         <div class="story-image">
-          <img src="images/story-leo-filippello.png" alt="Leo and daughter Natalia on the couch, calm and settled after a tutoring session">
+          <img loading="lazy" src="images/story-leo-filippello.png" alt="Leo and daughter Natalia on the couch, calm and settled after a tutoring session">
           <div class="story-result">&#128154; Comfort: exactly what Natalia needed</div>
         </div>
         <div class="story-body">
@@ -1897,7 +1879,7 @@
       </div>
       <div class="story-card">
         <div class="story-image">
-          <img src="images/story-warren.png" alt="Warren and son Lawson in the living room, quiet pride at a graded worksheet">
+          <img loading="lazy" src="images/story-warren.png" alt="Warren and son Lawson in the living room, quiet pride at a graded worksheet">
           <div class="story-result">&#129504; Patience: made all the difference</div>
         </div>
         <div class="story-body">
@@ -1915,7 +1897,7 @@
       </div>
       <div class="story-card">
         <div class="story-image">
-          <img src="images/story-bianca-mcgill.png" alt="Bianca kneeling beside her daughter at the kitchen table, patient and encouraging">
+          <img loading="lazy" src="images/story-bianca-mcgill.png" alt="Bianca kneeling beside her daughter at the kitchen table, patient and encouraging">
           <div class="story-result">&#128200; Progress: remarkable</div>
         </div>
         <div class="story-body">
@@ -1933,7 +1915,7 @@
       </div>
       <div class="story-card">
         <div class="story-image">
-          <img src="images/story-lorraine.png" alt="Lorraine and teenage daughter at the dining table, laptop open, calm and focused">
+          <img loading="lazy" src="images/story-lorraine.png" alt="Lorraine and teenage daughter at the dining table, laptop open, calm and focused">
           <div class="story-result">&#10024; Confidence: back in class</div>
         </div>
         <div class="story-body">
@@ -1951,7 +1933,7 @@
       </div>
       <div class="story-card">
         <div class="story-image">
-          <img src="images/story-lovethetees.png" alt="Mum sitting on the couch with her 12-year-old son, maths book in hand, calm focus">
+          <img loading="lazy" src="images/story-lovethetees.png" alt="Mum sitting on the couch with her 12-year-old son, maths book in hand, calm focus">
           <div class="story-result">&#8734;&#65039; Maths: finally clicked</div>
         </div>
         <div class="story-body">
@@ -1969,7 +1951,7 @@
       </div>
       <div class="story-card">
         <div class="story-image">
-          <img src="images/story-amanda-tobin.png" alt="Amanda holding up her son's graded test paper in the kitchen, son beside her with quiet pride">
+          <img loading="lazy" src="images/story-amanda-tobin.png" alt="Amanda holding up her son's graded test paper in the kitchen, son beside her with quiet pride">
           <div class="story-result">&#128208; Maths: grade improved</div>
         </div>
         <div class="story-body">
@@ -1988,7 +1970,7 @@
       <!-- Duplicate set for seamless loop -->
       <div class="story-card">
         <div class="story-image">
-          <img src="images/story-jessica-thompson.png" alt="Jessica and her son at home, relieved after finding the right tutor for autism support">
+          <img loading="lazy" src="images/story-jessica-thompson.png" alt="Jessica and her son at home, relieved after finding the right tutor for autism support">
           <div class="story-result">&#129513; Autism: perfectly matched</div>
         </div>
         <div class="story-body">
@@ -2006,7 +1988,7 @@
       </div>
       <div class="story-card">
         <div class="story-image">
-          <img src="images/story-carrie-lizzio.png" alt="Carrie and her daughter at the kitchen table, Queensland home, calm after anxious times">
+          <img loading="lazy" src="images/story-carrie-lizzio.png" alt="Carrie and her daughter at the kitchen table, Queensland home, calm after anxious times">
           <div class="story-result">&#128156; Anxiety &rarr; Confidence</div>
         </div>
         <div class="story-body">
@@ -2024,7 +2006,7 @@
       </div>
       <div class="story-card">
         <div class="story-image">
-          <img src="images/story-leo-filippello.png" alt="Leo and daughter Natalia on the couch, calm and settled after a tutoring session">
+          <img loading="lazy" src="images/story-leo-filippello.png" alt="Leo and daughter Natalia on the couch, calm and settled after a tutoring session">
           <div class="story-result">&#128154; Comfort: exactly what Natalia needed</div>
         </div>
         <div class="story-body">
@@ -2042,7 +2024,7 @@
       </div>
       <div class="story-card">
         <div class="story-image">
-          <img src="images/story-warren.png" alt="Warren and son Lawson in the living room, quiet pride at a graded worksheet">
+          <img loading="lazy" src="images/story-warren.png" alt="Warren and son Lawson in the living room, quiet pride at a graded worksheet">
           <div class="story-result">&#129504; Patience: made all the difference</div>
         </div>
         <div class="story-body">
@@ -2060,7 +2042,7 @@
       </div>
       <div class="story-card">
         <div class="story-image">
-          <img src="images/story-bianca-mcgill.png" alt="Bianca kneeling beside her daughter at the kitchen table, patient and encouraging">
+          <img loading="lazy" src="images/story-bianca-mcgill.png" alt="Bianca kneeling beside her daughter at the kitchen table, patient and encouraging">
           <div class="story-result">&#128200; Progress: remarkable</div>
         </div>
         <div class="story-body">
@@ -2078,7 +2060,7 @@
       </div>
       <div class="story-card">
         <div class="story-image">
-          <img src="images/story-lorraine.png" alt="Lorraine and teenage daughter at the dining table, laptop open, calm and focused">
+          <img loading="lazy" src="images/story-lorraine.png" alt="Lorraine and teenage daughter at the dining table, laptop open, calm and focused">
           <div class="story-result">&#10024; Confidence: back in class</div>
         </div>
         <div class="story-body">
@@ -2096,7 +2078,7 @@
       </div>
       <div class="story-card">
         <div class="story-image">
-          <img src="images/story-lovethetees.png" alt="Mum sitting on the couch with her 12-year-old son, maths book in hand, calm focus">
+          <img loading="lazy" src="images/story-lovethetees.png" alt="Mum sitting on the couch with her 12-year-old son, maths book in hand, calm focus">
           <div class="story-result">&#8734;&#65039; Maths: finally clicked</div>
         </div>
         <div class="story-body">
@@ -2114,7 +2096,7 @@
       </div>
       <div class="story-card">
         <div class="story-image">
-          <img src="images/story-amanda-tobin.png" alt="Amanda holding up her son's graded test paper in the kitchen, son beside her with quiet pride">
+          <img loading="lazy" src="images/story-amanda-tobin.png" alt="Amanda holding up her son's graded test paper in the kitchen, son beside her with quiet pride">
           <div class="story-result">&#128208; Maths: grade improved</div>
         </div>
         <div class="story-body">
@@ -2277,7 +2259,7 @@
         </div>
       </div>
       <div class="success-cta" style="border-top-color: rgba(255,255,255,.15);">
-        <a href="thank-you.html" class="success-cta-btn">Learn more about what's next &rarr;</a>
+        <a href="/tp/online-tutoring/a/" class="success-cta-btn">Learn more about what's next &rarr;</a>
       </div>
     </div>
   </div>
@@ -2285,9 +2267,12 @@
 
 </div>
 
-<script src="/shared/form-helpers.js"></script>
-<script src="/shared/confetti.js"></script>
-<script src="/shared/scroll-reveal.js"></script>
+<script defer src="/shared/analytics.js"></script>
+<script defer src="/shared/form-helpers.js"></script>
+<script defer src="/shared/lead.js"></script>
+<script defer src="/shared/submit-animation.js"></script>
+<script defer src="/shared/confetti.js"></script>
+<script defer src="/shared/scroll-reveal.js"></script>
 
 <script>
   // ── Hero Image Carousel ──

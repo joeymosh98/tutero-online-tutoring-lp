@@ -5,9 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Thank You — Tutero Online Tutoring</title>
   <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" href="/shared/images/tutero-logo.svg" type="image/svg+xml">
+  <meta name="theme-color" content="#FF8412">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/shared/css/tokens.css">
+  <link rel="stylesheet" href="/shared/css/reset.css">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -354,10 +358,10 @@
     <div class="footer-divider"></div>
 
     <div class="footer-bottom">
-      <img src="/shared/images/tutero-logo.svg" alt="Tutero" class="footer-logo">
+      <img loading="lazy" src="/shared/images/tutero-logo.svg" alt="Tutero" class="footer-logo">
       <div class="footer-links">
-        <a href="https://www.tutero.com.au/terms" target="_blank">Terms of Service</a>
-        <a href="https://www.tutero.com.au/privacy" target="_blank">Privacy Policy</a>
+        <a href="https://www.tutero.com.au/terms" target="_blank" rel="nofollow noopener">Terms of Service</a>
+        <a href="https://www.tutero.com.au/privacy" target="_blank" rel="nofollow noopener">Privacy Policy</a>
       </div>
     </div>
     <p class="footer-copyright">&copy; 2026 Tutero. All rights reserved.</p>
@@ -406,10 +410,11 @@
      Scripts
      ════════════════════════════════════════════════════ -->
 
-<script src="/shared/utm.js"></script>
-<script src="/shared/confetti.js"></script>
-<script src="/shared/scroll-reveal.js"></script>
-<script src="/shared/plan-viewer.js"></script>
+<script defer src="/shared/analytics.js"></script>
+<script defer src="/shared/utm.js"></script>
+<script defer src="/shared/confetti.js"></script>
+<script defer src="/shared/scroll-reveal.js"></script>
+<script defer src="/shared/plan-viewer.js"></script>
 <script>
 (function() {
   'use strict';

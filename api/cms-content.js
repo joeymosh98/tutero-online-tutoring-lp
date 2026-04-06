@@ -33,6 +33,6 @@ module.exports = async function handler(req, res) {
     }
   } catch (err) {
     console.error('CMS read error:', err);
-    return res.status(200).json({});
+    return res.status(500).json({ success: false, error: 'Internal server error' });
   }
 };
