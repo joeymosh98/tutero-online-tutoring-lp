@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+  <meta charset="UTF-8">
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" href="/shared/images/tutero-logo.svg" type="image/svg+xml">
+  <meta name="theme-color" content="#832EC5">
+  <title>Redirecting…</title>
+  <script>
+    (function() {
+      var key = 'tutero_sn_ab_variant';
+      var variants = ['a', 'b'];
+      var variant = localStorage.getItem(key);
+      if (!variant || variants.indexOf(variant) === -1) {
+        variant = variants[Math.floor(Math.random() * variants.length)];
+        localStorage.setItem(key, variant);
+      }
+      var search = window.location.search || '';
+      window.location.replace(variant + '/' + search);
+    })();
+  </script>
+</head>
+<body></body>
+</html>
