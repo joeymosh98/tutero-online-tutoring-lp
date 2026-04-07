@@ -42,108 +42,234 @@
 
     <!-- SCREEN 1: Top Recommendations -->
     <section class="screen active" id="screen-match">
-      <div class="match-wrap">
+      <div class="match-layout">
+        <div class="match-wrap">
 
-        <!-- Header -->
-        <div class="reco-header">
-          <p class="reco-eyebrow">Top recommendations</p>
-          <h1 class="reco-headline" id="matchHeadline">The best tutors for Emma</h1>
-          <p class="reco-subtitle" id="matchSubtitle">Based on Year 8 Maths · 200+ reviewed</p>
+          <!-- Header -->
+          <div class="reco-header">
+            <p class="reco-eyebrow">Top recommendations</p>
+            <h1 class="reco-headline" id="matchHeadline">The best tutors for Emma</h1>
+            <p class="reco-subtitle" id="matchSubtitle">Based on Year 8 Maths · 200+ reviewed</p>
+            <p class="reco-context" id="matchContext">Falling behind in algebra, losing confidence in class · needs patience</p>
+          </div>
+
+          <!-- Recommendation #1 — Gold -->
+          <div class="reco-card reco-card--gold" data-tutor-index="0" tabindex="0">
+            <div class="reco-medal-row">
+              <div class="reco-medal reco-medal--gold">
+                <svg class="medal-star-icon" viewBox="0 0 16 16" fill="currentColor" width="14" height="14">
+                  <path d="M8 1l1.8 3.6L14 5.5l-3 2.9.7 4.1L8 10.4l-3.7 2.1.7-4.1-3-2.9 4.2-.9z"/>
+                </svg>
+              </div>
+              <span class="reco-label">Best Match</span>
+              <span class="reco-medal-score reco-medal-score--gold" id="tutor1PctBadge">97% match</span>
+            </div>
+
+            <div class="reco-profile">
+              <img class="reco-photo reco-photo--lg" id="tutor1Photo" src="/lp/special-needs-tutoring/a/images/hero-tutor-profile.png" alt="Sarah R.">
+              <div class="reco-info">
+                <h3 class="reco-name" id="tutor1Name">Sarah R.</h3>
+                <p class="reco-tagline" id="tutor1Tagline">Year 7–12 Maths specialist · 6 years experience</p>
+              </div>
+            </div>
+
+            <div class="reco-suitability">
+              <div class="reco-suit-header">
+                <span class="reco-suit-label">Suitability</span>
+                <span class="reco-suit-pct" id="tutor1Pct">97%</span>
+              </div>
+              <div class="reco-suit-track">
+                <div class="reco-suit-fill" id="tutor1Bar" style="width:0%"></div>
+              </div>
+            </div>
+
+            <div class="reco-stats">
+              <div class="reco-stat">
+                <div class="reco-stat-value" id="tutor1Years">6</div>
+                <div class="reco-stat-label">Years</div>
+              </div>
+              <div class="reco-stat">
+                <div class="reco-stat-value" id="tutor1Students">84</div>
+                <div class="reco-stat-label">Students</div>
+              </div>
+              <div class="reco-stat">
+                <div class="reco-stat-value" id="tutor1Grade">1.5</div>
+                <div class="reco-stat-label">Avg grade jump</div>
+              </div>
+            </div>
+
+            <div class="reco-trust-row" id="tutor1Trust">
+              <span class="reco-trust-item"><span class="reco-trust-icon">✅</span> WWCC Verified</span>
+              <span class="reco-trust-item"><span class="reco-trust-icon">🎓</span> <span id="tutor1Education">B.Ed, University of Sydney</span></span>
+            </div>
+
+            <div class="reco-why">
+              <div class="reco-why-item">
+                <span class="reco-why-check">✓</span>
+                <span id="why1"></span>
+              </div>
+              <div class="reco-why-item">
+                <span class="reco-why-check">✓</span>
+                <span id="why2"></span>
+              </div>
+              <div class="reco-why-item">
+                <span class="reco-why-check">✓</span>
+                <span id="why3"></span>
+              </div>
+            </div>
+
+            <!-- Mobile inline expand -->
+            <div class="reco-expand" id="goldExpand">
+              <div class="reco-expand-inner">
+                <div class="expand-video-wrap">
+                  <img class="expand-video-thumb" id="expandThumb1" src="/lp/special-needs-tutoring/a/images/hero-tutor-profile.png" alt="">
+                  <div class="expand-play-overlay">
+                    <div class="expand-play-btn">
+                      <svg viewBox="0 0 24 24" fill="white"><polygon points="5,3 19,12 5,21"/></svg>
+                    </div>
+                    <span class="expand-video-label">Watch intro</span>
+                  </div>
+                </div>
+                <button class="btn-primary btn-green expand-book-btn" data-tutor-index="0" id="expandBook1">Book Emma's first lesson — 60% off</button>
+                <p class="expand-guarantee">❤️ Love the first lesson or it's free</p>
+              </div>
+            </div>
+
+            <div class="reco-expand-toggle">
+              <span class="expand-label">View profile</span>
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="2,4 6,8 10,4"/></svg>
+            </div>
+          </div>
+
+          <!-- Recommendation #2 — Silver -->
+          <div class="reco-card reco-card--silver" data-tutor-index="1" tabindex="0">
+            <div class="reco-medal-row">
+              <div class="reco-medal reco-medal--silver">
+                <svg class="medal-star-icon" viewBox="0 0 16 16" fill="currentColor" width="14" height="14">
+                  <path d="M8 1l1.8 3.6L14 5.5l-3 2.9.7 4.1L8 10.4l-3.7 2.1.7-4.1-3-2.9 4.2-.9z"/>
+                </svg>
+              </div>
+              <span class="reco-label">Runner Up</span>
+              <span class="reco-medal-score reco-medal-score--silver" id="tutor2PctBadge">91% match</span>
+            </div>
+
+            <div class="reco-profile">
+              <img loading="lazy" class="reco-photo reco-photo--lg" id="tutor2Photo" src="/shared/images/teacher-photo.jpg" alt="Emily K.">
+              <div class="reco-info">
+                <h3 class="reco-name" id="tutor2Name">Emily K.</h3>
+                <p class="reco-tagline" id="tutor2Tagline">Year 7–10 Maths specialist · 5 years experience</p>
+              </div>
+            </div>
+
+            <div class="reco-suitability">
+              <div class="reco-suit-header">
+                <span class="reco-suit-label">Suitability</span>
+                <span class="reco-suit-pct reco-suit-pct--silver" id="tutor2Pct">91%</span>
+              </div>
+              <div class="reco-suit-track">
+                <div class="reco-suit-fill reco-suit-fill--silver" id="tutor2Bar" style="width:0%"></div>
+              </div>
+            </div>
+
+            <div class="reco-stats">
+              <div class="reco-stat">
+                <div class="reco-stat-value" id="tutor2Years">5</div>
+                <div class="reco-stat-label">Years</div>
+              </div>
+              <div class="reco-stat">
+                <div class="reco-stat-value" id="tutor2Students">62</div>
+                <div class="reco-stat-label">Students</div>
+              </div>
+              <div class="reco-stat">
+                <div class="reco-stat-value" id="tutor2Grade">1.2</div>
+                <div class="reco-stat-label">Avg grade jump</div>
+              </div>
+            </div>
+
+            <div class="reco-trust-row" id="tutor2Trust">
+              <span class="reco-trust-item"><span class="reco-trust-icon">✅</span> WWCC Verified</span>
+              <span class="reco-trust-item"><span class="reco-trust-icon">🎓</span> <span id="tutor2Education">B.Sc, University of Melbourne</span></span>
+            </div>
+
+            <!-- Mobile inline expand -->
+            <div class="reco-expand" id="silverExpand">
+              <div class="reco-expand-inner">
+                <div class="expand-video-wrap">
+                  <img class="expand-video-thumb" id="expandThumb2" src="/shared/images/teacher-photo.jpg" alt="">
+                  <div class="expand-play-overlay">
+                    <div class="expand-play-btn">
+                      <svg viewBox="0 0 24 24" fill="white"><polygon points="5,3 19,12 5,21"/></svg>
+                    </div>
+                    <span class="expand-video-label">Watch intro</span>
+                  </div>
+                </div>
+                <button class="btn-primary btn-green expand-book-btn" data-tutor-index="1" id="expandBook2">Book Emma's first lesson — 60% off</button>
+                <p class="expand-guarantee">❤️ Love the first lesson or it's free</p>
+              </div>
+            </div>
+
+            <div class="reco-expand-toggle">
+              <span class="expand-label">View profile</span>
+              <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polyline points="2,4 6,8 10,4"/></svg>
+            </div>
+          </div>
+
         </div>
 
-        <!-- Recommendation #1 — Gold -->
-        <div class="reco-card reco-card--gold">
-          <div class="reco-medal-row">
-            <div class="reco-medal reco-medal--gold">1</div>
-            <span class="reco-label">Best Match</span>
-          </div>
-
-          <div class="reco-profile">
-            <img class="reco-photo reco-photo--lg" id="tutor1Photo" src="/lp/special-needs-tutoring/a/images/hero-tutor-profile.png" alt="Sarah R.">
-            <div class="reco-info">
-              <h3 class="reco-name" id="tutor1Name">Sarah R.</h3>
-              <p class="reco-tagline" id="tutor1Tagline">Year 7–12 Maths specialist · 6 years experience</p>
+        <!-- Preview Panel (desktop only) -->
+        <aside class="preview-panel" id="previewPanel" aria-hidden="true">
+          <div class="preview-panel-inner" id="previewPanelInner">
+            <div class="preview-video-wrap">
+              <img class="preview-video-thumb" id="previewThumb" src="" alt="">
+              <div class="preview-play-overlay">
+                <div class="preview-play-btn">
+                  <svg viewBox="0 0 24 24" fill="white"><polygon points="5,3 19,12 5,21"/></svg>
+                </div>
+                <span class="preview-video-label">Watch intro</span>
+              </div>
+            </div>
+            <div class="preview-info">
+              <div class="preview-name-row">
+                <h3 class="preview-tutor-name" id="previewName"></h3>
+                <div class="preview-suit-badge" id="previewSuit"></div>
+              </div>
+              <p class="preview-tagline" id="previewTagline"></p>
+              <div class="preview-stats">
+                <div class="preview-stat">
+                  <span class="preview-stat-value" id="previewYears"></span>
+                  <span class="preview-stat-label">Years</span>
+                </div>
+                <div class="preview-stat">
+                  <span class="preview-stat-value" id="previewStudents"></span>
+                  <span class="preview-stat-label">Students</span>
+                </div>
+                <div class="preview-stat">
+                  <span class="preview-stat-value" id="previewGrade"></span>
+                  <span class="preview-stat-label">Avg grade jump</span>
+                </div>
+              </div>
+              <div class="preview-why" id="previewWhy"></div>
+              <div class="preview-offer" id="previewOffer">
+                <span class="preview-offer-discount">60% off</span>
+                <span class="preview-offer-text" id="previewOfferText">Emma's first lesson</span>
+                <span class="preview-offer-timer">Held for <strong id="previewTimer">14:00</strong></span>
+              </div>
+              <button class="btn-primary btn-green preview-cta" id="previewBookBtn">
+                Book Emma's first lesson — 60% off
+              </button>
+              <p class="preview-guarantee">❤️ Love the first lesson or it's free</p>
             </div>
           </div>
-
-          <div class="reco-suitability">
-            <div class="reco-suit-header">
-              <span class="reco-suit-label">Suitability</span>
-              <span class="reco-suit-pct" id="tutor1Pct">97%</span>
+          <div class="preview-empty" id="previewEmpty">
+            <div class="preview-empty-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="color: var(--green); opacity: 0.7;">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                <circle cx="12" cy="7" r="4"/>
+              </svg>
             </div>
-            <div class="reco-suit-track">
-              <div class="reco-suit-fill" id="tutor1Bar" style="width:0%"></div>
-            </div>
+            <p>Hover over a tutor to preview their profile</p>
           </div>
-
-          <div class="reco-stats">
-            <div class="reco-stat">
-              <div class="reco-stat-value" id="tutor1Years">6</div>
-              <div class="reco-stat-label">Years</div>
-            </div>
-            <div class="reco-stat">
-              <div class="reco-stat-value" id="tutor1Students">84</div>
-              <div class="reco-stat-label">Students</div>
-            </div>
-            <div class="reco-stat">
-              <div class="reco-stat-value" id="tutor1Grade">1.5</div>
-              <div class="reco-stat-label">Avg grade jump</div>
-            </div>
-          </div>
-
-          <div class="reco-why">
-            <div class="reco-why-item">
-              <span class="reco-why-check">✓</span>
-              <span id="why1"></span>
-            </div>
-            <div class="reco-why-item">
-              <span class="reco-why-check">✓</span>
-              <span id="why2"></span>
-            </div>
-            <div class="reco-why-item">
-              <span class="reco-why-check">✓</span>
-              <span id="why3"></span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Recommendation #2 — Silver -->
-        <div class="reco-card reco-card--silver">
-          <div class="reco-medal-row">
-            <div class="reco-medal reco-medal--silver">2</div>
-            <span class="reco-label">Runner Up</span>
-          </div>
-
-          <div class="reco-compact">
-            <img loading="lazy" class="reco-photo reco-photo--sm" id="tutor2Photo" src="/shared/images/teacher-photo.jpg" alt="Emily K.">
-            <div class="reco-compact-info">
-              <h3 class="reco-compact-name" id="tutor2Name">Emily K.</h3>
-              <p class="reco-compact-tagline" id="tutor2Tagline">Year 7–10 Maths specialist · 5 years experience</p>
-              <p class="reco-compact-stats" id="tutor2Stats">5 yrs · 62 students · 1.2 avg grade jump</p>
-            </div>
-            <div class="reco-compact-score">
-              <span class="reco-compact-pct" id="tutor2Pct">91</span>
-              <span class="reco-compact-pct-label">% suit.</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- Offer banner -->
-        <div class="offer-banner">
-          <div class="offer-left">
-            <span class="offer-discount">60% off</span>
-            <span class="offer-text" id="offerText">Emma's first lesson</span>
-          </div>
-          <div class="offer-timer">
-            <span class="timer-text">Held for <strong id="countdownTimer">14:00</strong></span>
-          </div>
-        </div>
-
-        <!-- CTA -->
-        <button class="btn-primary btn-green" id="bookBtn">Book Sarah's first lesson — 60% off</button>
-        <p class="no-contract">No contracts. Cancel Tutero anytime.</p>
-        <div class="divider"></div>
-        <button class="link-secondary" id="otherMatchesLink">Not the right fit? See other matches</button>
+        </aside>
       </div>
     </section>
 
@@ -158,12 +284,29 @@
           <div class="checkout-action">
             <div class="checkout-card" id="slotPicker">
               <h3 class="checkout-card-title" id="slotPickerTitle">Pick a time for Emma's first lesson</h3>
+              <div class="slot-week-nav">
+                <button class="slot-week-btn slot-week-btn--active" id="weekBtn0">This week</button>
+                <button class="slot-week-btn" id="weekBtn1">Next week</button>
+              </div>
               <div class="slot-grid" id="slotGrid"></div>
+              <button class="slot-none-link" id="slotNoneBtn">None of these times work</button>
+            </div>
+
+            <div class="checkout-guarantee" id="checkoutGuarantee">
+              <h4 class="guarantee-title">❤️ Love the first lesson or it's free</h4>
+              <div class="guarantee-item"><span class="gi-check">✓</span> Full refund if your child doesn't love it</div>
+              <div class="guarantee-item"><span class="gi-check">✓</span> Cancel after any lesson — no lock-in contracts</div>
+              <div class="guarantee-item"><span class="gi-check">✓</span> Switch tutors anytime — no questions, no hassle</div>
+              <div class="guarantee-item"><span class="gi-check">✓</span> Every tutor is WWCC verified and background checked</div>
             </div>
 
             <div class="checkout-card" id="paymentView" style="display:none">
               <div class="selected-slot-banner">
-                <span id="selectedSlotText"></span>
+                <div class="selected-slot-icon">📅</div>
+                <div class="selected-slot-details">
+                  <div class="selected-slot-label">Your lesson</div>
+                  <div class="selected-slot-text" id="selectedSlotText"></div>
+                </div>
                 <button class="change-btn" id="changeSlotBtn">Change</button>
               </div>
               <h3 class="checkout-card-title">Complete your booking</h3>
@@ -197,12 +340,12 @@
               </button>
               <p class="no-contract">No contracts. Cancel Tutero anytime.</p>
               <div class="after-booking">
-                <h4 class="after-booking-title">After you book</h4>
+                <h4 class="after-booking-title">What happens next</h4>
                 <ol class="after-booking-list">
-                  <li>Your tutor receives your child's profile</li>
-                  <li>Confirmation sent to your email</li>
-                  <li>Your tutor sends a personal intro message</li>
-                  <li>Progress report after lesson 1</li>
+                  <li id="nextStep1">Tutor prepares a personalised session for Emma</li>
+                  <li id="nextStep2">Emma joins a 1-on-1 video call</li>
+                  <li id="nextStep4">Lesson targets exactly where she needs help</li>
+                  <li>Progress summary sent to you after</li>
                 </ol>
               </div>
             </div>
@@ -211,12 +354,10 @@
           <div class="checkout-trust">
             <div class="trust-block tutor-profile-card">
               <div class="tutor-profile-header">
-                <div class="mini-avatar" id="miniAvatar">
-                  <span class="tutor-initials" id="miniInitials">SR</span>
-                </div>
+                <img class="checkout-tutor-photo" id="checkoutTutorPhoto" src="/lp/special-needs-tutoring/a/images/hero-tutor-profile.png" alt="Sarah R.">
                 <div class="mini-info">
                   <strong id="miniTutorName">Sarah R.</strong>
-                  <span class="mini-match" id="miniMatch">96% match · #1 pick</span>
+                  <span class="mini-match" id="miniMatch">97% match · #1 pick</span>
                 </div>
               </div>
               <div class="tutor-stats-grid">
@@ -233,6 +374,9 @@
                   <span class="stat-label">Avg grade jump</span>
                 </div>
               </div>
+              <div class="tutor-bio">
+                <p id="tutorBio"></p>
+              </div>
               <div class="tutor-details">
                 <div class="detail-row">
                   <span class="detail-icon">🎓</span>
@@ -240,7 +384,7 @@
                 </div>
                 <div class="detail-row">
                   <span class="detail-icon">✅</span>
-                  <span class="detail-text">Working with Children Check verified</span>
+                  <span class="detail-text">WWCC verified & background checked</span>
                 </div>
                 <div class="detail-row">
                   <span class="detail-icon">⚡</span>
@@ -248,22 +392,32 @@
                 </div>
               </div>
             </div>
-            <div class="trust-block guarantee-block">
-              <h4 class="guarantee-title">The Tutero Guarantee</h4>
-              <div class="guarantee-item"><span class="gi-check">✓</span> Expert-matched tutor for your child</div>
-              <div class="guarantee-item"><span class="gi-check">✓</span> Personalised learning plan from lesson 1</div>
-              <div class="guarantee-item"><span class="gi-check">✓</span> Switch tutors anytime, no questions asked</div>
-              <div class="guarantee-item"><span class="gi-check">✓</span> 100% money-back guarantee</div>
-            </div>
-            <div class="trust-block review-card">
-              <div class="review-stars">★★★★★</div>
-              <p class="review-text">"Within two weeks, my daughter went from dreading Maths homework to actually asking to do extra practice. Her tutor just gets her."</p>
-              <div class="review-author">
-                <strong>Karen M.</strong>
-                <span>Parent of Year 8 student</span>
-              </div>
-            </div>
+
+            <div class="trust-block reviews-block" id="reviewsBlock"></div>
           </div>
+        </div>
+      </div>
+
+      <!-- "None of these work" modal -->
+      <div class="slot-none-modal" id="slotNoneModal">
+        <div class="slot-none-modal-card">
+          <h3 class="slot-none-modal-title">No worries — we'll find a time that works</h3>
+          <p class="slot-none-modal-sub">How would you like to proceed?</p>
+          <button class="slot-none-option" onclick="closeSlotNoneModal(); alert('Our team will call you within 2 hours to find the perfect time.');">
+            <span class="slot-none-option-icon">📞</span>
+            <span class="slot-none-option-text">
+              <strong>Get a call from our team</strong>
+              <span>We'll call you to find a time that suits your family</span>
+            </span>
+          </button>
+          <button class="slot-none-option" onclick="closeSlotNoneModal(); alert('We\u2019ll email you a link with more availability options.');">
+            <span class="slot-none-option-icon">📧</span>
+            <span class="slot-none-option-text">
+              <strong>Send me more times</strong>
+              <span>We'll email additional availability for your tutor</span>
+            </span>
+          </button>
+          <button class="slot-none-modal-close" onclick="closeSlotNoneModal();">Maybe later</button>
         </div>
       </div>
 
