@@ -81,7 +81,34 @@
           "thankYouPageId": "online-tutoring-quiz-ty"
         }
       ],
-      "marketplacePages": [],
+      "marketplacePages": [
+        {
+          "id": "tutor-matching",
+          "name": "Tutor Matching",
+          "description": "AI-matched tutor marketplace with hover preview panel and checkout flow",
+          "path": "/mp/tutor-matching",
+          "status": "active",
+          "builtWith": "custom-html",
+          "grade": null,
+          "hasSplitter": false,
+          "variants": [
+            {
+              "id": "a",
+              "label": "Base",
+              "path": "/mp/tutor-matching/a/"
+            },
+            {
+              "id": "b",
+              "label": "Preview Panel",
+              "path": "/mp/tutor-matching/b/"
+            }
+          ],
+          "splitterPath": null,
+          "createdAt": "2026-04-07",
+          "tags": ["google-ads", "marketplace", "ab-test"],
+          "thankYouPageId": null
+        }
+      ],
       "thankYouPages": [
         {
           "id": "online-tutoring-ty",
