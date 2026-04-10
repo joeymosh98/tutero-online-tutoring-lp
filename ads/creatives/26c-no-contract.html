@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ad 26C — No Contract</title>
+<link href="https://api.fontshare.com/v2/css?f[]=satoshi@700,900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: #0a0a0a;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+    padding: 40px 20px;
+  }
+
+  .ad {
+    width: 1080px;
+    height: 1350px;
+    border-radius: 0;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .bg-photo {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 25%;
+  }
+
+  .card {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 20px;
+    padding: 40px 44px;
+    max-width: 760px;
+    width: 80%;
+  }
+
+  .card p {
+    font-family: 'Satoshi', sans-serif;
+    font-weight: 700;
+    font-size: 38px;
+    line-height: 1.35;
+    color: #1A1A2E;
+    text-align: center;
+  }
+
+  .footer {
+    position: absolute;
+    bottom: 48px;
+    left: 60px;
+    right: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .footer .logo { height: 30px; width: auto; filter: brightness(0) invert(1); }
+  .footer .url {
+    font-family: 'Hanken Grotesk', sans-serif;
+    font-weight: 600;
+    font-size: 16px;
+    color: rgba(255,255,255,0.6);
+  }
+</style>
+</head>
+<body>
+
+<div class="ad">
+  <img class="bg-photo" src="../images/16a-every-family.png" alt="Happy family during online tutoring session">
+
+  <div class="card">
+    <p>No contract. No upfront payment. Just proof after every lesson.</p>
+  </div>
+
+  <div class="footer">
+    <img class="logo" src="../images/tutero-logo.svg" alt="Tutero">
+    <span class="url">tutero.com.au</span>
+  </div>
+</div>
+
+</body>
+</html>

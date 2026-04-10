@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ad 19C — One Lesson</title>
+<link href="https://api.fontshare.com/v2/css?f[]=satoshi@700,900&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: #0a0a0a;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+    padding: 40px 20px;
+  }
+
+  /* Layout Blueprint #12 — The Negative Space Hero
+     Deliberate emptiness: 60%+ canvas is blank.
+     One small element placed off-centre.
+     Pattern-break in a batch. */
+  .ad {
+    width: 1080px;
+    height: 1350px;
+    background: #F0FAFF;
+    border-radius: 0;
+    overflow: hidden;
+    position: relative;
+  }
+
+  /* Content cluster — placed in the bottom-left, leaving top 65% empty */
+  .content {
+    position: absolute;
+    bottom: 56px;
+    left: 56px;
+    right: 56px;
+  }
+
+  .hero-text {
+    flex-shrink: 0;
+    font-family: 'Satoshi', sans-serif;
+    font-weight: 900;
+    font-size: 96px;
+    line-height: 1.2;
+    background: linear-gradient(90deg, #1D49E3 0%, #00A3FF 15%, #66A693 35%, #E8A909 60%, #FF7A00 85%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    margin-bottom: 16px;
+    max-width: 700px;
+  }
+
+  .sub-text {
+    font-family: 'Hanken Grotesk', sans-serif;
+    font-weight: 600;
+    font-size: 32px;
+    line-height: 1.45;
+    color: #004166;
+    opacity: 0.7;
+    max-width: 640px;
+    margin-bottom: 40px;
+  }
+
+  .details {
+    display: flex;
+    gap: 24px;
+    margin-bottom: 32px;
+  }
+
+  .detail-pill {
+    background: #FFFFFF;
+    border-radius: 100px;
+    padding: 14px 28px;
+    font-family: 'Hanken Grotesk', sans-serif;
+    font-weight: 600;
+    font-size: 22px;
+    color: #004166;
+    box-shadow: 0 2px 8px rgba(0,65,102,0.06);
+  }
+
+  .footer {
+    flex-shrink: 0;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .footer .logo { height: 34px; width: auto; }
+  .footer .url {
+    font-family: 'Hanken Grotesk', sans-serif;
+    font-weight: 600;
+    font-size: 18px;
+    color: #004166;
+    opacity: 0.5;
+  }
+
+  /* Photo — placed off-centre in the negative space */
+  .photo-wrap {
+    position: absolute;
+    top: 80px;
+    right: 56px;
+    width: 520px;
+    height: 650px;
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow: 0 8px 40px rgba(0,65,102,0.08);
+  }
+  .photo-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 20%;
+  }
+</style>
+</head>
+<body class="hide-url">
+
+<div class="ad">
+  <div class="photo-wrap">
+    <img src="../images/19c-one-lesson.png" alt="Girl smiling during online tutoring session">
+  </div>
+
+  <div class="content">
+    <div class="hero-text" style="margin-top: 10px; margin-left: 1px;">One Lesson</div>
+    <div class="sub-text">That's all we're asking. One hour with a real tutor who already knows where your child is stuck. If it doesn't feel right, you walk away. No invoice. No follow-up. No strings.</div>
+
+    <div class="details">
+      <div class="detail-pill">No Contract</div>
+      <div class="detail-pill">Pay Per Lesson</div>
+      <div class="detail-pill">Prep – Year 12</div>
+    </div>
+
+    <div class="footer">
+      
+      
+    </div>
+  </div>
+</div>
+
+
+
+</body></html>

@@ -647,7 +647,7 @@
     editError.style.display = 'none';
     editSuccess.style.display = 'none';
     editSaveBtn.disabled = false;
-    editSaveBtn.textContent = 'Save Changes';
+    editSaveBtn.innerHTML = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg> Save Changes';
 
     // Build form
     var html = '';
@@ -816,7 +816,7 @@
 
     // Save to API
     editSaveBtn.disabled = true;
-    editSaveBtn.textContent = 'Saving...';
+    editSaveBtn.innerHTML = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg> Saving...';
     editError.style.display = 'none';
     editSuccess.style.display = 'none';
 
@@ -832,7 +832,7 @@
       .then(function(res) { return res.json(); })
       .then(function(data) {
         editSaveBtn.disabled = false;
-        editSaveBtn.textContent = 'Save Changes';
+        editSaveBtn.innerHTML = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg> Save Changes';
         if (data.success) {
           editSuccess.style.display = 'block';
           setTimeout(function() {
@@ -847,7 +847,7 @@
       })
       .catch(function() {
         editSaveBtn.disabled = false;
-        editSaveBtn.textContent = 'Save Changes';
+        editSaveBtn.innerHTML = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg> Save Changes';
         editError.textContent = 'Connection error. Try again.';
         editError.style.display = 'block';
       });

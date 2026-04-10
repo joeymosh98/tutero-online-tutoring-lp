@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ad 22C — Three Years Later</title>
+<link href="https://api.fontshare.com/v2/css?f[]=satoshi@700,900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: #0a0a0a;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+    padding: 40px 20px;
+  }
+
+  /* Layout Blueprint #11 — The Storyboard Strip
+     Sequential narrative in static frame: 3 horizontal bands
+     telling Year 5 / Year 7 / Year 9. */
+  .ad {
+    width: 1080px;
+    height: 1350px;
+    background: #F0FAFF;
+    border-radius: 0;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    padding: 48px 56px 56px;
+  }
+
+  .eyebrow {
+    flex-shrink: 0;
+    background: #C2E9FF;
+    border-radius: 100px;
+    padding: 10px 28px;
+    align-self: flex-start;
+    margin-bottom: 20px;
+  }
+  .eyebrow span {
+    font-family: 'Hanken Grotesk', sans-serif;
+    font-weight: 600;
+    font-size: 22px;
+    color: #004166;
+  }
+
+  .hero-text {
+    flex-shrink: 0;
+    font-family: 'Satoshi', sans-serif;
+    font-weight: 900;
+    font-size: 64px;
+    line-height: 1.25;
+    background: linear-gradient(90deg, #1D49E3 0%, #00A3FF 15%, #66A693 35%, #E8A909 60%, #FF7A00 85%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    margin-bottom: 32px;
+  }
+
+  /* The three story bands */
+  .story-strip {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 24px;
+  }
+
+  .band {
+    flex: 1;
+    min-height: 0;
+    background: #FFFFFF;
+    border-radius: 20px;
+    padding: 32px 36px;
+    display: flex;
+    align-items: center;
+    gap: 28px;
+    box-shadow: 0 2px 12px rgba(0,65,102,0.06);
+  }
+
+  .band-label {
+    font-family: 'Hanken Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #FFFFFF;
+    background: #004166;
+    border-radius: 10px;
+    padding: 10px 18px;
+    flex-shrink: 0;
+    min-width: 120px;
+    text-align: center;
+  }
+
+  .band-label.year-7 {
+    background: #1D49E3;
+  }
+
+  .band-label.year-9 {
+    background: #22c55e;
+  }
+
+  .band-photo {
+    width: 140px;
+    height: 140px;
+    border-radius: 16px;
+    object-fit: cover;
+    flex-shrink: 0;
+  }
+
+  .band-content {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .band-quote {
+    font-family: 'Hanken Grotesk', sans-serif;
+    font-weight: 600;
+    font-size: 28px;
+    line-height: 1.35;
+    color: #004166;
+  }
+
+  .band-note {
+    font-family: 'Hanken Grotesk', sans-serif;
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 1.4;
+    color: #5A5A70;
+    margin-top: 6px;
+  }
+
+  .cta-row {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    margin-bottom: 24px;
+  }
+
+  .cta-text {
+    font-family: 'Hanken Grotesk', sans-serif;
+    font-weight: 600;
+    font-size: 26px;
+    color: #004166;
+  }
+
+  .cta-pill {
+    background: #1D49E3;
+    border-radius: 100px;
+    padding: 14px 36px;
+    font-family: 'Hanken Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 22px;
+    color: #FFFFFF;
+    flex-shrink: 0;
+  }
+
+  .footer {
+    flex-shrink: 0;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .footer .logo { height: 34px; width: auto; }
+  .footer .url {
+    font-family: 'Hanken Grotesk', sans-serif;
+    font-weight: 600;
+    font-size: 18px;
+    color: #004166;
+    opacity: 0.5;
+  }
+</style>
+</head>
+<body>
+
+<div class="ad">
+  <div class="eyebrow"><span>Every parent remembers the year</span></div>
+
+  <div class="hero-text">The gap opened<br>three years ago.</div>
+
+  <div class="story-strip">
+    <div class="band">
+      <div class="band-label">Year 5</div>
+      <img class="band-photo" src="../images/22c-year5.png" alt="Child smiling with school backpack">
+      <div class="band-content">
+        <div class="band-quote">"She loved school."</div>
+        <div class="band-note">Homework was easy. Parent-teacher night was a breeze.</div>
+      </div>
+    </div>
+
+    <div class="band">
+      <div class="band-label year-7">Year 7</div>
+      <img class="band-photo" src="../images/22c-year7.png" alt="Child looking stressed over homework">
+      <div class="band-content">
+        <div class="band-quote">"She stopped talking about it."</div>
+        <div class="band-note">The shrug replaced the stories. 'Fine' replaced everything.</div>
+      </div>
+    </div>
+
+    <div class="band">
+      <div class="band-label year-9">Year 9</div>
+      <img class="band-photo" src="../images/22c-year9.png" alt="Child smiling during online tutoring">
+      <div class="band-content">
+        <div class="band-quote">"Her tutor found where it started."</div>
+        <div class="band-note">Same person every week. Lesson report every Tuesday.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="cta-row">
+    <div class="cta-text">No contract. Start with one lesson.</div>
+    <div class="cta-pill">Book a 1-on-1 lesson &rarr;</div>
+  </div>
+
+  <div class="footer">
+    <img class="logo" src="../images/tutero-logo.svg" alt="Tutero">
+    <span class="url">tutero.com.au</span>
+  </div>
+</div>
+
+</body>
+</html>

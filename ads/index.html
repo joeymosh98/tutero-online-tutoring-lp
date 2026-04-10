@@ -1,0 +1,3004 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <title>Tutero Ads — Australia Paid Social</title>
+  <style>
+    :root {
+      --bg: #0f0f0f;
+      --surface: #1a1a1a;
+      --border: #2a2a2a;
+      --text: #e5e5e5;
+      --muted: #888;
+      --accent: #6366f1;
+      --accent-hover: #818cf8;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    /* Header */
+    header {
+      border-bottom: 1px solid var(--border);
+      padding: 20px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    header h1 {
+      font-size: 18px;
+      font-weight: 600;
+      letter-spacing: -0.3px;
+    }
+    header h1 span { color: var(--muted); font-weight: 400; }
+    .badge {
+      font-size: 11px;
+      background: #1e1b2e;
+      color: var(--accent);
+      padding: 4px 10px;
+      border-radius: 100px;
+      font-weight: 500;
+    }
+
+    /* Toolbar */
+    .toolbar {
+      padding: 16px 32px;
+      display: flex;
+      gap: 8px;
+      border-bottom: 1px solid var(--border);
+    }
+    .toolbar button {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 7px 14px;
+      border-radius: 6px;
+      font-size: 13px;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .toolbar button:hover { border-color: var(--accent); color: #fff; }
+    .toolbar button.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+
+    /* Hypothesis sections */
+    .sections { padding: 32px; }
+    .hypothesis-section { margin-bottom: 40px; }
+    .hypothesis-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+    }
+    .hypothesis-header h2 {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--text);
+      letter-spacing: -0.3px;
+    }
+    .hypothesis-header .count {
+      font-size: 12px;
+      color: var(--muted);
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 2px 10px;
+      border-radius: 100px;
+    }
+
+    /* Grid */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 24px;
+    }
+
+    /* Ad Card */
+    .ad-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
+      transition: border-color 0.2s;
+    }
+    .ad-card:hover { border-color: #444; }
+
+    .ad-card .preview {
+      aspect-ratio: 4 / 5;
+      background: #222;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .ad-card .preview .iframe-wrap {
+      position: absolute;
+      inset: 0;
+    }
+    .ad-card .preview .iframe-wrap iframe {
+      width: 1080px;
+      height: 1350px;
+      border: none;
+      transform-origin: top left;
+      pointer-events: none;
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+    .ad-card.edit-mode .preview .iframe-wrap iframe {
+      pointer-events: auto;
+    }
+    .ad-card .preview img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .ad-card .preview .placeholder {
+      color: var(--muted);
+      font-size: 14px;
+      text-align: center;
+      padding: 20px;
+    }
+    .format-badge {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      background: rgba(0,0,0,0.7);
+      backdrop-filter: blur(8px);
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 500;
+      color: #fff;
+    }
+
+    .ad-card .info {
+      padding: 16px;
+    }
+    .ad-card .info h3 {
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+    .ad-card .info .headline {
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 12px;
+      line-height: 1.4;
+    }
+    .ad-card .info .meta {
+      display: flex;
+      gap: 12px;
+      font-size: 11px;
+      color: var(--muted);
+    }
+    .ad-card .info .meta span {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .tag {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 500;
+    }
+    .tag.story { background: #1a2332; color: #60a5fa; }
+    .tag.feed { background: #1a2e1a; color: #4ade80; }
+    .tag.reel { background: #2e1a2e; color: #c084fc; }
+    .tag.carousel { background: #2e2a1a; color: #fbbf24; }
+
+    /* Copy block */
+    .ad-card .copy-block {
+      border-top: 1px solid var(--border);
+      padding: 16px;
+    }
+    .ad-card .copy-block summary {
+      font-size: 12px;
+      color: var(--muted);
+      cursor: pointer;
+      user-select: none;
+    }
+    .ad-card .copy-block .body-copy {
+      margin-top: 10px;
+      font-size: 13px;
+      line-height: 1.6;
+      white-space: pre-wrap;
+      color: var(--text);
+    }
+    .ad-card .copy-block .cta {
+      margin-top: 10px;
+      display: inline-block;
+      background: var(--accent);
+      color: #fff;
+      padding: 6px 16px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    /* Review UI */
+    .review-block {
+      border-top: 1px solid var(--border);
+      padding: 16px;
+    }
+    .review-buttons {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+    .review-buttons button {
+      flex: 1;
+      padding: 8px 12px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      background: var(--surface);
+      color: var(--text);
+      transition: all 0.15s;
+    }
+    .review-buttons button:hover { opacity: 0.85; }
+    .review-buttons button.btn-approve { border-color: #22c55e; color: #22c55e; }
+    .review-buttons button.btn-approve.selected { background: #22c55e; color: #000; }
+    .review-buttons button.btn-maybe { border-color: #eab308; color: #eab308; }
+    .review-buttons button.btn-maybe.selected { background: #eab308; color: #000; }
+    .review-buttons button.btn-reject { border-color: #ef4444; color: #ef4444; }
+    .review-buttons button.btn-reject.selected { background: #ef4444; color: #fff; }
+    .review-block textarea {
+      width: 100%;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      color: var(--text);
+      padding: 8px 10px;
+      font-size: 12px;
+      font-family: inherit;
+      resize: vertical;
+      min-height: 48px;
+      display: none;
+    }
+    .review-block textarea.visible { display: block; }
+    .review-block .submit-btn {
+      margin-top: 8px;
+      padding: 7px 16px;
+      background: var(--accent);
+      border: none;
+      border-radius: 6px;
+      color: #fff;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      display: none;
+    }
+    .review-block .submit-btn.visible { display: inline-block; }
+    .review-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+    .review-badge.badge-approved { background: rgba(34,197,94,0.15); color: #22c55e; }
+    .review-badge.badge-maybe { background: rgba(234,179,8,0.15); color: #eab308; }
+    .review-badge.badge-rejected { background: rgba(239,68,68,0.15); color: #ef4444; }
+    .review-saved-reason {
+      margin-top: 8px;
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    /* Toast */
+    .toast-container {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .toast {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px 16px;
+      font-size: 13px;
+      color: var(--text);
+      max-width: 380px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+      animation: toastIn 0.2s ease-out;
+      line-height: 1.5;
+    }
+    .toast.success { border-left: 3px solid #22c55e; }
+    .toast.error { border-left: 3px solid #ef4444; }
+    .toast a { color: var(--accent-hover); text-decoration: none; font-weight: 500; }
+    .toast a:hover { text-decoration: underline; }
+    @keyframes toastIn {
+      from { opacity: 0; transform: translateX(20px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+
+    /* Empty state */
+    .empty-state {
+      grid-column: 1 / -1;
+      text-align: center;
+      padding: 80px 32px;
+    }
+    .empty-state h2 {
+      font-size: 20px;
+      margin-bottom: 8px;
+      color: var(--text);
+    }
+    .empty-state p {
+      color: var(--muted);
+      font-size: 14px;
+      max-width: 480px;
+      margin: 0 auto;
+      line-height: 1.6;
+    }
+    /* Card actions bar */
+    .card-actions {
+      display: flex;
+      gap: 4px;
+      padding: 8px 12px;
+      border-bottom: 1px solid var(--border);
+      flex-wrap: wrap;
+    }
+    .card-actions .spacer { flex: 1; }
+    .action-btn {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--muted);
+      padding: 5px 10px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      transition: all 0.15s;
+    }
+    .action-btn:hover { border-color: var(--accent); color: var(--text); }
+    .action-btn.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+    .action-btn.exporting {
+      opacity: 0.7;
+      cursor: wait;
+      pointer-events: none;
+    }
+    .action-btn.exported {
+      background: rgba(34,197,94,0.9);
+      border-color: #22c55e;
+      color: #fff;
+    }
+
+    /* Inline editable text */
+    .editable {
+      cursor: text;
+      border-radius: 4px;
+      transition: background 0.15s, box-shadow 0.15s;
+      position: relative;
+    }
+    .editable:hover {
+      background: rgba(99,102,241,0.08);
+      box-shadow: inset 0 0 0 1px rgba(99,102,241,0.25);
+    }
+    .editable:focus {
+      outline: none;
+      background: rgba(99,102,241,0.12);
+      box-shadow: inset 0 0 0 1.5px var(--accent);
+    }
+    .editable.saving {
+      opacity: 0.5;
+      pointer-events: none;
+    }
+    .editable.saved {
+      box-shadow: inset 0 0 0 1.5px #22c55e;
+      background: rgba(34,197,94,0.08);
+    }
+    .editable.save-error {
+      box-shadow: inset 0 0 0 1.5px #ef4444;
+      background: rgba(239,68,68,0.08);
+    }
+    .edit-hint {
+      position: absolute;
+      top: -20px;
+      right: 0;
+      font-size: 10px;
+      color: var(--muted);
+      opacity: 0;
+      transition: opacity 0.15s;
+      pointer-events: none;
+      white-space: nowrap;
+    }
+    .editable:hover .edit-hint,
+    .editable:focus .edit-hint { opacity: 1; }
+
+    /* Edit mode */
+    .ad-card.edit-mode .preview {
+      box-shadow: inset 0 0 0 3px var(--accent);
+    }
+    .ad-card.edit-mode .action-btn.edit-toggle {
+      background: #22c55e;
+      border-color: #22c55e;
+      color: #fff;
+    }
+    /* Focused mode: hide clutter when in Edit mode */
+    .ad-card.edit-mode .card-actions .action-btn:not(.edit-toggle):not(.edit-cancel-btn),
+    .ad-card.edit-mode .card-actions .unsaved-badge,
+    .ad-card.edit-mode .card-actions .spacer,
+    .ad-card.edit-mode .card-actions .save-creative-btn {
+      display: none !important;
+    }
+    .ad-card.edit-mode .info,
+    .ad-card.edit-mode .copy-block,
+    .ad-card.edit-mode .review-block {
+      display: none;
+    }
+
+    /* Reposition mode */
+    .ad-card.reposition-mode .preview {
+      box-shadow: inset 0 0 0 3px #f59e0b;
+    }
+    .ad-card.reposition-mode .preview .iframe-wrap iframe {
+      pointer-events: auto;
+    }
+    .ad-card.reposition-mode .action-btn.reposition-toggle {
+      background: #22c55e;
+      border-color: #22c55e;
+      color: #fff;
+    }
+
+    /* Photo reposition mode */
+    .ad-card.photo-repo-mode .preview {
+      box-shadow: inset 0 0 0 3px #8b5cf6;
+    }
+    .ad-card.photo-repo-mode .preview .iframe-wrap iframe {
+      pointer-events: auto;
+    }
+    .ad-card.photo-repo-mode .action-btn.photo-repo-toggle {
+      background: #22c55e;
+      border-color: #22c55e;
+      color: #fff;
+    }
+
+    /* Focused mode: hide clutter when in Move or Photo mode */
+    .ad-card.reposition-mode .card-actions .action-btn:not(.reposition-toggle):not(.repo-cancel-btn),
+    .ad-card.reposition-mode .card-actions .unsaved-badge,
+    .ad-card.reposition-mode .card-actions .spacer,
+    .ad-card.reposition-mode .card-actions .save-creative-btn {
+      display: none !important;
+    }
+    .ad-card.reposition-mode .info,
+    .ad-card.reposition-mode .copy-block,
+    .ad-card.reposition-mode .review-block {
+      display: none;
+    }
+    .ad-card.photo-repo-mode .card-actions .action-btn:not(.photo-repo-toggle):not(.photo-cancel-btn),
+    .ad-card.photo-repo-mode .card-actions .unsaved-badge,
+    .ad-card.photo-repo-mode .card-actions .spacer,
+    .ad-card.photo-repo-mode .card-actions .save-creative-btn {
+      display: none !important;
+    }
+    .ad-card.photo-repo-mode .info,
+    .ad-card.photo-repo-mode .copy-block,
+    .ad-card.photo-repo-mode .review-block {
+      display: none;
+    }
+
+    /* Unsaved changes indicator */
+    .ad-card.has-unsaved {
+      border-color: #f59e0b;
+    }
+    .ad-card .unsaved-badge {
+      display: none;
+      font-size: 10px;
+      font-weight: 600;
+      color: #f59e0b;
+      padding: 2px 8px;
+      border: 1px solid #f59e0b;
+      border-radius: 100px;
+      align-items: center;
+      gap: 4px;
+      margin-left: 4px;
+    }
+    .ad-card.has-unsaved .unsaved-badge { display: inline-flex; }
+
+    /* Delete button in action bar */
+    .card-actions .action-btn[title="Delete this ad"]:hover {
+      color: #ef4444;
+      border-color: #ef4444;
+      background: rgba(239,68,68,0.08);
+    }
+
+    /* Confirm dialog */
+    .confirm-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.6);
+      backdrop-filter: blur(4px);
+      z-index: 10000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: fadeIn 0.15s ease-out;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    .confirm-dialog {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      max-width: 400px;
+      width: 90%;
+      box-shadow: 0 16px 48px rgba(0,0,0,0.5);
+    }
+    .confirm-dialog h3 {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+    .confirm-dialog p {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.6;
+      margin-bottom: 8px;
+    }
+    .confirm-dialog .file-list {
+      font-size: 12px;
+      color: var(--muted);
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 10px 12px;
+      margin-bottom: 16px;
+      font-family: 'SF Mono', Monaco, monospace;
+      line-height: 1.8;
+    }
+    .confirm-actions {
+      display: flex;
+      gap: 8px;
+      justify-content: flex-end;
+    }
+    .confirm-actions button {
+      padding: 8px 16px;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      border: 1px solid var(--border);
+      transition: all 0.15s;
+    }
+    .confirm-cancel {
+      background: var(--surface);
+      color: var(--text);
+    }
+    .confirm-cancel:hover { border-color: var(--accent); }
+    .confirm-delete {
+      background: #ef4444;
+      border-color: #ef4444;
+      color: #fff;
+    }
+    .confirm-delete:hover { background: #dc2626; }
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/html-to-image@1.11.11/dist/html-to-image.js"></script>
+</head>
+<body>
+  <header>
+    <h1>Tutero Ads <span>/ Australia Paid Social</span></h1>
+    <span class="badge">LOCAL ONLY</span>
+  </header>
+
+  <div class="toolbar">
+    <button class="active" data-filter="all">All</button>
+    <button data-filter="story">Story</button>
+    <button data-filter="feed">Feed</button>
+    <button data-filter="reel">Reel</button>
+    <button data-filter="carousel">Carousel</button>
+    <span style="flex:1"></span>
+    <button onclick="bulkExportPng()" style="margin-left:auto">Export All PNG</button>
+  </div>
+
+  <div class="sections" id="ad-sections">
+    <!-- Hypothesis groups are injected by JS from ads.json -->
+  </div>
+
+  <script>
+    var ADS = [];
+    var DECISIONS = {};
+
+    // Load ads + existing decisions in parallel
+    Promise.all([
+      fetch('/ads/ads.json').then(function(r) { return r.ok ? r.json() : []; }).catch(function() { return []; }),
+      fetch('/api/ad-feedback').then(function(r) { return r.ok ? r.json() : { decisions: {} }; }).catch(function() { return { decisions: {} }; })
+    ]).then(function(results) {
+      ADS = results[0];
+      DECISIONS = results[1].decisions || {};
+      render('all');
+    });
+
+    function render(filter) {
+      var container = document.getElementById('ad-sections');
+      var filtered = filter === 'all' ? ADS : ADS.filter(function(a) {
+        return a.format.toLowerCase() === filter;
+      });
+
+      if (filtered.length === 0) {
+        container.innerHTML = '<div class="empty-state">' +
+          '<h2>No ads yet</h2>' +
+          '<p>Add ads to <code>ads/ads.json</code> and they\'ll appear here. Each ad needs a name, format, headline, body copy, and optionally an image path.</p>' +
+          '</div>';
+        return;
+      }
+
+      // Group by hypothesis
+      var groups = {};
+      var groupOrder = [];
+      filtered.forEach(function(ad) {
+        var key = ad.hypothesis || 'Uncategorised';
+        if (!groups[key]) {
+          groups[key] = [];
+          groupOrder.push(key);
+        }
+        groups[key].push(ad);
+      });
+
+      container.innerHTML = groupOrder.map(function(hypothesis) {
+        var ads = groups[hypothesis];
+        var cards = ads.map(function(ad) {
+          var formatClass = ad.format.toLowerCase();
+          var previewHtml;
+          if (ad.creative_file) {
+            previewHtml = '<div class="iframe-wrap"><iframe src="' + ad.creative_file + '" onload="scaleIframe(this)"></iframe></div>';
+          } else if (ad.image) {
+            previewHtml = '<img src="' + ad.image + '" alt="' + ad.name + '">';
+          } else {
+            previewHtml = '<div class="placeholder">No image yet</div>';
+          }
+
+          var escapedName = ad.name.replace(/"/g, '&quot;');
+          var hasCreative = !!ad.creative_file;
+
+          // Action bar buttons (below preview)
+          var editToggleBtn = hasCreative ?
+            '<button class="action-btn edit-toggle" data-creative="' + ad.creative_file + '" onclick="toggleEditMode(this)">' +
+              '<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>' +
+              ' Edit</button>' : '';
+
+          var repositionBtn = hasCreative ?
+            '<button class="action-btn reposition-toggle" data-creative="' + ad.creative_file + '" onclick="toggleRepositionMode(this)">' +
+              '<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 9l-3 3 3 3"/><path d="M9 5l3-3 3 3"/><path d="M15 19l-3 3-3-3"/><path d="M19 9l3 3-3 3"/><line x1="2" y1="12" x2="22" y2="12"/><line x1="12" y1="2" x2="12" y2="22"/></svg>' +
+              ' Move</button>' : '';
+
+          var resizeBtn = hasCreative ?
+            '<button class="action-btn resize-toggle" data-creative="' + ad.creative_file + '" onclick="toggleResizeMode(this)">' +
+              '<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg>' +
+              ' Resize</button>' : '';
+
+          var photoRepoBtn = hasCreative ?
+            '<button class="action-btn photo-repo-toggle" data-creative="' + ad.creative_file + '" onclick="togglePhotoReposition(this)">' +
+              '<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>' +
+              ' Photo</button>' : '';
+
+          var toggleLogoBtn = hasCreative ?
+            '<button class="action-btn" onclick="toggleCreativeElement(this, \'logo\')" title="Toggle logo visibility">' +
+              '<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 3v18"/><path d="M3 9h6"/></svg>' +
+              ' Logo</button>' : '';
+
+          var toggleUrlBtn = hasCreative ?
+            '<button class="action-btn" onclick="toggleCreativeElement(this, \'url\')" title="Toggle URL visibility">' +
+              '<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>' +
+              ' URL</button>' : '';
+
+          var toggleEyebrowBtn = hasCreative ?
+            '<button class="action-btn" onclick="toggleCreativeElement(this, \'eyebrow\')" title="Toggle pill visibility">' +
+              '<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="8" width="20" height="8" rx="4"/><line x1="7" y1="12" x2="17" y2="12"/></svg>' +
+              ' Pill</button>' : '';
+
+          var exportSvgBtn = '<button class="action-btn" onclick="exportAsSvg(this)" data-name="' + escapedName + '" title="Copy SVG to clipboard">' +
+              '<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>' +
+              ' SVG</button>';
+
+          var exportPngBtn = '<button class="action-btn" onclick="exportAsPng(this)" data-name="' + escapedName + '" data-image="' + (ad.image || '') + '" title="Download PNG">' +
+              '<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>' +
+              ' PNG</button>';
+
+          var deleteBtnHtml = '<button class="action-btn" data-name="' + escapedName + '" onclick="confirmDeleteAd(this)" title="Delete this ad" style="color:#ef4444;border-color:transparent">' +
+              '<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>' +
+              '</button>';
+
+          return '<div class="ad-card" data-format="' + formatClass + '" data-ad-name="' + ad.name.replace(/"/g, '&quot;') + '">' +
+            '<div class="preview">' +
+              previewHtml +
+              '<span class="format-badge">' + ad.format + '</span>' +
+            '</div>' +
+            '<div class="card-actions">' +
+              (hasCreative ? '<button class="action-btn open-btn" onclick="window.open(\'' + ad.creative_file + '\', \'_blank\')">' +
+                '<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>' +
+                ' Open</button>' : '') +
+              editToggleBtn +
+              repositionBtn +
+              resizeBtn +
+              photoRepoBtn +
+              toggleLogoBtn +
+              toggleUrlBtn +
+              toggleEyebrowBtn +
+              '<span class="unsaved-badge">Unsaved</span>' +
+              '<span class="spacer"></span>' +
+              (hasCreative ? '<button class="action-btn save-creative-btn" onclick="saveCreativeState(this)" style="display:none;background:#22c55e;border-color:#22c55e;color:#fff"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg> Save</button>' : '') +
+              exportSvgBtn +
+              exportPngBtn +
+              deleteBtnHtml +
+            '</div>' +
+            '<div class="info">' +
+              '<h3 class="editable" contenteditable="true" data-field="name" spellcheck="false">' + ad.name + '</h3>' +
+              '<div class="headline editable" contenteditable="true" data-field="headline" spellcheck="false">' + (ad.headline || '') + '</div>' +
+              '<div class="meta">' +
+                '<span class="tag ' + formatClass + '">' + ad.format + '</span>' +
+                (ad.audience ? '<span>Audience: ' + ad.audience + '</span>' : '') +
+              '</div>' +
+            '</div>' +
+            '<div class="copy-block">' +
+              '<details><summary>View primary text</summary>' +
+                '<div class="body-copy editable" contenteditable="true" data-field="body" spellcheck="false">' + (ad.body || '') + '</div>' +
+                (ad.cta_label ? '<span class="cta editable" contenteditable="true" data-field="cta_label" spellcheck="false" style="cursor:text">' + ad.cta_label + '</span>' : '') +
+              '</details>' +
+            '</div>' +
+            buildReviewBlock(ad) +
+          '</div>';
+        }).join('');
+
+        return '<div class="hypothesis-section">' +
+          '<div class="hypothesis-header">' +
+            '<h2>' + hypothesis + '</h2>' +
+            '<span class="count">' + ads.length + ' ad' + (ads.length !== 1 ? 's' : '') + '</span>' +
+          '</div>' +
+          '<div class="grid">' + cards + '</div>' +
+        '</div>';
+      }).join('');
+    }
+
+    function buildReviewBlock(ad) {
+      var existing = DECISIONS[ad.name];
+      if (existing) {
+        var badgeClass = 'badge-' + existing.decision;
+        var label = existing.decision.charAt(0).toUpperCase() + existing.decision.slice(1);
+        return '<div class="review-block">' +
+          '<span class="review-badge ' + badgeClass + '">' + label + '</span>' +
+          (existing.reason ? '<div class="review-saved-reason">' + existing.reason + '</div>' : '') +
+        '</div>';
+      }
+
+      var safeId = ad.name.replace(/[^a-zA-Z0-9]/g, '-');
+      return '<div class="review-block" id="review-' + safeId + '">' +
+        '<div class="review-buttons">' +
+          '<button class="btn-approve" onclick="selectDecision(\'' + safeId + '\', \'approved\', this)">Approve</button>' +
+          '<button class="btn-maybe" onclick="selectDecision(\'' + safeId + '\', \'maybe\', this)">Maybe</button>' +
+          '<button class="btn-reject" onclick="selectDecision(\'' + safeId + '\', \'rejected\', this)">Reject</button>' +
+        '</div>' +
+        '<textarea id="reason-' + safeId + '" placeholder="Reason (required for reject)"></textarea>' +
+        '<button class="submit-btn" id="submit-' + safeId + '" onclick="submitReview(\'' + safeId + '\')">Submit</button>' +
+        '<input type="hidden" id="decision-' + safeId + '" value="">' +
+        '<input type="hidden" id="adname-' + safeId + '" value="' + ad.name.replace(/"/g, '&quot;') + '">' +
+        '<input type="hidden" id="hyp-' + safeId + '" value="' + (ad.hypothesis || '').replace(/"/g, '&quot;') + '">' +
+      '</div>';
+    }
+
+    function selectDecision(safeId, decision, btn) {
+      var block = document.getElementById('review-' + safeId);
+      block.querySelectorAll('.review-buttons button').forEach(function(b) { b.classList.remove('selected'); });
+      btn.classList.add('selected');
+      document.getElementById('decision-' + safeId).value = decision;
+      document.getElementById('reason-' + safeId).classList.add('visible');
+      document.getElementById('submit-' + safeId).classList.add('visible');
+    }
+
+    function submitReview(safeId) {
+      var decision = document.getElementById('decision-' + safeId).value;
+      var reason = document.getElementById('reason-' + safeId).value.trim();
+      var adName = document.getElementById('adname-' + safeId).value;
+      var hypothesis = document.getElementById('hyp-' + safeId).value;
+
+      if (!decision) return;
+      if (decision === 'rejected' && !reason) {
+        document.getElementById('reason-' + safeId).style.borderColor = '#ef4444';
+        return;
+      }
+
+      var submitBtn = document.getElementById('submit-' + safeId);
+      submitBtn.textContent = 'Saving...';
+      submitBtn.disabled = true;
+
+      fetch('/api/ad-feedback', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ad_name: adName, hypothesis: hypothesis, decision: decision, reason: reason })
+      })
+      .then(function(r) { return r.json(); })
+      .then(function(data) {
+        if (data.success) {
+          DECISIONS[adName] = { decision: decision, reason: reason, hypothesis: hypothesis };
+          var block = document.getElementById('review-' + safeId);
+          var badgeClass = 'badge-' + decision;
+          var label = decision.charAt(0).toUpperCase() + decision.slice(1);
+          block.innerHTML = '<span class="review-badge ' + badgeClass + '">' + label + '</span>' +
+            (reason ? '<div class="review-saved-reason">' + reason + '</div>' : '');
+        }
+      })
+      .catch(function() {
+        submitBtn.textContent = 'Error — retry';
+        submitBtn.disabled = false;
+      });
+    }
+
+    function scaleIframe(iframe) {
+      var wrap = iframe.parentElement;
+      var scale = wrap.offsetWidth / 1080;
+      iframe.style.transform = 'scale(' + scale + ')';
+    }
+
+    // Re-scale on window resize
+    window.addEventListener('resize', function() {
+      document.querySelectorAll('.iframe-wrap iframe').forEach(function(iframe) {
+        scaleIframe(iframe);
+      });
+    });
+
+    // Filter buttons
+    document.querySelector('.toolbar').addEventListener('click', function(e) {
+      if (e.target.tagName !== 'BUTTON') return;
+      document.querySelectorAll('.toolbar button').forEach(function(b) { b.classList.remove('active'); });
+      e.target.classList.add('active');
+      render(e.target.dataset.filter);
+    });
+    // ── Inline Text Editing ──
+
+    // Track original values so we only save actual changes
+    document.addEventListener('focusin', function(e) {
+      var el = e.target;
+      if (!el.classList || !el.classList.contains('editable')) return;
+      el.dataset.original = el.textContent;
+    });
+
+    // Save on blur
+    document.addEventListener('focusout', function(e) {
+      var el = e.target;
+      if (!el.classList || !el.classList.contains('editable')) return;
+      saveEdit(el);
+    });
+
+    // Save on Enter (except body which allows newlines), Escape to cancel
+    document.addEventListener('keydown', function(e) {
+      var el = e.target;
+      if (!el.classList || !el.classList.contains('editable')) return;
+
+      if (e.key === 'Escape') {
+        el.textContent = el.dataset.original || '';
+        el.blur();
+        e.preventDefault();
+        return;
+      }
+
+      // Enter saves for single-line fields, Shift+Enter for newline in body
+      if (e.key === 'Enter' && el.dataset.field !== 'body') {
+        e.preventDefault();
+        el.blur();
+      }
+    });
+
+    // Prevent pasting rich text — plain text only
+    document.addEventListener('paste', function(e) {
+      var el = e.target;
+      if (!el.classList || !el.classList.contains('editable')) return;
+      e.preventDefault();
+      var text = (e.clipboardData || window.clipboardData).getData('text/plain');
+      document.execCommand('insertText', false, text);
+    });
+
+    function saveEdit(el) {
+      var newValue = el.textContent.trim();
+      var original = (el.dataset.original || '').trim();
+
+      // No change — skip
+      if (newValue === original) return;
+
+      var card = el.closest('.ad-card');
+      var adName = card.dataset.adName;
+      var field = el.dataset.field;
+
+      el.classList.add('saving');
+
+      fetch('/api/ad-edit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ad_name: adName, field: field, value: newValue })
+      })
+      .then(function(r) { return r.json(); })
+      .then(function(data) {
+        el.classList.remove('saving');
+        if (data.success) {
+          // Update the in-memory ADS array
+          var ad = ADS.find(function(a) { return a.name === adName; });
+          if (ad) {
+            ad[field] = newValue;
+            // If name changed, update the card's data attribute
+            if (field === 'name') {
+              card.dataset.adName = newValue;
+              // Also update any buttons that reference the old name
+              card.querySelectorAll('[data-name]').forEach(function(btn) {
+                if (btn.dataset.name === adName) btn.dataset.name = newValue;
+              });
+            }
+          }
+
+          el.classList.add('saved');
+          setTimeout(function() { el.classList.remove('saved'); }, 1500);
+          showToast('Saved: <strong>' + field + '</strong> updated', 'success');
+        } else {
+          throw new Error(data.error || 'Save failed');
+        }
+      })
+      .catch(function(err) {
+        el.classList.remove('saving');
+        el.classList.add('save-error');
+        setTimeout(function() { el.classList.remove('save-error'); }, 3000);
+        showToast('Failed to save: ' + err.message, 'error');
+        // Revert to original
+        el.textContent = original;
+      });
+    }
+
+    // ── Creative Edit Mode ──
+
+    // Find all leaf text elements inside the creative's .ad container
+    function findTextElements(doc) {
+      var ad = doc.querySelector('.ad');
+      if (!ad) return [];
+      var results = [];
+      var dominated = new Set(); // elements whose text is fully inside a child we already picked
+
+      function walk(el) {
+        if (!el || !el.children) return;
+        var dominated_by_child = false;
+        for (var i = 0; i < el.children.length; i++) {
+          walk(el.children[i]);
+        }
+
+        // Skip non-visible, containers, images, SVGs
+        var tag = el.tagName.toUpperCase();
+        if (tag === 'SVG' || tag === 'IMG' || tag === 'STYLE' || tag === 'SCRIPT' || tag === 'LINK') return;
+
+        var cs = doc.defaultView.getComputedStyle(el);
+        if (cs.display === 'none' || cs.visibility === 'hidden') return;
+
+        // Has direct text content?
+        var hasText = false;
+        for (var i = 0; i < el.childNodes.length; i++) {
+          if (el.childNodes[i].nodeType === 3 && el.childNodes[i].textContent.trim()) {
+            hasText = true;
+            break;
+          }
+        }
+        if (!hasText) return;
+
+        // Skip if all text children are already covered by a child element we found
+        var allCovered = true;
+        for (var i = 0; i < el.childNodes.length; i++) {
+          var n = el.childNodes[i];
+          if (n.nodeType === 3 && n.textContent.trim()) {
+            allCovered = false;
+            break;
+          }
+        }
+        if (allCovered) return;
+
+        // Skip tiny text (footers, urls) — only include meaningful text
+        var rect = el.getBoundingClientRect();
+        if (rect.width < 10 || rect.height < 5) return;
+
+        results.push(el);
+      }
+
+      walk(ad);
+      return results;
+    }
+
+    function toggleEditMode(btn) {
+      var card = btn.closest('.ad-card');
+      var iframe = card.querySelector('.preview iframe');
+      if (!iframe || !iframe.contentDocument) {
+        showToast('Cannot access creative content', 'error');
+        return;
+      }
+
+      // Exit reposition mode if active
+      if (card.classList.contains('reposition-mode')) {
+        var repoBtn = card.querySelector('.reposition-toggle');
+        if (repoBtn) toggleRepositionMode(repoBtn);
+      }
+      // Exit photo reposition mode if active
+      if (card.classList.contains('photo-repo-mode')) {
+        var photoBtn = card.querySelector('.photo-repo-toggle');
+        if (photoBtn) togglePhotoReposition(photoBtn);
+      }
+      // Exit resize mode if active
+      if (card.classList.contains('resize-mode')) {
+        var resizeBtn = card.querySelector('.resize-toggle');
+        if (resizeBtn) { card._resizeCancelled = true; toggleResizeMode(resizeBtn); }
+      }
+
+      var isEditing = card.classList.toggle('edit-mode');
+
+      if (isEditing) {
+        // Enter mode — show Save + Cancel
+        btn.innerHTML = '<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg> Save';
+        btn.style.background = '#22c55e';
+        btn.style.borderColor = '#22c55e';
+        btn.style.color = '#fff';
+
+        var cancelBtn = document.createElement('button');
+        cancelBtn.className = 'action-btn edit-cancel-btn';
+        cancelBtn.innerHTML = '<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg> Cancel';
+        cancelBtn.addEventListener('click', function() {
+          card._editCancelled = true;
+          toggleEditMode(btn);
+        });
+        btn.parentNode.insertBefore(cancelBtn, btn.nextSibling);
+
+        card._editCancelled = false;
+        enableCreativeEditing(card, iframe);
+      } else {
+        // Exit mode — save or cancel
+        var shouldSave = !card._editCancelled;
+
+        btn.innerHTML = '<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg> Edit';
+        btn.style.background = '';
+        btn.style.borderColor = '';
+        btn.style.color = '';
+
+        var cancelEl = card.querySelector('.edit-cancel-btn');
+        if (cancelEl) cancelEl.remove();
+
+        disableCreativeEditing(card, iframe, shouldSave);
+        delete card._editCancelled;
+      }
+    }
+
+    function enableCreativeEditing(card, iframe) {
+      var doc = iframe.contentDocument;
+      var els = findTextElements(doc);
+
+      // Inject editing styles if not already present
+      if (!doc.getElementById('edit-mode-styles')) {
+        var style = doc.createElement('style');
+        style.id = 'edit-mode-styles';
+        style.textContent =
+          '[contenteditable] { cursor: text; border-radius: 8px; transition: box-shadow 0.15s; outline: none; }' +
+          '[contenteditable]:hover { box-shadow: inset 0 0 0 3px rgba(99,102,241,0.4); }' +
+          '[contenteditable]:focus { box-shadow: inset 0 0 0 3px #6366f1; }';
+        doc.head.appendChild(style);
+      }
+
+      els.forEach(function(el) {
+        el.setAttribute('contenteditable', 'true');
+        el.setAttribute('spellcheck', 'false');
+        el.dataset.original = el.textContent;
+
+        // Enter to confirm field, Escape to revert field
+        el.addEventListener('keydown', function handler(e) {
+          if (e.key === 'Enter') {
+            e.preventDefault();
+            el.blur();
+          } else if (e.key === 'Escape') {
+            el.textContent = el.dataset.original || '';
+            el.blur();
+          }
+        });
+
+        // Plain text paste
+        el.addEventListener('paste', function handler(e) {
+          e.preventDefault();
+          var text = (e.clipboardData || window.clipboardData).getData('text/plain');
+          doc.execCommand('insertText', false, text);
+        });
+      });
+    }
+
+    function disableCreativeEditing(card, iframe, shouldSave) {
+      var doc = iframe.contentDocument;
+      var els = doc.querySelectorAll('[contenteditable]');
+
+      if (shouldSave) {
+        // Check if any text actually changed
+        var hasChanges = false;
+        els.forEach(function(el) {
+          if (el.textContent.trim() !== (el.dataset.original || '').trim()) {
+            hasChanges = true;
+          }
+        });
+
+        if (hasChanges) {
+          var creativePath = card.querySelector('.edit-toggle').dataset.creative;
+          var fullHtml = '<!DOCTYPE html>\n' + doc.documentElement.outerHTML;
+          fullHtml = fullHtml.replace(/<style id="edit-mode-styles">[\s\S]*?<\/style>/, '');
+          fullHtml = fullHtml.replace(/ contenteditable="true"/g, '');
+          fullHtml = fullHtml.replace(/ spellcheck="false"/g, '');
+          fullHtml = fullHtml.replace(/ data-original="[^"]*"/g, '');
+
+          fetch('/api/ad-edit', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ creative_file: creativePath, html: fullHtml })
+          })
+          .then(function(r) { return r.json(); })
+          .then(function(data) {
+            if (data.success) {
+              showToast('Creative text saved', 'success');
+            } else {
+              throw new Error(data.error || 'Save failed');
+            }
+          })
+          .catch(function(err) {
+            showToast('Failed to save: ' + err.message, 'error');
+          });
+        }
+      } else {
+        // Cancel — revert all text to originals
+        els.forEach(function(el) {
+          if (el.dataset.original !== undefined) {
+            el.textContent = el.dataset.original;
+          }
+        });
+      }
+
+      // Remove contenteditable from all elements
+      els.forEach(function(el) {
+        el.removeAttribute('contenteditable');
+      });
+    }
+
+    // Toast
+    function showToast(msg, type) {
+      var container = document.getElementById('toast-container');
+      var toast = document.createElement('div');
+      toast.className = 'toast ' + (type || '');
+      toast.innerHTML = msg;
+      container.appendChild(toast);
+      setTimeout(function() {
+        toast.style.animation = 'toastIn 0.2s ease-out reverse forwards';
+        setTimeout(function() { toast.remove(); }, 200);
+      }, 4500);
+    }
+
+
+    // ── Reposition Mode ──
+
+    function toggleRepositionMode(btn) {
+      var card = btn.closest('.ad-card');
+      var iframe = card.querySelector('.preview iframe');
+      if (!iframe || !iframe.contentDocument) {
+        showToast('Cannot access creative content', 'error');
+        return;
+      }
+
+      // Exit edit mode if active
+      if (card.classList.contains('edit-mode')) {
+        var editBtn = card.querySelector('.edit-toggle');
+        if (editBtn) toggleEditMode(editBtn);
+      }
+      // Exit photo reposition mode if active
+      if (card.classList.contains('photo-repo-mode')) {
+        var photoBtn = card.querySelector('.photo-repo-toggle');
+        if (photoBtn) exitPhotoMode(card, iframe, photoBtn, true);
+      }
+      // Exit resize mode if active
+      if (card.classList.contains('resize-mode')) {
+        var resizeBtnEl = card.querySelector('.resize-toggle');
+        if (resizeBtnEl) { card._resizeCancelled = true; toggleResizeMode(resizeBtnEl); }
+      }
+
+      var isRepositioning = card.classList.toggle('reposition-mode');
+
+      if (isRepositioning) {
+        // Enter mode — show Save + Cancel
+        btn.innerHTML = '<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg> Save';
+        btn.style.background = '#22c55e';
+        btn.style.borderColor = '#22c55e';
+        btn.style.color = '#fff';
+
+        var cancelBtn = document.createElement('button');
+        cancelBtn.className = 'action-btn repo-cancel-btn';
+        cancelBtn.innerHTML = '<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg> Cancel';
+        cancelBtn.addEventListener('click', function() {
+          card._repoCancelled = true;
+          toggleRepositionMode(btn);
+        });
+        btn.parentNode.insertBefore(cancelBtn, btn.nextSibling);
+
+        card._repoCancelled = false;
+        enableRepositioning(card, iframe);
+      } else {
+        // Exit mode — save or cancel
+        var shouldSave = !card._repoCancelled;
+
+        btn.innerHTML = '<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 9l-3 3 3 3"/><path d="M9 5l3-3 3 3"/><path d="M15 19l-3 3-3-3"/><path d="M19 9l3 3-3 3"/><line x1="2" y1="12" x2="22" y2="12"/><line x1="12" y1="2" x2="12" y2="22"/></svg> Move';
+        btn.style.background = '';
+        btn.style.borderColor = '';
+        btn.style.color = '';
+
+        var cancelEl = card.querySelector('.repo-cancel-btn');
+        if (cancelEl) cancelEl.remove();
+
+        disableRepositioning(card, iframe, shouldSave);
+        delete card._repoCancelled;
+      }
+    }
+
+    function findRepositionTargets(doc) {
+      // Find the flex container: .ad for light layouts, .content for overlay layouts
+      var container = doc.querySelector('.ad > .content') || doc.querySelector('.ad');
+      if (!container) return [];
+
+      var targets = [];
+      var skipTags = { STYLE: 1, SCRIPT: 1, LINK: 1, META: 1 };
+      for (var i = 0; i < container.children.length; i++) {
+        var child = container.children[i];
+        if (skipTags[child.tagName.toUpperCase()]) continue;
+        // Skip absolutely positioned elements (overlays, bg-photo)
+        var cs = doc.defaultView.getComputedStyle(child);
+        if (cs.position === 'absolute' || cs.position === 'fixed') continue;
+        if (cs.display === 'none') continue;
+        targets.push(child);
+      }
+      return targets;
+    }
+
+    // --- Snap-to-grid alignment helpers ---
+    var SNAP_THRESHOLD = 5;
+
+    function clearSnapGuides(doc) {
+      var c = doc.getElementById('repo-snap-guides');
+      if (c) c.innerHTML = '';
+    }
+
+    function renderSnapGuides(doc, guides) {
+      var c = doc.getElementById('repo-snap-guides');
+      if (!c) {
+        c = doc.createElement('div');
+        c.id = 'repo-snap-guides';
+        c.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:9998;';
+        doc.body.appendChild(c);
+      }
+      c.innerHTML = '';
+      for (var i = 0; i < guides.length; i++) {
+        var line = doc.createElement('div');
+        line.className = 'repo-snap-line';
+        if (guides[i].axis === 'x') {
+          line.style.cssText = 'position:fixed;left:' + guides[i].pos + 'px;top:0;width:1px;height:100%;';
+        } else {
+          line.style.cssText = 'position:fixed;top:' + guides[i].pos + 'px;left:0;height:1px;width:100%;';
+        }
+        c.appendChild(line);
+      }
+    }
+
+    function computeSnap(el, targets, newTx, newTy, doc) {
+      // Current transform on el (before we apply the new one)
+      var m = (el.style.transform || '').match(/translate\(\s*([-\d.]+)px\s*,\s*([-\d.]+)px\s*\)/);
+      var curTx = m ? parseFloat(m[1]) : 0;
+      var curTy = m ? parseFloat(m[2]) : 0;
+      var rect = el.getBoundingClientRect();
+      // Base position (without any translate)
+      var baseL = rect.left - curTx;
+      var baseT = rect.top - curTy;
+      var w = rect.width;
+      var h = rect.height;
+
+      // Proposed position with newTx, newTy
+      var pL = baseL + newTx, pT = baseT + newTy;
+      var pR = pL + w, pB = pT + h;
+      var pCX = pL + w / 2, pCY = pT + h / 2;
+
+      // Collect reference edges from other targets and container
+      var refX = [], refY = [];
+      var container = doc.querySelector('.ad > .content') || doc.querySelector('.ad');
+      if (container) {
+        var cr = container.getBoundingClientRect();
+        refX.push(cr.left, cr.left + cr.width / 2, cr.right);
+        refY.push(cr.top, cr.top + cr.height / 2, cr.bottom);
+      }
+      for (var i = 0; i < targets.length; i++) {
+        if (targets[i] === el) continue;
+        var r = targets[i].getBoundingClientRect();
+        refX.push(r.left, r.left + r.width / 2, r.right);
+        refY.push(r.top, r.top + r.height / 2, r.bottom);
+      }
+
+      // Find best snap
+      var snapTx = newTx, snapTy = newTy;
+      var bestDx = SNAP_THRESHOLD + 1, bestDy = SNAP_THRESHOLD + 1;
+      var propXE = [pL, pCX, pR];
+      var propYE = [pT, pCY, pB];
+
+      for (var pi = 0; pi < propXE.length; pi++) {
+        for (var ri = 0; ri < refX.length; ri++) {
+          var d = Math.abs(propXE[pi] - refX[ri]);
+          if (d < SNAP_THRESHOLD && d < bestDx) {
+            bestDx = d;
+            snapTx = newTx + (refX[ri] - propXE[pi]);
+          }
+        }
+      }
+      for (var pi = 0; pi < propYE.length; pi++) {
+        for (var ri = 0; ri < refY.length; ri++) {
+          var d = Math.abs(propYE[pi] - refY[ri]);
+          if (d < SNAP_THRESHOLD && d < bestDy) {
+            bestDy = d;
+            snapTy = newTy + (refY[ri] - propYE[pi]);
+          }
+        }
+      }
+
+      // Collect guide lines at final snapped position
+      var fL = baseL + snapTx, fT = baseT + snapTy;
+      var fR = fL + w, fB = fT + h;
+      var fCX = fL + w / 2, fCY = fT + h / 2;
+      var fXE = [fL, fCX, fR], fYE = [fT, fCY, fB];
+      var guides = [];
+
+      for (var pi = 0; pi < fXE.length; pi++) {
+        for (var ri = 0; ri < refX.length; ri++) {
+          if (Math.abs(fXE[pi] - refX[ri]) < 1) {
+            var dup = false;
+            for (var gi = 0; gi < guides.length; gi++) {
+              if (guides[gi].axis === 'x' && Math.abs(guides[gi].pos - refX[ri]) < 1) { dup = true; break; }
+            }
+            if (!dup) guides.push({ axis: 'x', pos: refX[ri] });
+          }
+        }
+      }
+      for (var pi = 0; pi < fYE.length; pi++) {
+        for (var ri = 0; ri < refY.length; ri++) {
+          if (Math.abs(fYE[pi] - refY[ri]) < 1) {
+            var dup = false;
+            for (var gi = 0; gi < guides.length; gi++) {
+              if (guides[gi].axis === 'y' && Math.abs(guides[gi].pos - refY[ri]) < 1) { dup = true; break; }
+            }
+            if (!dup) guides.push({ axis: 'y', pos: refY[ri] });
+          }
+        }
+      }
+
+      return { tx: snapTx, ty: snapTy, guides: guides };
+    }
+
+    function enableRepositioning(card, iframe) {
+      var doc = iframe.contentDocument;
+      var targets = findRepositionTargets(doc);
+
+      // Inject reposition styles
+      if (!doc.getElementById('repo-mode-styles')) {
+        var style = doc.createElement('style');
+        style.id = 'repo-mode-styles';
+        style.textContent =
+          '.repo-target { cursor: grab; border-radius: 8px; transition: box-shadow 0.15s; position: relative; }' +
+          '.repo-target:hover { box-shadow: inset 0 0 0 3px rgba(245,158,11,0.5); }' +
+          '.repo-target.dragging { cursor: grabbing; box-shadow: inset 0 0 0 3px #f59e0b; opacity: 0.9; }' +
+          '.repo-target.selected { box-shadow: inset 0 0 0 3px #f59e0b; }' +
+          '.repo-offset-badge { position: fixed; background: #f59e0b; color: #000; font-family: -apple-system, sans-serif; font-size: 13px; font-weight: 700; padding: 4px 10px; border-radius: 6px; pointer-events: none; z-index: 9999; white-space: nowrap; box-shadow: 0 2px 8px rgba(0,0,0,0.3); }' +
+          '.repo-snap-line { background: #f59e0b; opacity: 0.7; }';
+        doc.head.appendChild(style);
+      }
+
+      // Store reference for cleanup
+      card._repoState = { targets: targets, changed: false, handlers: [] };
+
+      targets.forEach(function(el) {
+        el.classList.add('repo-target');
+        el.setAttribute('tabindex', '0');
+
+        // Store original transform for cancel
+        el.dataset.repoOrigTransform = el.style.transform || '';
+
+        // Parse existing translate offset if any
+        var existingTx = 0, existingTy = 0;
+        var match = (el.style.transform || '').match(/translate\(\s*([-\d.]+)px\s*,\s*([-\d.]+)px\s*\)/);
+        if (match) {
+          existingTx = parseFloat(match[1]) || 0;
+          existingTy = parseFloat(match[2]) || 0;
+        }
+
+        var state = { startX: 0, startY: 0, baseTx: existingTx, baseTy: existingTy, isDragging: false };
+
+        function onMouseDown(e) {
+          if (e.button !== 0) return;
+          e.preventDefault();
+          state.isDragging = true;
+          state.startX = e.clientX;
+          state.startY = e.clientY;
+
+          // Read current translate at drag start
+          var m = (el.style.transform || '').match(/translate\(\s*([-\d.]+)px\s*,\s*([-\d.]+)px\s*\)/);
+          if (m) {
+            state.baseTx = parseFloat(m[1]) || 0;
+            state.baseTy = parseFloat(m[2]) || 0;
+          }
+
+          el.classList.add('dragging');
+
+          // Select this element
+          targets.forEach(function(t) { t.classList.remove('selected'); });
+          el.classList.add('selected');
+          el.focus();
+
+          // Create offset badge
+          var badge = doc.createElement('div');
+          badge.className = 'repo-offset-badge';
+          badge.id = 'repo-badge';
+          doc.body.appendChild(badge);
+
+          doc.addEventListener('mousemove', onMouseMove);
+          doc.addEventListener('mouseup', onMouseUp);
+        }
+
+        function onMouseMove(e) {
+          if (!state.isDragging) return;
+          var dx = e.clientX - state.startX;
+          var dy = e.clientY - state.startY;
+
+          var newTx = state.baseTx + dx;
+          var newTy = state.baseTy + dy;
+
+          // Snap to alignment guides
+          var snap = computeSnap(el, targets, newTx, newTy, doc);
+          newTx = snap.tx;
+          newTy = snap.ty;
+
+          if (snap.guides.length > 0) {
+            renderSnapGuides(doc, snap.guides);
+          } else {
+            clearSnapGuides(doc);
+          }
+
+          el.style.transform = 'translate(' + newTx + 'px, ' + newTy + 'px)';
+
+          // Update badge
+          var badge = doc.getElementById('repo-badge');
+          if (badge) {
+            var parts = [];
+            if (Math.abs(newTx) > 0.5) parts.push('X: ' + (newTx > 0 ? '+' : '') + Math.round(newTx) + 'px');
+            if (Math.abs(newTy) > 0.5) parts.push('Y: ' + (newTy > 0 ? '+' : '') + Math.round(newTy) + 'px');
+            badge.textContent = parts.join('  ') || 'drag to move';
+            badge.style.left = (e.clientX + 16) + 'px';
+            badge.style.top = (e.clientY - 12) + 'px';
+          }
+
+          card._repoState.changed = true;
+        }
+
+        function onMouseUp() {
+          state.isDragging = false;
+          el.classList.remove('dragging');
+
+          // Remove badge and snap guides
+          var badge = doc.getElementById('repo-badge');
+          if (badge) badge.remove();
+          clearSnapGuides(doc);
+
+          doc.removeEventListener('mousemove', onMouseMove);
+          doc.removeEventListener('mouseup', onMouseUp);
+        }
+
+        // Arrow key nudging
+        function onKeyDown(e) {
+          if (!el.classList.contains('selected')) return;
+          var step = e.shiftKey ? 10 : 1;
+          var m = (el.style.transform || '').match(/translate\(\s*([-\d.]+)px\s*,\s*([-\d.]+)px\s*\)/);
+          var tx = m ? (parseFloat(m[1]) || 0) : 0;
+          var ty = m ? (parseFloat(m[2]) || 0) : 0;
+
+          if (e.key === 'ArrowUp') {
+            e.preventDefault(); ty -= step;
+          } else if (e.key === 'ArrowDown') {
+            e.preventDefault(); ty += step;
+          } else if (e.key === 'ArrowLeft') {
+            e.preventDefault(); tx -= step;
+          } else if (e.key === 'ArrowRight') {
+            e.preventDefault(); tx += step;
+          } else { return; }
+
+          el.style.transform = 'translate(' + tx + 'px, ' + ty + 'px)';
+          card._repoState.changed = true;
+        }
+
+        el.addEventListener('mousedown', onMouseDown);
+        el.addEventListener('keydown', onKeyDown);
+
+        // Store handlers for cleanup
+        card._repoState.handlers.push({
+          el: el,
+          mousedown: onMouseDown,
+          keydown: onKeyDown
+        });
+      });
+
+      showToast('Move mode: drag elements or use arrow keys (Shift for 10px)', 'success');
+    }
+
+    function disableRepositioning(card, iframe, shouldSave) {
+      var doc = iframe.contentDocument;
+      var repoState = card._repoState;
+      if (!repoState) return;
+
+      var hasChanges = repoState.changed;
+
+      // Revert transforms if cancelling
+      if (!shouldSave) {
+        repoState.targets.forEach(function(el) {
+          el.style.transform = el.dataset.repoOrigTransform || '';
+        });
+      }
+
+      // Clean up everything BEFORE serializing for save
+      repoState.handlers.forEach(function(h) {
+        h.el.removeEventListener('mousedown', h.mousedown);
+        h.el.removeEventListener('keydown', h.keydown);
+        h.el.classList.remove('repo-target', 'selected', 'dragging');
+        h.el.removeAttribute('tabindex');
+      });
+
+      var styleEl = doc.getElementById('repo-mode-styles');
+      if (styleEl) styleEl.remove();
+
+      var badge = doc.getElementById('repo-badge');
+      if (badge) badge.remove();
+
+      var snapGuides = doc.getElementById('repo-snap-guides');
+      if (snapGuides) snapGuides.remove();
+
+      repoState.targets.forEach(function(el) {
+        delete el.dataset.repoOrigTransform;
+      });
+
+      // Save after cleanup so serialized HTML is clean
+      if (shouldSave && hasChanges) {
+        saveRepositionedCreative(card, iframe);
+      }
+
+      delete card._repoState;
+    }
+
+    function saveRepositionedCreative(card, iframe) {
+      var creativePath = card.querySelector('.reposition-toggle').dataset.creative;
+      var fullHtml = '<!DOCTYPE html>\n' + iframe.contentDocument.documentElement.outerHTML;
+
+      // Strip reposition artifacts before saving
+      fullHtml = fullHtml.replace(/<style id="repo-mode-styles">[\s\S]*?<\/style>/, '');
+      fullHtml = fullHtml.replace(/<div class="repo-offset-badge"[^>]*>[\s\S]*?<\/div>/g, '');
+      fullHtml = fullHtml.replace(/<div id="repo-snap-guides"[\s\S]*?<\/div>/g, '');
+      fullHtml = fullHtml.replace(/ class="repo-target( selected| dragging)*"/g, '');
+      fullHtml = fullHtml.replace(/ class="repo-target"/g, '');
+      fullHtml = fullHtml.replace(/ tabindex="0"/g, '');
+      fullHtml = fullHtml.replace(/ data-repo-orig-transform="[^"]*"/g, '');
+
+      // Also strip edit-mode artifacts if present
+      fullHtml = fullHtml.replace(/<style id="edit-mode-styles">[\s\S]*?<\/style>/, '');
+      fullHtml = fullHtml.replace(/ contenteditable="true"/g, '');
+      fullHtml = fullHtml.replace(/ spellcheck="false"/g, '');
+      fullHtml = fullHtml.replace(/ data-original="[^"]*"/g, '');
+
+      fetch('/api/ad-edit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ creative_file: creativePath, html: fullHtml })
+      })
+      .then(function(r) { return r.json(); })
+      .then(function(data) {
+        if (data.success) {
+          showToast('Layout repositioned & saved', 'success');
+        } else {
+          throw new Error(data.error || 'Save failed');
+        }
+      })
+      .catch(function(err) {
+        showToast('Failed to save repositioned layout: ' + err.message, 'error');
+      });
+    }
+
+    // ── Resize Mode ──
+
+    function toggleResizeMode(btn) {
+      var card = btn.closest('.ad-card');
+      var iframe = card.querySelector('.preview iframe');
+      if (!iframe || !iframe.contentDocument) {
+        showToast('Cannot access creative content', 'error');
+        return;
+      }
+
+      if (card.classList.contains('edit-mode')) {
+        var editBtn = card.querySelector('.edit-toggle');
+        if (editBtn) toggleEditMode(editBtn);
+      }
+      if (card.classList.contains('reposition-mode')) {
+        var repoBtn = card.querySelector('.reposition-toggle');
+        if (repoBtn) { card._repoCancelled = true; toggleRepositionMode(repoBtn); }
+      }
+      if (card.classList.contains('photo-repo-mode')) {
+        var photoBtn = card.querySelector('.photo-repo-toggle');
+        if (photoBtn) exitPhotoMode(card, iframe, photoBtn, true);
+      }
+
+      var isResizing = card.classList.toggle('resize-mode');
+
+      if (isResizing) {
+        btn.innerHTML = '<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg> Save';
+        btn.style.background = '#22c55e';
+        btn.style.borderColor = '#22c55e';
+        btn.style.color = '#fff';
+
+        var cancelBtn = document.createElement('button');
+        cancelBtn.className = 'action-btn resize-cancel-btn';
+        cancelBtn.innerHTML = '<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg> Cancel';
+        cancelBtn.addEventListener('click', function() {
+          card._resizeCancelled = true;
+          toggleResizeMode(btn);
+        });
+        btn.parentNode.insertBefore(cancelBtn, btn.nextSibling);
+
+        card._resizeCancelled = false;
+        enableResizing(card, iframe);
+      } else {
+        var shouldSave = !card._resizeCancelled;
+
+        btn.innerHTML = '<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg> Resize';
+        btn.style.background = '';
+        btn.style.borderColor = '';
+        btn.style.color = '';
+
+        var cancelEl = card.querySelector('.resize-cancel-btn');
+        if (cancelEl) cancelEl.remove();
+
+        disableResizing(card, iframe, shouldSave);
+        delete card._resizeCancelled;
+      }
+    }
+
+    function enableResizing(card, iframe) {
+      var doc = iframe.contentDocument;
+      var targets = findRepositionTargets(doc);
+
+      if (!doc.getElementById('resize-mode-styles')) {
+        var style = doc.createElement('style');
+        style.id = 'resize-mode-styles';
+        style.textContent =
+          '.resize-target { position: relative !important; border-radius: 8px; transition: box-shadow 0.15s; overflow: visible !important; }' +
+          '.resize-target:hover { box-shadow: inset 0 0 0 3px rgba(59,130,246,0.5); }' +
+          '.resize-target.selected { box-shadow: inset 0 0 0 3px #3b82f6; }' +
+          '.resize-handle { position: absolute; width: 20px; height: 20px; background: #3b82f6; border: 2px solid #fff; border-radius: 3px; z-index: 9999; box-shadow: 0 1px 6px rgba(0,0,0,0.4); transition: transform 0.1s, background 0.1s; }' +
+          '.resize-handle:hover { background: #2563eb; transform-origin: center; }' +
+          '.resize-handle::after { content: ""; position: absolute; top: -12px; left: -12px; right: -12px; bottom: -12px; }' +
+          '.resize-handle.handle-br { bottom: 2px; right: 2px; cursor: nwse-resize; }' +
+          '.resize-handle.handle-br:hover { transform: scale(1.2); }' +
+          '.resize-handle.handle-r { top: 50%; right: 2px; transform: translateY(-50%); cursor: ew-resize; }' +
+          '.resize-handle.handle-r:hover { transform: translateY(-50%) scale(1.2); }' +
+          '.resize-handle.handle-b { bottom: 2px; left: 50%; transform: translateX(-50%); cursor: ns-resize; }' +
+          '.resize-handle.handle-b:hover { transform: translateX(-50%) scale(1.2); }' +
+          '.resize-grid-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 9998; background-image: linear-gradient(rgba(59,130,246,0.08) 1px, transparent 1px), linear-gradient(90deg, rgba(59,130,246,0.08) 1px, transparent 1px); background-size: 8px 8px; }' +
+          '.resize-offset-badge { position: fixed; background: #3b82f6; color: #fff; font-family: -apple-system, sans-serif; font-size: 13px; font-weight: 700; padding: 4px 10px; border-radius: 6px; pointer-events: none; z-index: 9999; white-space: nowrap; box-shadow: 0 2px 8px rgba(0,0,0,0.3); }';
+        doc.head.appendChild(style);
+      }
+
+      card._resizeState = { targets: targets, changed: false, handlers: [], overflowEls: [] };
+
+      // Force overflow:visible on all ancestors that clip, so handles are visible
+      targets.forEach(function(el) {
+        var ancestor = el.parentElement;
+        while (ancestor && ancestor !== doc.body) {
+          var acs = doc.defaultView.getComputedStyle(ancestor);
+          if (acs.overflow === 'hidden' || acs.overflowX === 'hidden' || acs.overflowY === 'hidden') {
+            ancestor.dataset.resizeOrigOverflow = ancestor.style.overflow || '';
+            ancestor.style.overflow = 'visible';
+            card._resizeState.overflowEls.push(ancestor);
+          }
+          ancestor = ancestor.parentElement;
+        }
+      });
+
+      targets.forEach(function(el) {
+        el.classList.add('resize-target');
+
+        var cs = doc.defaultView.getComputedStyle(el);
+        if (cs.position === 'static') el.style.position = 'relative';
+
+        el.dataset.resizeOrigW = el.style.width || '';
+        el.dataset.resizeOrigH = el.style.height || '';
+        el.dataset.resizeOrigMaxW = el.style.maxWidth || '';
+        el.dataset.resizeOrigMaxH = el.style.maxHeight || '';
+
+        var handleBr = doc.createElement('div');
+        handleBr.className = 'resize-handle handle-br';
+        el.appendChild(handleBr);
+
+        var handleR = doc.createElement('div');
+        handleR.className = 'resize-handle handle-r';
+        el.appendChild(handleR);
+
+        var handleB = doc.createElement('div');
+        handleB.className = 'resize-handle handle-b';
+        el.appendChild(handleB);
+
+        var GRID = 8;
+        function snapTo(val) { return Math.round(val / GRID) * GRID; }
+
+        function makeHandleDragger(handle, axis) {
+          var state = { isDragging: false, startX: 0, startY: 0, startW: 0, startH: 0 };
+
+          function getXY(e) {
+            if (e.touches && e.touches.length) return { x: e.touches[0].clientX, y: e.touches[0].clientY };
+            return { x: e.clientX, y: e.clientY };
+          }
+
+          function onDown(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            state.isDragging = true;
+            var pt = getXY(e);
+            state.startX = pt.x;
+            state.startY = pt.y;
+            var rect = el.getBoundingClientRect();
+            state.startW = rect.width;
+            state.startH = rect.height;
+
+            targets.forEach(function(t) { t.classList.remove('selected'); });
+            el.classList.add('selected');
+
+            var badge = doc.createElement('div');
+            badge.className = 'resize-offset-badge';
+            badge.id = 'resize-badge';
+            doc.body.appendChild(badge);
+
+            // Show grid overlay while dragging
+            if (!doc.getElementById('resize-grid-overlay')) {
+              var grid = doc.createElement('div');
+              grid.className = 'resize-grid-overlay';
+              grid.id = 'resize-grid-overlay';
+              doc.body.appendChild(grid);
+            }
+
+            doc.addEventListener('mousemove', onMove);
+            doc.addEventListener('mouseup', onUp);
+            doc.addEventListener('touchmove', onMove, { passive: false });
+            doc.addEventListener('touchend', onUp);
+          }
+
+          function onMove(e) {
+            if (!state.isDragging) return;
+            e.preventDefault();
+            var pt = getXY(e);
+            var dx = pt.x - state.startX;
+            var dy = pt.y - state.startY;
+
+            if (axis === 'both' || axis === 'x') {
+              var newW = snapTo(Math.max(GRID, state.startW + dx));
+              el.style.width = newW + 'px';
+              el.style.maxWidth = 'none';
+            }
+            if (axis === 'both' || axis === 'y') {
+              var newH = snapTo(Math.max(GRID, state.startH + dy));
+              el.style.height = newH + 'px';
+              el.style.maxHeight = 'none';
+            }
+
+            var badge = doc.getElementById('resize-badge');
+            if (badge) {
+              var r = el.getBoundingClientRect();
+              badge.textContent = Math.round(r.width) + ' \u00d7 ' + Math.round(r.height);
+              badge.style.left = (pt.x + 16) + 'px';
+              badge.style.top = (pt.y - 12) + 'px';
+            }
+
+            card._resizeState.changed = true;
+          }
+
+          function onUp() {
+            state.isDragging = false;
+            var badge = doc.getElementById('resize-badge');
+            if (badge) badge.remove();
+            var gridEl = doc.getElementById('resize-grid-overlay');
+            if (gridEl) gridEl.remove();
+            doc.removeEventListener('mousemove', onMove);
+            doc.removeEventListener('mouseup', onUp);
+            doc.removeEventListener('touchmove', onMove);
+            doc.removeEventListener('touchend', onUp);
+          }
+
+          handle.addEventListener('mousedown', onDown);
+          handle.addEventListener('touchstart', onDown, { passive: false });
+          return { handle: handle, mousedown: onDown, touchstart: onDown };
+        }
+
+        var hBr = makeHandleDragger(handleBr, 'both');
+        var hR = makeHandleDragger(handleR, 'x');
+        var hB = makeHandleDragger(handleB, 'y');
+
+        card._resizeState.handlers.push({
+          el: el,
+          handles: [hBr, hR, hB]
+        });
+      });
+
+      showToast('Resize mode: drag handles to resize elements', 'success');
+    }
+
+    function disableResizing(card, iframe, shouldSave) {
+      var doc = iframe.contentDocument;
+      var resizeState = card._resizeState;
+      if (!resizeState) return;
+
+      var hasChanges = resizeState.changed;
+
+      if (!shouldSave) {
+        resizeState.targets.forEach(function(el) {
+          el.style.width = el.dataset.resizeOrigW || '';
+          el.style.height = el.dataset.resizeOrigH || '';
+          el.style.maxWidth = el.dataset.resizeOrigMaxW || '';
+          el.style.maxHeight = el.dataset.resizeOrigMaxH || '';
+        });
+      }
+
+      resizeState.handlers.forEach(function(h) {
+        h.handles.forEach(function(hd) {
+          hd.handle.removeEventListener('mousedown', hd.mousedown);
+          if (hd.touchstart) hd.handle.removeEventListener('touchstart', hd.touchstart);
+          hd.handle.remove();
+        });
+        h.el.classList.remove('resize-target', 'selected');
+      });
+
+      // Restore overflow on ancestors
+      (resizeState.overflowEls || []).forEach(function(ancestor) {
+        ancestor.style.overflow = ancestor.dataset.resizeOrigOverflow || '';
+        delete ancestor.dataset.resizeOrigOverflow;
+      });
+
+      var styleEl = doc.getElementById('resize-mode-styles');
+      if (styleEl) styleEl.remove();
+      var badge = doc.getElementById('resize-badge');
+      if (badge) badge.remove();
+      var gridEl = doc.getElementById('resize-grid-overlay');
+      if (gridEl) gridEl.remove();
+
+      resizeState.targets.forEach(function(el) {
+        delete el.dataset.resizeOrigW;
+        delete el.dataset.resizeOrigH;
+        delete el.dataset.resizeOrigMaxW;
+        delete el.dataset.resizeOrigMaxH;
+      });
+
+      if (shouldSave && hasChanges) {
+        saveResizedCreative(card, iframe);
+      }
+
+      delete card._resizeState;
+    }
+
+    function saveResizedCreative(card, iframe) {
+      var creativePath = card.querySelector('.resize-toggle').dataset.creative;
+      var fullHtml = '<!DOCTYPE html>\n' + iframe.contentDocument.documentElement.outerHTML;
+
+      fullHtml = fullHtml.replace(/<style id="resize-mode-styles">[\s\S]*?<\/style>/, '');
+      fullHtml = fullHtml.replace(/<div class="resize-grid-overlay"[^>]*><\/div>/g, '');
+      fullHtml = fullHtml.replace(/<div class="resize-handle[^"]*"[^>]*><\/div>/g, '');
+      fullHtml = fullHtml.replace(/ class="resize-target( selected)?"/g, '');
+      fullHtml = fullHtml.replace(/ data-resize-orig-w="[^"]*"/g, '');
+      fullHtml = fullHtml.replace(/ data-resize-orig-h="[^"]*"/g, '');
+      fullHtml = fullHtml.replace(/ data-resize-orig-max-w="[^"]*"/g, '');
+      fullHtml = fullHtml.replace(/ data-resize-orig-max-h="[^"]*"/g, '');
+      fullHtml = fullHtml.replace(/ data-resize-orig-overflow="[^"]*"/g, '');
+
+      fullHtml = fullHtml.replace(/<style id="repo-mode-styles">[\s\S]*?<\/style>/, '');
+      fullHtml = fullHtml.replace(/<style id="edit-mode-styles">[\s\S]*?<\/style>/, '');
+      fullHtml = fullHtml.replace(/ contenteditable="true"/g, '');
+      fullHtml = fullHtml.replace(/ spellcheck="false"/g, '');
+      fullHtml = fullHtml.replace(/ data-original="[^"]*"/g, '');
+
+      fetch('/api/ad-edit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ creative_file: creativePath, html: fullHtml })
+      })
+      .then(function(r) { return r.json(); })
+      .then(function(data) {
+        if (data.success) {
+          showToast('Elements resized & saved', 'success');
+        } else {
+          throw new Error(data.error || 'Save failed');
+        }
+      })
+      .catch(function(err) {
+        showToast('Failed to save resized layout: ' + err.message, 'error');
+      });
+    }
+
+    // ── Photo Reposition Mode ──
+    // Drag photos within their shape to adjust object-position
+
+    function togglePhotoReposition(btn) {
+      var card = btn.closest('.ad-card');
+      var iframe = card.querySelector('.preview iframe');
+      if (!iframe || !iframe.contentDocument) {
+        showToast('Cannot access creative content', 'error');
+        return;
+      }
+
+      // Exit other modes if active
+      if (card.classList.contains('edit-mode')) {
+        var editBtn = card.querySelector('.edit-toggle');
+        if (editBtn) toggleEditMode(editBtn);
+      }
+      if (card.classList.contains('reposition-mode')) {
+        var repoBtn = card.querySelector('.reposition-toggle');
+        if (repoBtn) {
+          card._repoCancelled = false;
+          toggleRepositionMode(repoBtn);
+        }
+      }
+      if (card.classList.contains('resize-mode')) {
+        var resizeBtnEl = card.querySelector('.resize-toggle');
+        if (resizeBtnEl) { card._resizeCancelled = true; toggleResizeMode(resizeBtnEl); }
+      }
+
+      var isActive = card.classList.contains('photo-repo-mode');
+
+      if (!isActive) {
+        // Enter mode — show Save + Cancel
+        card.classList.add('photo-repo-mode');
+        btn.innerHTML = '<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg> Save';
+        btn.style.background = '#22c55e';
+        btn.style.borderColor = '#22c55e';
+        btn.style.color = '#fff';
+
+        var cancelBtn = document.createElement('button');
+        cancelBtn.className = 'action-btn photo-cancel-btn';
+        cancelBtn.innerHTML = '<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg> Cancel';
+        cancelBtn.addEventListener('click', function() {
+          exitPhotoMode(card, iframe, btn, false);
+        });
+        btn.parentNode.insertBefore(cancelBtn, btn.nextSibling);
+
+        enablePhotoReposition(card, iframe);
+      } else {
+        // Save button clicked
+        exitPhotoMode(card, iframe, btn, true);
+      }
+    }
+
+    function exitPhotoMode(card, iframe, btn, shouldSave) {
+      var photoState = card._photoRepoState;
+
+      // Revert positions if not saving
+      if (!shouldSave && photoState && photoState.originalPositions) {
+        photoState.originalPositions.forEach(function(entry) {
+          entry.img.style.objectPosition = entry.position;
+        });
+      }
+
+      // Override changed flag based on decision
+      if (photoState) photoState.changed = shouldSave;
+
+      card.classList.remove('photo-repo-mode');
+
+      // Restore Photo button
+      btn.innerHTML = '<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg> Photo';
+      btn.style.background = '';
+      btn.style.borderColor = '';
+      btn.style.color = '';
+
+      // Remove cancel button
+      var cancelEl = card.querySelector('.photo-cancel-btn');
+      if (cancelEl) cancelEl.remove();
+
+      disablePhotoReposition(card, iframe);
+    }
+
+    function findPhotoTargets(doc) {
+      var imgs = doc.querySelectorAll('img');
+      var targets = [];
+      for (var i = 0; i < imgs.length; i++) {
+        var img = imgs[i];
+        var cs = doc.defaultView.getComputedStyle(img);
+        if (cs.objectFit === 'cover') targets.push(img);
+      }
+      return targets;
+    }
+
+    function getPhotoOverflow(img, doc) {
+      var rect = img.getBoundingClientRect();
+      var natW = img.naturalWidth;
+      var natH = img.naturalHeight;
+      if (!natW || !natH) return { x: 0, y: 0 };
+
+      var scaleX = rect.width / natW;
+      var scaleY = rect.height / natH;
+      var scale = Math.max(scaleX, scaleY);
+
+      return {
+        x: natW * scale - rect.width,
+        y: natH * scale - rect.height,
+      };
+    }
+
+    function parseObjectPosition(img, doc) {
+      var raw = doc.defaultView.getComputedStyle(img).objectPosition || '50% 50%';
+      var parts = raw.split(/\s+/);
+      return {
+        x: parseFloat(parts[0]) || 50,
+        y: parseFloat(parts[1]) || 50,
+      };
+    }
+
+    function enablePhotoReposition(card, iframe) {
+      var doc = iframe.contentDocument;
+      var targets = findPhotoTargets(doc);
+
+      if (targets.length === 0) {
+        showToast('No cover-fitted photos found in this creative', 'error');
+        card.classList.remove('photo-repo-mode');
+        var btn = card.querySelector('.photo-repo-toggle');
+        btn.innerHTML = '<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg> Photo';
+        return;
+      }
+
+      // Inject styles into iframe
+      if (!doc.getElementById('photo-repo-styles')) {
+        var style = doc.createElement('style');
+        style.id = 'photo-repo-styles';
+        style.textContent =
+          '.photo-repo-active { cursor: grab !important; }' +
+          '.photo-repo-active:active { cursor: grabbing !important; }' +
+          '.photo-repo-active.dragging { cursor: grabbing !important; }' +
+          '.photo-repo-hint { position: absolute; top: 8px; left: 8px; background: rgba(139,92,246,0.85); color: #fff; font-family: -apple-system, sans-serif; font-size: 11px; font-weight: 600; padding: 3px 8px; border-radius: 5px; pointer-events: none; z-index: 9999; opacity: 0; transition: opacity 0.15s; }' +
+          '.photo-repo-wrap:hover .photo-repo-hint, .photo-repo-wrap.dragging .photo-repo-hint { opacity: 1; }' +
+          '.photo-repo-wrap.dragging .photo-repo-hint { background: rgba(139,92,246,1); }' +
+          '.photo-repo-badge { position: fixed; background: #8b5cf6; color: #fff; font-family: -apple-system, monospace; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 6px; pointer-events: none; z-index: 9999; white-space: nowrap; box-shadow: 0 2px 8px rgba(0,0,0,0.3); }';
+        doc.head.appendChild(style);
+      }
+
+      // Store original positions for revert
+      var originalPositions = [];
+      targets.forEach(function(img) {
+        var pos = doc.defaultView.getComputedStyle(img).objectPosition || '50% 50%';
+        originalPositions.push({ img: img, position: pos });
+      });
+
+      card._photoRepoState = { targets: targets, changed: false, handlers: [], originalPositions: originalPositions };
+
+      targets.forEach(function(img) {
+        img.classList.add('photo-repo-active');
+        img.setAttribute('draggable', 'false');
+
+        // Add hint label to parent
+        var wrap = img.parentElement;
+        if (wrap) {
+          var wrapCs = doc.defaultView.getComputedStyle(wrap);
+          if (wrapCs.position === 'static') wrap.style.position = 'relative';
+          wrap.classList.add('photo-repo-wrap');
+          var hint = doc.createElement('div');
+          hint.className = 'photo-repo-hint';
+          hint.textContent = 'Drag to reposition';
+          wrap.appendChild(hint);
+        }
+
+        var state = { isDragging: false, startX: 0, startY: 0, startPosX: 50, startPosY: 50 };
+
+        function onMouseDown(e) {
+          if (e.button !== 0) return;
+          e.preventDefault();
+          state.isDragging = true;
+
+          var pos = parseObjectPosition(img, doc);
+          state.startPosX = pos.x;
+          state.startPosY = pos.y;
+          state.startX = e.clientX;
+          state.startY = e.clientY;
+
+          img.classList.add('dragging');
+          if (wrap) wrap.classList.add('dragging');
+
+          // Create badge
+          var badge = doc.createElement('div');
+          badge.className = 'photo-repo-badge';
+          badge.id = 'photo-repo-badge';
+          doc.body.appendChild(badge);
+
+          doc.addEventListener('mousemove', onMouseMove);
+          doc.addEventListener('mouseup', onMouseUp);
+        }
+
+        function onMouseMove(e) {
+          if (!state.isDragging) return;
+          e.preventDefault();
+
+          var dx = e.clientX - state.startX;
+          var dy = e.clientY - state.startY;
+          var overflow = getPhotoOverflow(img, doc);
+
+          // Grab-and-move: drag right → image moves right → show more left → decrease %
+          var newX = overflow.x > 0
+            ? Math.max(0, Math.min(100, state.startPosX - (dx / overflow.x) * 100))
+            : state.startPosX;
+          var newY = overflow.y > 0
+            ? Math.max(0, Math.min(100, state.startPosY - (dy / overflow.y) * 100))
+            : state.startPosY;
+
+          img.style.objectPosition = newX.toFixed(1) + '% ' + newY.toFixed(1) + '%';
+
+          // Update badge near cursor
+          var badge = doc.getElementById('photo-repo-badge');
+          if (badge) {
+            badge.textContent = 'object-position: ' + newX.toFixed(1) + '% ' + newY.toFixed(1) + '%';
+            badge.style.left = (e.clientX + 16) + 'px';
+            badge.style.top = (e.clientY - 12) + 'px';
+          }
+
+          // Also update the hint
+          var hintEl = wrap ? wrap.querySelector('.photo-repo-hint') : null;
+          if (hintEl) hintEl.textContent = newX.toFixed(1) + '% ' + newY.toFixed(1) + '%';
+
+          card._photoRepoState.changed = true;
+        }
+
+        function onMouseUp() {
+          state.isDragging = false;
+          img.classList.remove('dragging');
+          if (wrap) wrap.classList.remove('dragging');
+
+          var badge = doc.getElementById('photo-repo-badge');
+          if (badge) badge.remove();
+
+          // Restore hint text
+          var hintEl = wrap ? wrap.querySelector('.photo-repo-hint') : null;
+          if (hintEl) hintEl.textContent = 'Drag to reposition';
+
+          doc.removeEventListener('mousemove', onMouseMove);
+          doc.removeEventListener('mouseup', onMouseUp);
+        }
+
+        img.addEventListener('mousedown', onMouseDown);
+        card._photoRepoState.handlers.push({
+          img: img,
+          wrap: wrap,
+          mousedown: onMouseDown,
+        });
+      });
+
+      showToast('Photo mode: drag photos to reposition within their shape', 'success');
+    }
+
+    function disablePhotoReposition(card, iframe) {
+      var doc = iframe.contentDocument;
+      var photoState = card._photoRepoState;
+      if (!photoState) return;
+
+      var hasChanges = photoState.changed;
+
+      // Clean up handlers and classes
+      photoState.handlers.forEach(function(h) {
+        h.img.removeEventListener('mousedown', h.mousedown);
+        h.img.classList.remove('photo-repo-active', 'dragging');
+        h.img.removeAttribute('draggable');
+        if (h.wrap) {
+          h.wrap.classList.remove('photo-repo-wrap', 'dragging');
+          var hint = h.wrap.querySelector('.photo-repo-hint');
+          if (hint) hint.remove();
+        }
+      });
+
+      var styleEl = doc.getElementById('photo-repo-styles');
+      if (styleEl) styleEl.remove();
+      var badge = doc.getElementById('photo-repo-badge');
+      if (badge) badge.remove();
+
+      // Save the creative with updated object-position
+      if (hasChanges) {
+        savePhotoRepoCreative(card, iframe);
+      }
+
+      delete card._photoRepoState;
+    }
+
+    function savePhotoRepoCreative(card, iframe) {
+      var creativePath = card.querySelector('.photo-repo-toggle').dataset.creative;
+      var fullHtml = '<!DOCTYPE html>\n' + iframe.contentDocument.documentElement.outerHTML;
+
+      // Strip photo-repo artifacts before saving
+      fullHtml = fullHtml.replace(/<style id="photo-repo-styles">[\s\S]*?<\/style>/, '');
+      fullHtml = fullHtml.replace(/<div class="photo-repo-hint"[^>]*>[^<]*<\/div>/g, '');
+      fullHtml = fullHtml.replace(/<div class="photo-repo-badge"[^>]*>[^<]*<\/div>/g, '');
+      fullHtml = fullHtml.replace(/ class="photo-repo-active( dragging)*"/g, '');
+      fullHtml = fullHtml.replace(/ class="photo-repo-active"/g, '');
+      fullHtml = fullHtml.replace(/ class="photo-repo-wrap( dragging)*"/g, '');
+      fullHtml = fullHtml.replace(/ class="photo-repo-wrap"/g, '');
+      fullHtml = fullHtml.replace(/ draggable="false"/g, '');
+
+      // Also strip edit/repo artifacts
+      fullHtml = fullHtml.replace(/<style id="repo-mode-styles">[\s\S]*?<\/style>/, '');
+      fullHtml = fullHtml.replace(/<style id="edit-mode-styles">[\s\S]*?<\/style>/, '');
+
+      fetch('/api/ad-edit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ creative_file: creativePath, html: fullHtml })
+      })
+      .then(function(r) { return r.json(); })
+      .then(function(data) {
+        if (data.success) {
+          showToast('Photo position saved', 'success');
+        } else {
+          throw new Error(data.error || 'Save failed');
+        }
+      })
+      .catch(function(err) {
+        showToast('Failed to save photo position: ' + err.message, 'error');
+      });
+    }
+
+    // ── Export Functions ──
+
+    var SVG_ICON = '<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>';
+    var PNG_ICON = '<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>';
+
+    // ── Toggle Logo / URL in Creative ──
+
+    function ensureToggleStyles(doc) {
+      if (doc.getElementById('toggle-element-styles')) return;
+      var style = doc.createElement('style');
+      style.id = 'toggle-element-styles';
+      style.textContent =
+        '.hide-logo .logo { display: none !important; visibility: hidden !important; }' +
+        '.hide-url .url { display: none !important; visibility: hidden !important; }' +
+        '.hide-eyebrow .eyebrow, .hide-eyebrow .detail-pill, .hide-eyebrow .cta-pill { display: none !important; visibility: hidden !important; }';
+      doc.head.appendChild(style);
+    }
+
+    function toggleCreativeElement(btn, type) {
+      var card = btn.closest('.ad-card');
+      var iframe = card.querySelector('.preview iframe');
+      if (!iframe || !iframe.contentDocument) {
+        showToast('No creative to modify — wait for it to load', 'error');
+        return;
+      }
+
+      var doc = iframe.contentDocument;
+      ensureToggleStyles(doc);
+
+      // If toggling eyebrow and no pill elements exist, create a default one
+      if (type === 'eyebrow') {
+        var pillEls = doc.querySelectorAll('.eyebrow, .detail-pill, .cta-pill');
+        if (pillEls.length === 0) {
+          var pill = doc.createElement('div');
+          pill.className = 'eyebrow';
+          pill.innerHTML = '<span>Pill text here</span>';
+          var container = doc.querySelector('.ad') || doc.body;
+          container.insertBefore(pill, container.firstChild);
+          if (!doc.querySelector('style.eyebrow-injected')) {
+            var s = doc.createElement('style');
+            s.className = 'eyebrow-injected';
+            s.textContent = '.eyebrow { flex-shrink: 0; background: #C2E9FF; border-radius: 100px; padding: 10px 28px; margin-bottom: 20px; } .eyebrow span { font-family: "Hanken Grotesk", sans-serif; font-weight: 600; font-size: 22px; color: #1A1A1A; }';
+            doc.head.appendChild(s);
+          }
+          markUnsaved(card);
+          return;
+        }
+      }
+
+      var toggleClass = 'hide-' + type;
+      // Use doc.body — it's always stable and won't be replaced by re-renders
+      var isNowHidden = doc.body.classList.toggle(toggleClass);
+
+      // Sync button appearance to match the iframe's actual state
+      btn.classList.toggle('active', isNowHidden);
+
+      // Direct style override as fallback (handles eyebrow, detail-pill, cta-pill)
+      var selectors = { eyebrow: '.eyebrow, .detail-pill, .cta-pill', logo: '.logo', url: '.url' };
+      if (selectors[type]) {
+        doc.querySelectorAll(selectors[type]).forEach(function(el) {
+          el.style.display = isNowHidden ? 'none' : '';
+        });
+      }
+
+      // Mark card as having unsaved changes & show save button
+      markUnsaved(card);
+    }
+
+    function markUnsaved(card) {
+      var hasAnyToggle = card.querySelector('.card-actions .action-btn.active[title*="Toggle"]');
+      if (hasAnyToggle) {
+        card.classList.add('has-unsaved');
+        var saveBtn = card.querySelector('.save-creative-btn');
+        if (saveBtn) saveBtn.style.display = '';
+      } else {
+        card.classList.remove('has-unsaved');
+        var saveBtn = card.querySelector('.save-creative-btn');
+        if (saveBtn) saveBtn.style.display = 'none';
+      }
+    }
+
+    function saveCreativeState(btn) {
+      var card = btn.closest('.ad-card');
+      var iframe = card.querySelector('.preview iframe');
+      if (!iframe || !iframe.contentDocument) {
+        showToast('Cannot access creative', 'error');
+        return;
+      }
+
+      var editToggle = card.querySelector('.edit-toggle');
+      var creativePath = editToggle ? editToggle.dataset.creative : null;
+      if (!creativePath) {
+        var repoToggle = card.querySelector('.reposition-toggle');
+        creativePath = repoToggle ? repoToggle.dataset.creative : null;
+      }
+      if (!creativePath) {
+        showToast('No creative file path found', 'error');
+        return;
+      }
+
+      var doc = iframe.contentDocument;
+
+      // Remove toggled-off elements from the DOM before serializing
+      var logoBtn = card.querySelector('.action-btn[title="Toggle logo visibility"]');
+      var urlBtn = card.querySelector('.action-btn[title="Toggle URL visibility"]');
+      var removedEls = [];
+
+      if (logoBtn && logoBtn.classList.contains('active')) {
+        doc.querySelectorAll('.logo').forEach(function(el) {
+          removedEls.push({ el: el, parent: el.parentNode, next: el.nextSibling });
+          el.remove();
+        });
+      }
+      if (urlBtn && urlBtn.classList.contains('active')) {
+        doc.querySelectorAll('.url').forEach(function(el) {
+          removedEls.push({ el: el, parent: el.parentNode, next: el.nextSibling });
+          el.remove();
+        });
+      }
+      var eyebrowBtn = card.querySelector('.action-btn[title="Toggle pill visibility"]');
+      if (eyebrowBtn && eyebrowBtn.classList.contains('active')) {
+        doc.querySelectorAll('.eyebrow, .detail-pill, .cta-pill').forEach(function(el) {
+          removedEls.push({ el: el, parent: el.parentNode, next: el.nextSibling });
+          el.remove();
+        });
+      }
+
+      // Serialize clean HTML (elements actually removed, not just hidden)
+      var fullHtml = '<!DOCTYPE html>\n' + doc.documentElement.outerHTML;
+      fullHtml = fullHtml.replace(/<style id="toggle-element-styles">[\s\S]*?<\/style>/, '');
+      fullHtml = fullHtml.replace(/<style id="edit-mode-styles">[\s\S]*?<\/style>/, '');
+      fullHtml = fullHtml.replace(/<style id="repo-mode-styles">[\s\S]*?<\/style>/, '');
+      fullHtml = fullHtml.replace(/ hide-logo/g, '');
+      fullHtml = fullHtml.replace(/ hide-url/g, '');
+      fullHtml = fullHtml.replace(/ hide-eyebrow/g, '');
+      fullHtml = fullHtml.replace(/ contenteditable="true"/g, '');
+      fullHtml = fullHtml.replace(/ spellcheck="false"/g, '');
+      fullHtml = fullHtml.replace(/ data-original="[^"]*"/g, '');
+
+      btn.textContent = 'Saving...';
+      btn.disabled = true;
+
+      fetch('/api/ad-edit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ creative_file: creativePath, html: fullHtml })
+      })
+      .then(function(r) { return r.json(); })
+      .then(function(data) {
+        if (data.success) {
+          card.classList.remove('has-unsaved');
+          btn.style.display = 'none';
+          btn.innerHTML = '<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg> Save';
+          btn.disabled = false;
+
+          // Reset toggle buttons and iframe classes since elements are permanently removed
+          if (logoBtn && logoBtn.classList.contains('active')) logoBtn.classList.remove('active');
+          if (urlBtn && urlBtn.classList.contains('active')) urlBtn.classList.remove('active');
+          if (eyebrowBtn && eyebrowBtn.classList.contains('active')) eyebrowBtn.classList.remove('active');
+          doc.body.classList.remove('hide-logo', 'hide-url', 'hide-eyebrow');
+
+          showToast('Creative saved — toggled elements permanently removed', 'success');
+        } else {
+          throw new Error(data.error || 'Save failed');
+        }
+      })
+      .catch(function(err) {
+        // Restore elements back into live DOM on failure so preview still works
+        removedEls.reverse().forEach(function(r) {
+          if (r.next) r.parent.insertBefore(r.el, r.next);
+          else r.parent.appendChild(r.el);
+        });
+        btn.innerHTML = '<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg> Save';
+        btn.disabled = false;
+        showToast('Failed to save: ' + err.message, 'error');
+      });
+    }
+
+    function slugify(str) {
+      return str.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+    }
+
+    function downloadDataUrl(dataUrl, filename) {
+      var link = document.createElement('a');
+      link.download = filename;
+      link.href = dataUrl;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    }
+
+    // Inject html-to-image into iframe for PNG capture
+    var HTI_CDN = 'https://cdn.jsdelivr.net/npm/html-to-image@1.11.11/dist/html-to-image.js';
+
+    function ensureHtiInIframe(iframe) {
+      var win = iframe.contentWindow;
+      if (win.htmlToImage) return Promise.resolve(win);
+      return new Promise(function(resolve, reject) {
+        var script = iframe.contentDocument.createElement('script');
+        script.src = HTI_CDN;
+        script.onload = function() { resolve(win); };
+        script.onerror = function() { reject(new Error('Failed to load html-to-image in iframe')); };
+        iframe.contentDocument.head.appendChild(script);
+      });
+    }
+
+    // Freeze every element's computed width/height as inline styles so
+    // html-to-image's DOM clone preserves the exact layout (prevents
+    // text reflow after contenteditable edits).
+    function freezeLayout(root) {
+      var frozen = [];
+      var all = root.querySelectorAll('*');
+      for (var i = 0; i < all.length; i++) {
+        var el = all[i];
+        var tag = el.tagName.toUpperCase();
+        if (tag === 'SVG' || tag === 'IMG' || tag === 'STYLE' || tag === 'SCRIPT' || tag === 'LINK') continue;
+        var cs = root.ownerDocument.defaultView.getComputedStyle(el);
+        if (cs.display === 'none') continue;
+        var prev = {
+          el: el,
+          width: el.style.width,
+          height: el.style.height,
+          whiteSpace: el.style.whiteSpace
+        };
+        var rect = el.getBoundingClientRect();
+        el.style.width = rect.width + 'px';
+        el.style.height = rect.height + 'px';
+        if (!el.style.whiteSpace) {
+          el.style.whiteSpace = cs.whiteSpace;
+        }
+        frozen.push(prev);
+      }
+      return frozen;
+    }
+
+    function unfreezeLayout(frozen) {
+      for (var i = 0; i < frozen.length; i++) {
+        var f = frozen[i];
+        f.el.style.width = f.width;
+        f.el.style.height = f.height;
+        f.el.style.whiteSpace = f.whiteSpace;
+      }
+    }
+
+    function captureFromIframe(card, method) {
+      var iframe = card.querySelector('.preview iframe');
+      if (!iframe || !iframe.contentDocument) {
+        return Promise.reject(new Error('Cannot access iframe content'));
+      }
+      return ensureHtiInIframe(iframe).then(function(win) {
+        var node = win.document.querySelector('.ad') || win.document.body;
+        var frozen = freezeLayout(node);
+        return win.htmlToImage[method](node, {
+          pixelRatio: 1,
+          cacheBust: true,
+          style: { borderRadius: '0' }
+        }).then(function(result) {
+          unfreezeLayout(frozen);
+          return result;
+        }).catch(function(err) {
+          unfreezeLayout(frozen);
+          throw err;
+        });
+      });
+    }
+
+    // ── Native SVG Builder ──
+    // Walks the creative DOM and produces real SVG elements (rect, text, image)
+    // that Figma can import as editable objects.
+
+    function buildNativeSvg(card) {
+      var iframe = card.querySelector('.preview iframe');
+      if (!iframe || !iframe.contentDocument) return null;
+
+      var win = iframe.contentWindow;
+      var doc = iframe.contentDocument;
+      var adNode = doc.querySelector('.ad');
+      if (!adNode) return null;
+
+      var adRect = adNode.getBoundingClientRect();
+      var svgDefs = [];
+      var svgBody = [];
+      var uid = 0;
+
+      function nextId() { return 'e' + (uid++); }
+
+      function esc(s) {
+        return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;').replace(/'/g, '&apos;');
+      }
+
+      function relRect(el) {
+        var r = el.getBoundingClientRect();
+        return {
+          x: Math.round(r.left - adRect.left),
+          y: Math.round(r.top - adRect.top),
+          w: Math.round(r.width),
+          h: Math.round(r.height)
+        };
+      }
+
+      function isTransparent(c) {
+        return !c || c === 'transparent' || c === 'rgba(0, 0, 0, 0)' || c === 'none';
+      }
+
+      function fontName(ff) {
+        return ff.split(',')[0].trim().replace(/['"]/g, '');
+      }
+
+      // Convert rgb()/rgba() → hex for Figma SVG compatibility
+      function colorToHex(c) {
+        if (!c || c === 'transparent' || c === 'rgba(0, 0, 0, 0)') return 'none';
+        var m = c.match(/rgba?\(\s*(\d+),\s*(\d+),\s*(\d+)/);
+        if (!m) return c;
+        return '#' + ((1 << 24) + (parseInt(m[1]) << 16) + (parseInt(m[2]) << 8) + parseInt(m[3])).toString(16).slice(1);
+      }
+
+      // Convert an <img> to a data URI, handling object-fit: cover
+      function imgDataUri(img, r) {
+        try {
+          var c = doc.createElement('canvas');
+          var nw = img.naturalWidth || r.w;
+          var nh = img.naturalHeight || r.h;
+          c.width = r.w; c.height = r.h;
+          var ctx = c.getContext('2d');
+          var scale = Math.max(r.w / nw, r.h / nh);
+          var sw = nw * scale, sh = nh * scale;
+          ctx.drawImage(img, (r.w - sw) / 2, (r.h - sh) / 2, sw, sh);
+          return c.toDataURL('image/png');
+        } catch (e) { return img.src; }
+      }
+
+      // Parse CSS linear-gradient into SVG linearGradient, returns fill url or null
+      function addGradient(bgImage) {
+        var m = bgImage.match(/linear-gradient\((.+)\)$/);
+        if (!m) return null;
+        // Split args respecting parentheses
+        var args = [], depth = 0, cur = '';
+        for (var i = 0; i < m[1].length; i++) {
+          var ch = m[1][i];
+          if (ch === '(') depth++;
+          else if (ch === ')') depth--;
+          if (ch === ',' && depth === 0) { args.push(cur.trim()); cur = ''; }
+          else cur += ch;
+        }
+        if (cur.trim()) args.push(cur.trim());
+
+        var angle = 180, startIdx = 0;
+        if (args[0].match(/[\d.]+deg/)) { angle = parseFloat(args[0]); startIdx = 1; }
+        else if (args[0] === 'to right')  { angle = 90;  startIdx = 1; }
+        else if (args[0] === 'to left')   { angle = 270; startIdx = 1; }
+        else if (args[0] === 'to bottom') { angle = 180; startIdx = 1; }
+        else if (args[0] === 'to top')    { angle = 0;   startIdx = 1; }
+
+        var stops = [];
+        for (var i = startIdx; i < args.length; i++) {
+          var cm = args[i].match(/(#[0-9a-fA-F]{3,8}|rgba?\([^)]+\))\s*(\d+)?%?/);
+          if (cm) stops.push({ color: colorToHex(cm[1]), offset: cm[2] || null });
+        }
+        if (stops.length < 2) return null;
+
+        // Fill in missing offsets (even spread)
+        if (!stops[0].offset) stops[0].offset = '0';
+        if (!stops[stops.length - 1].offset) stops[stops.length - 1].offset = '100';
+        for (var i = 1; i < stops.length - 1; i++) {
+          if (!stops[i].offset) {
+            var p = i - 1, n = i + 1;
+            while (n < stops.length && !stops[n].offset) n++;
+            var pv = parseFloat(stops[p].offset), nv = parseFloat(stops[n].offset);
+            for (var j = p + 1; j < n; j++)
+              stops[j].offset = String(Math.round(pv + (nv - pv) * (j - p) / (n - p)));
+          }
+        }
+
+        // CSS angle → SVG gradient coords
+        var rad = angle * Math.PI / 180;
+        var sinA = Math.sin(rad), cosA = Math.cos(rad);
+        var gid = nextId();
+        var stopsXml = stops.map(function(s) {
+          return '<stop offset="' + s.offset + '%" stop-color="' + s.color + '"/>';
+        }).join('');
+        svgDefs.push(
+          '<linearGradient id="' + gid + '" x1="' + (50 - sinA * 50).toFixed(1) +
+          '%" y1="' + (50 + cosA * 50).toFixed(1) +
+          '%" x2="' + (50 + sinA * 50).toFixed(1) +
+          '%" y2="' + (50 - cosA * 50).toFixed(1) + '%">' +
+          stopsXml + '</linearGradient>'
+        );
+        return 'url(#' + gid + ')';
+      }
+
+      // Extract text from direct text nodes and split into visual lines
+      function getTextLines(el) {
+        // Collect text from direct text-node children only
+        var text = '';
+        for (var ni = 0; ni < el.childNodes.length; ni++) {
+          if (el.childNodes[ni].nodeType === 3) text += el.childNodes[ni].textContent;
+        }
+        text = text.trim().replace(/\s+/g, ' ');
+        if (!text) return [];
+
+        var r = relRect(el);
+        var elCs = win.getComputedStyle(el);
+        var lh = parseFloat(elCs.lineHeight);
+        if (isNaN(lh)) lh = parseFloat(elCs.fontSize) * 1.2;
+
+        // Single line: element height fits ~1 line
+        if (r.h <= lh * 1.6) {
+          return [{ text: text, top: r.y }];
+        }
+
+        // Multi-line: use canvas to measure word wrapping
+        var fontSize = parseFloat(elCs.fontSize);
+        var cvs = doc.createElement('canvas');
+        var ctx = cvs.getContext('2d');
+        ctx.font = elCs.fontWeight + ' ' + fontSize + 'px ' + elCs.fontFamily;
+
+        var words = text.split(' ');
+        var lines = [];
+        var cur = words[0];
+        for (var wi = 1; wi < words.length; wi++) {
+          var test = cur + ' ' + words[wi];
+          if (ctx.measureText(test).width > r.w * 0.98) {
+            lines.push({ text: cur, top: r.y + lines.length * lh });
+            cur = words[wi];
+          } else {
+            cur = test;
+          }
+        }
+        lines.push({ text: cur, top: r.y + lines.length * lh });
+        return lines;
+      }
+
+      // Recursive DOM walker
+      function walk(el, clipId) {
+        var cs = win.getComputedStyle(el);
+        if (cs.display === 'none' || cs.visibility === 'hidden') return;
+        var r = relRect(el);
+        if (r.w <= 0 || r.h <= 0) return;
+        var tag = el.tagName.toUpperCase();
+
+        // Inline SVGs — serialize as-is
+        if (tag === 'SVG') {
+          var clone = el.cloneNode(true);
+          clone.setAttribute('x', r.x); clone.setAttribute('y', r.y);
+          clone.setAttribute('width', r.w); clone.setAttribute('height', r.h);
+          clone.removeAttribute('class');
+          svgBody.push(new win.XMLSerializer().serializeToString(clone));
+          return;
+        }
+
+        var bg = colorToHex(cs.backgroundColor);
+        var bgImage = cs.backgroundImage;
+        var brTL = parseFloat(cs.borderTopLeftRadius) || 0;
+        var overflow = cs.overflow;
+        var isCircle = brTL >= Math.min(r.w, r.h) / 2 && Math.abs(r.w - r.h) < 2;
+
+        // Clip path for overflow:hidden + border-radius
+        var newClip = null;
+        if (overflow === 'hidden' && brTL > 0) {
+          newClip = nextId();
+          if (isCircle) {
+            svgDefs.push('<clipPath id="' + newClip + '"><circle cx="' + (r.x + r.w / 2) +
+              '" cy="' + (r.y + r.h / 2) + '" r="' + (r.w / 2) + '"/></clipPath>');
+          } else {
+            svgDefs.push('<clipPath id="' + newClip + '"><rect x="' + r.x + '" y="' + r.y +
+              '" width="' + r.w + '" height="' + r.h + '" rx="' + Math.round(brTL) + '"/></clipPath>');
+          }
+        }
+        var activeClip = newClip || clipId;
+        var ca = activeClip ? ' clip-path="url(#' + activeClip + ')"' : '';
+
+        // Background rect
+        if (!isTransparent(bg)) {
+          if (isCircle) {
+            svgBody.push('<circle cx="' + (r.x + r.w / 2) + '" cy="' + (r.y + r.h / 2) +
+              '" r="' + (r.w / 2) + '" fill="' + bg + '"/>');
+          } else {
+            svgBody.push('<rect x="' + r.x + '" y="' + r.y + '" width="' + r.w + '" height="' + r.h +
+              '" fill="' + bg + '"' + (brTL > 0 ? ' rx="' + Math.round(brTL) + '"' : '') + '/>');
+          }
+        }
+
+        // Background gradient overlay (skip if it's gradient text)
+        var bgClip = cs.backgroundClip || cs.webkitBackgroundClip || '';
+        var isGradientText = bgImage && bgImage.indexOf('gradient') !== -1 &&
+          (bgClip === 'text' || bgClip === '-webkit-text' || cs.color === 'transparent' || cs.color === 'rgba(0, 0, 0, 0)');
+        if (bgImage && bgImage !== 'none' && bgImage.indexOf('gradient') !== -1 && !isGradientText) {
+          var gf = addGradient(bgImage);
+          if (gf) {
+            svgBody.push('<rect x="' + r.x + '" y="' + r.y + '" width="' + r.w + '" height="' + r.h +
+              '" fill="' + gf + '"' + ca + '/>');
+          }
+        }
+
+        // Images
+        if (tag === 'IMG' && el.complete && el.naturalWidth > 0) {
+          svgBody.push('<image x="' + r.x + '" y="' + r.y + '" width="' + r.w + '" height="' + r.h +
+            '" href="' + imgDataUri(el, r) + '"' + ca + '/>');
+        }
+
+        // Text — only process leaf text or direct text nodes
+        var hasDirectText = false;
+        for (var i = 0; i < el.childNodes.length; i++) {
+          if (el.childNodes[i].nodeType === 3 && el.childNodes[i].textContent.trim()) {
+            hasDirectText = true; break;
+          }
+        }
+
+        if (hasDirectText) {
+          var fontSize = parseFloat(cs.fontSize);
+          var ff = fontName(cs.fontFamily);
+          var fw = cs.fontWeight;
+          var color = colorToHex(cs.color);
+          var textAlign = cs.textAlign;
+
+          // Gradient text (background-clip: text or transparent color with gradient)
+          if (isGradientText) {
+            var gfill = addGradient(bgImage);
+            if (gfill) color = gfill;
+          }
+
+          var lines = getTextLines(el);
+          // Fallback: if Range API returned nothing, use textContent
+          if (lines.length === 0 && el.textContent.trim()) {
+            lines = [{ text: el.textContent.trim(), top: r.y }];
+          }
+          if (lines.length > 0) {
+            var tx = r.x, anchor = 'start';
+            if (textAlign === 'center') { tx = r.x + r.w / 2; anchor = 'middle'; }
+            else if (textAlign === 'right' || textAlign === 'end') { tx = r.x + r.w; anchor = 'end'; }
+
+            var quotedFf = ff.indexOf(' ') !== -1 ? "'" + esc(ff) + "'" : esc(ff);
+            var attrs = ' font-family="' + quotedFf + '" font-size="' + fontSize +
+              '" font-weight="' + fw + '" fill="' + color + '" text-anchor="' + anchor + '"';
+
+            if (lines.length === 1) {
+              svgBody.push('<text x="' + tx + '" y="' + Math.round(lines[0].top + fontSize * 0.82) + '"' +
+                attrs + '>' + esc(lines[0].text) + '</text>');
+            } else {
+              var t = '<text' + attrs + '>';
+              lines.forEach(function(ln) {
+                t += '<tspan x="' + tx + '" y="' + Math.round(ln.top + fontSize * 0.82) + '">' +
+                  esc(ln.text) + '</tspan>';
+              });
+              t += '</text>';
+              svgBody.push(t);
+            }
+          }
+        }
+
+        // Recurse into children
+        for (var ci = 0; ci < el.children.length; ci++) {
+          walk(el.children[ci], activeClip);
+        }
+      }
+
+      walk(adNode, null);
+
+      var svg = '<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="1080" height="1350" viewBox="0 0 1080 1350">';
+      if (svgDefs.length > 0) svg += '<defs>' + svgDefs.join('') + '</defs>';
+      svg += svgBody.join('');
+      svg += '</svg>';
+      return svg;
+    }
+
+    function exportAsSvg(btn) {
+      var card = btn.closest('.ad-card');
+      var adName = btn.dataset.name;
+
+      btn.classList.add('exporting');
+      var origSvgHtml = btn.innerHTML;
+      btn.innerHTML = '... SVG';
+
+      setTimeout(function() {
+        try {
+          var svgString = buildNativeSvg(card);
+          if (!svgString) throw new Error('Could not access creative');
+
+          navigator.clipboard.writeText(svgString).then(function() {
+            btn.classList.remove('exporting');
+            btn.classList.add('exported');
+            btn.innerHTML = '&#10003; Copied';
+            showToast('SVG copied — paste into Figma with Cmd+V', 'success');
+            setTimeout(function() {
+              btn.classList.remove('exported');
+              btn.innerHTML = origSvgHtml;
+            }, 3000);
+          }).catch(function(err) {
+            throw err;
+          });
+        } catch (err) {
+          btn.classList.remove('exporting');
+          btn.innerHTML = origSvgHtml;
+          showToast('SVG export failed: ' + err.message, 'error');
+          console.error('SVG export error:', err);
+        }
+      }, 50);
+    }
+
+    function exportAsPng(btn) {
+      var card = btn.closest('.ad-card');
+      var adName = btn.dataset.name;
+      var fallbackImage = btn.dataset.image;
+
+      btn.classList.add('exporting');
+      var origPngHtml = btn.innerHTML;
+      btn.innerHTML = '... PNG';
+
+      captureFromIframe(card, 'toPng')
+      .then(function(dataUrl) {
+        downloadDataUrl(dataUrl, slugify(adName) + '.png');
+        btn.classList.remove('exporting');
+        btn.classList.add('exported');
+        btn.innerHTML = '&#10003; Done';
+        showToast('Downloaded PNG: ' + adName, 'success');
+        setTimeout(function() {
+          btn.classList.remove('exported');
+          btn.innerHTML = origPngHtml;
+        }, 3000);
+      })
+      .catch(function(err) {
+        btn.classList.remove('exporting');
+        // Fallback to static image if available
+        if (fallbackImage) {
+          var link = document.createElement('a');
+          link.download = slugify(adName) + '.png';
+          link.href = '/ads/' + fallbackImage;
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+          btn.innerHTML = origPngHtml;
+          showToast('Downloaded fallback image for ' + adName, 'success');
+        } else {
+          btn.innerHTML = origPngHtml;
+          showToast('PNG export failed: ' + err.message, 'error');
+          console.error('PNG export error:', err);
+        }
+      });
+    }
+
+    function bulkExportPng() {
+      var cards = document.querySelectorAll('.ad-card');
+      if (cards.length === 0) {
+        showToast('No ads to export', 'error');
+        return;
+      }
+      var total = cards.length;
+      var done = 0;
+      var failed = 0;
+      showToast('Exporting ' + total + ' ads as PNG...', '');
+
+      var queue = Array.from(cards);
+      function processNext() {
+        if (queue.length === 0) {
+          showToast('Exported ' + done + '/' + total + ' ads as PNG' + (failed > 0 ? ' (' + failed + ' failed)' : ''), 'success');
+          return;
+        }
+        var card = queue.shift();
+        var adName = card.querySelector('.info h3').textContent;
+
+        captureFromIframe(card, 'toPng')
+        .then(function(dataUrl) {
+          downloadDataUrl(dataUrl, slugify(adName) + '.png');
+          done++;
+          setTimeout(processNext, 300);
+        })
+        .catch(function() {
+          done++;
+          failed++;
+          setTimeout(processNext, 100);
+        });
+      }
+      processNext();
+    }
+
+    // ── Delete Ad ──
+
+    function confirmDeleteAd(btn) {
+      var adName = btn.dataset.name;
+      var ad = ADS.find(function(a) { return a.name === adName; });
+      if (!ad) return;
+
+      var files = [];
+      if (ad.creative_file) files.push(ad.creative_file);
+      if (ad.image) files.push(ad.image);
+      files.push('ads.json (entry removed)');
+
+      var overlay = document.createElement('div');
+      overlay.className = 'confirm-overlay';
+      overlay.innerHTML = '<div class="confirm-dialog">' +
+        '<h3>Delete this ad?</h3>' +
+        '<p>This will permanently remove <strong>' + adName + '</strong> and its files from disk.</p>' +
+        '<div class="file-list">' + files.join('<br>') + '</div>' +
+        '<div class="confirm-actions">' +
+          '<button class="confirm-cancel" onclick="this.closest(\'.confirm-overlay\').remove()">Cancel</button>' +
+          '<button class="confirm-delete" data-name="' + adName.replace(/"/g, '&quot;') + '" onclick="executeDeleteAd(this)">Delete</button>' +
+        '</div>' +
+      '</div>';
+
+      document.body.appendChild(overlay);
+      overlay.addEventListener('click', function(e) {
+        if (e.target === overlay) overlay.remove();
+      });
+    }
+
+    function executeDeleteAd(btn) {
+      var adName = btn.dataset.name;
+      var overlay = btn.closest('.confirm-overlay');
+      btn.textContent = 'Deleting...';
+      btn.disabled = true;
+
+      fetch('/api/delete-ad', {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ad_name: adName })
+      })
+      .then(function(r) { return r.json(); })
+      .then(function(data) {
+        overlay.remove();
+        if (!data.success) throw new Error(data.error || 'Failed');
+
+        ADS = ADS.filter(function(a) { return a.name !== adName; });
+        delete DECISIONS[adName];
+
+        var activeFilter = document.querySelector('.toolbar button.active');
+        render(activeFilter ? activeFilter.dataset.filter : 'all');
+
+        showToast('Deleted <strong>' + adName + '</strong> (' + data.remaining + ' ads remaining)', 'success');
+      })
+      .catch(function(err) {
+        overlay.remove();
+        showToast('Delete failed: ' + err.message, 'error');
+      });
+    }
+  </script>
+
+  <div class="toast-container" id="toast-container"></div>
+</body>
+</html>

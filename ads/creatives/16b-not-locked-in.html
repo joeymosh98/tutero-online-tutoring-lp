@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ad 16B — You're Not Locked In</title>
+<link href="https://api.fontshare.com/v2/css?f[]=satoshi@700,900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: #0a0a0a;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+    padding: 40px 20px;
+  }
+
+  .ad {
+    width: 1080px;
+    height: 1350px;
+    border-radius: 0;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .bg-photo {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 30%;
+  }
+
+  .overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg,
+      rgba(0,15,30,0.72) 0%,
+      rgba(0,15,30,0.25) 20%,
+      rgba(0,15,30,0.08) 45%,
+      rgba(0,15,30,0.25) 62%,
+      rgba(0,15,30,0.72) 80%,
+      rgba(0,15,30,0.9) 100%
+    );
+  }
+
+  .content {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 64px 60px 80px;
+  }
+
+  .top-group { flex-shrink: 0;}
+
+  .hero-word {
+    flex-shrink: 0;
+    font-family: 'Satoshi', sans-serif;
+    font-weight: 900;
+    font-size: 100px;
+    line-height: 1.25;
+    background: linear-gradient(90deg, #5B8CFF 0%, #33C8FF 15%, #7EC9A8 35%, #F5C542 60%, #FF8C33 85%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    margin-bottom: 4px;
+  }
+
+  .subhead {
+    flex-shrink: 0;
+    font-family: 'Satoshi', sans-serif;
+    font-weight: 900;
+    font-size: 48px;
+    line-height: 1.1;
+    color: #FFFFFF;
+  }
+
+  .bottom-group { flex-shrink: 0;}
+
+  .ticks {
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 28px;
+  }
+  .tick {
+    white-space: nowrap;
+    font-family: 'Hanken Grotesk', sans-serif;
+    font-weight: 600;
+    font-size: 28px;
+    color: #FFFFFF;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .tick .emoji { font-size: 26px; }
+
+  .footer {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .footer .logo { height: 34px; width: auto; filter: brightness(0) invert(1); }
+  .footer .url {
+    font-family: 'Hanken Grotesk', sans-serif;
+    font-weight: 600;
+    font-size: 18px;
+    color: rgba(255,255,255,0.5);
+  }
+</style>
+</head>
+<body>
+
+<div class="ad">
+  <img class="bg-photo" src="../images/16b-not-locked-in.png" alt="Mum walking through front door looking relaxed">
+  <div class="overlay"></div>
+
+  <div class="content">
+    <div class="top-group">
+      <div class="hero-word">Online Tutoring</div>
+      <div class="subhead">for Prep – Year 12 🇦🇺</div>
+    </div>
+
+    <div class="bottom-group">
+      <div class="ticks">
+        <div class="tick"><span class="emoji">✅</span> No Contract. Ever.</div>
+        <div class="tick"><span class="emoji">✅</span> Pay Per Lesson</div>
+        <div class="tick"><span class="emoji">✅</span> Matched by a Real Human</div>
+        <div class="tick"><span class="emoji">✅</span> Your Own Education Manager</div>
+      </div>
+
+      <div class="footer">
+        <img class="logo" src="../images/tutero-logo.svg" alt="Tutero">
+        <span class="url">tutero.com.au</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

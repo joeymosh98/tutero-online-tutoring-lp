@@ -1094,12 +1094,12 @@ body.division-schools .lp-action-btn:hover {
 }
 
 .cms-btn--primary {
-  background: var(--color-orange);
+  background: #22c55e;
   color: #fff;
 }
 
 .cms-btn--primary:hover {
-  background: var(--color-orange-hover);
+  background: #16a34a;
 }
 
 .cms-btn--primary:disabled {

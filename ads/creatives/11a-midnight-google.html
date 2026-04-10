@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ad 11A — You're Not The Only Parent Who Searched This</title>
+<link href="https://api.fontshare.com/v2/css?f[]=satoshi@700,900&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #0a0a0a; display: flex; justify-content: center; align-items: flex-start; min-height: 100vh; padding: 40px 20px; }
+
+  .ad { width: 1080px; height: 1350px; border-radius: 0; overflow: hidden; position: relative; }
+
+  .bg-photo { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .overlay { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,8,20,0.75) 0%, rgba(0,8,20,0.35) 15%, rgba(0,8,20,0.1) 35%, rgba(0,8,20,0.1) 55%, rgba(0,8,20,0.45) 75%, rgba(0,8,20,0.82) 100%); }
+
+  .content { position: relative; z-index: 2; width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: space-between; padding: 64px 60px 80px; }
+
+  .hero-word { flex-shrink: 0; font-family: 'Satoshi', sans-serif; font-weight: 900; font-size: 100px; line-height: 1.25; background: linear-gradient(90deg, #5B8CFF 0%, #33C8FF 15%, #7EC9A8 35%, #F5C542 60%, #FF8C33 85%); -webkit-background-clip: text; background-clip: text; color: transparent; margin-bottom: 4px; }
+  .subhead { flex-shrink: 0; font-family: 'Satoshi', sans-serif; font-weight: 900; font-size: 48px; line-height: 1.1; color: #FFFFFF; }
+
+  .search-area { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 16px; padding: 20px 0; }
+
+  .search-time { font-family: -apple-system, sans-serif; font-size: 14px; color: rgba(255,255,255,0.3); margin-bottom: 8px; }
+
+  .search-bar { width: 100%; max-width: 680px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.15); border-radius: 28px; padding: 22px 28px; display: flex; align-items: center; gap: 14px; backdrop-filter: blur(8px); box-shadow: 0 4px 24px rgba(0,0,0,0.3); }
+  .search-icon { font-size: 22px; opacity: 0.4; }
+  .search-text { font-family: -apple-system, sans-serif; font-size: 22px; color: rgba(255,255,255,0.85); flex: 1; }
+  .search-cursor { width: 2px; height: 26px; background: #4285f4; animation: blink 1s infinite; }
+  @keyframes blink { 0%,50% { opacity: 1; } 51%,100% { opacity: 0; } }
+
+  .suggestions { width: 100%; max-width: 680px; display: flex; flex-direction: column; gap: 2px; }
+  .suggestion { padding: 14px 28px; display: flex; align-items: center; gap: 14px; border-radius: 8px; }
+  .suggestion .icon { font-size: 18px; opacity: 0.3; }
+  .suggestion span { font-family: -apple-system, sans-serif; font-size: 18px; color: rgba(255,255,255,0.4); }
+
+  .reassurance { margin-top: 28px; font-family: 'Hanken Grotesk', sans-serif; font-weight: 600; font-size: 24px; color: rgba(245,220,160,0.85); text-align: center; }
+
+  .ticks { flex-shrink: 0; display: flex; flex-direction: column; gap: 12px; margin-bottom: 28px; }
+  .tick { font-family: 'Hanken Grotesk', sans-serif; font-weight: 600; font-size: 28px; color: #FFFFFF; display: flex; align-items: center; gap: 12px; white-space: nowrap; }
+  .tick .emoji { font-size: 26px; }
+
+  .footer { flex-shrink: 0; display: flex; align-items: center; justify-content: space-between; }
+  .footer .logo { height: 34px; width: auto; filter: brightness(0) invert(1); }
+  .footer .url { font-family: 'Hanken Grotesk', sans-serif; font-weight: 600; font-size: 18px; color: rgba(255,255,255,0.5); }
+</style>
+</head>
+<body>
+<div class="ad">
+  <img class="bg-photo" src="../images/11a-midnight-phone.png" alt="Mum in dark bedroom looking at phone late at night">
+  <div class="overlay"></div>
+
+  <div class="content">
+    <div class="top-group">
+      <div class="hero-word">Online Tutoring</div>
+      <div class="subhead">for Prep – Year 12 🇦🇺</div>
+    </div>
+
+    <div class="search-area" style="margin-top: 29px; margin-left: 0px;">
+      <div class="search-time">11:47 PM</div>
+      <div class="search-bar">
+        <span class="search-icon">🔍</span>
+        <span class="search-text">is my year 8 son behind in maths</span>
+        <div class="search-cursor"></div>
+      </div>
+      <div class="suggestions">
+        <div class="suggestion"><span class="icon">🔍</span><span>best tutoring for year 8 maths</span></div>
+        <div class="suggestion"><span class="icon">🔍</span><span>signs your child is falling behind at school</span></div>
+        <div class="suggestion"><span class="icon">🔍</span><span>online maths tutoring that actually works</span></div>
+      </div>
+      <div class="reassurance">4,000+ families started with this exact search.<br>Then they found Tutero.</div>
+    </div>
+
+    <div class="bottom-group">
+      <div class="ticks">
+        <div class="tick"><span class="emoji">✅</span> Same Tutor Every Week</div>
+        <div class="tick"><span class="emoji">✅</span> A Real Person Picks Up When You Call</div>
+        <div class="tick"><span class="emoji">✅</span> No Lock-in Contract</div>
+        <div class="tick"><span class="emoji">✅</span> Pay Per Lesson</div>
+      </div>
+      <div class="footer">
+        <img class="logo" src="../images/tutero-logo.svg" alt="Tutero">
+        <span class="url">tutero.com.au</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+</body></html>
