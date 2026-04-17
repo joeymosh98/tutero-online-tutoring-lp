@@ -1,8 +1,13 @@
 var fs = require('fs');
 var path = require('path');
 
-var ADS_PATH = path.join(__dirname, '..', 'ads', 'ads.json');
 var ADS_DIR = path.join(__dirname, '..', 'ads');
+var ADS_PATH = path.join(ADS_DIR, 'ads.json');
+var SOCIAL_PATH = path.join(ADS_DIR, 'social.json');
+
+function resolveJsonPath(source) {
+  return source === 'social' ? SOCIAL_PATH : ADS_PATH;
+}
 
 module.exports = function handler(req, res) {
   if (req.method !== 'POST') {
@@ -10,6 +15,26 @@ module.exports = function handler(req, res) {
   }
 
   var body = req.body || {};
+  var source = body.source === 'social' ? 'social' : 'ads';
+
+  // ── Bulk reorder (grid) ──
+  if (body.bulk_reorder && Array.isArray(body.order)) {
+    try {
+      var jsonPath = resolveJsonPath(source);
+      var ads = JSON.parse(fs.readFileSync(jsonPath, 'utf8'));
+      body.order.forEach(function(item) {
+        var ad = ads.find(function(a) { return a.name === item.name; });
+        if (ad && typeof item.grid_order === 'number') {
+          ad.grid_order = item.grid_order;
+        }
+      });
+      fs.writeFileSync(jsonPath, JSON.stringify(ads, null, 2) + '\n', 'utf8');
+      return res.status(200).json({ success: true, updated: body.order.length });
+    } catch (err) {
+      console.error('bulk reorder error:', err);
+      return res.status(500).json({ error: 'Failed to save reorder' });
+    }
+  }
 
   // ── Creative HTML save ──
   if (body.creative_file && body.html) {
@@ -21,13 +46,14 @@ module.exports = function handler(req, res) {
     return res.status(400).json({ error: 'ad_name, field, and value are required' });
   }
 
-  var allowedFields = ['name', 'headline', 'body', 'cta_label'];
+  var allowedFields = ['name', 'headline', 'body', 'cta_label', 'caption', 'cta', 'grid_approved', 'grid_order'];
   if (allowedFields.indexOf(body.field) === -1) {
     return res.status(400).json({ error: 'Field not editable: ' + body.field });
   }
 
   try {
-    var ads = JSON.parse(fs.readFileSync(ADS_PATH, 'utf8'));
+    var jsonPath = resolveJsonPath(source);
+    var ads = JSON.parse(fs.readFileSync(jsonPath, 'utf8'));
     var ad = ads.find(function(a) { return a.name === body.ad_name; });
     if (!ad) {
       return res.status(404).json({ error: 'Ad not found: ' + body.ad_name });
@@ -38,10 +64,11 @@ module.exports = function handler(req, res) {
 
     var newName = body.field === 'name' ? body.value : ad.name;
 
-    fs.writeFileSync(ADS_PATH, JSON.stringify(ads, null, 2) + '\n', 'utf8');
+    fs.writeFileSync(jsonPath, JSON.stringify(ads, null, 2) + '\n', 'utf8');
 
     return res.status(200).json({
       success: true,
+      source: source,
       ad_name: newName,
       field: body.field,
       old_value: oldValue,
