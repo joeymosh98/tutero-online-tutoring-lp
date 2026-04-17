@@ -33,6 +33,9 @@ http.createServer(async function(req, res) {
   var parsedUrl = new URL(req.url, 'http://localhost');
   var url = parsedUrl.pathname;
 
+  // Log API requests
+  if (url.startsWith('/api/')) console.log('[API]', req.method, url);
+
   // Handle API routes
   if (url.startsWith('/api/')) {
     var fnName = url.replace(/^\/api\//, '').replace(/\/$/, '');
@@ -76,6 +79,7 @@ http.createServer(async function(req, res) {
       };
 
       try {
+        delete require.cache[require.resolve(fnPath)];
         var handler = require(fnPath);
         if (typeof handler === 'function') await handler(req, mockRes);
         else if (handler.default) await handler.default(req, mockRes);
@@ -107,7 +111,7 @@ http.createServer(async function(req, res) {
       return res.end('Not found: ' + url);
     }
     var ext = path.extname(filePath);
-    res.writeHead(200, { 'Content-Type': MIME[ext] || 'application/octet-stream' });
+    res.writeHead(200, { 'Content-Type': MIME[ext] || 'application/octet-stream', 'Cache-Control': 'no-store' });
     res.end(data);
   });
 }).listen(PORT, function() {

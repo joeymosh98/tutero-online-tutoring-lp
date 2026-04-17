@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="UTF-8">
+<title>Tuesday at Five</title>
+<link rel="preconnect" href="https://api.fontshare.com" crossorigin="">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://api.fontshare.com/v2/css?f[]=satoshi@700,900&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 1080px; height: 1350px; overflow: hidden; }
+  body {
+    background: #F0FAFF;
+    position: relative;
+    font-family: 'Hanken Grotesk', system-ui, sans-serif;
+  }
+  .photo {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(160deg, #97B9D4 0%, #58738F 100%);
+    overflow: hidden;
+  }
+  .photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .grade {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(0,0,0,0) 52%, rgba(0,40,65,0.4) 100%);
+    pointer-events: none;
+  }
+  .caption {
+    position: absolute;
+    left: 90px;
+    right: 90px;
+    bottom: 90px;
+    z-index: 2;
+    color: #F0FAFF;
+  }
+  .eyebrow {
+    font-family: 'Hanken Grotesk', system-ui, sans-serif;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.24em;
+    font-size: 20px;
+    color: rgba(240,250,255,0.75);
+    margin-bottom: 16px;
+  }
+  .line {
+    font-family: 'Satoshi', sans-serif;
+    font-weight: 700;
+    font-size: 88px;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+  }
+  .line em { font-style: normal; background: linear-gradient(90deg, #1D49E3 0%, #00A3FF 25%, #66A693 50%, #E8A909 75%, #FF7A00 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+</style>
+</head>
+<body>
+  <div class="photo">
+    <img src="../../images/s-06-img.png" alt="">
+  </div>
+  <div class="grade"></div>
+  <div class="caption">
+    <p class="eyebrow">Her routine</p>
+    <h1 class="line">Tuesday, 5pm.&nbsp;<em>Her hour.</em></h1>
+  </div>
+
+
+</body></html>

@@ -48,6 +48,29 @@
       font-weight: 500;
     }
 
+    /* Mode tabs (top-level: Ads / Social) */
+    .mode-tabs {
+      display: flex;
+      gap: 4px;
+      padding: 12px 32px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .mode-tab {
+      background: transparent;
+      border: none;
+      color: var(--muted);
+      padding: 10px 18px;
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: -0.2px;
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      margin-bottom: -1px;
+      transition: color 0.15s, border-color 0.15s;
+    }
+    .mode-tab:hover { color: var(--text); }
+    .mode-tab.active { color: var(--accent-hover); border-bottom-color: var(--accent); }
+
     /* Toolbar */
     .toolbar {
       padding: 16px 32px;
@@ -197,6 +220,46 @@
     .tag.feed { background: #1a2e1a; color: #4ade80; }
     .tag.reel { background: #2e1a2e; color: #c084fc; }
     .tag.carousel { background: #2e2a1a; color: #fbbf24; }
+    .tag.static { background: #1e1b2e; color: #a5b4fc; }
+
+    /* Carousel slide navigation */
+    .slide-badge {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background: rgba(0,0,0,0.7);
+      backdrop-filter: blur(8px);
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 600;
+      color: #fff;
+      z-index: 2;
+    }
+    .slide-nav-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(0,0,0,0.6);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255,255,255,0.1);
+      color: #fff;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 2;
+      transition: background 0.15s;
+    }
+    .slide-nav-btn:hover { background: rgba(0,0,0,0.85); }
+    .slide-nav-btn[disabled] { opacity: 0.3; cursor: default; }
+    .slide-nav-btn.prev { left: 8px; }
+    .slide-nav-btn.next { right: 8px; }
 
     /* Copy block */
     .ad-card .copy-block {
@@ -599,8 +662,243 @@
       color: #fff;
     }
     .confirm-delete:hover { background: #dc2626; }
+
+    /* ── Instagram Grid View ── */
+    .view-toggle {
+      display: flex;
+      gap: 0;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      overflow: hidden;
+      margin-right: 12px;
+    }
+    .view-toggle button {
+      background: transparent;
+      border: none;
+      color: var(--muted);
+      padding: 7px 14px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .view-toggle button:hover { color: var(--text); }
+    .view-toggle button.active { background: var(--accent); color: #fff; }
+
+    .ig-grid-container {
+      max-width: 960px;
+      margin: 32px auto;
+      padding: 0 32px;
+    }
+    .ig-grid-header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border);
+    }
+    .ig-grid-header h2 { font-size: 16px; font-weight: 600; }
+    .ig-grid-header .grid-stats { font-size: 13px; color: var(--muted); }
+
+    .ig-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 3px;
+      background: var(--bg);
+    }
+
+    .ig-grid-cell {
+      position: relative;
+      aspect-ratio: 1 / 1;
+      overflow: hidden;
+      background: #222;
+      cursor: pointer;
+    }
+
+    .ig-grid-cell .grid-iframe-wrap {
+      position: absolute;
+      width: 100%;
+      height: 125%;
+      top: -12.5%;
+      left: 0;
+      pointer-events: none;
+    }
+    .ig-grid-cell .grid-iframe-wrap iframe {
+      width: 1080px;
+      height: 1350px;
+      border: none;
+      transform-origin: top left;
+      pointer-events: none;
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+
+    .ig-grid-cell .cell-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.4);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.15s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 2;
+    }
+    .ig-grid-cell:hover .cell-overlay {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .ig-grid-cell .carousel-indicator {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      z-index: 3;
+      color: #fff;
+      pointer-events: none;
+      filter: drop-shadow(0 1px 2px rgba(0,0,0,0.5));
+    }
+
+    .ig-grid-cell .cell-name {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 8px 10px;
+      background: linear-gradient(transparent, rgba(0,0,0,0.7));
+      color: #fff;
+      font-size: 11px;
+      font-weight: 500;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.15s;
+      z-index: 3;
+    }
+    .ig-grid-cell:hover .cell-name { opacity: 1; }
+
+    .ig-grid-cell.dragging {
+      opacity: 0.4;
+      outline: 2px dashed var(--accent);
+    }
+    .ig-grid-cell.drag-over {
+      outline: 2px solid var(--accent);
+      outline-offset: -2px;
+    }
+
+    .ig-unapproved-section {
+      margin-top: 32px;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+    }
+    .ig-unapproved-section h3 {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--muted);
+      margin-bottom: 16px;
+    }
+    .ig-unapproved-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: 8px;
+    }
+    .ig-unapproved-grid .ig-grid-cell {
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      opacity: 0.6;
+    }
+    .ig-unapproved-grid .ig-grid-cell:hover {
+      opacity: 1;
+      border-color: var(--accent);
+    }
+
+    /* Grid preview overlay */
+    .grid-preview-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.85);
+      backdrop-filter: blur(8px);
+      z-index: 10000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: fadeIn 0.15s ease-out;
+    }
+    .grid-preview-panel {
+      display: flex;
+      gap: 0;
+      max-width: 1100px;
+      width: 95%;
+      max-height: 90vh;
+      background: var(--surface);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 24px 64px rgba(0,0,0,0.5);
+    }
+    .grid-preview-creative {
+      flex: 0 0 480px;
+      aspect-ratio: 4 / 5;
+      background: #222;
+      position: relative;
+      overflow: hidden;
+    }
+    .grid-preview-creative .iframe-wrap {
+      position: absolute;
+      inset: 0;
+    }
+    .grid-preview-creative .iframe-wrap iframe {
+      width: 1080px;
+      height: 1350px;
+      border: none;
+      transform-origin: top left;
+      pointer-events: none;
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+    .grid-preview-details {
+      flex: 1;
+      padding: 24px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .grid-preview-details h2 { font-size: 18px; font-weight: 600; }
+    .grid-preview-details .caption {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.6;
+      white-space: pre-wrap;
+    }
+    .grid-preview-details .hashtags {
+      font-size: 12px;
+      color: var(--accent);
+    }
+    .grid-preview-close {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      background: rgba(255,255,255,0.1);
+      border: none;
+      color: #fff;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      font-size: 18px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.15s;
+      z-index: 10001;
+    }
+    .grid-preview-close:hover { background: rgba(255,255,255,0.2); }
   </style>
   <script src="https://cdn.jsdelivr.net/npm/html-to-image@1.11.11/dist/html-to-image.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
 </head>
 <body>
   <header>
@@ -608,14 +906,13 @@
     <span class="badge">LOCAL ONLY</span>
   </header>
 
-  <div class="toolbar">
-    <button class="active" data-filter="all">All</button>
-    <button data-filter="story">Story</button>
-    <button data-filter="feed">Feed</button>
-    <button data-filter="reel">Reel</button>
-    <button data-filter="carousel">Carousel</button>
-    <span style="flex:1"></span>
-    <button onclick="bulkExportPng()" style="margin-left:auto">Export All PNG</button>
+  <div class="mode-tabs">
+    <button class="mode-tab active" data-mode="ads">Ads</button>
+    <button class="mode-tab" data-mode="social">Social</button>
+  </div>
+
+  <div class="toolbar" id="toolbar">
+    <!-- Filter buttons injected by renderToolbar() based on current mode -->
   </div>
 
   <div class="sections" id="ad-sections">
@@ -624,28 +921,85 @@
 
   <script>
     var ADS = [];
+    var SOCIAL = [];
     var DECISIONS = {};
+    var CURRENT_MODE = 'ads';
+    var SOCIAL_VIEW = 'cards'; // 'cards' | 'grid'
 
-    // Load ads + existing decisions in parallel
+    var TOOLBAR_FILTERS = {
+      ads: [
+        { key: 'all', label: 'All' },
+        { key: 'story', label: 'Story' },
+        { key: 'feed', label: 'Feed' },
+        { key: 'reel', label: 'Reel' },
+        { key: 'carousel', label: 'Carousel' }
+      ],
+      social: [
+        { key: 'all', label: 'All' },
+        { key: 'carousel', label: 'Carousel' },
+        { key: 'static', label: 'Static' }
+      ]
+    };
+
+    function getActiveDataset() {
+      return CURRENT_MODE === 'social' ? SOCIAL : ADS;
+    }
+
+    function renderToolbar() {
+      var toolbar = document.getElementById('toolbar');
+      var filters = TOOLBAR_FILTERS[CURRENT_MODE] || TOOLBAR_FILTERS.ads;
+
+      var viewToggle = '';
+      if (CURRENT_MODE === 'social') {
+        viewToggle = '<div class="view-toggle">' +
+          '<button data-view="cards"' + (SOCIAL_VIEW === 'cards' ? ' class="active"' : '') + '>Cards</button>' +
+          '<button data-view="grid"' + (SOCIAL_VIEW === 'grid' ? ' class="active"' : '') + '>Grid</button>' +
+        '</div>';
+      }
+
+      if (CURRENT_MODE === 'social' && SOCIAL_VIEW === 'grid') {
+        var approvedCount = SOCIAL.filter(function(s) { return s.grid_approved; }).length;
+        toolbar.innerHTML = viewToggle +
+          '<button onclick="gridSelectAll(true)">Approve All</button>' +
+          '<button onclick="gridSelectAll(false)">Remove All</button>' +
+          '<span style="flex:1"></span>' +
+          '<span style="font-size:13px;color:var(--muted)">' + approvedCount + ' / ' + SOCIAL.length + ' on grid</span>';
+      } else {
+        var btns = filters.map(function(f, i) {
+          return '<button' + (i === 0 ? ' class="active"' : '') + ' data-filter="' + f.key + '">' + f.label + '</button>';
+        }).join('');
+        toolbar.innerHTML = viewToggle + btns +
+          '<span style="flex:1"></span>' +
+          '<button onclick="bulkExportPng()" style="margin-left:auto">Export All PNG</button>';
+      }
+    }
+
+    // Load ads + social + decisions in parallel
     Promise.all([
       fetch('/ads/ads.json').then(function(r) { return r.ok ? r.json() : []; }).catch(function() { return []; }),
+      fetch('/ads/social.json').then(function(r) { return r.ok ? r.json() : []; }).catch(function() { return []; }),
       fetch('/api/ad-feedback').then(function(r) { return r.ok ? r.json() : { decisions: {} }; }).catch(function() { return { decisions: {} }; })
     ]).then(function(results) {
       ADS = results[0];
-      DECISIONS = results[1].decisions || {};
+      SOCIAL = results[1];
+      DECISIONS = results[2].decisions || {};
+      renderToolbar();
       render('all');
     });
 
     function render(filter) {
       var container = document.getElementById('ad-sections');
-      var filtered = filter === 'all' ? ADS : ADS.filter(function(a) {
-        return a.format.toLowerCase() === filter;
+      var dataset = getActiveDataset();
+      var filtered = filter === 'all' ? dataset : dataset.filter(function(a) {
+        return (a.format || '').toLowerCase() === filter;
       });
 
       if (filtered.length === 0) {
+        var fileLabel = CURRENT_MODE === 'social' ? 'ads/social.json' : 'ads/ads.json';
+        var emptyHeading = CURRENT_MODE === 'social' ? 'No social posts yet' : 'No ads yet';
         container.innerHTML = '<div class="empty-state">' +
-          '<h2>No ads yet</h2>' +
-          '<p>Add ads to <code>ads/ads.json</code> and they\'ll appear here. Each ad needs a name, format, headline, body copy, and optionally an image path.</p>' +
+          '<h2>' + emptyHeading + '</h2>' +
+          '<p>Add entries to <code>' + fileLabel + '</code> and they\'ll appear here. Each entry needs a name, format, headline, and either a creative_file (Static) or slides[] (Carousel).</p>' +
           '</div>';
         return;
       }
@@ -665,10 +1019,20 @@
       container.innerHTML = groupOrder.map(function(hypothesis) {
         var ads = groups[hypothesis];
         var cards = ads.map(function(ad) {
-          var formatClass = ad.format.toLowerCase();
+          var formatClass = (ad.format || '').toLowerCase();
+          var isCarousel = formatClass === 'carousel' && Array.isArray(ad.slides) && ad.slides.length > 0;
+          var creativePath = isCarousel ? ad.slides[0] : ad.creative_file;
+          var slidesAttr = isCarousel ? ' data-slides=\'' + JSON.stringify(ad.slides).replace(/'/g, '&#39;') + '\' data-slide-index="0"' : '';
+
           var previewHtml;
-          if (ad.creative_file) {
-            previewHtml = '<div class="iframe-wrap"><iframe src="' + ad.creative_file + '" onload="scaleIframe(this)"></iframe></div>';
+          if (creativePath) {
+            previewHtml = '<div class="iframe-wrap"><iframe src="' + creativePath + '" onload="scaleIframe(this)"></iframe></div>';
+            if (isCarousel) {
+              previewHtml +=
+                '<span class="slide-badge">1/' + ad.slides.length + '</span>' +
+                '<button class="slide-nav-btn prev" onclick="carouselNav(this, -1)"' + (ad.slides.length <= 1 ? ' disabled' : '') + '>‹</button>' +
+                '<button class="slide-nav-btn next" onclick="carouselNav(this, 1)"' + (ad.slides.length <= 1 ? ' disabled' : '') + '>›</button>';
+            }
           } else if (ad.image) {
             previewHtml = '<img src="' + ad.image + '" alt="' + ad.name + '">';
           } else {
@@ -676,26 +1040,26 @@
           }
 
           var escapedName = ad.name.replace(/"/g, '&quot;');
-          var hasCreative = !!ad.creative_file;
+          var hasCreative = !!creativePath;
 
           // Action bar buttons (below preview)
           var editToggleBtn = hasCreative ?
-            '<button class="action-btn edit-toggle" data-creative="' + ad.creative_file + '" onclick="toggleEditMode(this)">' +
+            '<button class="action-btn edit-toggle" data-creative="' + creativePath + '" onclick="toggleEditMode(this)">' +
               '<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>' +
               ' Edit</button>' : '';
 
           var repositionBtn = hasCreative ?
-            '<button class="action-btn reposition-toggle" data-creative="' + ad.creative_file + '" onclick="toggleRepositionMode(this)">' +
+            '<button class="action-btn reposition-toggle" data-creative="' + creativePath + '" onclick="toggleRepositionMode(this)">' +
               '<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 9l-3 3 3 3"/><path d="M9 5l3-3 3 3"/><path d="M15 19l-3 3-3-3"/><path d="M19 9l3 3-3 3"/><line x1="2" y1="12" x2="22" y2="12"/><line x1="12" y1="2" x2="12" y2="22"/></svg>' +
               ' Move</button>' : '';
 
           var resizeBtn = hasCreative ?
-            '<button class="action-btn resize-toggle" data-creative="' + ad.creative_file + '" onclick="toggleResizeMode(this)">' +
+            '<button class="action-btn resize-toggle" data-creative="' + creativePath + '" onclick="toggleResizeMode(this)">' +
               '<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg>' +
               ' Resize</button>' : '';
 
           var photoRepoBtn = hasCreative ?
-            '<button class="action-btn photo-repo-toggle" data-creative="' + ad.creative_file + '" onclick="togglePhotoReposition(this)">' +
+            '<button class="action-btn photo-repo-toggle" data-creative="' + creativePath + '" onclick="togglePhotoReposition(this)">' +
               '<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>' +
               ' Photo</button>' : '';
 
@@ -722,17 +1086,22 @@
               '<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>' +
               ' PNG</button>';
 
+          var exportZipBtn = isCarousel ?
+            '<button class="action-btn" onclick="exportAsZip(this)" data-name="' + escapedName + '" title="Download all slides as ZIP">' +
+              '<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>' +
+              ' ZIP</button>' : '';
+
           var deleteBtnHtml = '<button class="action-btn" data-name="' + escapedName + '" onclick="confirmDeleteAd(this)" title="Delete this ad" style="color:#ef4444;border-color:transparent">' +
               '<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>' +
               '</button>';
 
-          return '<div class="ad-card" data-format="' + formatClass + '" data-ad-name="' + ad.name.replace(/"/g, '&quot;') + '">' +
+          return '<div class="ad-card" data-format="' + formatClass + '" data-source="' + CURRENT_MODE + '" data-ad-name="' + ad.name.replace(/"/g, '&quot;') + '"' + slidesAttr + '>' +
             '<div class="preview">' +
               previewHtml +
               '<span class="format-badge">' + ad.format + '</span>' +
             '</div>' +
             '<div class="card-actions">' +
-              (hasCreative ? '<button class="action-btn open-btn" onclick="window.open(\'' + ad.creative_file + '\', \'_blank\')">' +
+              (hasCreative ? '<button class="action-btn open-btn" onclick="window.open(\'' + creativePath + '\', \'_blank\')">' +
                 '<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>' +
                 ' Open</button>' : '') +
               editToggleBtn +
@@ -747,6 +1116,7 @@
               (hasCreative ? '<button class="action-btn save-creative-btn" onclick="saveCreativeState(this)" style="display:none;background:#22c55e;border-color:#22c55e;color:#fff"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg> Save</button>' : '') +
               exportSvgBtn +
               exportPngBtn +
+              exportZipBtn +
               deleteBtnHtml +
             '</div>' +
             '<div class="info">' +
@@ -759,8 +1129,11 @@
             '</div>' +
             '<div class="copy-block">' +
               '<details><summary>View primary text</summary>' +
-                '<div class="body-copy editable" contenteditable="true" data-field="body" spellcheck="false">' + (ad.body || '') + '</div>' +
-                (ad.cta_label ? '<span class="cta editable" contenteditable="true" data-field="cta_label" spellcheck="false" style="cursor:text">' + ad.cta_label + '</span>' : '') +
+                '<div class="body-copy editable" contenteditable="true" data-field="' + (CURRENT_MODE === 'social' ? 'caption' : 'body') + '" spellcheck="false">' + (CURRENT_MODE === 'social' ? (ad.caption || '') : (ad.body || '')) + '</div>' +
+                (CURRENT_MODE === 'social'
+                  ? (ad.cta ? '<span class="cta editable" contenteditable="true" data-field="cta" spellcheck="false" style="cursor:text">' + ad.cta + '</span>' : '')
+                  : (ad.cta_label ? '<span class="cta editable" contenteditable="true" data-field="cta_label" spellcheck="false" style="cursor:text">' + ad.cta_label + '</span>' : '')
+                ) +
               '</details>' +
             '</div>' +
             buildReviewBlock(ad) +
@@ -861,22 +1234,475 @@
       document.querySelectorAll('.iframe-wrap iframe').forEach(function(iframe) {
         scaleIframe(iframe);
       });
+      document.querySelectorAll('.ig-grid-cell .grid-iframe-wrap iframe').forEach(function(iframe) {
+        scaleGridIframe(iframe);
+      });
     });
 
     // Filter buttons
     document.querySelector('.toolbar').addEventListener('click', function(e) {
+      // View toggle (Cards / Grid within Social)
+      var viewBtn = e.target.closest('[data-view]');
+      if (viewBtn) {
+        var view = viewBtn.dataset.view;
+        if (view === SOCIAL_VIEW) return;
+        SOCIAL_VIEW = view;
+        renderToolbar();
+        if (SOCIAL_VIEW === 'grid') {
+          renderGridView();
+        } else {
+          render('all');
+        }
+        return;
+      }
+
       if (e.target.tagName !== 'BUTTON') return;
-      document.querySelectorAll('.toolbar button').forEach(function(b) { b.classList.remove('active'); });
+      if (!e.target.dataset.filter) return; // skip "Export All PNG" etc.
+      document.querySelectorAll('.toolbar button[data-filter]').forEach(function(b) { b.classList.remove('active'); });
       e.target.classList.add('active');
       render(e.target.dataset.filter);
     });
+
+    // Mode tabs (Ads / Social)
+    document.querySelector('.mode-tabs').addEventListener('click', function(e) {
+      if (e.target.tagName !== 'BUTTON') return;
+      var mode = e.target.dataset.mode;
+      if (!mode || mode === CURRENT_MODE) return;
+      CURRENT_MODE = mode;
+      SOCIAL_VIEW = 'cards';
+      document.querySelectorAll('.mode-tab').forEach(function(b) { b.classList.remove('active'); });
+      e.target.classList.add('active');
+      renderToolbar();
+      render('all');
+    });
+
+    // ── Instagram Grid View ──
+
+    function scaleGridIframe(iframe) {
+      var wrap = iframe.parentElement;
+      if (!wrap) return;
+      var scale = wrap.offsetWidth / 1080;
+      iframe.style.transform = 'scale(' + scale + ')';
+    }
+
+    function renderGridView() {
+      var container = document.getElementById('ad-sections');
+      var approved = SOCIAL.filter(function(s) { return s.grid_approved; })
+        .sort(function(a, b) { return (a.grid_order || 0) - (b.grid_order || 0); });
+      var unapproved = SOCIAL.filter(function(s) { return !s.grid_approved; });
+
+      var html = '<div class="ig-grid-container">';
+      html += '<div class="ig-grid-header">' +
+        '<h2>Instagram Grid Preview</h2>' +
+        '<span class="grid-stats">' + approved.length + ' posts on grid</span>' +
+      '</div>';
+
+      if (approved.length > 0) {
+        html += '<div class="ig-grid" id="ig-grid-sortable">';
+        approved.forEach(function(post, i) {
+          html += buildGridCell(post, i, true);
+        });
+        html += '</div>';
+      } else {
+        html += '<div class="empty-state" style="padding:48px 0">' +
+          '<h2>No posts on the grid yet</h2>' +
+          '<p>Approve posts below to add them to your Instagram grid wall.</p>' +
+        '</div>';
+      }
+
+      if (unapproved.length > 0) {
+        html += '<div class="ig-unapproved-section">' +
+          '<h3>Available Posts (' + unapproved.length + ')</h3>' +
+          '<div class="ig-unapproved-grid">';
+        unapproved.forEach(function(post, i) {
+          html += buildGridCell(post, i, false);
+        });
+        html += '</div></div>';
+      }
+
+      html += '</div>';
+      container.innerHTML = html;
+
+      requestAnimationFrame(function() {
+        container.querySelectorAll('.ig-grid-cell .grid-iframe-wrap iframe').forEach(function(iframe) {
+          scaleGridIframe(iframe);
+        });
+        initGridDragDrop();
+      });
+    }
+
+    function buildGridCell(post, index, isApproved) {
+      var isCarousel = post.format === 'Carousel' && Array.isArray(post.slides) && post.slides.length > 0;
+      var creativePath = isCarousel ? post.slides[0] : post.creative_file;
+      var escapedName = post.name.replace(/"/g, '&quot;');
+
+      var previewHtml = '';
+      if (creativePath) {
+        previewHtml = '<div class="grid-iframe-wrap">' +
+          '<iframe src="' + creativePath + '" loading="lazy" onload="scaleGridIframe(this)"></iframe>' +
+        '</div>';
+      } else {
+        previewHtml = '<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:12px;">No preview</div>';
+      }
+
+      var carouselIcon = isCarousel ?
+        '<div class="carousel-indicator">' +
+          '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="7" height="18" rx="1.5"/><rect x="11" y="3" width="7" height="18" rx="1.5" opacity="0.5"/><rect x="20" y="3" width="2" height="18" rx="1" opacity="0.3"/></svg>' +
+        '</div>' : '';
+
+      var approveBtn = isApproved ?
+        '<button class="grid-approve-btn" data-approve="false" ' +
+          'style="background:rgba(239,68,68,0.9);border:none;color:#fff;padding:6px 14px;border-radius:6px;font-size:11px;font-weight:600;cursor:pointer">' +
+          'Remove</button>' :
+        '<button class="grid-approve-btn" data-approve="true" ' +
+          'style="background:rgba(34,197,94,0.9);border:none;color:#fff;padding:6px 14px;border-radius:6px;font-size:11px;font-weight:600;cursor:pointer">' +
+          'Add to Grid</button>';
+
+      return '<div class="ig-grid-cell" data-post-name="' + escapedName + '"' +
+        (isApproved ? ' draggable="true"' : '') + '>' +
+        previewHtml +
+        carouselIcon +
+        '<div class="cell-overlay">' + approveBtn + '</div>' +
+        '<div class="cell-name">' + post.name + '</div>' +
+      '</div>';
+    }
+
+    // Delegated click handler for all grid interactions
+    document.getElementById('ad-sections').addEventListener('click', function(e) {
+      // Handle approve/remove button clicks
+      var approveBtn = e.target.closest('.grid-approve-btn');
+      if (approveBtn) {
+        e.stopPropagation();
+        var cell = approveBtn.closest('.ig-grid-cell');
+        if (!cell) return;
+        var postName = cell.dataset.postName;
+        var approve = approveBtn.dataset.approve === 'true';
+        toggleGridApproval(postName, approve);
+        return;
+      }
+
+      // Handle cell clicks (open preview)
+      var cell = e.target.closest('.ig-grid-cell');
+      if (cell && SOCIAL_VIEW === 'grid') {
+        openGridPreview(cell.dataset.postName);
+      }
+    });
+
+    function toggleGridApproval(postName, approve) {
+      var post = SOCIAL.find(function(s) { return s.name === postName; });
+      if (!post) {
+        showToast('Post not found: ' + postName, 'error');
+        return;
+      }
+
+      var newOrder = 0;
+      if (approve) {
+        var maxOrder = SOCIAL.reduce(function(max, s) {
+          return s.grid_approved ? Math.max(max, s.grid_order || 0) : max;
+        }, -1);
+        newOrder = maxOrder + 1;
+      }
+
+      var oldApproved = post.grid_approved;
+      var oldOrder = post.grid_order;
+      post.grid_approved = approve;
+      post.grid_order = approve ? newOrder : 0;
+
+      // Immediately re-render for snappy UI
+      renderToolbar();
+      renderGridView();
+
+      // Persist: first grid_approved, then grid_order
+      fetch('/api/ad-edit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ ad_name: postName, field: 'grid_approved', value: approve, source: 'social' })
+      })
+      .then(function(r) { return r.json(); })
+      .then(function(data) {
+        if (!data.success) throw new Error(data.error || 'Save failed');
+        return fetch('/api/ad-edit', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ ad_name: postName, field: 'grid_order', value: post.grid_order, source: 'social' })
+        });
+      })
+      .then(function(r) { return r.json(); })
+      .then(function(data) {
+        if (!data.success) throw new Error(data.error || 'Save failed');
+        showToast((approve ? 'Added' : 'Removed') + ' <strong>' + postName + '</strong> ' + (approve ? 'to' : 'from') + ' grid', 'success');
+      })
+      .catch(function(err) {
+        post.grid_approved = oldApproved;
+        post.grid_order = oldOrder;
+        showToast('Failed to update: ' + err.message, 'error');
+        renderToolbar();
+        renderGridView();
+      });
+    }
+
+    function gridSelectAll(approve) {
+      SOCIAL.forEach(function(post, i) {
+        post.grid_approved = approve;
+        post.grid_order = approve ? i : 0;
+      });
+
+      // Optimistic re-render
+      renderToolbar();
+      renderGridView();
+
+      var promises = SOCIAL.map(function(post) {
+        return fetch('/api/ad-edit', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ ad_name: post.name, field: 'grid_approved', value: approve, source: 'social' })
+        });
+      });
+
+      Promise.all(promises)
+      .then(function() {
+        if (approve) {
+          return fetch('/api/ad-edit', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              bulk_reorder: true,
+              source: 'social',
+              order: SOCIAL.map(function(p, i) { return { name: p.name, grid_order: i }; })
+            })
+          });
+        }
+      })
+      .then(function() {
+        showToast(approve ? 'All posts added to grid' : 'Grid cleared', 'success');
+      })
+      .catch(function() {
+        showToast('Some updates failed — refresh to retry', 'error');
+      });
+    }
+
+    function initGridDragDrop() {
+      var grid = document.getElementById('ig-grid-sortable');
+      if (!grid) return;
+
+      var draggedCell = null;
+
+      grid.addEventListener('dragstart', function(e) {
+        var cell = e.target.closest('.ig-grid-cell');
+        if (!cell) return;
+        draggedCell = cell;
+        cell.classList.add('dragging');
+        e.dataTransfer.effectAllowed = 'move';
+        e.dataTransfer.setData('text/plain', cell.dataset.postName);
+      });
+
+      grid.addEventListener('dragend', function() {
+        if (draggedCell) {
+          draggedCell.classList.remove('dragging');
+          draggedCell = null;
+        }
+        grid.querySelectorAll('.ig-grid-cell').forEach(function(c) {
+          c.classList.remove('drag-over');
+        });
+      });
+
+      grid.addEventListener('dragover', function(e) {
+        e.preventDefault();
+        e.dataTransfer.dropEffect = 'move';
+        var cell = e.target.closest('.ig-grid-cell');
+        if (cell && cell !== draggedCell) {
+          grid.querySelectorAll('.ig-grid-cell').forEach(function(c) {
+            c.classList.remove('drag-over');
+          });
+          cell.classList.add('drag-over');
+        }
+      });
+
+      grid.addEventListener('drop', function(e) {
+        e.preventDefault();
+        var targetCell = e.target.closest('.ig-grid-cell');
+        if (!targetCell || !draggedCell || targetCell === draggedCell) return;
+
+        var draggedName = draggedCell.dataset.postName;
+        var targetName = targetCell.dataset.postName;
+
+        var approved = SOCIAL.filter(function(s) { return s.grid_approved; })
+          .sort(function(a, b) { return (a.grid_order || 0) - (b.grid_order || 0); });
+
+        var draggedIdx = approved.findIndex(function(s) { return s.name === draggedName; });
+        var targetIdx = approved.findIndex(function(s) { return s.name === targetName; });
+        if (draggedIdx === -1 || targetIdx === -1) return;
+
+        var item = approved.splice(draggedIdx, 1)[0];
+        approved.splice(targetIdx, 0, item);
+
+        var order = [];
+        approved.forEach(function(post, i) {
+          post.grid_order = i;
+          order.push({ name: post.name, grid_order: i });
+        });
+
+        fetch('/api/ad-edit', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ bulk_reorder: true, source: 'social', order: order })
+        })
+        .then(function(r) { return r.json(); })
+        .then(function(data) {
+          if (!data.success) throw new Error('Reorder failed');
+          showToast('Grid order updated', 'success');
+          renderGridView();
+        })
+        .catch(function(err) {
+          showToast('Failed to save order: ' + err.message, 'error');
+          renderGridView();
+        });
+      });
+    }
+
+    function openGridPreview(postName) {
+      var post = SOCIAL.find(function(s) { return s.name === postName; });
+      if (!post) return;
+
+      var isCarousel = post.format === 'Carousel' && Array.isArray(post.slides) && post.slides.length > 0;
+      var creativePath = isCarousel ? post.slides[0] : post.creative_file;
+
+      var slideNav = '';
+      if (isCarousel) {
+        slideNav = '<div style="display:flex;align-items:center;gap:8px">' +
+          '<button class="grid-preview-prev" style="background:var(--surface);border:1px solid var(--border);color:var(--text);width:32px;height:32px;border-radius:50%;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center">&#8249;</button>' +
+          '<span id="grid-preview-slide-badge" style="font-size:12px;color:var(--muted)">1/' + post.slides.length + '</span>' +
+          '<button class="grid-preview-next" style="background:var(--surface);border:1px solid var(--border);color:var(--text);width:32px;height:32px;border-radius:50%;font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center">&#8250;</button>' +
+        '</div>';
+      }
+
+      var approveLabel = post.grid_approved ? 'Remove from Grid' : 'Add to Grid';
+      var approveBg = post.grid_approved ? '#ef4444' : '#22c55e';
+
+      var positionInfo = post.grid_approved ?
+        '<span style="font-size:12px;color:var(--muted)">Position: ' + ((post.grid_order || 0) + 1) + ' of ' + SOCIAL.filter(function(s) { return s.grid_approved; }).length + '</span>' : '';
+
+      var overlay = document.createElement('div');
+      overlay.className = 'grid-preview-overlay';
+      overlay.innerHTML =
+        '<button class="grid-preview-close">&times;</button>' +
+        '<div class="grid-preview-panel">' +
+          '<div class="grid-preview-creative" data-slides="' + (isCarousel ? JSON.stringify(post.slides).replace(/"/g, '&quot;') : '[]') + '" data-slide-index="0">' +
+            (creativePath ?
+              '<div class="iframe-wrap"><iframe src="' + creativePath + '" onload="scaleIframe(this)"></iframe></div>' :
+              '<div style="display:flex;align-items:center;justify-content:center;height:100%;color:var(--muted)">No preview</div>'
+            ) +
+          '</div>' +
+          '<div class="grid-preview-details">' +
+            '<h2>' + post.name + '</h2>' +
+            '<span class="tag ' + post.format.toLowerCase() + '">' + post.format + '</span>' +
+            '<div style="font-size:15px;font-weight:600;color:var(--text)">' + (post.headline || '') + '</div>' +
+            slideNav +
+            '<div class="caption">' + (post.caption || '') + '</div>' +
+            '<div class="hashtags">' + (post.hashtags || []).join(' ') + '</div>' +
+            '<div style="margin-top:auto;padding-top:16px;display:flex;gap:8px;align-items:center">' +
+              '<button class="grid-preview-approve" style="background:' + approveBg + ';border:1px solid ' + approveBg + ';color:#fff;padding:8px 20px;border-radius:6px;font-size:13px;font-weight:600;cursor:pointer">' + approveLabel + '</button>' +
+              positionInfo +
+            '</div>' +
+          '</div>' +
+        '</div>';
+
+      document.body.appendChild(overlay);
+
+      // Close button
+      overlay.querySelector('.grid-preview-close').addEventListener('click', function() {
+        overlay.remove();
+      });
+
+      // Background click to close
+      overlay.addEventListener('click', function(e) {
+        if (e.target === overlay) overlay.remove();
+      });
+
+      // Escape key to close
+      var escHandler = function(e) {
+        if (e.key === 'Escape') {
+          overlay.remove();
+          document.removeEventListener('keydown', escHandler);
+        }
+      };
+      document.addEventListener('keydown', escHandler);
+
+      // Approve/remove button
+      overlay.querySelector('.grid-preview-approve').addEventListener('click', function() {
+        var shouldApprove = !post.grid_approved;
+        overlay.remove();
+        toggleGridApproval(postName, shouldApprove);
+      });
+
+      // Carousel navigation
+      var prevBtn = overlay.querySelector('.grid-preview-prev');
+      var nextBtn = overlay.querySelector('.grid-preview-next');
+      if (prevBtn) prevBtn.addEventListener('click', function() { gridPreviewNav(-1); });
+      if (nextBtn) nextBtn.addEventListener('click', function() { gridPreviewNav(1); });
+    }
+
+    function gridPreviewNav(delta) {
+      var panel = document.querySelector('.grid-preview-creative');
+      if (!panel) return;
+      var slides;
+      try { slides = JSON.parse(panel.dataset.slides || '[]'); } catch(e) { slides = []; }
+      if (slides.length < 2) return;
+
+      var idx = parseInt(panel.dataset.slideIndex || '0', 10) + delta;
+      if (idx < 0) idx = 0;
+      if (idx > slides.length - 1) idx = slides.length - 1;
+      panel.dataset.slideIndex = idx;
+
+      var iframe = panel.querySelector('.iframe-wrap iframe');
+      if (iframe) iframe.src = slides[idx];
+
+      var badge = document.getElementById('grid-preview-slide-badge');
+      if (badge) badge.textContent = (idx + 1) + '/' + slides.length;
+    }
+
+    // ── Carousel slide navigation ──
+    function carouselNav(btn, delta) {
+      var card = btn.closest('.ad-card');
+      if (!card) return;
+      var slides;
+      try { slides = JSON.parse(card.dataset.slides || '[]'); } catch (e) { slides = []; }
+      if (slides.length < 2) return;
+
+      var idx = parseInt(card.dataset.slideIndex || '0', 10) + delta;
+      if (idx < 0) idx = 0;
+      if (idx > slides.length - 1) idx = slides.length - 1;
+      card.dataset.slideIndex = idx;
+
+      var newPath = slides[idx];
+      var iframe = card.querySelector('.iframe-wrap iframe');
+      if (iframe) {
+        iframe.src = newPath;
+      }
+      var badge = card.querySelector('.slide-badge');
+      if (badge) badge.textContent = (idx + 1) + '/' + slides.length;
+
+      // Re-point the slide-aware action buttons at the visible slide
+      card.querySelectorAll('.edit-toggle, .reposition-toggle, .resize-toggle, .photo-repo-toggle').forEach(function(b) {
+        b.dataset.creative = newPath;
+      });
+      var openBtn = card.querySelector('.open-btn');
+      if (openBtn) openBtn.setAttribute('onclick', "window.open('" + newPath + "', '_blank')");
+
+      // Disabled state for prev/next at edges
+      var prev = card.querySelector('.slide-nav-btn.prev');
+      var next = card.querySelector('.slide-nav-btn.next');
+      if (prev) prev.disabled = (idx === 0);
+      if (next) next.disabled = (idx === slides.length - 1);
+    }
+
     // ── Inline Text Editing ──
 
     // Track original values so we only save actual changes
     document.addEventListener('focusin', function(e) {
       var el = e.target;
       if (!el.classList || !el.classList.contains('editable')) return;
-      el.dataset.original = el.textContent;
+      el.dataset.original = el.innerText || el.textContent;
     });
 
     // Save on blur
@@ -898,10 +1724,10 @@
         return;
       }
 
-      // Enter saves for single-line fields, Shift+Enter for newline in body
-      if (e.key === 'Enter' && el.dataset.field !== 'body') {
+      // Enter inserts a newline in all fields (save via blur / save button)
+      if (e.key === 'Enter') {
         e.preventDefault();
-        el.blur();
+        document.execCommand('insertLineBreak');
       }
     });
 
@@ -915,7 +1741,7 @@
     });
 
     function saveEdit(el) {
-      var newValue = el.textContent.trim();
+      var newValue = (el.innerText || el.textContent).trim();
       var original = (el.dataset.original || '').trim();
 
       // No change — skip
@@ -924,20 +1750,22 @@
       var card = el.closest('.ad-card');
       var adName = card.dataset.adName;
       var field = el.dataset.field;
+      var source = card.dataset.source || CURRENT_MODE;
 
       el.classList.add('saving');
 
       fetch('/api/ad-edit', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ad_name: adName, field: field, value: newValue })
+        body: JSON.stringify({ ad_name: adName, field: field, value: newValue, source: source })
       })
       .then(function(r) { return r.json(); })
       .then(function(data) {
         el.classList.remove('saving');
         if (data.success) {
-          // Update the in-memory ADS array
-          var ad = ADS.find(function(a) { return a.name === adName; });
+          // Update the in-memory dataset for the card's mode
+          var dataset = source === 'social' ? SOCIAL : ADS;
+          var ad = dataset.find(function(a) { return a.name === adName; });
           if (ad) {
             ad[field] = newValue;
             // If name changed, update the card's data attribute
@@ -969,9 +1797,9 @@
 
     // ── Creative Edit Mode ──
 
-    // Find all leaf text elements inside the creative's .ad container
+    // Find all leaf text elements inside the creative's .ad container (fallback to body)
     function findTextElements(doc) {
-      var ad = doc.querySelector('.ad');
+      var ad = doc.querySelector('.ad') || doc.body;
       if (!ad) return [];
       var results = [];
       var dominated = new Set(); // elements whose text is fully inside a child we already picked
@@ -1103,11 +1931,11 @@
         el.setAttribute('spellcheck', 'false');
         el.dataset.original = el.textContent;
 
-        // Enter to confirm field, Escape to revert field
+        // Enter inserts newline, Escape to revert field
         el.addEventListener('keydown', function handler(e) {
           if (e.key === 'Enter') {
             e.preventDefault();
-            el.blur();
+            doc.execCommand('insertLineBreak');
           } else if (e.key === 'Escape') {
             el.textContent = el.dataset.original || '';
             el.blur();
@@ -1147,7 +1975,7 @@
           fetch('/api/ad-edit', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ creative_file: creativePath, html: fullHtml })
+            body: JSON.stringify({ creative_file: creativePath, html: fullHtml, source: (card && card.dataset && card.dataset.source) || CURRENT_MODE })
           })
           .then(function(r) { return r.json(); })
           .then(function(data) {
@@ -1255,7 +2083,8 @@
 
     function findRepositionTargets(doc) {
       // Find the flex container: .ad for light layouts, .content for overlay layouts
-      var container = doc.querySelector('.ad > .content') || doc.querySelector('.ad');
+      // Social creatives have no .ad wrapper — fall back to body > .content or body
+      var container = doc.querySelector('.ad > .content') || doc.querySelector('.ad') || doc.querySelector('body > .content') || doc.body;
       if (!container) return [];
 
       var targets = [];
@@ -1609,7 +2438,7 @@
       fetch('/api/ad-edit', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ creative_file: creativePath, html: fullHtml })
+        body: JSON.stringify({ creative_file: creativePath, html: fullHtml, source: (card && card.dataset && card.dataset.source) || CURRENT_MODE })
       })
       .then(function(r) { return r.json(); })
       .then(function(data) {
@@ -1686,11 +2515,17 @@
       var doc = iframe.contentDocument;
       var targets = findRepositionTargets(doc);
 
+      // Also include .logo elements (absolutely positioned, so findRepositionTargets skips them)
+      doc.querySelectorAll('.logo').forEach(function(el) {
+        if (targets.indexOf(el) === -1) targets.push(el);
+      });
+
       if (!doc.getElementById('resize-mode-styles')) {
         var style = doc.createElement('style');
         style.id = 'resize-mode-styles';
         style.textContent =
           '.resize-target { position: relative !important; border-radius: 8px; transition: box-shadow 0.15s; overflow: visible !important; }' +
+          '.resize-target.logo { position: absolute !important; }' +
           '.resize-target:hover { box-shadow: inset 0 0 0 3px rgba(59,130,246,0.5); }' +
           '.resize-target.selected { box-shadow: inset 0 0 0 3px #3b82f6; }' +
           '.resize-handle { position: absolute; width: 20px; height: 20px; background: #3b82f6; border: 2px solid #fff; border-radius: 3px; z-index: 9999; box-shadow: 0 1px 6px rgba(0,0,0,0.4); transition: transform 0.1s, background 0.1s; }' +
@@ -1924,7 +2759,7 @@
       fetch('/api/ad-edit', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ creative_file: creativePath, html: fullHtml })
+        body: JSON.stringify({ creative_file: creativePath, html: fullHtml, source: (card && card.dataset && card.dataset.source) || CURRENT_MODE })
       })
       .then(function(r) { return r.json(); })
       .then(function(data) {
@@ -2247,7 +3082,7 @@
       fetch('/api/ad-edit', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ creative_file: creativePath, html: fullHtml })
+        body: JSON.stringify({ creative_file: creativePath, html: fullHtml, source: (card && card.dataset && card.dataset.source) || CURRENT_MODE })
       })
       .then(function(r) { return r.json(); })
       .then(function(data) {
@@ -2304,6 +3139,47 @@
             var s = doc.createElement('style');
             s.className = 'eyebrow-injected';
             s.textContent = '.eyebrow { flex-shrink: 0; background: #C2E9FF; border-radius: 100px; padding: 10px 28px; margin-bottom: 20px; } .eyebrow span { font-family: "Hanken Grotesk", sans-serif; font-weight: 600; font-size: 22px; color: #1A1A1A; }';
+            doc.head.appendChild(s);
+          }
+          markUnsaved(card);
+          return;
+        }
+      }
+
+      // If toggling url and no .url element exists, inject a default URL element
+      if (type === 'url') {
+        var urlEls = doc.querySelectorAll('.url');
+        if (urlEls.length === 0) {
+          var urlDiv = doc.createElement('div');
+          urlDiv.className = 'url';
+          urlDiv.textContent = 'tutero.com.au';
+          doc.body.appendChild(urlDiv);
+          if (!doc.querySelector('style.url-injected')) {
+            var s = doc.createElement('style');
+            s.className = 'url-injected';
+            s.textContent = '.url { position: absolute; bottom: 50px; right: 60px; font-family: "Hanken Grotesk", sans-serif; font-weight: 600; font-size: 22px; color: #004166; z-index: 10; }';
+            doc.head.appendChild(s);
+          }
+          markUnsaved(card);
+          return;
+        }
+      }
+
+      // If toggling logo and no .logo element exists, inject the coloured Tutero logo
+      if (type === 'logo') {
+        var logoEls = doc.querySelectorAll('.logo');
+        if (logoEls.length === 0) {
+          var logoImg = doc.createElement('img');
+          logoImg.className = 'logo';
+          logoImg.alt = 'Tutero';
+          // Determine relative path based on creative depth (social/ subfolder vs creatives/)
+          var iframeSrc = iframe.src || iframe.getAttribute('src') || '';
+          logoImg.src = iframeSrc.indexOf('/social/') !== -1 ? '../../images/tutero-logo.svg' : '../images/tutero-logo.svg';
+          doc.body.appendChild(logoImg);
+          if (!doc.querySelector('style.logo-injected')) {
+            var s = doc.createElement('style');
+            s.className = 'logo-injected';
+            s.textContent = '.logo { position: absolute; bottom: 50px; left: 60px; height: 50px; width: auto; z-index: 10; }';
             doc.head.appendChild(s);
           }
           markUnsaved(card);
@@ -2407,7 +3283,7 @@
       fetch('/api/ad-edit', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ creative_file: creativePath, html: fullHtml })
+        body: JSON.stringify({ creative_file: creativePath, html: fullHtml, source: (card && card.dataset && card.dataset.source) || CURRENT_MODE })
       })
       .then(function(r) { return r.json(); })
       .then(function(data) {
@@ -2512,9 +3388,15 @@
         return Promise.reject(new Error('Cannot access iframe content'));
       }
       return ensureHtiInIframe(iframe).then(function(win) {
-        var node = win.document.querySelector('.ad') || win.document.body;
+        var iframeSrc = iframe.src || '';
+        var isSocial = iframeSrc.indexOf('/social/') !== -1;
+        // Social creatives: body is the full 1080×1350 canvas.
+        // Paid ads: .ad is the 1080×1350 card inside a dark body.
+        var node = isSocial ? win.document.body : (win.document.querySelector('.ad') || win.document.body);
         var frozen = freezeLayout(node);
         return win.htmlToImage[method](node, {
+          width: isSocial ? 1080 : undefined,
+          height: isSocial ? 1350 : undefined,
           pixelRatio: 1,
           cacheBust: true,
           style: { borderRadius: '0' }
@@ -2538,7 +3420,9 @@
 
       var win = iframe.contentWindow;
       var doc = iframe.contentDocument;
-      var adNode = doc.querySelector('.ad');
+      var iframeSrc = iframe.src || '';
+      var isSocial = iframeSrc.indexOf('/social/') !== -1;
+      var adNode = isSocial ? doc.body : doc.querySelector('.ad');
       if (!adNode) return null;
 
       var adRect = adNode.getBoundingClientRect();
@@ -2938,27 +3822,119 @@
       processNext();
     }
 
+    // ── ZIP Export for Carousels ──
+
+    function exportAsZip(btn) {
+      var card = btn.closest('.ad-card');
+      var adName = btn.dataset.name;
+      var slides;
+      try { slides = JSON.parse(card.dataset.slides || '[]'); } catch (e) { slides = []; }
+      if (slides.length === 0) {
+        showToast('No slides found for ' + adName, 'error');
+        return;
+      }
+
+      btn.classList.add('exporting');
+      var origHtml = btn.innerHTML;
+      btn.innerHTML = '... ZIP';
+
+      var zip = new JSZip();
+      var slug = slugify(adName);
+      var completed = 0;
+      var failed = 0;
+
+      // Create a hidden iframe for capturing each slide
+      var tempIframe = document.createElement('iframe');
+      tempIframe.style.cssText = 'position:fixed;left:-9999px;top:0;width:1080px;height:1350px;border:none;';
+      document.body.appendChild(tempIframe);
+
+      function captureSlide(index) {
+        if (index >= slides.length) {
+          // All slides processed — generate and download ZIP
+          document.body.removeChild(tempIframe);
+          if (completed === 0) {
+            btn.classList.remove('exporting');
+            btn.innerHTML = origHtml;
+            showToast('ZIP export failed — no slides captured', 'error');
+            return;
+          }
+          zip.generateAsync({ type: 'blob' }).then(function(blob) {
+            var link = document.createElement('a');
+            link.download = slug + '.zip';
+            link.href = URL.createObjectURL(blob);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(link.href);
+            btn.classList.remove('exporting');
+            btn.classList.add('exported');
+            btn.innerHTML = '&#10003; Done';
+            showToast('Downloaded ZIP: ' + adName + ' (' + completed + ' slides)', 'success');
+            setTimeout(function() {
+              btn.classList.remove('exported');
+              btn.innerHTML = origHtml;
+            }, 3000);
+          });
+          return;
+        }
+
+        btn.innerHTML = '... ' + (index + 1) + '/' + slides.length;
+        tempIframe.src = slides[index];
+        tempIframe.onload = function() {
+          // Wait for fonts/images to render
+          setTimeout(function() {
+            ensureHtiInIframe(tempIframe).then(function(win) {
+              var isSocial = (slides[index] || '').indexOf('/social/') !== -1;
+              var node = isSocial ? win.document.body : (win.document.querySelector('.ad') || win.document.body);
+              return win.htmlToImage.toPng(node, {
+                width: isSocial ? 1080 : undefined,
+                height: isSocial ? 1350 : undefined,
+                pixelRatio: 1,
+                cacheBust: true,
+                style: { borderRadius: '0' }
+              });
+            }).then(function(dataUrl) {
+              var base64 = dataUrl.split(',')[1];
+              zip.file(slug + '-' + (index + 1) + '.png', base64, { base64: true });
+              completed++;
+              captureSlide(index + 1);
+            }).catch(function(err) {
+              console.error('Failed to capture slide ' + (index + 1) + ':', err);
+              failed++;
+              captureSlide(index + 1);
+            });
+          }, 500);
+        };
+      }
+
+      captureSlide(0);
+    }
+
     // ── Delete Ad ──
 
     function confirmDeleteAd(btn) {
       var adName = btn.dataset.name;
-      var ad = ADS.find(function(a) { return a.name === adName; });
+      var card = btn.closest('.ad-card');
+      var source = (card && card.dataset && card.dataset.source) || CURRENT_MODE;
+      var dataset = source === 'social' ? SOCIAL : ADS;
+      var ad = dataset.find(function(a) { return a.name === adName; });
       if (!ad) return;
 
       var files = [];
       if (ad.creative_file) files.push(ad.creative_file);
+      if (Array.isArray(ad.slides)) ad.slides.forEach(function(s) { files.push(s); });
       if (ad.image) files.push(ad.image);
-      files.push('ads.json (entry removed)');
+      files.push((source === 'social' ? 'social.json' : 'ads.json') + ' (entry removed)');
 
       var overlay = document.createElement('div');
       overlay.className = 'confirm-overlay';
       overlay.innerHTML = '<div class="confirm-dialog">' +
-        '<h3>Delete this ad?</h3>' +
+        '<h3>Delete this ' + (source === 'social' ? 'social post' : 'ad') + '?</h3>' +
         '<p>This will permanently remove <strong>' + adName + '</strong> and its files from disk.</p>' +
         '<div class="file-list">' + files.join('<br>') + '</div>' +
         '<div class="confirm-actions">' +
           '<button class="confirm-cancel" onclick="this.closest(\'.confirm-overlay\').remove()">Cancel</button>' +
-          '<button class="confirm-delete" data-name="' + adName.replace(/"/g, '&quot;') + '" onclick="executeDeleteAd(this)">Delete</button>' +
+          '<button class="confirm-delete" data-name="' + adName.replace(/"/g, '&quot;') + '" data-source="' + source + '" onclick="executeDeleteAd(this)">Delete</button>' +
         '</div>' +
       '</div>';
 
@@ -2970,6 +3946,7 @@
 
     function executeDeleteAd(btn) {
       var adName = btn.dataset.name;
+      var source = btn.dataset.source === 'social' ? 'social' : 'ads';
       var overlay = btn.closest('.confirm-overlay');
       btn.textContent = 'Deleting...';
       btn.disabled = true;
@@ -2977,20 +3954,25 @@
       fetch('/api/delete-ad', {
         method: 'DELETE',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ad_name: adName })
+        body: JSON.stringify({ ad_name: adName, source: source })
       })
       .then(function(r) { return r.json(); })
       .then(function(data) {
         overlay.remove();
         if (!data.success) throw new Error(data.error || 'Failed');
 
-        ADS = ADS.filter(function(a) { return a.name !== adName; });
+        if (source === 'social') {
+          SOCIAL = SOCIAL.filter(function(a) { return a.name !== adName; });
+        } else {
+          ADS = ADS.filter(function(a) { return a.name !== adName; });
+        }
         delete DECISIONS[adName];
 
         var activeFilter = document.querySelector('.toolbar button.active');
         render(activeFilter ? activeFilter.dataset.filter : 'all');
 
-        showToast('Deleted <strong>' + adName + '</strong> (' + data.remaining + ' ads remaining)', 'success');
+        var label = source === 'social' ? 'social posts' : 'ads';
+        showToast('Deleted <strong>' + adName + '</strong> (' + data.remaining + ' ' + label + ' remaining)', 'success');
       })
       .catch(function(err) {
         overlay.remove();

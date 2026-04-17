@@ -1,0 +1,563 @@
+[
+  {
+    "id": "s-01",
+    "name": "Sunday Nights, Lately",
+    "hypothesis": "Quiet impact",
+    "grid_approved": false,
+    "grid_order": 0,
+    "format": "Carousel",
+    "platform": [
+      "Instagram"
+    ],
+    "headline": "Sunday nights, lately.",
+    "caption": "Most Sunday evenings still feel like a small dread. We notice the ones that don't.\n\nOne mum told us her daughter started leaving her notebook open on the kitchen table Sunday evenings — ready for Monday. Nobody asked for that. It just started happening.\n\nWe match families with a tutor who actually stays. Not a name from a list — a real person. Quietly, that changes things.\n\nLink in bio.",
+    "hashtags": [
+      "#schoolmum",
+      "#parenting",
+      "#sundayscaries"
+    ],
+    "cta": "Link in bio",
+    "slides": [
+      "creatives/social/s-01-slide-1.html",
+      "creatives/social/s-01-slide-2.html",
+      "creatives/social/s-01-slide-3.html",
+      "creatives/social/s-01-slide-4.html",
+      "creatives/social/s-01-slide-5.html"
+    ],
+    "creative_file": null,
+    "image": null,
+    "pillar": "Education Manager (white-glove)"
+  },
+  {
+    "id": "s-02",
+    "name": "You Interview Them",
+    "hypothesis": "How it works",
+    "grid_approved": true,
+    "grid_order": 1,
+    "format": "Carousel",
+    "platform": [
+      "Instagram"
+    ],
+    "headline": "You interview them. Then you choose.",
+    "caption": "Most places send you a tutor. We send you a few, and you pick.\n\nA short call first. No sales pitch, just what your kid's actually struggling with. Then two or three tutors, a free first session with each. If none of them feel right, we keep looking.\n\nIt's how you'd hope matching a tutor to your family worked.\n\nLink in bio to start.",
+    "hashtags": [
+      "#tutoring",
+      "#schoolmum",
+      "#parenting",
+      "#howitworks"
+    ],
+    "cta": "Link in bio",
+    "slides": [
+      "creatives/social/s-02-slide-1.html",
+      "creatives/social/s-02-slide-2.html",
+      "creatives/social/s-02-slide-3.html",
+      "creatives/social/s-02-slide-4.html",
+      "creatives/social/s-02-slide-5.html"
+    ],
+    "creative_file": null,
+    "image": null,
+    "pillar": "Matching (white-glove)"
+  },
+  {
+    "id": "s-03",
+    "name": "Six Weeks, Quietly",
+    "hypothesis": "Quiet impact",
+    "grid_approved": true,
+    "grid_order": 2,
+    "format": "Carousel",
+    "platform": [
+      "Instagram"
+    ],
+    "headline": "Six weeks in. Things we noticed.",
+    "caption": "Nothing dramatic. Just different.\n\nWeek one: still the same shrug after school. Week three: she started asking questions in the sessions. Week six: a paper came home with a 78% on it, and for the first time in a while, she wanted to talk about it.\n\nThis is what most of our families say changes first. Not the marks — the conversation around the marks.\n\nLink in bio if you want to try it.",
+    "hashtags": [
+      "#tutoring",
+      "#schoolmum",
+      "#parenting",
+      "#yearinreview"
+    ],
+    "cta": "Link in bio",
+    "slides": [
+      "creatives/social/s-03-slide-1.html",
+      "creatives/social/s-03-slide-2.html",
+      "creatives/social/s-03-slide-3.html",
+      "creatives/social/s-03-slide-4.html",
+      "creatives/social/s-03-slide-5.html"
+    ],
+    "creative_file": null,
+    "image": null,
+    "pillar": "Impact (6-week arc)"
+  },
+  {
+    "id": "s-04",
+    "name": "Bedroom Door",
+    "hypothesis": "Parent voices",
+    "grid_approved": false,
+    "grid_order": 3,
+    "format": "Static",
+    "platform": [
+      "Instagram"
+    ],
+    "headline": "She stopped closing her bedroom door.",
+    "caption": "From a Sydney mum of a Year 8, four months in:\n\n“She didn't tell me tutoring was helping. She just stopped closing her bedroom door when she worked.”\n\nThat's usually how we hear about it. Not in the report card. In a small thing that changed.\n\nIf you want that kind of tutor for your kid — link in bio.",
+    "hashtags": [
+      "#schoolmum",
+      "#parenting",
+      "#tutoring",
+      "#realparents"
+    ],
+    "cta": "Link in bio",
+    "slides": [],
+    "creative_file": "creatives/social/s-04.html",
+    "image": null,
+    "pillar": "Parent testimonial"
+  },
+  {
+    "id": "s-05",
+    "name": "Week Four",
+    "hypothesis": "In the moment",
+    "grid_approved": false,
+    "grid_order": 4,
+    "format": "Static",
+    "platform": [
+      "Instagram"
+    ],
+    "headline": "Week four.",
+    "caption": "The page doesn't look neat. That's kind of the point.\n\nA month in, the working starts showing — crossings out, second attempts, small ticks. Proof that someone is actually trying. Not performing for a teacher. Trying.\n\nLink in bio if you want that for your kid.",
+    "hashtags": [
+      "#tutoring",
+      "#schoolmum",
+      "#mathsworkbook",
+      "#parenting"
+    ],
+    "cta": "Link in bio",
+    "slides": [],
+    "creative_file": "creatives/social/s-05.html",
+    "image": null,
+    "pillar": "Aesthetic micro-moment"
+  },
+  {
+    "id": "s-06",
+    "name": "Tuesday at Five",
+    "hypothesis": "In the moment",
+    "grid_approved": false,
+    "grid_order": 5,
+    "format": "Static",
+    "platform": [
+      "Instagram"
+    ],
+    "headline": "Tuesday, 5pm. Her hour.",
+    "caption": "One hour a week. Same time. Same tutor.\n\nThat consistency is quietly the whole thing. When it's the same person across months, they notice when she's tired, when she's stuck, when something at school is off. You can't outsource that kind of attention to a rotating roster.\n\nWhich is why we don't.\n\nLink in bio.",
+    "hashtags": [
+      "#tutoring",
+      "#onetutor",
+      "#schoolmum",
+      "#parenting"
+    ],
+    "cta": "Link in bio",
+    "slides": [],
+    "creative_file": "creatives/social/s-06.html",
+    "image": null,
+    "pillar": "Same-tutor consistency"
+  },
+  {
+    "id": "s-08",
+    "name": "Your Tutero Experience — Term 2",
+    "hypothesis": "How it works",
+    "grid_approved": false,
+    "grid_order": 6,
+    "format": "Carousel",
+    "platform": [
+      "Instagram"
+    ],
+    "headline": "Your Tutero experience, Term 2.",
+    "caption": "Six steps. Roughly two weeks, start to finish.\n\n1. You fill out a form on our site — a few questions about what your kid is working on.\n2. A free call with your account manager. No sales pitch.\n3. First lesson with your tutor. Also free.\n4. A text from your account manager after: how did it go, anything we should change?\n5. Second lesson. Same tutor — he remembers what they covered.\n6. A few weeks later, she's the one opening the laptop.\n\nThat's Term 2 with us. Link in bio if you want to start.",
+    "hashtags": [
+      "#tutoring",
+      "#term2",
+      "#schoolmum",
+      "#howitworks"
+    ],
+    "cta": "Link in bio",
+    "slides": [
+      "creatives/social/s-08-slide-1.html",
+      "creatives/social/s-08-slide-2.html",
+      "creatives/social/s-08-slide-3.html",
+      "creatives/social/s-08-slide-4.html",
+      "creatives/social/s-08-slide-5.html",
+      "creatives/social/s-08-slide-6.html"
+    ],
+    "creative_file": null,
+    "image": null,
+    "pillar": "Term 2 onboarding"
+  },
+  {
+    "id": "s-07",
+    "name": "The Tutor Who Stayed",
+    "hypothesis": "Quiet impact",
+    "grid_approved": false,
+    "grid_order": 7,
+    "format": "Static",
+    "platform": [
+      "Instagram"
+    ],
+    "headline": "The tutor who stayed.",
+    "caption": "If you ask our families what worked, most of them don't talk about the worksheets or the method. They talk about the person.\n\nThe one who remembered which book she was reading. Who knew her netball Thursdays. Who stayed long enough to see her figure something out on her own.\n\nThat was the whole thing.\n\nLink in bio.",
+    "hashtags": [
+      "#tutoring",
+      "#schoolmum",
+      "#parenting",
+      "#onetutor"
+    ],
+    "cta": "Link in bio",
+    "slides": [],
+    "creative_file": "creatives/social/s-07.html",
+    "image": null,
+    "pillar": "Same-tutor consistency"
+  },
+  {
+    "id": "s-09",
+    "name": "Term 1 Report",
+    "hypothesis": "Term 2 growth",
+    "grid_approved": false,
+    "grid_order": 8,
+    "format": "Static",
+    "platform": [
+      "Instagram"
+    ],
+    "headline": "Term 1 report just came home.",
+    "caption": "You opened the envelope and you already had a feeling.\n\nMost parents we speak to in April say the same thing — they weren't surprised. A subject slipped. Homework had been different for weeks. The report just made it official.\n\nTerm 2 is the window. Not because things are urgent — because it's early enough that one hour a week actually moves something.\n\nLink in bio.",
+    "hashtags": [
+      "#schoolmum",
+      "#parenting",
+      "#term1report",
+      "#term2"
+    ],
+    "cta": "Link in bio",
+    "slides": [],
+    "creative_file": "creatives/social/s-09.html",
+    "image": null,
+    "pillar": "Report card trigger"
+  },
+  {
+    "id": "s-10",
+    "name": "April Is Getting Full",
+    "hypothesis": "Term 2 growth",
+    "grid_approved": false,
+    "grid_order": 9,
+    "format": "Static",
+    "platform": [
+      "Instagram"
+    ],
+    "headline": "Our April is getting full.",
+    "caption": "Not a scarcity pitch — just what our inbox looks like this week.\n\nMost of our Term 2 slots go in the first two weeks of the term, because that's when parents open the report card and decide to actually do the thing they've been thinking about since February.\n\nIf you've been turning this over, now is the easier time.\n\nLink in bio.",
+    "hashtags": [
+      "#tutoring",
+      "#term2",
+      "#schoolmum",
+      "#parenting"
+    ],
+    "cta": "Link in bio",
+    "slides": [],
+    "creative_file": "creatives/social/s-10.html",
+    "image": null,
+    "pillar": "Timing / scarcity"
+  },
+  {
+    "id": "s-11",
+    "name": "One Free Lesson",
+    "hypothesis": "Term 2 growth",
+    "grid_approved": false,
+    "grid_order": 10,
+    "format": "Static",
+    "platform": [
+      "Instagram"
+    ],
+    "headline": "One free lesson. Before week one.",
+    "caption": "Here's what Term 2 onboarding looks like with us.\n\nOne free lesson with a tutor we've matched to your kid — before Term 2 starts. No card details, no commitment. If it doesn't feel right, we match again or we don't go ahead at all.\n\nIt's the least risky way to see if this is actually going to work for your family.\n\nLink in bio.",
+    "hashtags": [
+      "#tutoring",
+      "#freetrial",
+      "#term2",
+      "#schoolmum"
+    ],
+    "cta": "Link in bio",
+    "slides": [],
+    "creative_file": "creatives/social/s-11.html",
+    "image": null,
+    "pillar": "Free trial offer"
+  },
+  {
+    "id": "s-12",
+    "name": "Same Tutor, All Year",
+    "hypothesis": "Term 2 growth",
+    "grid_approved": false,
+    "grid_order": 11,
+    "format": "Static",
+    "platform": [
+      "Instagram"
+    ],
+    "headline": "Same tutor, all year.",
+    "caption": "Most families who start with us in Term 2 keep the same tutor through to the end of the year. A lot of them, longer than that.\n\nNot because we lock anyone in — there's no contract. Because when the matching is right, nobody wants to change it.\n\nQuietly, that's the whole model.\n\nLink in bio.",
+    "hashtags": [
+      "#tutoring",
+      "#onetutor",
+      "#schoolmum",
+      "#term2"
+    ],
+    "cta": "Link in bio",
+    "slides": [],
+    "creative_file": "creatives/social/s-12.html",
+    "image": null,
+    "pillar": "Same-tutor consistency"
+  },
+  {
+    "id": "s-13",
+    "name": "Parents Who Book In April",
+    "hypothesis": "Term 2 growth",
+    "grid_approved": false,
+    "grid_order": 12,
+    "format": "Static",
+    "platform": [
+      "Instagram"
+    ],
+    "headline": "Parents who book in April usually noticed something in March.",
+    "caption": "A small pattern in our inbox.\n\nThe parents who reach out in April almost always tell us they'd been watching something since March — a subject getting harder, homework taking longer, a quiet change in how their kid talked about school.\n\nIf that's you right now, you're not overreacting. You're early, which is the useful place to be.\n\nLink in bio.",
+    "hashtags": [
+      "#schoolmum",
+      "#parenting",
+      "#term2",
+      "#tutoring"
+    ],
+    "cta": "Link in bio",
+    "slides": [],
+    "creative_file": "creatives/social/s-13.html",
+    "image": null,
+    "pillar": "Parent-insight / timing"
+  },
+  {
+    "id": "s-14",
+    "name": "4 Reasons Parents Choose Tutero",
+    "hypothesis": "Value proposition",
+    "grid_approved": false,
+    "grid_order": 13,
+    "format": "Static",
+    "platform": [
+      "Instagram"
+    ],
+    "headline": "4 reasons parents choose Tutero.",
+    "caption": "It's not complicated. It's just done properly.\n\n1. The same tutor, every week — not a rotating roster. Someone who actually knows your kid.\n2. A dedicated account manager for each family — one person you can text when something comes up.\n3. Reports after every lesson — so you always know what they covered and how it went.\n4. Tutors who are engaging, friendly, patient and calm — because that's the kind of person kids actually open up to.\n\nWe've just opened enrolments for Term 2.\n\nLink in bio.",
+    "hashtags": [
+      "#tutoring",
+      "#term2",
+      "#schoolmum",
+      "#parenting",
+      "#whytutero"
+    ],
+    "cta": "Link in bio",
+    "slides": [],
+    "creative_file": "creatives/social/s-14.html",
+    "image": null,
+    "pillar": "Value proposition"
+  },
+  {
+    "id": "s-14b",
+    "name": "4 Reasons — Dark",
+    "hypothesis": "Value proposition",
+    "grid_approved": false,
+    "grid_order": 14,
+    "format": "Static",
+    "platform": [
+      "Instagram"
+    ],
+    "headline": "4 reasons parents choose Tutero.",
+    "caption": "It's not complicated. It's just done properly.\n\n1. The same tutor, every week — not a rotating roster. Someone who actually knows your kid.\n2. A dedicated account manager for each family — one person you can text when something comes up.\n3. Reports after every lesson — so you always know what they covered and how it went.\n4. Tutors who are engaging, friendly, patient and calm — because that's the kind of person kids actually open up to.\n\nWe've just opened enrolments for Term 2.\n\nLink in bio.",
+    "hashtags": [
+      "#tutoring",
+      "#term2",
+      "#schoolmum",
+      "#parenting",
+      "#whytutero"
+    ],
+    "cta": "Link in bio",
+    "slides": [],
+    "creative_file": "creatives/social/s-14b.html",
+    "image": null,
+    "pillar": "Value proposition"
+  },
+  {
+    "id": "s-14c",
+    "name": "4 Reasons — Grid",
+    "hypothesis": "Value proposition",
+    "grid_approved": false,
+    "grid_order": 15,
+    "format": "Static",
+    "platform": [
+      "Instagram"
+    ],
+    "headline": "4 reasons parents choose Tutero.",
+    "caption": "It's not complicated. It's just done properly.\n\n1. The same tutor, every week — not a rotating roster. Someone who actually knows your kid.\n2. A dedicated account manager for each family — one person you can text when something comes up.\n3. Reports after every lesson — so you always know what they covered and how it went.\n4. Tutors who are engaging, friendly, patient and calm — because that's the kind of person kids actually open up to.\n\nWe've just opened enrolments for Term 2.\n\nLink in bio.",
+    "hashtags": [
+      "#tutoring",
+      "#term2",
+      "#schoolmum",
+      "#parenting",
+      "#whytutero"
+    ],
+    "cta": "Link in bio",
+    "slides": [],
+    "creative_file": "creatives/social/s-14c.html",
+    "image": null,
+    "pillar": "Value proposition"
+  },
+  {
+    "id": "s-15",
+    "name": "The Night Before",
+    "hypothesis": "Fresh start anticipation",
+    "grid_approved": false,
+    "grid_order": 16,
+    "format": "Static",
+    "platform": [
+      "Instagram"
+    ],
+    "headline": "The night before.",
+    "caption": "Sunday evening. Term 2 starts tomorrow.\n\nShe cleared her desk. Sharpened two pencils. Put the notebook her tutor uses on the left side, the way she likes it. Laptop charged. Water bottle filled.\n\nNobody told her to do any of that.\n\nSomething shifted this term, and it started before the term even did.\n\nLink in bio.",
+    "hashtags": [
+      "#term2",
+      "#schoolmum",
+      "#parenting",
+      "#tutoring",
+      "#freshstart"
+    ],
+    "cta": "Link in bio",
+    "slides": [],
+    "creative_file": "creatives/social/s-15.html",
+    "image": null,
+    "pillar": "Term 2 celebration"
+  },
+  {
+    "id": "s-16",
+    "name": "She Set Her Own Alarm",
+    "hypothesis": "Independence signal",
+    "grid_approved": false,
+    "grid_order": 17,
+    "format": "Static",
+    "platform": [
+      "Instagram"
+    ],
+    "headline": "She set her own alarm.",
+    "caption": "Monday morning. First day of Term 2.\n\nNo one dragged her out of bed. No \"you're going to be late.\" She just appeared in the kitchen at 7:15, bag already packed.\n\nThe parents we work with keep telling us — it's never one big thing. It's a collection of small ones that add up until you realise she's a different kid than she was ten weeks ago.\n\nTerm 2. Here we go.\n\nLink in bio.",
+    "hashtags": [
+      "#term2",
+      "#schoolmum",
+      "#parenting",
+      "#tutoring",
+      "#mondaymorning"
+    ],
+    "cta": "Link in bio",
+    "slides": [],
+    "creative_file": "creatives/social/s-16.html",
+    "image": null,
+    "pillar": "Term 2 celebration"
+  },
+  {
+    "id": "s-17",
+    "name": "Walk In Different",
+    "hypothesis": "Quiet transformation",
+    "grid_approved": false,
+    "grid_order": 18,
+    "format": "Static",
+    "platform": [
+      "Instagram"
+    ],
+    "headline": "She walked in different.",
+    "caption": "First day of Term 2. Same school gate. Same uniform. Same mum watching from the car.\n\nBut something about the way she walked in — shoulders back, no dragging her feet, no last-minute \"I don't want to go.\"\n\nTwo terms ago, that walk looked different.\n\nWe don't take credit for everything. But we know what one hour a week with the right person can quietly shift.\n\nHappy Term 2, from the Tutero team.\n\nLink in bio.",
+    "hashtags": [
+      "#term2",
+      "#schoolmum",
+      "#parenting",
+      "#tutoring",
+      "#backtoschool"
+    ],
+    "cta": "Link in bio",
+    "slides": [],
+    "creative_file": "creatives/social/s-17.html",
+    "image": null,
+    "pillar": "Term 2 celebration"
+  },
+  {
+    "id": "s-18",
+    "name": "Term 2. Let's Go.",
+    "hypothesis": "Celebration energy",
+    "grid_approved": false,
+    "grid_order": 19,
+    "format": "Static",
+    "platform": [
+      "Instagram"
+    ],
+    "headline": "Term 2. Let's go.",
+    "caption": "New term. Same tutor. Same person who already knows what she's working on, what she finds hard, and what makes her laugh in the middle of a session.\n\nNo re-introductions. No starting from scratch. Just picking up where they left off — except this time, she's ten weeks further along.\n\nThat's the whole idea.\n\nHappy Term 2 from all of us at Tutero.\n\nLink in bio.",
+    "hashtags": [
+      "#term2",
+      "#tutoring",
+      "#schoolmum",
+      "#parenting",
+      "#letsgo"
+    ],
+    "cta": "Link in bio",
+    "slides": [],
+    "creative_file": "creatives/social/s-18.html",
+    "image": null,
+    "pillar": "Term 2 celebration"
+  },
+  {
+    "id": "s-19",
+    "name": "10 Weeks. Same Tutor. New Chapter.",
+    "hypothesis": "Consistency promise",
+    "grid_approved": false,
+    "grid_order": 20,
+    "format": "Static",
+    "platform": [
+      "Instagram"
+    ],
+    "headline": "10 weeks. Same tutor. New chapter.",
+    "caption": "Here's what Term 2 actually looks like with us.\n\nTen weeks. Same session time. Same tutor who already knows her learning style, her weak spots, and the way she goes quiet when she doesn't understand something but doesn't want to say.\n\nNo catch-up period. No new face to get used to. Just the next chapter.\n\nThat's what consistency looks like.\n\nLink in bio if you want that for your kid this term.",
+    "hashtags": [
+      "#term2",
+      "#tutoring",
+      "#schoolmum",
+      "#parenting",
+      "#sametutor"
+    ],
+    "cta": "Link in bio",
+    "slides": [],
+    "creative_file": "creatives/social/s-19.html",
+    "image": null,
+    "pillar": "Term 2 celebration"
+  },
+  {
+    "id": "s-20",
+    "name": "Everything Starts Again on Monday",
+    "hypothesis": "Poetic fresh start",
+    "grid_approved": false,
+    "grid_order": 21,
+    "format": "Static",
+    "platform": [
+      "Instagram"
+    ],
+    "headline": "Everything starts again on Monday.",
+    "caption": "New books. New unit. New chance to be the kid who puts her hand up.\n\nBut this time she's not walking in cold. Her tutor already mapped out Term 2 with her. They know what's coming in maths. They've already started on the bits that'll be hard.\n\nMonday isn't scary when someone's already thought it through with you.\n\nHappy Term 2.\n\nLink in bio.",
+    "hashtags": [
+      "#term2",
+      "#schoolmum",
+      "#parenting",
+      "#tutoring",
+      "#newterm"
+    ],
+    "cta": "Link in bio",
+    "slides": [],
+    "creative_file": "creatives/social/s-20.html",
+    "image": null,
+    "pillar": "Term 2 celebration"
+  }
+]

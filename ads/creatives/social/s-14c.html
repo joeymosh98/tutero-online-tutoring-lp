@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>4 Reasons Parents Choose Tutero — Grid</title>
+<link rel="preconnect" href="https://api.fontshare.com" crossorigin>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://api.fontshare.com/v2/css?f[]=satoshi@700,900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 1080px; height: 1350px; overflow: hidden; }
+  body {
+    background: #F0FAFF;
+    color: #004166;
+    font-family: 'Hanken Grotesk', system-ui, sans-serif;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    padding: 80px 70px 70px;
+  }
+  body::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 30% 20%, rgba(194, 233, 255, 0.4), transparent 62%);
+    pointer-events: none;
+  }
+
+  .content { position: relative; z-index: 1; flex: 1; display: flex; flex-direction: column; }
+
+  .top-row {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 20px;
+  }
+
+  .eyebrow {
+    font-family: 'Hanken Grotesk', sans-serif;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.24em;
+    font-size: 22px;
+    color: #0077B6;
+  }
+
+  .headline {
+    font-family: 'Satoshi', sans-serif;
+    font-weight: 700;
+    font-size: 78px;
+    line-height: 1.06;
+    letter-spacing: -0.02em;
+    color: #004166;
+    margin-bottom: 50px;
+  }
+  .headline em {
+    font-style: normal;
+    background: linear-gradient(90deg, #1D49E3 0%, #00A3FF 25%, #66A693 50%, #E8A909 75%, #FF7A00 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .grid {
+    list-style: none;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 22px;
+    flex: 1;
+  }
+
+  .tile {
+    background: rgba(255, 255, 255, 0.7);
+    border-radius: 28px;
+    padding: 40px 36px 36px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    box-shadow: 0 2px 16px rgba(0, 65, 102, 0.06);
+    border: 1.5px solid rgba(0, 119, 182, 0.1);
+  }
+
+  .tile .num {
+    flex-shrink: 0;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #1D49E3 0%, #00A3FF 50%, #66A693 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Satoshi', sans-serif;
+    font-weight: 700;
+    font-size: 26px;
+    color: #FFFFFF;
+    margin-bottom: 24px;
+  }
+
+  .tile .text {
+    font-family: 'Satoshi', sans-serif;
+    font-weight: 700;
+    font-size: 36px;
+    line-height: 1.2;
+    letter-spacing: -0.005em;
+    color: #004166;
+    flex: 1;
+  }
+  .tile .text .soft {
+    font-weight: 700;
+    color: #5A8FA8;
+  }
+
+  .bottom {
+    margin-top: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .cta {
+    font-family: 'Satoshi', sans-serif;
+    font-weight: 700;
+    font-size: 44px;
+    line-height: 1.22;
+    letter-spacing: -0.01em;
+    color: #004166;
+  }
+  .cta em {
+    font-style: normal;
+    background: linear-gradient(90deg, #1D49E3 0%, #00A3FF 25%, #66A693 50%, #E8A909 75%, #FF7A00 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .footer {
+    position: absolute;
+    bottom: 70px;
+    left: 70px;
+    font-family: 'Hanken Grotesk', sans-serif;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.22em;
+    font-size: 18px;
+    color: #6A88A8;
+  }
+</style>
+</head>
+<body>
+  <div class="content">
+    <p class="eyebrow">Why families love us</p>
+    <h1 class="headline">4 reasons parents<br>choose <em>Tutero</em></h1>
+
+    <ol class="grid">
+      <li class="tile">
+        <span class="num">1</span>
+        <p class="text">The same tutor, <span class="soft">every week</span></p>
+      </li>
+      <li class="tile">
+        <span class="num">2</span>
+        <p class="text">A dedicated account manager <span class="soft">for each family</span></p>
+      </li>
+      <li class="tile">
+        <span class="num">3</span>
+        <p class="text">Reports after <span class="soft">every lesson</span></p>
+      </li>
+      <li class="tile">
+        <span class="num">4</span>
+        <p class="text">Engaging, friendly, <span class="soft">patient & calm</span></p>
+      </li>
+    </ol>
+
+    <div class="bottom">
+      <p class="cta">Enrolments open for <em>Term 2</em></p>
+    </div>
+  </div>
+  <p class="footer">Tutero &nbsp;·&nbsp; Term 2, 2026</p>
+</body>
+</html>

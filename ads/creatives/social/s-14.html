@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>4 Reasons Parents Choose Tutero</title>
+<link rel="preconnect" href="https://api.fontshare.com" crossorigin>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://api.fontshare.com/v2/css?f[]=satoshi@700,900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 1080px; height: 1350px; overflow: hidden; }
+  body {
+    background: #F0FAFF;
+    color: #004166;
+    font-family: 'Hanken Grotesk', system-ui, sans-serif;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    padding: 100px 90px 80px;
+  }
+  body::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse at 15% 20%, rgba(255, 213, 79, 0.15), transparent 50%),
+      radial-gradient(ellipse at 85% 75%, rgba(255, 183, 77, 0.12), transparent 50%),
+      radial-gradient(ellipse at 50% 50%, rgba(194, 233, 255, 0.3), transparent 65%);
+    pointer-events: none;
+  }
+
+  /* Decorative banana accents */
+  .banana-1, .banana-2, .banana-3 {
+    position: absolute;
+    font-size: 64px;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.18;
+  }
+  .banana-1 { top: 60px; right: 80px; transform: rotate(-15deg); font-size: 72px; }
+  .banana-2 { bottom: 160px; left: 60px; transform: rotate(25deg); font-size: 56px; }
+  .banana-3 { top: 380px; right: 60px; transform: rotate(-30deg); font-size: 48px; }
+
+  .content { position: relative; z-index: 1; flex: 1; display: flex; flex-direction: column; }
+
+  .eyebrow {
+    font-family: 'Hanken Grotesk', sans-serif;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.28em;
+    font-size: 22px;
+    color: #0077B6;
+    margin-bottom: 28px;
+  }
+
+  .headline {
+    font-family: 'Satoshi', sans-serif;
+    font-weight: 900;
+    font-size: 86px;
+    line-height: 1.06;
+    letter-spacing: -0.025em;
+    color: #004166;
+    margin-bottom: 70px;
+  }
+  .headline em {
+    font-style: normal;
+    background: linear-gradient(90deg, #E8A909 0%, #FF9800 50%, #FF7A00 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .reasons { list-style: none; flex: 1; display: flex; flex-direction: column; gap: 36px; }
+
+  .reason {
+    display: flex;
+    align-items: flex-start;
+    gap: 30px;
+  }
+  .reason .num {
+    flex-shrink: 0;
+    width: 62px;
+    height: 62px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #FFD54F 0%, #FFB74D 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Satoshi', sans-serif;
+    font-weight: 700;
+    font-size: 30px;
+    color: #004166;
+    margin-top: 4px;
+    box-shadow: 0 4px 16px rgba(255, 183, 77, 0.3);
+  }
+  .reason .text {
+    font-family: 'Satoshi', sans-serif;
+    font-weight: 700;
+    font-size: 46px;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+    color: #004166;
+  }
+  .reason .text .soft {
+    font-weight: 700;
+    color: #5A8FA8;
+  }
+
+  .divider {
+    width: 120px;
+    height: 4px;
+    background: linear-gradient(90deg, #FFD54F, #FFB74D);
+    border-radius: 2px;
+    margin: 50px 0 40px;
+  }
+
+  .cta {
+    font-family: 'Satoshi', sans-serif;
+    font-weight: 700;
+    font-size: 44px;
+    line-height: 1.22;
+    letter-spacing: -0.01em;
+    color: #004166;
+  }
+  .cta em {
+    font-style: normal;
+    background: linear-gradient(90deg, #E8A909 0%, #FF9800 50%, #FF7A00 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+</style>
+</head>
+<body>
+  <div class="banana-1">🍌</div>
+  <div class="banana-2">🍌</div>
+  <div class="banana-3">🍌</div>
+
+  <div class="content">
+    <p class="eyebrow">Why families love us</p>
+    <h1 class="headline">4 reasons parents choose <em>Tutero</em></h1>
+
+    <ol class="reasons">
+      <li class="reason">
+        <span class="num">1</span>
+        <p class="text">The same tutor, <span class="soft">every week</span></p>
+      </li>
+      <li class="reason">
+        <span class="num">2</span>
+        <p class="text">A dedicated account manager <span class="soft">for each family</span></p>
+      </li>
+      <li class="reason">
+        <span class="num">3</span>
+        <p class="text">Reports after <span class="soft">every lesson</span></p>
+      </li>
+      <li class="reason">
+        <span class="num">4</span>
+        <p class="text">Tutors who are engaging, friendly, <span class="soft">patient &amp; calm</span></p>
+      </li>
+    </ol>
+
+    <div class="divider"></div>
+    <p class="cta">We've just opened enrolments for <em>Term 2</em></p>
+  </div>
+</body>
+</html>

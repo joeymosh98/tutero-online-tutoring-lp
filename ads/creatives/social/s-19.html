@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>10 Weeks. Same Tutor. New Chapter.</title>
+<link rel="preconnect" href="https://api.fontshare.com" crossorigin>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://api.fontshare.com/v2/css?f[]=satoshi@700,900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 1080px; height: 1350px; overflow: hidden; }
+  body {
+    background: #F0FAFF;
+    color: #004166;
+    font-family: 'Hanken Grotesk', system-ui, sans-serif;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 120px 110px;
+  }
+  body::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 25% 30%, rgba(194, 233, 255, 0.45), transparent 60%);
+    pointer-events: none;
+  }
+
+  .content { position: relative; z-index: 1; }
+
+  .eyebrow {
+    font-family: 'Hanken Grotesk', sans-serif;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.28em;
+    font-size: 22px;
+    color: #0077B6;
+    margin-bottom: 60px;
+  }
+
+  .stack {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .stack .row {
+    font-family: 'Satoshi', sans-serif;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: #004166;
+  }
+  .row-1 {
+    font-size: 110px;
+    line-height: 1;
+  }
+  .row-2 {
+    font-size: 100px;
+    line-height: 1;
+    color: #5A8FA8 !important;
+  }
+  .row-3 {
+    font-size: 120px;
+    line-height: 1;
+  }
+  .row-3 em {
+    font-style: normal;
+    background: linear-gradient(90deg, #1D49E3 0%, #00A3FF 25%, #66A693 50%, #E8A909 75%, #FF7A00 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .line-accent {
+    width: 100px;
+    height: 5px;
+    background: linear-gradient(90deg, #1D49E3, #00A3FF, #66A693);
+    border-radius: 3px;
+    margin: 56px 0 44px;
+  }
+
+  .sub {
+    font-family: 'Satoshi', sans-serif;
+    font-size: 42px;
+    line-height: 1.35;
+    color: #5A8FA8;
+    max-width: 700px;
+  }
+
+  .footer {
+    position: absolute;
+    bottom: 80px;
+    left: 110px;
+    font-family: 'Hanken Grotesk', sans-serif;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.22em;
+    font-size: 18px;
+    color: #6A88A8;
+  }
+</style>
+</head>
+<body>
+  <div class="content">
+    <p class="eyebrow">What Term 2 looks like</p>
+
+    <div class="stack">
+      <p class="row row-1">10 weeks.</p>
+      <p class="row row-2">Same tutor.</p>
+      <p class="row row-3"><em>New chapter.</em></p>
+    </div>
+
+    <div class="line-accent"></div>
+    <p class="sub">She picks up right where she left off. No re-explaining. No starting over.</p>
+  </div>
+
+  <p class="footer">Tutero &nbsp;·&nbsp; Term 2, 2026</p>
+</body>
+</html>
