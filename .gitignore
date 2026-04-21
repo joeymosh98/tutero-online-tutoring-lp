@@ -27,6 +27,3 @@ index-monolith-backup.html
 !.env.example
 node_modules/
 dev-cms/
-
-# Figma push queue (local state)
-ads/.figma-queue.json
