@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ad 35L — The Rejection Grid (Experimental)</title>
+<link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: #0a0a0a;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+    padding: 40px 20px;
+  }
+
+  .ad {
+    width: 1080px;
+    height: 1350px;
+    background: #F0FAFF;
+    border-radius: 0;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 56px 56px 48px;
+    justify-content: space-between;
+  }
+
+  .hero-top {
+    text-align: center;
+  }
+  .hero-statement {
+    font-family: 'Satoshi', sans-serif;
+    font-weight: 900;
+    font-size: 58px;
+    line-height: 1.25;
+    background: linear-gradient(90deg, #1D49E3 0%, #00A3FF 15%, #66A693 35%, #E8A909 60%, #FF7A00 85%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    margin-bottom: 12px;
+  }
+  .hero-sub {
+    font-family: 'Hanken Grotesk', sans-serif;
+    font-weight: 600;
+    font-size: 22px;
+    color: #004166;
+    opacity: 0.4;
+  }
+
+  /* --- The Grid --- */
+  .rejection-grid {
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    grid-template-rows: repeat(7, 1fr);
+    gap: 14px;
+    width: 100%;
+    max-width: 860px;
+    padding: 10px 0;
+  }
+
+  .dot {
+    width: 100%;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: #D1DBE8;
+    opacity: 0.45;
+    position: relative;
+  }
+
+  /* Slight variation in rejected dots */
+  .dot:nth-child(3n) { opacity: 0.35; }
+  .dot:nth-child(5n+2) { opacity: 0.5; }
+  .dot:nth-child(7n+4) { opacity: 0.3; }
+
+  /* The one accepted tutor */
+  .dot.accepted {
+    opacity: 1;
+    background: none;
+    border: 4px solid #00A3FF;
+    box-shadow: 0 0 0 4px rgba(0, 163, 255, 0.2), 0 4px 16px rgba(0, 163, 255, 0.25);
+    overflow: hidden;
+  }
+  .dot.accepted img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+  }
+
+  .punchline {
+    text-align: center;
+  }
+  .punchline-text {
+    font-family: 'Satoshi', sans-serif;
+    font-weight: 900;
+    font-size: 50px;
+    line-height: 1.3;
+    color: #1A1A2E;
+  }
+  .punchline-text em {
+    font-style: normal;
+    background: linear-gradient(90deg, #1D49E3 0%, #00A3FF 15%, #66A693 35%, #E8A909 60%, #FF7A00 85%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .footer {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .footer .logo { height: 34px; width: auto; }
+  .footer .url {
+    font-family: 'Hanken Grotesk', sans-serif;
+    font-weight: 600;
+    font-size: 18px;
+    color: #004166;
+    opacity: 0.5;
+  }
+</style>
+</head>
+<body>
+
+<div class="ad">
+  <div class="hero-top">
+    <div class="hero-statement">We said no to 29,610 tutors this year.</div>
+    <div class="hero-sub">Each dot is an applicant.</div>
+  </div>
+
+  <div class="rejection-grid">
+    <div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div>
+    <div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div>
+    <div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div>
+    <div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot accepted"><img src="../images/35c-tutor-portrait.png" alt="Accepted tutor"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div>
+    <div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div>
+    <div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div>
+    <div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div>
+  </div>
+
+  <div class="punchline">
+    <div class="punchline-text">She wasn't <em>one of them.</em></div>
+  </div>
+
+  <div class="footer">
+    <img class="logo" src="../images/tutero-logo.svg" alt="Tutero">
+    <span class="url">tutero.com.au</span>
+  </div>
+</div>
+
+</body>
+</html>

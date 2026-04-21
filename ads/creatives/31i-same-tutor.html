@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ad 31I — Same Question Same Answer</title>
+<link href="https://api.fontshare.com/v2/css?f[]=satoshi@700,900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: #0a0a0a;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+    padding: 40px 20px;
+  }
+  .ad {
+    width: 1080px;
+    height: 1350px;
+    overflow: hidden;
+    position: relative;
+  }
+  .bg-photo {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 35%;
+  }
+  .scrim {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(0,0,0,0.10) 0%, rgba(0,0,0,0.55) 100%);
+  }
+  .card {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(255, 255, 255, 0.96);
+    border-radius: 20px;
+    padding: 44px 48px;
+    max-width: 860px;
+    width: 84%;
+  }
+  .card .stat {
+    font-family: 'Hanken Grotesk', sans-serif;
+    font-weight: 600;
+    font-size: 20px;
+    color: #004166;
+    opacity: 0.65;
+    margin-bottom: 14px;
+    text-align: center;
+    letter-spacing: 0.04em;
+  }
+  .card p {
+    font-family: 'Satoshi', sans-serif;
+    font-weight: 900;
+    font-size: 58px;
+    line-height: 1.1;
+    color: #1A1A2E;
+    text-align: center;
+  }
+  .card .accent {
+    background: linear-gradient(90deg, #1D49E3 0%, #00A3FF 25%, #66A693 50%, #E8A909 75%, #FF7A00 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .footer {
+    position: absolute;
+    bottom: 48px;
+    left: 60px;
+    right: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .footer .logo { height: 30px; width: auto; filter: brightness(0) invert(1); }
+  .footer .url {
+    font-family: 'Hanken Grotesk', sans-serif;
+    font-weight: 600;
+    font-size: 16px;
+    color: rgba(255,255,255,0.75);
+  }
+</style>
+</head>
+<body>
+
+<div class="ad">
+  <img class="bg-photo" src="../images/31d-not-the-first.png" alt="Australian mum sitting on a couch at night considering online tutoring, laptop open">
+  <div class="scrim"></div>
+
+  <div class="card">
+    <div class="stat">3,200 AUSTRALIAN FAMILIES · 98.1% FEEL MORE CONFIDENT BY WEEK SIX</div>
+    <p>3,200 families. Same question.<br><span class="accent">Same answer.</span></p>
+  </div>
+
+  <div class="footer">
+    <img class="logo" src="../images/tutero-logo.svg" alt="Tutero">
+    <span class="url">tutero.com.au</span>
+  </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ad 35O — The Funnel Cascade (Experimental)</title>
+<link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: #0a0a0a;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+    padding: 40px 20px;
+  }
+
+  .ad {
+    width: 1080px;
+    height: 1350px;
+    background: #F0FAFF;
+    border-radius: 0;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    padding: 56px 56px 48px;
+    justify-content: space-between;
+  }
+
+  .hero-statement {
+    font-family: 'Satoshi', sans-serif;
+    font-weight: 900;
+    font-size: 52px;
+    line-height: 1.25;
+    background: linear-gradient(90deg, #1D49E3 0%, #00A3FF 15%, #66A693 35%, #E8A909 60%, #FF7A00 85%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    text-align: center;
+  }
+
+  /* --- Funnel --- */
+  .funnel {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+    width: 100%;
+  }
+
+  .funnel-stage {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
+
+  .funnel-number {
+    font-family: 'Satoshi', sans-serif;
+    font-weight: 900;
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+  .funnel-label {
+    font-family: 'Hanken Grotesk', sans-serif;
+    font-weight: 600;
+    font-size: 20px;
+    color: #5A5A70;
+    margin-bottom: 14px;
+  }
+  .funnel-bar {
+    height: 40px;
+    border-radius: 20px;
+    margin-bottom: 10px;
+  }
+
+  /* Stage 1 — Applications: widest, lightest */
+  .stage-1 .funnel-number {
+    font-size: 90px;
+    color: #C2D1E0;
+  }
+  .stage-1 .funnel-bar {
+    width: 92%;
+    background: #D1DBE8;
+  }
+
+  /* Arrow */
+  .funnel-arrow {
+    font-family: 'Satoshi', sans-serif;
+    font-weight: 700;
+    font-size: 28px;
+    color: #C2D1E0;
+    margin: 8px 0;
+  }
+
+  /* Stage 2 — Accepted: medium */
+  .stage-2 .funnel-number {
+    font-size: 90px;
+    color: #6BA3D6;
+  }
+  .stage-2 .funnel-bar {
+    width: 28%;
+    background: #6BA3D6;
+  }
+
+  /* Stage 3 — Matched: smallest, gradient */
+  .stage-3 {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 32px;
+    width: auto;
+  }
+  .stage-3-text {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+  }
+  .stage-3 .funnel-number {
+    font-size: 140px;
+    background: linear-gradient(90deg, #1D49E3 0%, #00A3FF 30%, #E8A909 70%, #FF7A00 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    margin-bottom: 0;
+  }
+  .stage-3 .funnel-label {
+    font-family: 'Satoshi', sans-serif;
+    font-weight: 700;
+    font-size: 28px;
+    color: #1A1A2E;
+    margin-bottom: 0;
+  }
+
+  .stage-3-photo {
+    width: 200px;
+    height: 200px;
+    border-radius: 24px;
+    overflow: hidden;
+    border: 4px solid #00A3FF;
+    box-shadow: 0 4px 24px rgba(0, 163, 255, 0.2);
+    flex-shrink: 0;
+  }
+  .stage-3-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 20%;
+  }
+
+  .bottom-cta {
+    text-align: center;
+    font-family: 'Hanken Grotesk', sans-serif;
+    font-weight: 600;
+    font-size: 22px;
+    color: #5A5A70;
+  }
+
+  .footer {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .footer .logo { height: 34px; width: auto; }
+  .footer .url {
+    font-family: 'Hanken Grotesk', sans-serif;
+    font-weight: 600;
+    font-size: 18px;
+    color: #004166;
+    opacity: 0.5;
+  }
+</style>
+</head>
+<body>
+
+<div class="ad">
+  <div class="hero-statement">How we find your child's tutor.</div>
+
+  <div class="funnel">
+    <div class="funnel-stage stage-1">
+      <div class="funnel-number">30,000</div>
+      <div class="funnel-label">applications per year</div>
+      <div class="funnel-bar"></div>
+    </div>
+
+    <div class="funnel-arrow">↓</div>
+
+    <div class="funnel-stage stage-2">
+      <div class="funnel-number">390</div>
+      <div class="funnel-label">tutors accepted</div>
+      <div class="funnel-bar"></div>
+    </div>
+
+    <div class="funnel-arrow">↓</div>
+
+    <div class="funnel-stage stage-3">
+      <div class="stage-3-text">
+        <div class="funnel-number">1</div>
+        <div class="funnel-label">matched to your child</div>
+      </div>
+      <div class="stage-3-photo">
+        <img src="../images/35o-tutor-funnel.png" alt="Your child's matched tutor">
+      </div>
+    </div>
+  </div>
+
+  <div class="bottom-cta">No contract. No upfront payment. Book a 1-on-1 lesson →</div>
+
+  <div class="footer">
+    <img class="logo" src="../images/tutero-logo.svg" alt="Tutero">
+    <span class="url">tutero.com.au</span>
+  </div>
+</div>
+
+</body>
+</html>

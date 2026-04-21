@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ad 35N — The Tutor Dossier (Experimental)</title>
+<link href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: #0a0a0a;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+    padding: 40px 20px;
+  }
+
+  .ad {
+    width: 1080px;
+    height: 1350px;
+    background: #F0FAFF;
+    border-radius: 0;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    padding: 56px 56px 48px;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .eyebrow {
+    font-family: 'Hanken Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #00A3FF;
+    margin-bottom: 4px;
+  }
+
+  /* --- Avatar --- */
+  .avatar-wrap {
+    width: 220px;
+    height: 220px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 5px solid #00A3FF;
+    box-shadow: 0 4px 24px rgba(0, 163, 255, 0.2);
+    margin-bottom: 16px;
+  }
+  .avatar-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .tutor-name {
+    font-family: 'Satoshi', sans-serif;
+    font-weight: 900;
+    font-size: 48px;
+    color: #1A1A2E;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 6px;
+  }
+  .verified-icon {
+    width: 32px;
+    height: 32px;
+    flex-shrink: 0;
+  }
+
+  .tutor-tag {
+    display: inline-flex;
+    background: #00A3FF;
+    color: white;
+    font-family: 'Hanken Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 15px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    border-radius: 100px;
+    padding: 6px 18px;
+    margin-bottom: 28px;
+  }
+
+  /* --- Dossier Fields --- */
+  .dossier {
+    width: 100%;
+    max-width: 780px;
+    background: white;
+    border-radius: 20px;
+    padding: 36px 40px;
+    box-shadow: 0 2px 16px rgba(0, 0, 0, 0.06);
+  }
+
+  .field {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px 0;
+    border-bottom: 1px solid #EDF2F8;
+  }
+  .field:last-child { border-bottom: none; }
+
+  .field-label {
+    font-family: 'Hanken Grotesk', sans-serif;
+    font-weight: 600;
+    font-size: 20px;
+    color: #5A5A70;
+  }
+  .field-value {
+    font-family: 'Satoshi', sans-serif;
+    font-weight: 700;
+    font-size: 22px;
+    color: #1A1A2E;
+    text-align: right;
+  }
+  .field-value.highlight {
+    background: linear-gradient(90deg, #1D49E3 0%, #00A3FF 40%, #FF7A00 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    font-weight: 900;
+    font-size: 24px;
+  }
+  .field-value .stars {
+    color: #E8A909;
+  }
+
+  .bottom-line {
+    font-family: 'Satoshi', sans-serif;
+    font-weight: 900;
+    font-size: 38px;
+    line-height: 1.25;
+    text-align: center;
+    background: linear-gradient(90deg, #1D49E3 0%, #00A3FF 15%, #66A693 35%, #E8A909 60%, #FF7A00 85%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .footer {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .footer .logo { height: 34px; width: auto; }
+  .footer .url {
+    font-family: 'Hanken Grotesk', sans-serif;
+    font-weight: 600;
+    font-size: 18px;
+    color: #004166;
+    opacity: 0.5;
+  }
+</style>
+<style id="toggle-element-styles">.hide-logo .logo { display: none !important; visibility: hidden !important; }.hide-url .url { display: none !important; visibility: hidden !important; }.hide-eyebrow .eyebrow, .hide-eyebrow .detail-pill, .hide-eyebrow .cta-pill { display: none !important; visibility: hidden !important; }</style></head>
+<body class="">
+
+<div class="ad">
+  <div class="eyebrow">Tutor Profile</div>
+
+  <div class="avatar-wrap">
+    <img src="../images/35n-tutor-dossier.png" alt="Emma W. — Qualified Tutero tutor">
+  </div>
+
+  <div class="tutor-name">
+    Emma W.
+    <svg class="verified-icon" viewBox="0 0 32 32" fill="none">
+      <circle cx="16" cy="16" r="16" fill="#00A3FF"></circle>
+      <path d="M10 16.5L14 20.5L22 12.5" stroke="white" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"></path>
+    </svg>
+  </div>
+  <div class="tutor-tag">Verified &amp; Accepted</div>
+
+  <div class="dossier">
+    <div class="field">
+      <span class="field-label">Qualification</span>
+      <span class="field-value">B.Sc (Hons), Mathematics</span>
+    </div>
+    <div class="field">
+      <span class="field-label">University</span>
+      <span class="field-value">University of Sydney</span>
+    </div>
+    <div class="field">
+      <span class="field-label">Acceptance</span>
+      <span class="field-value highlight">Top 1.3%</span>
+    </div>
+    <div class="field">
+      <span class="field-label">Lessons delivered</span>
+      <span class="field-value">412</span>
+    </div>
+    <div class="field">
+      <span class="field-label">Parent rating</span>
+      <span class="field-value"><span class="stars">★★★★★</span> 4.9</span>
+    </div>
+    <div class="field">
+      <span class="field-label">WWCC verified</span>
+      <span class="field-value">✓ Current</span>
+    </div>
+  </div>
+
+  <div class="bottom-line">Emma can be your child's tutor.</div>
+
+  <div class="footer">
+    
+    
+  </div>
+</div>
+
+
+
+</body></html>
