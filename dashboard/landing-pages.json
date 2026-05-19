@@ -49,9 +49,9 @@
               "path": "/lp/special-needs-tutoring/a/"
             },
             {
-              "id": "b",
-              "label": "Trust-Copy",
-              "path": "/lp/special-needs-tutoring/b/"
+              "id": "c",
+              "label": "Specialist (clean blue)",
+              "path": "/lp/special-needs-tutoring/c/"
             }
           ],
           "splitterPath": "/lp/special-needs-tutoring/",
