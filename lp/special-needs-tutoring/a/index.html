@@ -2268,6 +2268,7 @@
 </div>
 
 <script src="/shared/analytics.js"></script>
+<script src="/shared/utm.js"></script>
 <script src="/shared/form-helpers.js"></script>
 <script src="/shared/lead.js"></script>
 <script src="/shared/submit-animation.js"></script>
@@ -2368,10 +2369,41 @@
   }));
   document.getElementById('mBack3').addEventListener('click',()=>mGoTo(2));
   mSub.addEventListener('click',()=>{
-    document.getElementById('modalForm').style.display='none';
-    document.getElementById('mSuccessName').textContent=TuteroForms.capitalise(mSN.value.trim());
-    document.getElementById('modalSuccess').classList.add('active');
-    TuteroConfetti.launch();
+    mSub.disabled = true;
+    mSub.classList.add('is-loading');
+    var selectedGoal = document.querySelector('#mGoalPills .modal-pill.selected');
+    var selectedUrgency = document.querySelector('#mUrgencyPills .modal-pill.selected');
+    var data = {
+      source: 'modal',
+      parent_name: TuteroForms.capitalise(mPN.value.trim()),
+      email: mEM.value.trim(),
+      phone: mPH.value.trim(),
+      student_name: TuteroForms.capitalise(mSN.value.trim()),
+      year_level: mYL.value,
+      subject: 'Learning Differences',
+      goal: selectedGoal ? selectedGoal.getAttribute('data-val') : '',
+      urgency: selectedUrgency ? selectedUrgency.getAttribute('data-val') : '',
+      diagnosis: '',
+      hopes: '',
+      state: ''
+    };
+    var redirectUrl = TuteroLead.buildThankYouUrl(
+      'https://www.tutero.com/au/form/submission-confirmed',
+      {
+        studentName: data.student_name,
+        yearLevel: data.year_level,
+        subject: data.subject,
+        goal: data.goal
+      }
+    );
+    var didRedirect = false;
+    function redirect() {
+      if (didRedirect) return;
+      didRedirect = true;
+      window.location.href = redirectUrl;
+    }
+    TuteroLead.submit(data, { landingPage: 'Special Needs Tutoring', variant: 'a' }).then(redirect, redirect);
+    setTimeout(redirect, 3000);
   });
   TuteroForms.enterToSubmit(mSteps[3],mSub);
 
@@ -2388,7 +2420,40 @@
   TuteroForms.enterToSubmit(steps[1],toStep3);
   const parentName=document.getElementById('parentName'),parentEmail=document.getElementById('parentEmail'),parentPhone=document.getElementById('parentPhone'),submitLead=document.getElementById('submitLead');
   [parentName,parentEmail,parentPhone].forEach(i=>i.addEventListener('input',()=>{submitLead.disabled=!(parentName.value.trim()&&parentEmail.value.trim()&&parentPhone.value.trim())}));
-  submitLead.addEventListener('click',()=>{steps.forEach(s=>s.classList.remove('active'));document.querySelector('.cta-steps').style.display='none';document.querySelector('.bottom-cta-heading').style.display='none';document.querySelector('.bottom-cta-sub').style.display='none';document.querySelector('.bottom-cta-emoji').style.display='none';document.getElementById('successName').textContent=studentName.value.trim();const _ss=document.getElementById('successSubject');if(_ss)_ss.textContent=selectedSubject;success.classList.add('active');TuteroConfetti.launch()});
+  submitLead.addEventListener('click',()=>{
+    submitLead.disabled = true;
+    submitLead.classList.add('is-loading');
+    var data = {
+      source: 'bottom_cta',
+      parent_name: TuteroForms.capitalise(parentName.value.trim()),
+      email: parentEmail.value.trim(),
+      phone: parentPhone.value.trim(),
+      student_name: TuteroForms.capitalise(studentName.value.trim()),
+      year_level: yearLevel.value,
+      subject: selectedSubject || 'Learning Differences',
+      goal: '',
+      urgency: '',
+      diagnosis: '',
+      hopes: '',
+      state: ''
+    };
+    var redirectUrl = TuteroLead.buildThankYouUrl(
+      'https://www.tutero.com/au/form/submission-confirmed',
+      {
+        studentName: data.student_name,
+        yearLevel: data.year_level,
+        subject: data.subject
+      }
+    );
+    var didRedirect = false;
+    function redirect() {
+      if (didRedirect) return;
+      didRedirect = true;
+      window.location.href = redirectUrl;
+    }
+    TuteroLead.submit(data, { landingPage: 'Special Needs Tutoring', variant: 'a' }).then(redirect, redirect);
+    setTimeout(redirect, 3000);
+  });
   TuteroForms.enterToSubmit(steps[2],submitLead);
 
   // ── Scroll Reveal ──
