@@ -2221,39 +2221,24 @@
 
       var data = getFormData(prefix);
 
-      TuteroLead.submit(data, LEAD_CONFIG).then(function(res) {
-        if (res.success) {
-          /* Desktop form: flip the card */
-          var flipInner = document.getElementById('formCardInner');
-          if (flipInner && formEl.closest('.form-card-front')) {
-            var greeting = document.getElementById('successGreeting');
-            if (greeting && data.parent_name) greeting.textContent = 'Thanks, ' + data.parent_name + '.';
-            flipInner.classList.add('is-flipped');
-          } else {
-            /* Modal: show inline success */
-            formEl.style.display = 'none';
-            var privacyEl = formEl.nextElementSibling;
-            if (privacyEl && privacyEl.classList.contains('form-privacy')) privacyEl.style.display = 'none';
-            var modalGreeting = document.getElementById('modalSuccessGreeting');
-            if (modalGreeting && data.parent_name) modalGreeting.textContent = 'Thanks, ' + data.parent_name + '.';
-            successEl.classList.add('active');
-          }
-          if (window.TuteroConfetti) TuteroConfetti.launch();
-          trackEvent('lead_submitted');
-        } else {
-          errorEl.textContent = res.error || 'Something went wrong. Please try again.';
-          errorEl.classList.add('active');
-          submitBtn.disabled = false;
-          submitBtn.classList.remove('is-loading');
-          submitBtn.textContent = 'Request a call';
+      var redirectUrl = TuteroLead.buildThankYouUrl(
+        'https://www.tutero.com/au/form/submission-confirmed',
+        {
+          studentName: data.parent_name,
+          yearLevel: data.year_level,
+          subject: data.subject,
+          state: data.state
         }
-      }).catch(function() {
-        errorEl.textContent = 'Connection error. Please try again.';
-        errorEl.classList.add('active');
-        submitBtn.disabled = false;
-        submitBtn.classList.remove('is-loading');
-        submitBtn.textContent = 'Request a call';
-      });
+      );
+      var didRedirect = false;
+      function redirect() {
+        if (didRedirect) return;
+        didRedirect = true;
+        window.location.href = redirectUrl;
+      }
+
+      TuteroLead.submit(data, LEAD_CONFIG).then(redirect, redirect);
+      setTimeout(redirect, 3000);
     }
 
     /* ── Form submit handlers ── */
