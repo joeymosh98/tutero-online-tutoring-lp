@@ -1579,6 +1579,17 @@
           <input class="modal-input" type="text" id="mParentName" placeholder="e.g. Jane Smith" autocomplete="off">
           <input class="modal-input" type="email" id="mEmail" placeholder="e.g. jane.smith@email.com" autocomplete="off">
           <input class="modal-input" type="tel" id="mPhone" placeholder="e.g. 0412 345 678" autocomplete="off">
+          <select class="modal-input" id="mState" autocomplete="address-level1">
+            <option value="" disabled selected>Select your state</option>
+            <option value="ACT">Australian Capital Territory</option>
+            <option value="NSW">New South Wales</option>
+            <option value="NT">Northern Territory</option>
+            <option value="QLD">Queensland</option>
+            <option value="SA">South Australia</option>
+            <option value="TAS">Tasmania</option>
+            <option value="VIC">Victoria</option>
+            <option value="WA">Western Australia</option>
+          </select>
           <button class="modal-submit" id="mSubmit" disabled>Find <span id="mCtaName">your</span>'s tutor &rarr;</button>
           <button class="modal-back" id="mBack3">&larr; Back</button>
           <div class="modal-social-proof"><span class="proof-dot"></span> 32 parents enquired this morning</div>
@@ -2219,6 +2230,17 @@
         <input class="cta-input" type="email" id="parentEmail" placeholder="e.g. jane.smith@email.com">
         <input class="cta-input" type="tel" id="parentPhone" placeholder="e.g. 0412 345 678">
       </div>
+      <select class="cta-input" id="stateField" autocomplete="address-level1">
+        <option value="" disabled selected>Select your state</option>
+        <option value="ACT">Australian Capital Territory</option>
+        <option value="NSW">New South Wales</option>
+        <option value="NT">Northern Territory</option>
+        <option value="QLD">Queensland</option>
+        <option value="SA">South Australia</option>
+        <option value="TAS">Tasmania</option>
+        <option value="VIC">Victoria</option>
+        <option value="WA">Western Australia</option>
+      </select>
       <button class="cta-submit" id="submitLead" disabled>Find my child's specialist tutor &#127881;</button>
       <button class="cta-back-btn" onclick="goToStep(1)">&larr; Back</button>
     </div>
@@ -2361,12 +2383,14 @@
   document.getElementById('mBack2').addEventListener('click',()=>mGoTo(1));
 
   // Step 4: Contact details
-  const mPN=document.getElementById('mParentName'),mEM=document.getElementById('mEmail'),mPH=document.getElementById('mPhone'),mSub=document.getElementById('mSubmit');
+  const mPN=document.getElementById('mParentName'),mEM=document.getElementById('mEmail'),mPH=document.getElementById('mPhone'),mST=document.getElementById('mState'),mSub=document.getElementById('mSubmit');
   const phoneStore = { digits: '' };
   mPH.addEventListener('input', () => { TuteroForms.formatPhone(mPH, phoneStore); });
-  [mPN,mEM,mPH].forEach(i=>i.addEventListener('input',()=>{
-    mSub.disabled=!(mPN.value.trim()&&mEM.value.trim()&&phoneStore.digits.length>=10);
-  }));
+  function updateModalSubmit(){
+    mSub.disabled=!(mPN.value.trim()&&mEM.value.trim()&&phoneStore.digits.length>=10&&mST.value);
+  }
+  [mPN,mEM,mPH].forEach(i=>i.addEventListener('input',updateModalSubmit));
+  mST.addEventListener('change',updateModalSubmit);
   document.getElementById('mBack3').addEventListener('click',()=>mGoTo(2));
   mSub.addEventListener('click',()=>{
     mSub.disabled = true;
@@ -2385,7 +2409,7 @@
       urgency: selectedUrgency ? selectedUrgency.getAttribute('data-val') : '',
       diagnosis: '',
       hopes: '',
-      state: ''
+      state: mST.value
     };
     var redirectUrl = TuteroLead.buildThankYouUrl(
       'https://www.tutero.com/au/form/submission-confirmed',
@@ -2393,7 +2417,8 @@
         studentName: data.student_name,
         yearLevel: data.year_level,
         subject: data.subject,
-        goal: data.goal
+        goal: data.goal,
+        state: data.state
       }
     );
     var didRedirect = false;
@@ -2418,8 +2443,12 @@
   [studentName,yearLevel].forEach(i=>i.addEventListener('input',()=>{toStep3.disabled=!(studentName.value.trim()&&yearLevel.value.trim())}));
   toStep3.addEventListener('click',()=>goToStep(2));
   TuteroForms.enterToSubmit(steps[1],toStep3);
-  const parentName=document.getElementById('parentName'),parentEmail=document.getElementById('parentEmail'),parentPhone=document.getElementById('parentPhone'),submitLead=document.getElementById('submitLead');
-  [parentName,parentEmail,parentPhone].forEach(i=>i.addEventListener('input',()=>{submitLead.disabled=!(parentName.value.trim()&&parentEmail.value.trim()&&parentPhone.value.trim())}));
+  const parentName=document.getElementById('parentName'),parentEmail=document.getElementById('parentEmail'),parentPhone=document.getElementById('parentPhone'),stateField=document.getElementById('stateField'),submitLead=document.getElementById('submitLead');
+  function updateCtaSubmit(){
+    submitLead.disabled=!(parentName.value.trim()&&parentEmail.value.trim()&&parentPhone.value.trim()&&stateField.value);
+  }
+  [parentName,parentEmail,parentPhone].forEach(i=>i.addEventListener('input',updateCtaSubmit));
+  stateField.addEventListener('change',updateCtaSubmit);
   submitLead.addEventListener('click',()=>{
     submitLead.disabled = true;
     submitLead.classList.add('is-loading');
@@ -2435,14 +2464,15 @@
       urgency: '',
       diagnosis: '',
       hopes: '',
-      state: ''
+      state: stateField.value
     };
     var redirectUrl = TuteroLead.buildThankYouUrl(
       'https://www.tutero.com/au/form/submission-confirmed',
       {
         studentName: data.student_name,
         yearLevel: data.year_level,
-        subject: data.subject
+        subject: data.subject,
+        state: data.state
       }
     );
     var didRedirect = false;
