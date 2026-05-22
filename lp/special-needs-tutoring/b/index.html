@@ -1595,6 +1595,23 @@
               </div>
             </div>
             <div class="form-field">
+              <label class="form-label" for="state">Your state</label>
+              <div class="field-wrap">
+                <select class="form-select" id="state" name="state" autocomplete="address-level1" required>
+                  <option value="" disabled selected>Select your state</option>
+                  <option value="ACT">Australian Capital Territory</option>
+                  <option value="NSW">New South Wales</option>
+                  <option value="NT">Northern Territory</option>
+                  <option value="QLD">Queensland</option>
+                  <option value="SA">South Australia</option>
+                  <option value="TAS">Tasmania</option>
+                  <option value="VIC">Victoria</option>
+                  <option value="WA">Western Australia</option>
+                </select>
+                <div class="field-error">Please select your state.</div>
+              </div>
+            </div>
+            <div class="form-field">
               <label class="form-label" for="diagnosis">Child's diagnosis or learning difference</label>
               <div class="field-wrap">
                 <textarea class="form-textarea" id="diagnosis" name="diagnosis" placeholder="Tell us in your own words" rows="2" required></textarea>
@@ -2076,6 +2093,23 @@
           </div>
         </div>
         <div class="form-field">
+          <label class="form-label" for="mState">Your state</label>
+          <div class="field-wrap">
+            <select class="form-select" id="mState" name="state" autocomplete="address-level1" required>
+              <option value="" disabled selected>Select your state</option>
+              <option value="ACT">Australian Capital Territory</option>
+              <option value="NSW">New South Wales</option>
+              <option value="NT">Northern Territory</option>
+              <option value="QLD">Queensland</option>
+              <option value="SA">South Australia</option>
+              <option value="TAS">Tasmania</option>
+              <option value="VIC">Victoria</option>
+              <option value="WA">Western Australia</option>
+            </select>
+            <div class="field-error">Please select your state.</div>
+          </div>
+        </div>
+        <div class="form-field">
           <label class="form-label" for="mDiagnosis">Child's diagnosis or learning difference</label>
           <div class="field-wrap">
             <textarea class="form-textarea" id="mDiagnosis" name="diagnosis" placeholder="Tell us in your own words" rows="2" required></textarea>
@@ -2173,6 +2207,7 @@
       var email      = document.getElementById(p + 'parentEmail') || document.getElementById(p + 'ParentEmail');
       var phone      = document.getElementById(p + 'parentPhone') || document.getElementById(p + 'ParentPhone');
       var year       = document.getElementById(p + 'yearLevel') || document.getElementById(p + 'YearLevel');
+      var state      = document.getElementById(p + 'state') || document.getElementById(p + 'State');
       var diag       = document.getElementById(p + 'diagnosis') || document.getElementById(p + 'Diagnosis');
 
       if (!parentName.value.trim()) { parentName.closest('.field-wrap').classList.add('has-error'); valid = false; }
@@ -2181,6 +2216,7 @@
       var store = (prefix === 'm') ? mPhoneStore : phoneStore;
       if (store.digits.length < 10) { phone.closest('.field-wrap').classList.add('has-error'); valid = false; }
       if (!year.value) { year.closest('.field-wrap').classList.add('has-error'); valid = false; }
+      if (!state.value) { state.closest('.field-wrap').classList.add('has-error'); valid = false; }
       if (!diag.value.trim()) { diag.closest('.field-wrap').classList.add('has-error'); valid = false; }
 
       return valid;
@@ -2192,6 +2228,7 @@
       var email      = document.getElementById(p + 'parentEmail') || document.getElementById(p + 'ParentEmail');
       var phone      = document.getElementById(p + 'parentPhone') || document.getElementById(p + 'ParentPhone');
       var year       = document.getElementById(p + 'yearLevel') || document.getElementById(p + 'YearLevel');
+      var state      = document.getElementById(p + 'state') || document.getElementById(p + 'State');
       var diag       = document.getElementById(p + 'diagnosis') || document.getElementById(p + 'Diagnosis');
       var hopes      = document.getElementById(p + 'hopes') || document.getElementById(p + 'Hopes');
 
@@ -2207,7 +2244,7 @@
         subject: 'Learning Differences',
         goal: '',
         urgency: '',
-        state: ''
+        state: state ? state.value : ''
       };
     }
 
