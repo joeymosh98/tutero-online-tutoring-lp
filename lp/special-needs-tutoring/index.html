@@ -7,9 +7,11 @@
   <meta name="theme-color" content="#832EC5">
   <title>Redirecting…</title>
   <script>
+    // A/D split started 2026-06-03 — testing the redesign (D) against the previous winner (A).
+    // Fresh localStorage key so every visitor is freshly randomised 50/50 (prior A/C assignments ignored).
     (function() {
-      var key = 'tutero_sn_ab_variant';
-      var variants = ['a', 'c'];
+      var key = 'tutero_sn_ad_variant';
+      var variants = ['a', 'd'];
       var variant = localStorage.getItem(key);
       if (!variant || variants.indexOf(variant) === -1) {
         variant = variants[Math.floor(Math.random() * variants.length)];

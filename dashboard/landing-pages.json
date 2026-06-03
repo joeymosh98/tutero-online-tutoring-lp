@@ -45,13 +45,13 @@
           "variants": [
             {
               "id": "a",
-              "label": "Main",
+              "label": "Control (previous A/C winner)",
               "path": "/lp/special-needs-tutoring/a/"
             },
             {
-              "id": "c",
-              "label": "Specialist (clean blue)",
-              "path": "/lp/special-needs-tutoring/c/"
+              "id": "d",
+              "label": "Redesign — real testimonials + documentary imagery",
+              "path": "/lp/special-needs-tutoring/d/"
             }
           ],
           "splitterPath": "/lp/special-needs-tutoring/",

@@ -6,7 +6,7 @@
   <meta name="robots" content="noindex, nofollow">
   <link rel="icon" href="/shared/images/tutero-logo.svg" type="image/svg+xml">
   <meta name="theme-color" content="#FF8412">
-  <title>Tutero — Special Needs Tutoring for ADHD, Dyslexia &amp; ASD</title>
+  <title>Tutero · Special Needs Tutoring for ADHD, Dyslexia &amp; ASD</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -481,10 +481,16 @@
       border-radius: 20px;
       overflow: hidden;
       aspect-ratio: 4/3;
+      position: relative;
     }
-    .rv2-headline-img img {
+    .rv2-headline-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .rv2-slides { position: absolute; inset: 0; }
+    .rv2-slide {
+      position: absolute; inset: 0;
       width: 100%; height: 100%; object-fit: cover; display: block;
+      opacity: 0; transition: opacity 1s ease-in-out;
     }
+    .rv2-slide.active { opacity: 1; }
     .rv2-eyebrow {
       display: inline-block;
       font-size: 12px;
@@ -855,11 +861,11 @@
       transition: opacity 0.2s;
     }
     .needs-headline-stat {
-      font-size: 42px;
+      font-size: 23px;
       font-weight: 800;
       color: #4CB092;
-      letter-spacing: -0.04em;
-      line-height: 1;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
       margin-bottom: 5px;
       transition: all 0.3s;
     }
@@ -990,6 +996,34 @@
       text-align: center; font-size: 15px; color: #999;
       margin-bottom: 56px; font-weight: 400;
     }
+    .tdiff-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+    .tdiff-card {
+      background: #fff; border: 1px solid #efe7da; border-radius: 20px; overflow: hidden;
+      display: flex; flex-direction: column;
+      transition: transform .35s cubic-bezier(.34,1.4,.5,1), box-shadow .35s;
+    }
+    .tdiff-card:hover { transform: translateY(-8px); box-shadow: 0 24px 50px rgba(80,50,10,.14); }
+    .tdiff-img { aspect-ratio: 4/3; overflow: hidden; background: #eee; }
+    .tdiff-img img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .6s ease; }
+    .tdiff-card:hover .tdiff-img img { transform: scale(1.05); }
+    .tdiff-body { padding: 20px 20px 22px; display: flex; flex-direction: column; gap: 9px; }
+    .tdiff-title { font-size: 16px; font-weight: 800; letter-spacing: -.02em; color: #1a1a1a; line-height: 1.25; margin: 0; }
+    .tdiff-desc { font-size: 13.5px; line-height: 1.6; color: #5a6270; margin: 0; }
+    .tdiff-expand {
+      list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px;
+      max-height: 0; opacity: 0; overflow: hidden; margin-top: 0;
+      transition: max-height .4s ease, opacity .35s ease, margin-top .4s ease;
+    }
+    .tdiff-card:hover .tdiff-expand { max-height: 140px; opacity: 1; margin-top: 6px; }
+    .tdiff-expand li { position: relative; padding-left: 25px; font-size: 12.8px; font-weight: 600; color: #2f6b56; line-height: 1.4; }
+    .tdiff-expand li::before {
+      content: '\2713'; position: absolute; left: 0; top: 0; width: 17px; height: 17px;
+      background: #4CB092; color: #fff; border-radius: 50%; font-size: 10px; font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
+    }
+    @media (max-width:1000px){ .tdiff-grid{grid-template-columns:repeat(2,1fr)} }
+    @media (max-width:560px){ .tdiff-grid{grid-template-columns:1fr} }
+    @media (hover:none){ .tdiff-expand{max-height:200px;opacity:1;margin-top:6px} }
     .trust-grid {
       display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;
     }
@@ -1098,122 +1132,84 @@
       100% { transform: translateX(-50%); }
     }
     .story-card {
-      flex-shrink: 0; width: 360px; background: #fff;
-      border-radius: 20px; overflow: hidden;
-      box-shadow: 0 1px 3px rgba(0,0,0,.04), 0 4px 24px rgba(0,0,0,.03);
-      display: flex; flex-direction: column;
+      flex-shrink: 0; width: 344px; background: #fff;
+      border: 1px solid #edeff2; border-radius: 20px;
+      padding: 26px 26px 22px;
+      box-shadow: 0 1px 2px rgba(16,24,40,.04), 0 10px 30px rgba(16,24,40,.045);
+      display: flex; flex-direction: column; gap: 14px;
       transition: transform .4s cubic-bezier(.34,1.56,.64,1), box-shadow .4s;
     }
     .story-card:hover {
-      transform: translateY(-6px); box-shadow: 0 20px 60px rgba(0,0,0,.1);
+      transform: translateY(-6px); box-shadow: 0 22px 54px rgba(16,24,40,.10);
     }
-    .story-image {
-      width: 100%; height: 200px; overflow: hidden; position: relative;
-    }
-    .story-image img { width: 100%; height: 100%; object-fit: cover; display: block; }
-    .story-image::after {
-      content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 60px;
-      background: linear-gradient(to top, rgba(0,0,0,0.08), transparent);
-      pointer-events: none;
-    }
-    .story-result {
-      position: absolute; top: 14px; right: 14px;
-      display: inline-flex; align-items: center; gap: 5px;
-      background: rgba(255,255,255,0.95); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
-      color: #4CB092; font-size: 11.5px; font-weight: 700;
-      padding: 6px 12px; border-radius: 20px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-    }
-    .story-body { padding: 24px 24px 28px; display: flex; flex-direction: column; gap: 14px; }
+    .story-top { display: flex; align-items: center; justify-content: space-between; }
+    .story-stars { color: #F8B200; font-size: 15px; letter-spacing: 2px; }
     .story-tp-badge {
-      display: flex; align-items: center; gap: 5px;
+      display: inline-flex; align-items: center; gap: 5px;
       font-size: 12px; font-weight: 700; color: #191919; letter-spacing: -0.01em;
     }
     .story-tp-badge svg { flex-shrink: 0; }
-    .story-header { display: flex; align-items: center; justify-content: space-between; }
-    .story-meta { display: flex; flex-direction: column; gap: 1px; }
-    .story-name { font-size: 15px; font-weight: 700; color: #1a1a1a; letter-spacing: -0.01em; }
-    .story-detail { font-size: 12.5px; color: #999; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .story-stars { color: #F8B200; font-size: 13px; letter-spacing: 1px; flex-shrink: 0; }
     .story-quote {
-      font-size: 14px; line-height: 1.65; color: #555; font-weight: 400;
+      font-size: 14.5px; line-height: 1.7; color: #3f4651; font-weight: 400;
+      margin: 0; flex: 1 0 auto;
     }
-    .story-quote::before { content: '\201C'; font-size: 24px; font-weight: 800; color: #e0e0e0; line-height: 0; vertical-align: -6px; margin-right: 2px; }
-    .story-quote::after { content: '\201D'; font-size: 24px; font-weight: 800; color: #e0e0e0; line-height: 0; vertical-align: -6px; margin-left: 1px; }
-    .story-link {
-      display: inline-flex; align-items: center; gap: 5px;
-      font-size: 12.5px; font-weight: 600; color: #aaa;
-      text-decoration: none; transition: color .2s; margin-top: auto;
+    .story-foot {
+      display: flex; align-items: center; gap: 12px;
+      padding-top: 18px; border-top: 1px solid #f1f2f4;
     }
-    .story-link:hover { color: #FF8412; }
-    .story-link svg { width: 14px; height: 14px; flex-shrink: 0; }
+    .story-avatar {
+      flex-shrink: 0; width: 42px; height: 42px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14.5px; font-weight: 700; color: #fff;
+      background: var(--c, #2f5fd0); letter-spacing: .02em;
+    }
+    .story-meta { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+    .story-name { font-size: 14.5px; font-weight: 700; color: #1a1a1a; letter-spacing: -0.01em; }
+    .story-detail { font-size: 12px; color: #98a0ab; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .stories-tp-link {
+      display: flex; align-items: center; justify-content: center; gap: 6px;
+      margin: 36px auto 0; font-size: 14px; font-weight: 600;
+      color: #2f5fd0; text-decoration: none; transition: gap .2s, color .2s;
+    }
+    .stories-tp-link:hover { gap: 10px; color: #1f47a8; }
+    .stories-tp-link svg { width: 16px; height: 16px; }
+    .story-tp-link {
+      display: inline-flex; align-items: center; gap: 5px; margin-top: 2px;
+      font-size: 12.5px; font-weight: 700; color: #00B67A; text-decoration: none;
+      transition: gap .2s, color .2s; align-self: flex-start;
+    }
+    .story-tp-link:hover { gap: 9px; color: #009a68; }
+    .story-tp-link svg { width: 13px; height: 13px; }
 
     /* ══════════════════════════════════ FAQ Section */
-    .faq-section {
-      width: 100%; padding: 80px 32px; background: #eef4f9;
-    }
-    .faq-section > * {
-      max-width: 620px; margin-left: auto; margin-right: auto;
-    }
-    .faq-header { text-align: center; margin-bottom: 16px; }
-    .faq-heading { font-size: 28px; font-weight: 800; letter-spacing: -0.03em; color: #1a1a1a; margin-bottom: 12px; }
-    .faq-subheading { font-size: 15px; color: #6b6b6b; font-weight: 400; margin-bottom: 8px; }
-    .curiosity-meter { display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 40px; }
-    .curiosity-label { font-size: 13px; font-weight: 600; color: #aaa; transition: color .4s; }
-    .curiosity-label.active { color: #FF8412; }
-    .curiosity-track { width: 160px; height: 8px; background: #e8e8e8; border-radius: 4px; overflow: hidden; }
-    .curiosity-fill {
-      height: 100%; width: 0%; border-radius: 4px;
-      background: linear-gradient(90deg,#FF8412,#F8B200,#4CB092,#00A3FF);
-      transition: width .6s cubic-bezier(.34,1.56,.64,1);
-    }
-    .curiosity-emoji { font-size: 20px; transition: transform .4s cubic-bezier(.34,1.56,.64,1); }
-    .faq-list { display: flex; flex-direction: column; gap: 12px; max-width: 100%; }
-    .faq-item {
-      border-radius: 16px; overflow: hidden;
-      transition: background .3s, box-shadow .3s; cursor: pointer; background: #fff;
-    }
-    .faq-item:hover { box-shadow: 0 4px 20px rgba(0,0,0,.04); }
-    .faq-item.open { box-shadow: 0 6px 28px rgba(0,0,0,.06); }
-    .faq-item:nth-child(1){--accent:#FF8412;--bg-light:#FFF7ED}
-    .faq-item:nth-child(2){--accent:#F8B200;--bg-light:#FFF9E6}
-    .faq-item:nth-child(3){--accent:#4CB092;--bg-light:#EEF7F4}
-    .faq-item:nth-child(4){--accent:#00A3FF;--bg-light:#EDF4FF}
-    .faq-item:nth-child(5){--accent:#1D49E3;--bg-light:#EEF0FF}
-    .faq-item:nth-child(6){--accent:#FF8412;--bg-light:#FFF7ED}
-    .faq-item.open { background: var(--bg-light); }
-    .faq-question { display: flex; align-items: center; gap: 14px; padding: 18px 22px; user-select: none; }
-    .faq-emoji { font-size: 24px; flex-shrink: 0; line-height: 1; transition: transform .4s cubic-bezier(.34,1.56,.64,1); }
-    .faq-item:hover .faq-emoji { transform: scale(1.2) rotate(-8deg); }
-    .faq-item.open .faq-emoji { animation: emoji-celebrate .6s cubic-bezier(.34,1.56,.64,1); }
-    @keyframes emoji-celebrate { 0%{transform:scale(1)} 30%{transform:scale(1.4) rotate(-15deg)} 60%{transform:scale(.9) rotate(5deg)} 100%{transform:scale(1.1) rotate(0)} }
-    .faq-question-text { flex: 1; font-size: 15px; font-weight: 600; color: #1a1a1a; letter-spacing: -0.01em; line-height: 1.4; }
-    .faq-toggle {
-      width: 28px; height: 28px; border-radius: 50%; background: #f5f5f5;
-      border: 1.5px solid #e0e0e0; display: flex; align-items: center;
-      justify-content: center; flex-shrink: 0;
-      transition: transform .35s cubic-bezier(.34,1.56,.64,1), background .3s, border-color .3s;
-    }
-    .faq-item.open .faq-toggle { transform: rotate(135deg); background: var(--accent); border-color: var(--accent); }
+    .faq-section { width: 100%; padding: 88px 32px 96px; background: #f4f7fb; }
+    .faq-section > * { max-width: 720px; margin-left: auto; margin-right: auto; }
+    .faq-header { text-align: center; margin-bottom: 8px; }
+    .faq-heading { font-size: 30px; font-weight: 800; letter-spacing: -0.03em; color: #16202e; margin-bottom: 10px; }
+    .faq-subheading { font-size: 15px; color: #64748b; font-weight: 400; margin-bottom: 36px; text-align: center; }
+    .faq-list { display: flex; flex-direction: column; gap: 10px; max-width: 720px; margin: 0 auto; }
+    .faq-item { background: #fff; border: 1px solid #e6ebf2; border-radius: 14px; overflow: hidden; cursor: pointer; transition: border-color .25s, box-shadow .25s; }
+    .faq-item:hover { border-color: #cdd9e8; box-shadow: 0 6px 22px rgba(20,40,80,.05); }
+    .faq-item.open { border-color: #c2d0e6; box-shadow: 0 10px 30px rgba(20,40,80,.07); }
+    .faq-question { display: flex; align-items: center; gap: 16px; padding: 20px 24px; user-select: none; }
+    .faq-question-text { flex: 1; font-size: 15.5px; font-weight: 700; color: #1a2230; letter-spacing: -0.01em; line-height: 1.4; }
+    .faq-toggle { width: 30px; height: 30px; border-radius: 50%; background: #eef2f8; border: none; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: transform .35s cubic-bezier(.34,1.56,.64,1), background .3s; }
+    .faq-item.open .faq-toggle { transform: rotate(135deg); background: #1d49e3; }
     .faq-toggle svg { width: 12px; height: 12px; }
-    .faq-toggle svg line { stroke: #999; stroke-width: 2; }
+    .faq-toggle svg line { stroke: #7c8aa0; stroke-width: 2; transition: stroke .3s; }
     .faq-item.open .faq-toggle svg line { stroke: #fff; }
     .faq-answer-wrapper { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .4s cubic-bezier(.34,1,.64,1); }
     .faq-item.open .faq-answer-wrapper { grid-template-rows: 1fr; }
     .faq-answer-inner { overflow: hidden; }
-    .faq-answer { padding: 0 22px 20px 60px; font-size: 14px; line-height: 1.65; color: #555; }
-    .faq-answer strong { color: #1a1a1a; font-weight: 600; }
-    .faq-completion {
-      text-align: center; margin-top: 24px; padding: 20px; border-radius: 16px;
-      background: #fff; opacity: 0; transform: translateY(10px) scale(.98);
-      transition: opacity .5s, transform .5s cubic-bezier(.34,1.56,.64,1); pointer-events: none;
-    }
-    .faq-completion.visible { opacity: 1; transform: translateY(0) scale(1); pointer-events: auto; }
-    .faq-completion-emoji { font-size: 32px; display: block; margin-bottom: 8px; }
-    .faq-completion.visible .faq-completion-emoji { animation: party 1s ease-in-out; }
-    @keyframes party { 0%{transform:scale(0) rotate(-180deg)} 50%{transform:scale(1.3) rotate(10deg)} 70%{transform:scale(.9) rotate(-5deg)} 100%{transform:scale(1) rotate(0)} }
-    .faq-completion-text { font-size: 14px; font-weight: 600; color: #1a1a1a; }
-    .faq-completion-sub { font-size: 13px; color: #888; margin-top: 4px; }
+    .faq-answer { padding: 0 24px 22px 24px; font-size: 14.5px; line-height: 1.7; color: #4a5568; }
+    .faq-answer strong { color: #1a2230; font-weight: 700; }
+    .lp-footer { width: 100%; background: #141414; border-top: 1px solid rgba(255,255,255,.08); padding: 24px 32px; }
+    .lp-footer-inner { max-width: 1140px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 14px; flex-wrap: wrap; }
+    .lp-footer-copy { font-size: 12.5px; color: rgba(255,255,255,.4); }
+    .lp-footer-links { display: flex; gap: 26px; }
+    .lp-footer-links a { font-size: 12.5px; color: rgba(255,255,255,.62); text-decoration: none; transition: color .2s; }
+    .lp-footer-links a:hover { color: #fff; }
+    @media (max-width:560px){ .lp-footer-inner{ justify-content: center; text-align: center; } }
 
     /* ══════════════════════════════════ Bottom CTA */
     .bottom-cta {
@@ -1305,8 +1301,7 @@
       .cta-input-row{flex-direction:column}
       .modal-input-row{flex-direction:column}
       .stories-track{gap:16px;animation-duration:45s}
-      .story-card{width:300px}
-      .story-image{height:160px}
+      .story-card{width:300px;padding:22px 22px 18px}
       .image-wrapper{height:240px;min-height:240px}
       h1{font-size:28px}
       .subtitle{font-size:14px}
@@ -1314,7 +1309,7 @@
       .results-sub{font-size:14px}
       .grade-widget{padding:28px 20px 24px}
       .grade-widget-title{font-size:15px}
-      .needs-headline-stat{font-size:40px}
+      .needs-headline-stat{font-size:21px}
       .trust-heading{font-size:24px}
       .stories-heading{font-size:22px}
       .faq-heading{font-size:22px}
@@ -1431,17 +1426,17 @@
       <div class="proof-divider"></div>
       <div class="proof-item">
         <div class="proof-icon proof-icon--tutors"><svg viewBox="0 0 24 24" fill="none"><path d="M22 11.08V12a10 10 0 11-5.93-9.14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M22 4L12 14.01l-3-3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-        <div class="proof-text"><span class="proof-number">98.1%</span><span class="proof-label">See noticeable improvement</span></div>
+        <div class="proof-text"><span class="proof-number">1-on-1</span><span class="proof-label">Every single lesson</span></div>
       </div>
       <div class="proof-divider"></div>
       <div class="proof-item">
         <div class="proof-icon proof-icon--reviews"><svg viewBox="0 0 24 24" fill="none"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26" fill="currentColor" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg></div>
-        <div class="proof-text"><span class="proof-number">300+</span><span class="proof-label">5-star Google reviews</span></div>
+        <div class="proof-text"><span class="proof-number">300+</span><span class="proof-label">Verified 5-star reviews</span></div>
       </div>
       <div class="proof-divider"></div>
       <div class="proof-item">
         <div class="proof-icon proof-icon--curriculum"><svg viewBox="0 0 24 24" fill="none"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-        <div class="proof-text"><span class="proof-number">Top 2%</span><span class="proof-label">Of Australian tutors</span></div>
+        <div class="proof-text"><span class="proof-number">Anytime</span><span class="proof-label">Cancel, no contracts</span></div>
       </div>
     </div>
   </div>
@@ -1450,9 +1445,9 @@
   <section class="hero">
     <div class="hero-image">
       <div class="image-wrapper">
-        <img src="images/hero-child-tutoring.png" alt="Child with learning differences happily engaged in a 1-on-1 online tutoring session at home" class="active">
-        <img loading="lazy" src="images/hero-tutor-profile.png" alt="Warm and approachable Tutero specialist tutor, a real caring educator you would trust with your child">
-        <img loading="lazy" src="images/hero-child-outcome.png" alt="Child at kitchen table holding a graded worksheet with a quiet smile, calm pride after a tutoring breakthrough">
+        <img src="images/hero-child-tutoring.webp" alt="Child with learning differences happily engaged in a 1-on-1 online tutoring session at home" class="active">
+        <img loading="lazy" src="images/hero-tutor-profile.webp" alt="Warm and approachable Tutero specialist tutor, a real caring tutor you would trust with your child">
+        <img loading="lazy" src="images/hero-child-outcome.webp" alt="Child at kitchen table holding a graded worksheet with a quiet smile, calm pride after a tutoring breakthrough">
         <div class="hero-dots">
           <div class="hero-dot active" data-slide="0"></div>
           <div class="hero-dot" data-slide="1"></div>
@@ -1470,7 +1465,7 @@
     <div class="hero-content">
       <div class="logo"><img src="/shared/images/tutero-logo.svg" alt="Tutero"></div>
       <h1>1-1 Tutoring for Students with ADHD, Autism, Dyslexia &amp; Learning Challenges</h1>
-      <p class="subtitle">Match your child with a specialist tutor who understands how they learn. Online, from home, with Australia's top 2% of educators.</p>
+      <p class="subtitle">Match your child with a specialist tutor who understands how they learn. One-on-one, online, from the comfort of home.</p>
       <div class="hero-condition-pills">
         <span class="hero-condition-pill">&#10003; ADHD</span>
         <span class="hero-condition-pill">&#10003; Autism / ASD</span>
@@ -1482,7 +1477,7 @@
       <button class="cta-button" id="heroCtaBtn">Find a Specialist Tutor for My Child <span class="arrow">&rarr;</span></button>
       <div class="hero-guarantee">
         <svg viewBox="0 0 24 24" fill="none"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        Love your first lesson or it's free
+        No contracts, cancel anytime
       </div>
     </div>
   </section>
@@ -1502,7 +1497,7 @@
       <div class="trust-bar-dot"></div>
       <div class="trust-bar-item"><svg viewBox="0 0 24 24" fill="none"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26" fill="currentColor" stroke="currentColor" stroke-width="1.5"/></svg> 300+ five-star Google reviews</div>
       <div class="trust-bar-dot"></div>
-      <div class="trust-bar-item"><svg viewBox="0 0 24 24" fill="none"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="currentColor" stroke-width="2"/><path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Love your first lesson or it's free</div>
+      <div class="trust-bar-item"><svg viewBox="0 0 24 24" fill="none"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="currentColor" stroke-width="2"/><path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Pay after each lesson, no upfront cost</div>
       <div class="trust-bar-dot"></div>
       <div class="trust-bar-item"><svg viewBox="0 0 24 24" fill="none"><path d="M22 11.08V12a10 10 0 11-5.93-9.14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M22 4L12 14.01l-3-3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> No upfront payments</div>
       <!-- Duplicate for seamless loop -->
@@ -1519,7 +1514,7 @@
       <div class="trust-bar-dot"></div>
       <div class="trust-bar-item"><svg viewBox="0 0 24 24" fill="none"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26" fill="currentColor" stroke="currentColor" stroke-width="1.5"/></svg> 300+ five-star Google reviews</div>
       <div class="trust-bar-dot"></div>
-      <div class="trust-bar-item"><svg viewBox="0 0 24 24" fill="none"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="currentColor" stroke-width="2"/><path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Love your first lesson or it's free</div>
+      <div class="trust-bar-item"><svg viewBox="0 0 24 24" fill="none"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="currentColor" stroke-width="2"/><path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> Pay after each lesson, no upfront cost</div>
       <div class="trust-bar-dot"></div>
       <div class="trust-bar-item"><svg viewBox="0 0 24 24" fill="none"><path d="M22 11.08V12a10 10 0 11-5.93-9.14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M22 4L12 14.01l-3-3" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg> No upfront payments</div>
     </div>
@@ -1564,7 +1559,7 @@
         <!-- Step 3: Urgency -->
         <div class="modal-form-step" id="ms2">
           <h3>How soon do you need a tutor?</h3>
-          <p class="modal-sub">No pressure — just helps us prioritise.</p>
+          <p class="modal-sub">No pressure, just helps us prioritise.</p>
           <div class="modal-pills" id="mUrgencyPills">
             <button class="modal-pill" data-val="This week">This week</button>
             <button class="modal-pill" data-val="Within 2 weeks">Within 2 weeks</button>
@@ -1593,7 +1588,7 @@
           <button class="modal-submit" id="mSubmit" disabled>Find <span id="mCtaName">your</span>'s tutor &rarr;</button>
           <button class="modal-back" id="mBack3">&larr; Back</button>
           <div class="modal-social-proof"><span class="proof-dot"></span> 32 parents enquired this morning</div>
-          <div class="modal-testimonial">"Best decision we made for Sarah's confidence." <strong>— Michelle T.</strong></div>
+          <div class="modal-testimonial">"Best decision we made for Sarah's confidence." <strong>Michelle T.</strong></div>
         </div>
       </div>
       <div class="modal-success" id="modalSuccess">
@@ -1628,7 +1623,7 @@
             <div class="success-step-icon success-step-icon--4">&#127891;</div>
             <div class="success-step-text">
               <span class="success-step-title">Start your first lesson</span>
-              <span class="success-step-desc">Love it or your first lesson is completely free.</span>
+              <span class="success-step-desc">No contracts and no upfront cost. Pay after each lesson.</span>
             </div>
           </div>
         </div>
@@ -1643,13 +1638,13 @@
 <!-- ════ Results / Data Section ════ -->
 <section class="results-section">
   <h2 class="results-heading reveal">Why families with special needs children choose Tutero</h2>
-  <p class="results-sub reveal stagger-1">Specialist support that builds confidence, focus, and results.</p>
+  <p class="results-sub reveal stagger-1">Specialist, one-on-one support shaped around how your child learns.</p>
 
   <div class="results-grid">
     <!-- Condition outcome widget (left) -->
     <div class="grade-widget reveal-left">
       <h3 class="grade-widget-title">How can we support your child?</h3>
-      <p class="grade-widget-sub">Select what your child is working through to see typical outcomes.</p>
+      <p class="grade-widget-sub">Select what your child is working through to see how a Tutero tutor helps.</p>
       <div class="needs-selector" id="needsSelector">
         <button class="needs-btn active" data-needs="adhd">&#129504; ADHD</button>
         <button class="needs-btn" data-needs="dyslexia">&#128214; Dyslexia</button>
@@ -1658,26 +1653,26 @@
         <button class="needs-btn" data-needs="other">&#128337; Other</button>
       </div>
       <div class="needs-result" id="needsResult">
-        <div class="needs-headline-stat" id="needsStat">78%</div>
-        <div class="needs-headline-desc" id="needsDesc">of students with ADHD show improved focus and reduced homework resistance within the first 4 sessions.</div>
+        <div class="needs-headline-stat" id="needsStat">Short, focused sessions</div>
+        <div class="needs-headline-desc" id="needsDesc">Work is broken into small, manageable steps so homework feels less overwhelming, with one patient tutor who keeps sessions calm and moving.</div>
         <div class="needs-sub-stats">
           <div class="needs-sub-stat">
-            <div class="needs-sub-stat-num" id="needsSubNum1">3–4</div>
-            <div class="needs-sub-stat-label" id="needsSubLabel1">lessons until homework resistance starts to ease for most students</div>
+            <div class="needs-sub-stat-num" id="needsSubNum1">Breaks</div>
+            <div class="needs-sub-stat-label" id="needsSubLabel1">movement breaks built in so attention does not run out</div>
           </div>
           <div class="needs-sub-stat">
             <div class="needs-sub-stat-num">4.9&#9733;</div>
-            <div class="needs-sub-stat-label">average Google rating from Australian parents</div>
+            <div class="needs-sub-stat-label">average rating from 300+ Australian parents</div>
           </div>
         </div>
       </div>
-      <p class="grade-timeline" id="needsCaption">Based on Tutero outcomes for students with ADHD, Australia</p>
+      <p class="grade-timeline" id="needsCaption">How a Tutero tutor supports students with ADHD</p>
     </div>
 
     <!-- Photo + value points (right) -->
     <div class="reveal stagger-2">
       <div class="results-photo">
-        <img loading="lazy" src="images/why-families-photo.png" alt="Mum and son on the couch, calm and focused during a Tutero session at home">
+        <img loading="lazy" src="images/why-families-photo.webp" alt="Mum and son on the couch, calm and focused during a Tutero session at home">
         <div class="results-photo-caption">
           <span>Liam, Year 6 &middot; ADHD</span> &middot; <span class="caption-result">C &rarr; A in Maths</span>
         </div>
@@ -1722,54 +1717,35 @@
     <!-- Top: bold stat headline -->
     <div class="rv2-headline reveal">
       <div class="rv2-headline-text">
-        <span class="rv2-eyebrow">Based on students with ADHD, dyslexia &amp; ASD</span>
-        <h2 class="rv2-title">94% of students improve<br>within 4 weeks</h2>
+        <span class="rv2-eyebrow">For students with ADHD, dyslexia, ASD &amp; more</span>
+        <h2 class="rv2-title">Real progress, at<br>your child's pace</h2>
         <p class="rv2-subtitle">Not just grades. Confidence, motivation, and a kid who actually wants to learn.</p>
       </div>
       <div class="rv2-headline-img">
-        <img loading="lazy" src="images/rv2-student-progress.png" alt="Child at home desk, focused and calm during an online tutoring session with Tutero">
+        <div class="rv2-slides">
+          <img src="images/rv2-student-progress.webp" class="rv2-slide active" alt="Teenager focused during an online tutoring session at home">
+          <img loading="lazy" src="images/rv2-progress-2.webp" class="rv2-slide" alt="Boy doing schoolwork at the kitchen table during an online lesson">
+          <img loading="lazy" src="images/rv2-progress-3.webp" class="rv2-slide" alt="Girl working through a problem on her laptop at home">
+        </div>
       </div>
     </div>
 
     <!-- Three proof columns -->
     <div class="rv2-proof-row reveal stagger-1">
-      <div class="rv2-proof-card">
-        <div class="rv2-proof-number">2&#8211;3</div>
-        <div class="rv2-proof-unit">lessons</div>
-        <p class="rv2-proof-desc">until most students start feeling more confident in their subject</p>
-      </div>
       <div class="rv2-proof-card rv2-proof-card--highlight">
-        <div class="rv2-proof-number">30%</div>
-        <div class="rv2-proof-unit">avg. grade lift</div>
-        <p class="rv2-proof-desc">within 6 months of consistent weekly tutoring sessions</p>
+        <div class="rv2-proof-number">1-on-1</div>
+        <div class="rv2-proof-unit">every lesson</div>
+        <p class="rv2-proof-desc">one dedicated tutor who gets to know exactly how your child learns</p>
       </div>
       <div class="rv2-proof-card">
-        <div class="rv2-proof-number">4.9</div>
-        <div class="rv2-proof-unit">Google rating</div>
-        <p class="rv2-proof-desc">from 300+ verified reviews by Australian parents</p>
+        <div class="rv2-proof-number">4.9&#9733;</div>
+        <div class="rv2-proof-unit">parent rating</div>
+        <p class="rv2-proof-desc">from 300+ verified reviews by Australian families</p>
       </div>
-    </div>
-
-    <!-- Before/After transformation strip -->
-    <div class="rv2-transform reveal stagger-2">
-      <div class="rv2-transform-side rv2-before">
-        <span class="rv2-transform-label">Before Tutero</span>
-        <ul class="rv2-transform-list">
-          <li>Homework meltdowns every night</li>
-          <li>Falling further behind because of their learning difference</li>
-          <li>Losing confidence, avoiding class participation</li>
-        </ul>
-      </div>
-      <div class="rv2-transform-arrow">
-        <svg viewBox="0 0 24 24" fill="none" width="32" height="32"><path d="M5 12h14M13 5l6 7-6 7" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </div>
-      <div class="rv2-transform-side rv2-after">
-        <span class="rv2-transform-label rv2-transform-label--after">After Tutero</span>
-        <ul class="rv2-transform-list rv2-transform-list--after">
-          <li>Strategies tailored to how their brain works</li>
-          <li>Homework done calmly, with growing independence</li>
-          <li>Confident, focused, and back on track at school</li>
-        </ul>
+      <div class="rv2-proof-card">
+        <div class="rv2-proof-number">$70</div>
+        <div class="rv2-proof-unit">per hour</div>
+        <p class="rv2-proof-desc">pay after each lesson, no contracts and no upfront cost</p>
       </div>
     </div>
 
@@ -1779,7 +1755,7 @@
         <p class="rv2-cta-text"><strong>See the difference in your child.</strong> Book a free consultation and we'll match them with a tutor this week.</p>
         <div class="rv2-cta-trust">
           <svg viewBox="0 0 24 24" fill="none" width="15" height="15"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="currentColor" stroke-width="2"/><path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          <span>Love your first lesson or it's free &middot; No contracts &middot; Cancel anytime</span>
+          <span>Pay after each lesson &middot; No contracts &middot; Cancel anytime</span>
         </div>
       </div>
       <button class="rv2-cta-btn" onclick="openModal()">Get matched with a tutor &rarr;</button>
@@ -1829,339 +1805,284 @@
 
 <!-- ════ Success Stories ════ -->
 <section class="stories-section">
-  <h2 class="stories-heading reveal">What other Tutero families are saying.</h2>
-  <p class="stories-subheading reveal stagger-1">Verified reviews from parents of children with ADHD, dyslexia, ASD and anxiety.</p>
+  <h2 class="stories-heading reveal">Real families. Real Trustpilot reviews.</h2>
+  <p class="stories-subheading reveal stagger-1">From Australian parents of children with autism, ADHD, anxiety and other learning needs &mdash; every one verified on Trustpilot.</p>
   <div class="stories-track-wrapper reveal stagger-2">
     <div class="stories-track" id="storiesTrack">
-      <!-- Set 1 — Real Trustpilot reviews -->
-      <div class="story-card">
-        <div class="story-image">
-          <img loading="lazy" src="images/story-jessica-thompson.png" alt="Jessica and her son at home, relieved after finding the right tutor for autism support">
-          <div class="story-result">&#129513; Autism: perfectly matched</div>
+      <article class="story-card">
+        <div class="story-top">
+          <span class="story-stars" aria-label="Rated 5 out of 5">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+          <span class="story-tp-badge"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="24" height="24" rx="4" fill="#00B67A"/><path d="M12 3.5l2.06 6.34H20.5l-5.28 3.84 2.01 6.18L12 16.02l-5.23 3.84 2.01-6.18L3.5 9.84H9.94z" fill="white"/></svg><span>Trustpilot</span></span>
         </div>
-        <div class="story-body">
-          <div class="story-tp-badge">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="24" height="24" rx="4" fill="#00B67A"/><path d="M12 3.5l2.06 6.34H20.5l-5.28 3.84 2.01 6.18L12 16.02l-5.23 3.84 2.01-6.18L3.5 9.84H9.94z" fill="white"/></svg>
-            <span>Trustpilot</span>
-          </div>
-          <div class="story-header">
-            <div class="story-meta"><span class="story-name">Jessica T.</span><span class="story-detail">Australia &middot; Autism</span></div>
-            <div class="story-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-          </div>
-          <p class="story-quote">We were nervous about finding the right tutor for our son who is Autistic. Tutero matched us with the best tutor for our son — she is so patient and understanding of his needs. He's gone from refusing to do homework to actually looking forward to his sessions.</p>
-          <a class="story-link" href="https://www.trustpilot.com/review/www.tutero.com" target="_blank">Read on Trustpilot <svg viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        <p class="story-quote">We’ve been using Tutero for 7 months. Our experience has been excellent.  From the first consultation they matched us with the best tutor for our son who is Autistic. Josh his tutor is so motivating, kind, and has improved my son’s confidence with learning.</p>
+        <div class="story-foot">
+          <span class="story-avatar" style="--c:#2f5fd0">JT</span>
+          <span class="story-meta"><span class="story-name">Jessica T.</span><span class="story-detail">Verified review &middot; Australia</span></span>
         </div>
-      </div>
-      <div class="story-card">
-        <div class="story-image">
-          <img loading="lazy" src="images/story-carrie-lizzio.png" alt="Carrie and her daughter at the kitchen table, Queensland home, calm after anxious times">
-          <div class="story-result">&#128156; Anxiety &rarr; Confidence</div>
+        <a class="story-tp-link" href="https://www.trustpilot.com/review/www.tutero.com" target="_blank" rel="noopener">Read on Trustpilot <svg viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      </article>
+      <article class="story-card">
+        <div class="story-top">
+          <span class="story-stars" aria-label="Rated 5 out of 5">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+          <span class="story-tp-badge"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="24" height="24" rx="4" fill="#00B67A"/><path d="M12 3.5l2.06 6.34H20.5l-5.28 3.84 2.01 6.18L12 16.02l-5.23 3.84 2.01-6.18L3.5 9.84H9.94z" fill="white"/></svg><span>Trustpilot</span></span>
         </div>
-        <div class="story-body">
-          <div class="story-tp-badge">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="24" height="24" rx="4" fill="#00B67A"/><path d="M12 3.5l2.06 6.34H20.5l-5.28 3.84 2.01 6.18L12 16.02l-5.23 3.84 2.01-6.18L3.5 9.84H9.94z" fill="white"/></svg>
-            <span>Trustpilot</span>
-          </div>
-          <div class="story-header">
-            <div class="story-meta"><span class="story-name">Carrie L.</span><span class="story-detail">Queensland &middot; Anxiety</span></div>
-            <div class="story-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-          </div>
-          <p class="story-quote">It's been a great experience dealing with Tutero — from the quoting experience to being matched with our lovely tutor. Tutero has cared about my daughter's comfort as she suffers with anxiety and has tailored her learning to her needs. Couldn't recommend more highly.</p>
-          <a class="story-link" href="https://www.trustpilot.com/review/www.tutero.com" target="_blank">Read on Trustpilot <svg viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        <p class="story-quote">It's been a great experience dealing with Tutero; from the quoting experience to being matched with our lovely tutor. Tutero has cared about my daughter's comfort as she suffers with anxiety and has tailored her learning to her needs. We are located in Queensland and the tutor can cover the material she is learning in the curriculum.</p>
+        <div class="story-foot">
+          <span class="story-avatar" style="--c:#1f8a78">CL</span>
+          <span class="story-meta"><span class="story-name">Carrie L.</span><span class="story-detail">Verified review &middot; Australia</span></span>
         </div>
-      </div>
-      <div class="story-card">
-        <div class="story-image">
-          <img loading="lazy" src="images/story-leo-filippello.png" alt="Leo and daughter Natalia on the couch, calm and settled after a tutoring session">
-          <div class="story-result">&#128154; Comfort: exactly what Natalia needed</div>
+        <a class="story-tp-link" href="https://www.trustpilot.com/review/www.tutero.com" target="_blank" rel="noopener">Read on Trustpilot <svg viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      </article>
+      <article class="story-card">
+        <div class="story-top">
+          <span class="story-stars" aria-label="Rated 5 out of 5">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+          <span class="story-tp-badge"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="24" height="24" rx="4" fill="#00B67A"/><path d="M12 3.5l2.06 6.34H20.5l-5.28 3.84 2.01 6.18L12 16.02l-5.23 3.84 2.01-6.18L3.5 9.84H9.94z" fill="white"/></svg><span>Trustpilot</span></span>
         </div>
-        <div class="story-body">
-          <div class="story-tp-badge">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="24" height="24" rx="4" fill="#00B67A"/><path d="M12 3.5l2.06 6.34H20.5l-5.28 3.84 2.01 6.18L12 16.02l-5.23 3.84 2.01-6.18L3.5 9.84H9.94z" fill="white"/></svg>
-            <span>Trustpilot</span>
-          </div>
-          <div class="story-header">
-            <div class="story-meta"><span class="story-name">Leo F.</span><span class="story-detail">Australia &middot; Special learning needs</span></div>
-            <div class="story-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-          </div>
-          <p class="story-quote">Maddie is amazing and always so kind and comforting which is what Natalia needs. She has a very caring approach and Natalia feels safe to make mistakes and learn at her own pace. It's exactly the environment we were looking for.</p>
-          <a class="story-link" href="https://www.trustpilot.com/review/www.tutero.com" target="_blank">Read on Trustpilot <svg viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        <p class="story-quote">My son was struggling with Maths and so we turned to Tutero for help. They organised a tutor for him and it has been fantastic. He has improved his grade and no longer thinks he is ‘bad’ at maths. Additionally he can do his tutoring at home which helps with our busy family.</p>
+        <div class="story-foot">
+          <span class="story-avatar" style="--c:#b4552d">AT</span>
+          <span class="story-meta"><span class="story-name">Amanda T.</span><span class="story-detail">Verified review &middot; Australia</span></span>
         </div>
-      </div>
-      <div class="story-card">
-        <div class="story-image">
-          <img loading="lazy" src="images/story-warren.png" alt="Warren and son Lawson in the living room, quiet pride at a graded worksheet">
-          <div class="story-result">&#129504; Patience: made all the difference</div>
+        <a class="story-tp-link" href="https://www.trustpilot.com/review/www.tutero.com" target="_blank" rel="noopener">Read on Trustpilot <svg viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      </article>
+      <article class="story-card">
+        <div class="story-top">
+          <span class="story-stars" aria-label="Rated 5 out of 5">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+          <span class="story-tp-badge"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="24" height="24" rx="4" fill="#00B67A"/><path d="M12 3.5l2.06 6.34H20.5l-5.28 3.84 2.01 6.18L12 16.02l-5.23 3.84 2.01-6.18L3.5 9.84H9.94z" fill="white"/></svg><span>Trustpilot</span></span>
         </div>
-        <div class="story-body">
-          <div class="story-tp-badge">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="24" height="24" rx="4" fill="#00B67A"/><path d="M12 3.5l2.06 6.34H20.5l-5.28 3.84 2.01 6.18L12 16.02l-5.23 3.84 2.01-6.18L3.5 9.84H9.94z" fill="white"/></svg>
-            <span>Trustpilot</span>
-          </div>
-          <div class="story-header">
-            <div class="story-meta"><span class="story-name">Warren</span><span class="story-detail">Australia &middot; ADHD support</span></div>
-            <div class="story-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-          </div>
-          <p class="story-quote">My son Lawson's tutor John has been amazingly patient and understanding with him. He takes the time to explain concepts in different ways until they click, never making Lawson feel bad for needing extra help. His confidence has completely turned around.</p>
-          <a class="story-link" href="https://www.trustpilot.com/review/www.tutero.com" target="_blank">Read on Trustpilot <svg viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        <p class="story-quote">Turero is a excellent choice.  My son has autism needing extra support and Tutero selected the perfect tutor for him. I would highly recommend the company to any family.</p>
+        <div class="story-foot">
+          <span class="story-avatar" style="--c:#7a4ea8">JA</span>
+          <span class="story-meta"><span class="story-name">Jackie</span><span class="story-detail">Verified review &middot; Australia</span></span>
         </div>
-      </div>
-      <div class="story-card">
-        <div class="story-image">
-          <img loading="lazy" src="images/story-bianca-mcgill.png" alt="Bianca kneeling beside her daughter at the kitchen table, patient and encouraging">
-          <div class="story-result">&#128200; Progress: remarkable</div>
+        <a class="story-tp-link" href="https://www.trustpilot.com/review/www.tutero.com" target="_blank" rel="noopener">Read on Trustpilot <svg viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      </article>
+      <article class="story-card">
+        <div class="story-top">
+          <span class="story-stars" aria-label="Rated 5 out of 5">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+          <span class="story-tp-badge"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="24" height="24" rx="4" fill="#00B67A"/><path d="M12 3.5l2.06 6.34H20.5l-5.28 3.84 2.01 6.18L12 16.02l-5.23 3.84 2.01-6.18L3.5 9.84H9.94z" fill="white"/></svg><span>Trustpilot</span></span>
         </div>
-        <div class="story-body">
-          <div class="story-tp-badge">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="24" height="24" rx="4" fill="#00B67A"/><path d="M12 3.5l2.06 6.34H20.5l-5.28 3.84 2.01 6.18L12 16.02l-5.23 3.84 2.01-6.18L3.5 9.84H9.94z" fill="white"/></svg>
-            <span>Trustpilot</span>
-          </div>
-          <div class="story-header">
-            <div class="story-meta"><span class="story-name">Bianca M.</span><span class="story-detail">Australia &middot; Primary school</span></div>
-            <div class="story-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-          </div>
-          <p class="story-quote">I'm so impressed with the thoughtfulness and patience in working with my daughter. Her tutor really takes the time to understand how she learns best and adapts every session. The progress has been remarkable — I only wish we'd found Tutero sooner.</p>
-          <a class="story-link" href="https://www.trustpilot.com/review/www.tutero.com" target="_blank">Read on Trustpilot <svg viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        <p class="story-quote">The team at Tutero have always worked hard to find the right tutor for my children. It is easy to connect with them and they listen to our needs. Each tutor that has been assigned to us has been caring and wants to know a lot about my children in how they are getting along with their work at school to fully understand my child and to see where they are at and how they can help advance them to the next level and bring out their confidence to perform better in school.</p>
+        <div class="story-foot">
+          <span class="story-avatar" style="--c:#3f6b52">RS</span>
+          <span class="story-meta"><span class="story-name">Renae S.</span><span class="story-detail">Verified review &middot; Australia</span></span>
         </div>
-      </div>
-      <div class="story-card">
-        <div class="story-image">
-          <img loading="lazy" src="images/story-lorraine.png" alt="Lorraine and teenage daughter at the dining table, laptop open, calm and focused">
-          <div class="story-result">&#10024; Confidence: back in class</div>
+        <a class="story-tp-link" href="https://www.trustpilot.com/review/www.tutero.com" target="_blank" rel="noopener">Read on Trustpilot <svg viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      </article>
+      <article class="story-card">
+        <div class="story-top">
+          <span class="story-stars" aria-label="Rated 5 out of 5">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+          <span class="story-tp-badge"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="24" height="24" rx="4" fill="#00B67A"/><path d="M12 3.5l2.06 6.34H20.5l-5.28 3.84 2.01 6.18L12 16.02l-5.23 3.84 2.01-6.18L3.5 9.84H9.94z" fill="white"/></svg><span>Trustpilot</span></span>
         </div>
-        <div class="story-body">
-          <div class="story-tp-badge">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="24" height="24" rx="4" fill="#00B67A"/><path d="M12 3.5l2.06 6.34H20.5l-5.28 3.84 2.01 6.18L12 16.02l-5.23 3.84 2.01-6.18L3.5 9.84H9.94z" fill="white"/></svg>
-            <span>Trustpilot</span>
-          </div>
-          <div class="story-header">
-            <div class="story-meta"><span class="story-name">Lorraine</span><span class="story-detail">Australia &middot; Learning support</span></div>
-            <div class="story-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-          </div>
-          <p class="story-quote">Our tutor has been incredibly supportive and understanding of my daughter's needs. She feels so much more confident in class now and is actually putting her hand up to answer questions — something she never did before. Tutero has been a game changer for our family.</p>
-          <a class="story-link" href="https://www.trustpilot.com/review/www.tutero.com" target="_blank">Read on Trustpilot <svg viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        <p class="story-quote">Amy has been a godsend. 
+My daughter is always keen to spend an hour with Amy. My daughter’s maths has really improved over the year as has her confidence. You won’t regret Tutero.</p>
+        <div class="story-foot">
+          <span class="story-avatar" style="--c:#c08a1e">ND</span>
+          <span class="story-meta"><span class="story-name">Niki D.</span><span class="story-detail">Verified review &middot; Australia</span></span>
         </div>
-      </div>
-      <div class="story-card">
-        <div class="story-image">
-          <img loading="lazy" src="images/story-lovethetees.png" alt="Mum sitting on the couch with her 12-year-old son, maths book in hand, calm focus">
-          <div class="story-result">&#8734;&#65039; Maths: finally clicked</div>
+        <a class="story-tp-link" href="https://www.trustpilot.com/review/www.tutero.com" target="_blank" rel="noopener">Read on Trustpilot <svg viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      </article>
+      <article class="story-card">
+        <div class="story-top">
+          <span class="story-stars" aria-label="Rated 5 out of 5">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+          <span class="story-tp-badge"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="24" height="24" rx="4" fill="#00B67A"/><path d="M12 3.5l2.06 6.34H20.5l-5.28 3.84 2.01 6.18L12 16.02l-5.23 3.84 2.01-6.18L3.5 9.84H9.94z" fill="white"/></svg><span>Trustpilot</span></span>
         </div>
-        <div class="story-body">
-          <div class="story-tp-badge">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="24" height="24" rx="4" fill="#00B67A"/><path d="M12 3.5l2.06 6.34H20.5l-5.28 3.84 2.01 6.18L12 16.02l-5.23 3.84 2.01-6.18L3.5 9.84H9.94z" fill="white"/></svg>
-            <span>Trustpilot</span>
-          </div>
-          <div class="story-header">
-            <div class="story-meta"><span class="story-name">Lovethetees</span><span class="story-detail">Australia &middot; Maths, Year 7</span></div>
-            <div class="story-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-          </div>
-          <p class="story-quote">Our tutor is kind, caring and smart — with endless patience for our 12-year-old boy. Maths was a real struggle and source of stress at home. Now he comes out of sessions calm and confident. The way she explains things just makes sense to him. It's finally clicked.</p>
-          <a class="story-link" href="https://www.trustpilot.com/review/www.tutero.com" target="_blank">Read on Trustpilot <svg viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        <p class="story-quote">Tutero's service has been exceptional; their tutors are remarkable, demonstrating thoughtfulness and patience in working with my daughter.  Her rapid progress is a direct result of their skill and commitment to meeting our needs.</p>
+        <div class="story-foot">
+          <span class="story-avatar" style="--c:#456">BM</span>
+          <span class="story-meta"><span class="story-name">Bianca M.</span><span class="story-detail">Verified review &middot; Australia</span></span>
         </div>
-      </div>
-      <div class="story-card">
-        <div class="story-image">
-          <img loading="lazy" src="images/story-amanda-tobin.png" alt="Amanda holding up her son's graded test paper in the kitchen, son beside her with quiet pride">
-          <div class="story-result">&#128208; Maths: grade improved</div>
+        <a class="story-tp-link" href="https://www.trustpilot.com/review/www.tutero.com" target="_blank" rel="noopener">Read on Trustpilot <svg viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      </article>
+      <article class="story-card">
+        <div class="story-top">
+          <span class="story-stars" aria-label="Rated 5 out of 5">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+          <span class="story-tp-badge"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="24" height="24" rx="4" fill="#00B67A"/><path d="M12 3.5l2.06 6.34H20.5l-5.28 3.84 2.01 6.18L12 16.02l-5.23 3.84 2.01-6.18L3.5 9.84H9.94z" fill="white"/></svg><span>Trustpilot</span></span>
         </div>
-        <div class="story-body">
-          <div class="story-tp-badge">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="24" height="24" rx="4" fill="#00B67A"/><path d="M12 3.5l2.06 6.34H20.5l-5.28 3.84 2.01 6.18L12 16.02l-5.23 3.84 2.01-6.18L3.5 9.84H9.94z" fill="white"/></svg>
-            <span>Trustpilot</span>
-          </div>
-          <div class="story-header">
-            <div class="story-meta"><span class="story-name">Amanda T.</span><span class="story-detail">Australia &middot; Maths</span></div>
-            <div class="story-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-          </div>
-          <p class="story-quote">Tutero has improved my son's grade and — more importantly — he no longer thinks he is 'bad' at maths. That shift in his self-belief has been everything. His tutor is warm, patient and genuinely invested in his progress. We couldn't be happier.</p>
-          <a class="story-link" href="https://www.trustpilot.com/review/www.tutero.com" target="_blank">Read on Trustpilot <svg viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        <p class="story-quote">We were so lucky to find Juliana as a maths tutor. Such a delight - kind caring smart and amazing. Who can engage and teach a 12 year old boy maths!? Cannot recommend her highly enough and can't thank her enough for endless patience!!!</p>
+        <div class="story-foot">
+          <span class="story-avatar" style="--c:#a23e5c">LO</span>
+          <span class="story-meta"><span class="story-name">Lovethetees</span><span class="story-detail">Verified review &middot; Australia</span></span>
         </div>
-      </div>
-      <!-- Duplicate set for seamless loop -->
-      <div class="story-card">
-        <div class="story-image">
-          <img loading="lazy" src="images/story-jessica-thompson.png" alt="Jessica and her son at home, relieved after finding the right tutor for autism support">
-          <div class="story-result">&#129513; Autism: perfectly matched</div>
+        <a class="story-tp-link" href="https://www.trustpilot.com/review/www.tutero.com" target="_blank" rel="noopener">Read on Trustpilot <svg viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      </article>
+      <article class="story-card">
+        <div class="story-top">
+          <span class="story-stars" aria-label="Rated 5 out of 5">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+          <span class="story-tp-badge"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="24" height="24" rx="4" fill="#00B67A"/><path d="M12 3.5l2.06 6.34H20.5l-5.28 3.84 2.01 6.18L12 16.02l-5.23 3.84 2.01-6.18L3.5 9.84H9.94z" fill="white"/></svg><span>Trustpilot</span></span>
         </div>
-        <div class="story-body">
-          <div class="story-tp-badge">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="24" height="24" rx="4" fill="#00B67A"/><path d="M12 3.5l2.06 6.34H20.5l-5.28 3.84 2.01 6.18L12 16.02l-5.23 3.84 2.01-6.18L3.5 9.84H9.94z" fill="white"/></svg>
-            <span>Trustpilot</span>
-          </div>
-          <div class="story-header">
-            <div class="story-meta"><span class="story-name">Jessica T.</span><span class="story-detail">Australia &middot; Autism</span></div>
-            <div class="story-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-          </div>
-          <p class="story-quote">We were nervous about finding the right tutor for our son who is Autistic. Tutero matched us with the best tutor for our son — she is so patient and understanding of his needs. He's gone from refusing to do homework to actually looking forward to his sessions.</p>
-          <a class="story-link" href="https://www.trustpilot.com/review/www.tutero.com" target="_blank">Read on Trustpilot <svg viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        <p class="story-quote">Our tutor has been both supportive and patient while structuring the lessons to focus on the key challenges. Has been a noticeable change even after three sessions.</p>
+        <div class="story-foot">
+          <span class="story-avatar" style="--c:#2b6c8f">AM</span>
+          <span class="story-meta"><span class="story-name">Adam M.</span><span class="story-detail">Verified review &middot; Australia</span></span>
         </div>
-      </div>
-      <div class="story-card">
-        <div class="story-image">
-          <img loading="lazy" src="images/story-carrie-lizzio.png" alt="Carrie and her daughter at the kitchen table, Queensland home, calm after anxious times">
-          <div class="story-result">&#128156; Anxiety &rarr; Confidence</div>
+        <a class="story-tp-link" href="https://www.trustpilot.com/review/www.tutero.com" target="_blank" rel="noopener">Read on Trustpilot <svg viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      </article>
+      <article class="story-card">
+        <div class="story-top">
+          <span class="story-stars" aria-label="Rated 5 out of 5">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+          <span class="story-tp-badge"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="24" height="24" rx="4" fill="#00B67A"/><path d="M12 3.5l2.06 6.34H20.5l-5.28 3.84 2.01 6.18L12 16.02l-5.23 3.84 2.01-6.18L3.5 9.84H9.94z" fill="white"/></svg><span>Trustpilot</span></span>
         </div>
-        <div class="story-body">
-          <div class="story-tp-badge">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="24" height="24" rx="4" fill="#00B67A"/><path d="M12 3.5l2.06 6.34H20.5l-5.28 3.84 2.01 6.18L12 16.02l-5.23 3.84 2.01-6.18L3.5 9.84H9.94z" fill="white"/></svg>
-            <span>Trustpilot</span>
-          </div>
-          <div class="story-header">
-            <div class="story-meta"><span class="story-name">Carrie L.</span><span class="story-detail">Queensland &middot; Anxiety</span></div>
-            <div class="story-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-          </div>
-          <p class="story-quote">It's been a great experience dealing with Tutero — from the quoting experience to being matched with our lovely tutor. Tutero has cared about my daughter's comfort as she suffers with anxiety and has tailored her learning to her needs. Couldn't recommend more highly.</p>
-          <a class="story-link" href="https://www.trustpilot.com/review/www.tutero.com" target="_blank">Read on Trustpilot <svg viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        <p class="story-quote">We’ve been using Tutero for 7 months. Our experience has been excellent.  From the first consultation they matched us with the best tutor for our son who is Autistic. Josh his tutor is so motivating, kind, and has improved my son’s confidence with learning.</p>
+        <div class="story-foot">
+          <span class="story-avatar" style="--c:#2f5fd0">JT</span>
+          <span class="story-meta"><span class="story-name">Jessica T.</span><span class="story-detail">Verified review &middot; Australia</span></span>
         </div>
-      </div>
-      <div class="story-card">
-        <div class="story-image">
-          <img loading="lazy" src="images/story-leo-filippello.png" alt="Leo and daughter Natalia on the couch, calm and settled after a tutoring session">
-          <div class="story-result">&#128154; Comfort: exactly what Natalia needed</div>
+        <a class="story-tp-link" href="https://www.trustpilot.com/review/www.tutero.com" target="_blank" rel="noopener">Read on Trustpilot <svg viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      </article>
+      <article class="story-card">
+        <div class="story-top">
+          <span class="story-stars" aria-label="Rated 5 out of 5">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+          <span class="story-tp-badge"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="24" height="24" rx="4" fill="#00B67A"/><path d="M12 3.5l2.06 6.34H20.5l-5.28 3.84 2.01 6.18L12 16.02l-5.23 3.84 2.01-6.18L3.5 9.84H9.94z" fill="white"/></svg><span>Trustpilot</span></span>
         </div>
-        <div class="story-body">
-          <div class="story-tp-badge">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="24" height="24" rx="4" fill="#00B67A"/><path d="M12 3.5l2.06 6.34H20.5l-5.28 3.84 2.01 6.18L12 16.02l-5.23 3.84 2.01-6.18L3.5 9.84H9.94z" fill="white"/></svg>
-            <span>Trustpilot</span>
-          </div>
-          <div class="story-header">
-            <div class="story-meta"><span class="story-name">Leo F.</span><span class="story-detail">Australia &middot; Special learning needs</span></div>
-            <div class="story-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-          </div>
-          <p class="story-quote">Maddie is amazing and always so kind and comforting which is what Natalia needs. She has a very caring approach and Natalia feels safe to make mistakes and learn at her own pace. It's exactly the environment we were looking for.</p>
-          <a class="story-link" href="https://www.trustpilot.com/review/www.tutero.com" target="_blank">Read on Trustpilot <svg viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        <p class="story-quote">It's been a great experience dealing with Tutero; from the quoting experience to being matched with our lovely tutor. Tutero has cared about my daughter's comfort as she suffers with anxiety and has tailored her learning to her needs. We are located in Queensland and the tutor can cover the material she is learning in the curriculum.</p>
+        <div class="story-foot">
+          <span class="story-avatar" style="--c:#1f8a78">CL</span>
+          <span class="story-meta"><span class="story-name">Carrie L.</span><span class="story-detail">Verified review &middot; Australia</span></span>
         </div>
-      </div>
-      <div class="story-card">
-        <div class="story-image">
-          <img loading="lazy" src="images/story-warren.png" alt="Warren and son Lawson in the living room, quiet pride at a graded worksheet">
-          <div class="story-result">&#129504; Patience: made all the difference</div>
+        <a class="story-tp-link" href="https://www.trustpilot.com/review/www.tutero.com" target="_blank" rel="noopener">Read on Trustpilot <svg viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      </article>
+      <article class="story-card">
+        <div class="story-top">
+          <span class="story-stars" aria-label="Rated 5 out of 5">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+          <span class="story-tp-badge"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="24" height="24" rx="4" fill="#00B67A"/><path d="M12 3.5l2.06 6.34H20.5l-5.28 3.84 2.01 6.18L12 16.02l-5.23 3.84 2.01-6.18L3.5 9.84H9.94z" fill="white"/></svg><span>Trustpilot</span></span>
         </div>
-        <div class="story-body">
-          <div class="story-tp-badge">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="24" height="24" rx="4" fill="#00B67A"/><path d="M12 3.5l2.06 6.34H20.5l-5.28 3.84 2.01 6.18L12 16.02l-5.23 3.84 2.01-6.18L3.5 9.84H9.94z" fill="white"/></svg>
-            <span>Trustpilot</span>
-          </div>
-          <div class="story-header">
-            <div class="story-meta"><span class="story-name">Warren</span><span class="story-detail">Australia &middot; ADHD support</span></div>
-            <div class="story-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-          </div>
-          <p class="story-quote">My son Lawson's tutor John has been amazingly patient and understanding with him. He takes the time to explain concepts in different ways until they click, never making Lawson feel bad for needing extra help. His confidence has completely turned around.</p>
-          <a class="story-link" href="https://www.trustpilot.com/review/www.tutero.com" target="_blank">Read on Trustpilot <svg viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        <p class="story-quote">My son was struggling with Maths and so we turned to Tutero for help. They organised a tutor for him and it has been fantastic. He has improved his grade and no longer thinks he is ‘bad’ at maths. Additionally he can do his tutoring at home which helps with our busy family.</p>
+        <div class="story-foot">
+          <span class="story-avatar" style="--c:#b4552d">AT</span>
+          <span class="story-meta"><span class="story-name">Amanda T.</span><span class="story-detail">Verified review &middot; Australia</span></span>
         </div>
-      </div>
-      <div class="story-card">
-        <div class="story-image">
-          <img loading="lazy" src="images/story-bianca-mcgill.png" alt="Bianca kneeling beside her daughter at the kitchen table, patient and encouraging">
-          <div class="story-result">&#128200; Progress: remarkable</div>
+        <a class="story-tp-link" href="https://www.trustpilot.com/review/www.tutero.com" target="_blank" rel="noopener">Read on Trustpilot <svg viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      </article>
+      <article class="story-card">
+        <div class="story-top">
+          <span class="story-stars" aria-label="Rated 5 out of 5">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+          <span class="story-tp-badge"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="24" height="24" rx="4" fill="#00B67A"/><path d="M12 3.5l2.06 6.34H20.5l-5.28 3.84 2.01 6.18L12 16.02l-5.23 3.84 2.01-6.18L3.5 9.84H9.94z" fill="white"/></svg><span>Trustpilot</span></span>
         </div>
-        <div class="story-body">
-          <div class="story-tp-badge">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="24" height="24" rx="4" fill="#00B67A"/><path d="M12 3.5l2.06 6.34H20.5l-5.28 3.84 2.01 6.18L12 16.02l-5.23 3.84 2.01-6.18L3.5 9.84H9.94z" fill="white"/></svg>
-            <span>Trustpilot</span>
-          </div>
-          <div class="story-header">
-            <div class="story-meta"><span class="story-name">Bianca M.</span><span class="story-detail">Australia &middot; Primary school</span></div>
-            <div class="story-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-          </div>
-          <p class="story-quote">I'm so impressed with the thoughtfulness and patience in working with my daughter. Her tutor really takes the time to understand how she learns best and adapts every session. The progress has been remarkable — I only wish we'd found Tutero sooner.</p>
-          <a class="story-link" href="https://www.trustpilot.com/review/www.tutero.com" target="_blank">Read on Trustpilot <svg viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        <p class="story-quote">Turero is a excellent choice.  My son has autism needing extra support and Tutero selected the perfect tutor for him. I would highly recommend the company to any family.</p>
+        <div class="story-foot">
+          <span class="story-avatar" style="--c:#7a4ea8">JA</span>
+          <span class="story-meta"><span class="story-name">Jackie</span><span class="story-detail">Verified review &middot; Australia</span></span>
         </div>
-      </div>
-      <div class="story-card">
-        <div class="story-image">
-          <img loading="lazy" src="images/story-lorraine.png" alt="Lorraine and teenage daughter at the dining table, laptop open, calm and focused">
-          <div class="story-result">&#10024; Confidence: back in class</div>
+        <a class="story-tp-link" href="https://www.trustpilot.com/review/www.tutero.com" target="_blank" rel="noopener">Read on Trustpilot <svg viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      </article>
+      <article class="story-card">
+        <div class="story-top">
+          <span class="story-stars" aria-label="Rated 5 out of 5">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+          <span class="story-tp-badge"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="24" height="24" rx="4" fill="#00B67A"/><path d="M12 3.5l2.06 6.34H20.5l-5.28 3.84 2.01 6.18L12 16.02l-5.23 3.84 2.01-6.18L3.5 9.84H9.94z" fill="white"/></svg><span>Trustpilot</span></span>
         </div>
-        <div class="story-body">
-          <div class="story-tp-badge">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="24" height="24" rx="4" fill="#00B67A"/><path d="M12 3.5l2.06 6.34H20.5l-5.28 3.84 2.01 6.18L12 16.02l-5.23 3.84 2.01-6.18L3.5 9.84H9.94z" fill="white"/></svg>
-            <span>Trustpilot</span>
-          </div>
-          <div class="story-header">
-            <div class="story-meta"><span class="story-name">Lorraine</span><span class="story-detail">Australia &middot; Learning support</span></div>
-            <div class="story-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-          </div>
-          <p class="story-quote">Our tutor has been incredibly supportive and understanding of my daughter's needs. She feels so much more confident in class now and is actually putting her hand up to answer questions — something she never did before. Tutero has been a game changer for our family.</p>
-          <a class="story-link" href="https://www.trustpilot.com/review/www.tutero.com" target="_blank">Read on Trustpilot <svg viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        <p class="story-quote">The team at Tutero have always worked hard to find the right tutor for my children. It is easy to connect with them and they listen to our needs. Each tutor that has been assigned to us has been caring and wants to know a lot about my children in how they are getting along with their work at school to fully understand my child and to see where they are at and how they can help advance them to the next level and bring out their confidence to perform better in school.</p>
+        <div class="story-foot">
+          <span class="story-avatar" style="--c:#3f6b52">RS</span>
+          <span class="story-meta"><span class="story-name">Renae S.</span><span class="story-detail">Verified review &middot; Australia</span></span>
         </div>
-      </div>
-      <div class="story-card">
-        <div class="story-image">
-          <img loading="lazy" src="images/story-lovethetees.png" alt="Mum sitting on the couch with her 12-year-old son, maths book in hand, calm focus">
-          <div class="story-result">&#8734;&#65039; Maths: finally clicked</div>
+        <a class="story-tp-link" href="https://www.trustpilot.com/review/www.tutero.com" target="_blank" rel="noopener">Read on Trustpilot <svg viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      </article>
+      <article class="story-card">
+        <div class="story-top">
+          <span class="story-stars" aria-label="Rated 5 out of 5">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+          <span class="story-tp-badge"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="24" height="24" rx="4" fill="#00B67A"/><path d="M12 3.5l2.06 6.34H20.5l-5.28 3.84 2.01 6.18L12 16.02l-5.23 3.84 2.01-6.18L3.5 9.84H9.94z" fill="white"/></svg><span>Trustpilot</span></span>
         </div>
-        <div class="story-body">
-          <div class="story-tp-badge">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="24" height="24" rx="4" fill="#00B67A"/><path d="M12 3.5l2.06 6.34H20.5l-5.28 3.84 2.01 6.18L12 16.02l-5.23 3.84 2.01-6.18L3.5 9.84H9.94z" fill="white"/></svg>
-            <span>Trustpilot</span>
-          </div>
-          <div class="story-header">
-            <div class="story-meta"><span class="story-name">Lovethetees</span><span class="story-detail">Australia &middot; Maths, Year 7</span></div>
-            <div class="story-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-          </div>
-          <p class="story-quote">Our tutor is kind, caring and smart — with endless patience for our 12-year-old boy. Maths was a real struggle and source of stress at home. Now he comes out of sessions calm and confident. The way she explains things just makes sense to him. It's finally clicked.</p>
-          <a class="story-link" href="https://www.trustpilot.com/review/www.tutero.com" target="_blank">Read on Trustpilot <svg viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        <p class="story-quote">Amy has been a godsend. 
+My daughter is always keen to spend an hour with Amy. My daughter’s maths has really improved over the year as has her confidence. You won’t regret Tutero.</p>
+        <div class="story-foot">
+          <span class="story-avatar" style="--c:#c08a1e">ND</span>
+          <span class="story-meta"><span class="story-name">Niki D.</span><span class="story-detail">Verified review &middot; Australia</span></span>
         </div>
-      </div>
-      <div class="story-card">
-        <div class="story-image">
-          <img loading="lazy" src="images/story-amanda-tobin.png" alt="Amanda holding up her son's graded test paper in the kitchen, son beside her with quiet pride">
-          <div class="story-result">&#128208; Maths: grade improved</div>
+        <a class="story-tp-link" href="https://www.trustpilot.com/review/www.tutero.com" target="_blank" rel="noopener">Read on Trustpilot <svg viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      </article>
+      <article class="story-card">
+        <div class="story-top">
+          <span class="story-stars" aria-label="Rated 5 out of 5">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+          <span class="story-tp-badge"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="24" height="24" rx="4" fill="#00B67A"/><path d="M12 3.5l2.06 6.34H20.5l-5.28 3.84 2.01 6.18L12 16.02l-5.23 3.84 2.01-6.18L3.5 9.84H9.94z" fill="white"/></svg><span>Trustpilot</span></span>
         </div>
-        <div class="story-body">
-          <div class="story-tp-badge">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="24" height="24" rx="4" fill="#00B67A"/><path d="M12 3.5l2.06 6.34H20.5l-5.28 3.84 2.01 6.18L12 16.02l-5.23 3.84 2.01-6.18L3.5 9.84H9.94z" fill="white"/></svg>
-            <span>Trustpilot</span>
-          </div>
-          <div class="story-header">
-            <div class="story-meta"><span class="story-name">Amanda T.</span><span class="story-detail">Australia &middot; Maths</span></div>
-            <div class="story-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
-          </div>
-          <p class="story-quote">Tutero has improved my son's grade and — more importantly — he no longer thinks he is 'bad' at maths. That shift in his self-belief has been everything. His tutor is warm, patient and genuinely invested in his progress. We couldn't be happier.</p>
-          <a class="story-link" href="https://www.trustpilot.com/review/www.tutero.com" target="_blank">Read on Trustpilot <svg viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        <p class="story-quote">Tutero's service has been exceptional; their tutors are remarkable, demonstrating thoughtfulness and patience in working with my daughter.  Her rapid progress is a direct result of their skill and commitment to meeting our needs.</p>
+        <div class="story-foot">
+          <span class="story-avatar" style="--c:#456">BM</span>
+          <span class="story-meta"><span class="story-name">Bianca M.</span><span class="story-detail">Verified review &middot; Australia</span></span>
         </div>
-      </div>
+        <a class="story-tp-link" href="https://www.trustpilot.com/review/www.tutero.com" target="_blank" rel="noopener">Read on Trustpilot <svg viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      </article>
+      <article class="story-card">
+        <div class="story-top">
+          <span class="story-stars" aria-label="Rated 5 out of 5">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+          <span class="story-tp-badge"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="24" height="24" rx="4" fill="#00B67A"/><path d="M12 3.5l2.06 6.34H20.5l-5.28 3.84 2.01 6.18L12 16.02l-5.23 3.84 2.01-6.18L3.5 9.84H9.94z" fill="white"/></svg><span>Trustpilot</span></span>
+        </div>
+        <p class="story-quote">We were so lucky to find Juliana as a maths tutor. Such a delight - kind caring smart and amazing. Who can engage and teach a 12 year old boy maths!? Cannot recommend her highly enough and can't thank her enough for endless patience!!!</p>
+        <div class="story-foot">
+          <span class="story-avatar" style="--c:#a23e5c">LO</span>
+          <span class="story-meta"><span class="story-name">Lovethetees</span><span class="story-detail">Verified review &middot; Australia</span></span>
+        </div>
+        <a class="story-tp-link" href="https://www.trustpilot.com/review/www.tutero.com" target="_blank" rel="noopener">Read on Trustpilot <svg viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      </article>
+      <article class="story-card">
+        <div class="story-top">
+          <span class="story-stars" aria-label="Rated 5 out of 5">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+          <span class="story-tp-badge"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="24" height="24" rx="4" fill="#00B67A"/><path d="M12 3.5l2.06 6.34H20.5l-5.28 3.84 2.01 6.18L12 16.02l-5.23 3.84 2.01-6.18L3.5 9.84H9.94z" fill="white"/></svg><span>Trustpilot</span></span>
+        </div>
+        <p class="story-quote">Our tutor has been both supportive and patient while structuring the lessons to focus on the key challenges. Has been a noticeable change even after three sessions.</p>
+        <div class="story-foot">
+          <span class="story-avatar" style="--c:#2b6c8f">AM</span>
+          <span class="story-meta"><span class="story-name">Adam M.</span><span class="story-detail">Verified review &middot; Australia</span></span>
+        </div>
+        <a class="story-tp-link" href="https://www.trustpilot.com/review/www.tutero.com" target="_blank" rel="noopener">Read on Trustpilot <svg viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      </article>
     </div>
   </div>
+  <a class="stories-tp-link reveal stagger-3" href="https://www.trustpilot.com/review/www.tutero.com" target="_blank" rel="noopener">See all verified reviews on Trustpilot
+    <svg viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </a>
 </section>
 
 <!-- ════ Trust Section ════ -->
 <section class="trust-section">
   <h2 class="trust-heading reveal">The Tutero difference</h2>
-  <p class="trust-subheading reveal stagger-1">Built for families navigating learning differences — not a one-size-fits-all tutoring service.</p>
-  <div class="trust-grid reveal-scale">
-    <div class="trust-card">
-      <div class="trust-card-icon">&#129504;</div>
-      <div class="trust-card-title">Tutors trained in learning differences</div>
-      <p class="trust-card-desc">We match your child with educators who have experience working with ADHD, dyslexia, ASD, and other learning challenges. Not just any tutor.</p>
-    </div>
-    <div class="trust-card">
-      <div class="trust-card-icon">&#128203;</div>
-      <div class="trust-card-title">Detailed lesson reports every session</div>
-      <p class="trust-card-desc">After every lesson, your tutor writes a report covering what was covered and your child's progress. You're always in the loop.</p>
-    </div>
-    <div class="trust-card">
-      <div class="trust-card-icon">&#127919;</div>
-      <div class="trust-card-title">Every lesson built around your child</div>
-      <p class="trust-card-desc">Lessons adapt to your child's specific diagnosis, pace, and learning style — not a one-size-fits-all worksheet.</p>
-    </div>
-    <div class="trust-card">
-      <div class="trust-card-icon">&#128154;</div>
-      <div class="trust-card-title">Patient, compassionate educators</div>
-      <p class="trust-card-desc">Our tutors don't just know their subjects — they know how to build rapport with students who've struggled and lost confidence.</p>
-    </div>
-    <div class="trust-card">
-      <div class="trust-card-icon">&#128275;</div>
-      <div class="trust-card-title">No contracts, cancel anytime</div>
-      <p class="trust-card-desc">Stay because it works, not because you're locked in. No upfront deposits. Pay after each lesson.</p>
-    </div>
-    <div class="trust-card">
-      <div class="trust-card-icon">&#128581;</div>
-      <div class="trust-card-title">A real person managing your account</div>
-      <p class="trust-card-desc">A dedicated account manager who knows your child's situation. Call, text, or email — not a chatbot.</p>
-    </div>
+  <p class="trust-subheading reveal stagger-1">Built for families navigating learning differences, not a one-size-fits-all tutoring service.</p>
+  <div class="tdiff-grid reveal-scale">
+    <article class="tdiff-card">
+      <div class="tdiff-img"><img loading="lazy" src="images/diff-tutors.webp" alt="A friendly Tutero tutor during an online lesson"></div>
+      <div class="tdiff-body">
+        <h3 class="tdiff-title">Tutors who understand learning differences</h3>
+        <p class="tdiff-desc">Matched with a tutor who has real experience supporting ADHD, autism, dyslexia and more.</p>
+        <ul class="tdiff-expand">
+          <li>Experienced with your child's specific needs</li>
+          <li>Change tutors anytime the fit is not right</li>
+        </ul>
+      </div>
+    </article>
+    <article class="tdiff-card">
+      <div class="tdiff-img"><img loading="lazy" src="images/diff-tailored.webp" alt="A child focused during a one-on-one online lesson at home"></div>
+      <div class="tdiff-body">
+        <h3 class="tdiff-title">Every lesson built around your child</h3>
+        <p class="tdiff-desc">Sessions adapt to your child's diagnosis, pace and the way they learn best.</p>
+        <ul class="tdiff-expand">
+          <li>Tailored, one-on-one lessons</li>
+          <li>Goes at your child's pace, never rushed</li>
+        </ul>
+      </div>
+    </article>
+    <article class="tdiff-card">
+      <div class="tdiff-img"><img loading="lazy" src="images/diff-support.webp" alt="A friendly account manager checking in on a family"></div>
+      <div class="tdiff-body">
+        <h3 class="tdiff-title">A real person on your team</h3>
+        <p class="tdiff-desc">A dedicated account manager who knows your child and your family, not a chatbot.</p>
+        <ul class="tdiff-expand">
+          <li>Call, text or email anytime</li>
+          <li>One contact who knows your story</li>
+        </ul>
+      </div>
+    </article>
+    <article class="tdiff-card">
+      <div class="tdiff-img"><img loading="lazy" src="images/diff-progress.webp" alt="A parent and child looking at progress together at home"></div>
+      <div class="tdiff-body">
+        <h3 class="tdiff-title">You always know how they are going</h3>
+        <p class="tdiff-desc">A clear written report after every lesson, so you can see progress and stay in the loop.</p>
+        <ul class="tdiff-expand">
+          <li>A summary after each session</li>
+          <li>See what is improving and what is next</li>
+        </ul>
+      </div>
+    </article>
   </div>
 </section>
 
@@ -2170,23 +2091,14 @@
   <div class="faq-header">
     <h2 class="faq-heading reveal">Got questions? We've got answers</h2>
   </div>
-  <div class="curiosity-meter reveal stagger-1">
-    <span class="curiosity-label" id="curiosityLabel">Curiosity level:</span>
-    <div class="curiosity-track"><div class="curiosity-fill" id="curiosityFill"></div></div>
-    <span class="curiosity-emoji" id="curiosityEmoji">&#129300;</span>
-  </div>
+  <p class="faq-subheading reveal stagger-1">Everything parents ask before their child's first lesson.</p>
   <div class="faq-list reveal stagger-2" id="faqList">
-    <div class="faq-item" data-index="0"><div class="faq-question"><span class="faq-emoji">&#129513;</span><span class="faq-question-text">Do your tutors have experience with ADHD, autism, and dyslexia?</span><div class="faq-toggle"><svg viewBox="0 0 12 12"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg></div></div><div class="faq-answer-wrapper"><div class="faq-answer-inner"><p class="faq-answer">Yes — we specifically match students with tutors who have experience supporting their condition. Whether it's ADHD, ASD, dyslexia, dyscalculia, or anxiety, we only pair your child with an educator who understands how they learn and how to keep them engaged.</p></div></div></div>
-    <div class="faq-item" data-index="1"><div class="faq-question"><span class="faq-emoji">&#128176;</span><span class="faq-question-text">How much does it cost?</span><div class="faq-toggle"><svg viewBox="0 0 12 12"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg></div></div><div class="faq-answer-wrapper"><div class="faq-answer-inner"><p class="faq-answer">Lessons start from <strong>$65/hour</strong> for 1-on-1 online tutoring. There are no upfront costs and you pay after each lesson — so there's nothing to lose trying it.</p></div></div></div>
-    <div class="faq-item" data-index="2"><div class="faq-question"><span class="faq-emoji">&#127919;</span><span class="faq-question-text">How do you match my child with the right tutor?</span><div class="faq-toggle"><svg viewBox="0 0 12 12"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg></div></div><div class="faq-answer-wrapper"><div class="faq-answer-inner"><p class="faq-answer">When you enquire, our team learns about your child's specific needs, diagnosis, year level, and goals. We then handpick a tutor from our vetted pool who has the right experience and personality for your child. We don't guess — we match carefully.</p></div></div></div>
-    <div class="faq-item" data-index="3"><div class="faq-question"><span class="faq-emoji">&#9203;&#65039;</span><span class="faq-question-text">How quickly will I see results?</span><div class="faq-toggle"><svg viewBox="0 0 12 12"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg></div></div><div class="faq-answer-wrapper"><div class="faq-answer-inner"><p class="faq-answer">Most parents report a confidence boost within <strong>2–3 lessons</strong>. For students with ADHD or anxiety, just having a patient 1-on-1 environment makes a visible difference early. Grade improvements typically follow within the <strong>first 4–6 weeks</strong>.</p></div></div></div>
-    <div class="faq-item" data-index="4"><div class="faq-question"><span class="faq-emoji">&#128205;</span><span class="faq-question-text">Are lessons online or in-person?</span><div class="faq-toggle"><svg viewBox="0 0 12 12"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg></div></div><div class="faq-answer-wrapper"><div class="faq-answer-inner"><p class="faq-answer">All lessons are <strong>online</strong> via our interactive classroom — whiteboard, screen sharing, and real-time tools. For students with special needs, learning from home in a familiar, calm environment often improves focus and reduces anxiety compared to in-person settings.</p></div></div></div>
-    <div class="faq-item" data-index="5"><div class="faq-question"><span class="faq-emoji">&#128260;</span><span class="faq-question-text">What if the tutor isn't the right fit?</span><div class="faq-toggle"><svg viewBox="0 0 12 12"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg></div></div><div class="faq-answer-wrapper"><div class="faq-answer-inner"><p class="faq-answer">We'll find you a new one — no questions asked. Finding the right match is especially important for children with special needs, and we take that seriously. Just let your account manager know and we'll re-match immediately.</p></div></div></div>
-  </div>
-  <div class="faq-completion" id="faqCompletion">
-    <span class="faq-completion-emoji">&#127881;</span>
-    <div class="faq-completion-text">You're officially a Tutero expert!</div>
-    <div class="faq-completion-sub">Now there's only one thing left to do...</div>
+    <div class="faq-item" data-index="0"><div class="faq-question"><span class="faq-question-text">Do your tutors have experience with ADHD, autism, and dyslexia?</span><div class="faq-toggle"><svg viewBox="0 0 12 12"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg></div></div><div class="faq-answer-wrapper"><div class="faq-answer-inner"><p class="faq-answer">Yes. We specifically match students with tutors who have experience supporting their condition. Whether it's ADHD, ASD, dyslexia, dyscalculia, or anxiety, we only pair your child with a tutor who understands how they learn and how to keep them engaged.</p></div></div></div>
+    <div class="faq-item" data-index="1"><div class="faq-question"><span class="faq-question-text">How much does it cost?</span><div class="faq-toggle"><svg viewBox="0 0 12 12"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg></div></div><div class="faq-answer-wrapper"><div class="faq-answer-inner"><p class="faq-answer">Lessons start from <strong>$70/hour</strong> for 1-on-1 online tutoring. There are no upfront costs and you pay after each lesson, so there's nothing to lose trying it.</p></div></div></div>
+    <div class="faq-item" data-index="2"><div class="faq-question"><span class="faq-question-text">How do you match my child with the right tutor?</span><div class="faq-toggle"><svg viewBox="0 0 12 12"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg></div></div><div class="faq-answer-wrapper"><div class="faq-answer-inner"><p class="faq-answer">When you enquire, our team learns about your child's specific needs, diagnosis, year level, and goals. We then handpick a tutor from our vetted pool who has the right experience and personality for your child. We don't guess. We match carefully.</p></div></div></div>
+    <div class="faq-item" data-index="3"><div class="faq-question"><span class="faq-question-text">How quickly will I see results?</span><div class="faq-toggle"><svg viewBox="0 0 12 12"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg></div></div><div class="faq-answer-wrapper"><div class="faq-answer-inner"><p class="faq-answer">Every child is different, so we will not promise a fixed timeline. What we hear most often is that the first shift is how a child <strong>feels</strong> about learning. A patient, one-on-one tutor in a calm space tends to ease stress and resistance early on, and academic progress usually builds steadily from there with consistent weekly sessions.</p></div></div></div>
+    <div class="faq-item" data-index="4"><div class="faq-question"><span class="faq-question-text">Are lessons online or in-person?</span><div class="faq-toggle"><svg viewBox="0 0 12 12"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg></div></div><div class="faq-answer-wrapper"><div class="faq-answer-inner"><p class="faq-answer">All lessons are <strong>online</strong> via our interactive classroom, with a whiteboard, screen sharing, and real-time tools. For students with special needs, learning from home in a familiar, calm environment often improves focus and reduces anxiety compared to in-person settings.</p></div></div></div>
+    <div class="faq-item" data-index="5"><div class="faq-question"><span class="faq-question-text">What if the tutor isn't the right fit?</span><div class="faq-toggle"><svg viewBox="0 0 12 12"><line x1="6" y1="1" x2="6" y2="11"/><line x1="1" y1="6" x2="11" y2="6"/></svg></div></div><div class="faq-answer-wrapper"><div class="faq-answer-inner"><p class="faq-answer">We'll find you a new one, no questions asked. Finding the right match is especially important for children with special needs, and we take that seriously. Just let your account manager know and we'll re-match immediately.</p></div></div></div>
   </div>
 </section>
 
@@ -2276,7 +2188,7 @@
           <div class="success-step-icon success-step-icon--4">&#127891;</div>
           <div class="success-step-text">
             <span class="success-step-title" style="color:#fff;">Start your first lesson</span>
-            <span class="success-step-desc" style="color:rgba(255,255,255,.5);">Love it or your first lesson is free.</span>
+            <span class="success-step-desc" style="color:rgba(255,255,255,.5);">No contracts and no upfront cost. Pay after each lesson.</span>
           </div>
         </div>
       </div>
@@ -2286,6 +2198,16 @@
     </div>
   </div>
 </section>
+
+<footer class="lp-footer">
+  <div class="lp-footer-inner">
+    <span class="lp-footer-copy">&copy; Tutero. Online tutoring across Australia.</span>
+    <nav class="lp-footer-links">
+      <a href="https://tutero.com/au/info/privacy-policy" target="_blank" rel="noopener">Privacy Policy</a>
+      <a href="https://tutero.com/au/info/terms-of-service" target="_blank" rel="noopener">Terms of Service</a>
+    </nav>
+  </div>
+</footer>
 
 </div>
 
@@ -2314,14 +2236,31 @@
     setInterval(()=>goTo((current+1)%imgs.length),5500);
   })();
 
+  // ── rv2 image + highlight rotation ──
+  (function(){
+    const slides=document.querySelectorAll('.rv2-slide');
+    const cards=document.querySelectorAll('.rv2-proof-card');
+    if(slides.length<2) return;
+    let i=0;
+    const setHL=n=>cards.forEach((c,idx)=>c.classList.toggle('rv2-proof-card--highlight', idx===n%cards.length));
+    setHL(0);
+    setInterval(()=>{
+      slides[i].classList.remove('active');
+      i=(i+1)%slides.length;
+      slides[i].classList.add('active');
+      setHL(i);
+    }, 4500);
+  })();
 
-  // ── FAQ ──
-  const faqItems=document.querySelectorAll('.faq-item'), curiosityFill=document.getElementById('curiosityFill'), curiosityEmoji=document.getElementById('curiosityEmoji'), curiosityLabel=document.getElementById('curiosityLabel'), faqCompletion=document.getElementById('faqCompletion');
-  const openedSet=new Set(), totalFaqs=faqItems.length;
-  const emojiStages=['\u{1F914}','\u{1F9D0}','\u{1F62E}','\u{1F604}','\u{1F929}','\u{1F9E0}','\u{1F393}'];
-  faqItems.forEach(item=>{item.addEventListener('click',()=>{const w=item.classList.contains('open');faqItems.forEach(o=>o.classList.remove('open'));if(!w){item.classList.add('open');openedSet.add(item.dataset.index)}const p=openedSet.size/totalFaqs;curiosityFill.style.width=(p*100)+'%';const ei=Math.min(Math.floor(p*emojiStages.length),emojiStages.length-1);curiosityEmoji.textContent=emojiStages[ei];curiosityEmoji.style.transform='scale(1.3)';setTimeout(()=>curiosityEmoji.style.transform='scale(1)',300);if(openedSet.size>0)curiosityLabel.classList.add('active');})});
-  const faqObserver=new IntersectionObserver((entries)=>{entries.forEach(e=>{if(e.isIntersecting){faqCompletion.classList.add('visible');faqObserver.unobserve(faqCompletion)}})},{threshold:0.5});
-  faqObserver.observe(faqCompletion);
+
+  // ── FAQ accordion ──
+  document.querySelectorAll('.faq-item').forEach(item=>{
+    item.addEventListener('click',()=>{
+      const wasOpen=item.classList.contains('open');
+      document.querySelectorAll('.faq-item').forEach(o=>o.classList.remove('open'));
+      if(!wasOpen) item.classList.add('open');
+    });
+  });
 
   // ── Hero Modal Form ──
   const modalOverlay=document.getElementById('modalOverlay');
@@ -2427,7 +2366,7 @@
       didRedirect = true;
       window.location.href = redirectUrl;
     }
-    TuteroLead.submit(data, { landingPage: 'Special Needs Tutoring', variant: 'a' }).then(redirect, redirect);
+    TuteroLead.submit(data, { landingPage: 'Special Needs Tutoring', variant: 'd' }).then(redirect, redirect);
     setTimeout(redirect, 3000);
   });
   TuteroForms.enterToSubmit(mSteps[3],mSub);
@@ -2481,7 +2420,7 @@
       didRedirect = true;
       window.location.href = redirectUrl;
     }
-    TuteroLead.submit(data, { landingPage: 'Special Needs Tutoring', variant: 'a' }).then(redirect, redirect);
+    TuteroLead.submit(data, { landingPage: 'Special Needs Tutoring', variant: 'd' }).then(redirect, redirect);
     setTimeout(redirect, 3000);
   });
   TuteroForms.enterToSubmit(steps[2],submitLead);
@@ -2491,11 +2430,11 @@
 
   // ── Condition Outcome Widget ──
   const needsData = {
-    adhd:     { stat:'78%',  desc:'of students with ADHD show improved focus and reduced homework resistance within the first 4 sessions.', sub1:'3–4', label1:'lessons until homework resistance starts to ease for most students', caption:'Based on Tutero parent feedback, students with ADHD, Australia' },
-    dyslexia: { stat:'82%',  desc:'of students with dyslexia show improved reading confidence within 6 weeks of consistent tutoring.', sub1:'+12mo', label1:'average reading level gain in the first term for dyslexic students', caption:'Based on Tutero parent feedback, students with dyslexia, Australia' },
-    asd:      { stat:'86%',  desc:'of ASD students feel settled and comfortable with their tutor within the first two sessions.', sub1:'74%', label1:'show improved engagement in learning tasks within the first month', caption:'Based on Tutero parent feedback, students on the autism spectrum, Australia' },
-    anxiety:  { stat:'76%',  desc:'of students with learning anxiety show reduced avoidance behaviour within the first 4 weeks.', sub1:'3–5', label1:'sessions until most students start engaging more actively', caption:'Based on Tutero parent feedback, students with learning anxiety, Australia' },
-    other:    { stat:'81%',  desc:'of students with learning difficulties show noticeable improvement within their first term of tutoring.', sub1:'2+', label1:'average grade levels gained within 6 months', caption:'Based on Tutero parent feedback, students with learning difficulties, Australia' }
+    adhd:     { stat:'Short, focused sessions', desc:'Work is broken into small, manageable steps so homework feels less overwhelming, with one patient tutor who keeps sessions calm and moving.', sub1:'Breaks', label1:'movement breaks built in so attention does not run out', caption:'How a Tutero tutor supports students with ADHD' },
+    dyslexia: { stat:'Structured reading support', desc:'Patient, phonics-based and multi-sensory help that rebuilds reading confidence one step at a time, at a pace that suits your child.', sub1:'Multi-sensory', label1:'see it, hear it, say it, so reading finally sticks', caption:'How a Tutero tutor supports students with dyslexia' },
+    asd:      { stat:'Calm and predictable', desc:'The same tutor every week, a consistent routine, and a settled space where mistakes are completely okay.', sub1:'Same tutor', label1:'one familiar face every week your child learns to trust', caption:'How a Tutero tutor supports students on the autism spectrum' },
+    anxiety:  { stat:'Gentle, low-pressure', desc:'Confidence first. Small wins, no judgement, and a tutor who lets your child set the pace.', sub1:'No spotlight', label1:'never put on the spot, your child sets the pace', caption:'How a Tutero tutor supports students with learning anxiety' },
+    other:    { stat:'Shaped around your child', desc:'We take the time to understand exactly how your child learns, then tailor every session to suit them.', sub1:'Matched', label1:'a tutor chosen for exactly how your child learns', caption:'How a Tutero tutor supports students with learning difficulties' }
   };
   const needsBtns=document.querySelectorAll('.needs-btn');
   const needsStat=document.getElementById('needsStat');
