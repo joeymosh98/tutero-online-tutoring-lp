@@ -7,18 +7,11 @@
   <meta name="theme-color" content="#832EC5">
   <title>Redirecting…</title>
   <script>
-    // A/D split started 2026-06-03 — testing the redesign (D) against the previous winner (A).
-    // Fresh localStorage key so every visitor is freshly randomised 50/50 (prior A/C assignments ignored).
+    // A/D split ran 2026-06-03 to 2026-06-22 (50/50). D (redesign) won: 7 leads vs 2 on A.
+    // Test concluded — all traffic now routed to D. Prior splitter logic is in git history.
     (function() {
-      var key = 'tutero_sn_ad_variant';
-      var variants = ['a', 'd'];
-      var variant = localStorage.getItem(key);
-      if (!variant || variants.indexOf(variant) === -1) {
-        variant = variants[Math.floor(Math.random() * variants.length)];
-        localStorage.setItem(key, variant);
-      }
       var search = window.location.search || '';
-      window.location.replace(variant + '/' + search);
+      window.location.replace('d/' + search);
     })();
   </script>
 </head>
