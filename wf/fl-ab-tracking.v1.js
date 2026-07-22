@@ -43,11 +43,18 @@
     else { pending.push([ev, props, opts]); }
   }
 
+  // Minimal official-snippet stub: the CDN lib only bootstraps onto a
+  // pre-existing window.mixpanel carrying __SV (snippet contract) — without
+  // this, the lib loads but window.mixpanel never initialises.
+  window.mixpanel = window.mixpanel || {};
+  if (!window.mixpanel.__SV) {
+    window.mixpanel.__SV = 1.2;
+    window.mixpanel._i = [[TOKEN, { persistence: 'localStorage', batch_requests: true }, undefined]];
+  }
   var s = document.createElement('script');
   s.src = 'https://cdn.mxpnl.com/libs/mixpanel-2-latest.min.js';
   s.async = true;
   s.onload = function () {
-    window.mixpanel.init(TOKEN, { persistence: 'localStorage', batch_requests: true });
     window.mixpanel.identify(uid);
     window.mixpanel.register({ lp_variant: variant, lp_slug: slug, fl_uid: uid });
     ready = true;
