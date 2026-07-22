@@ -49,7 +49,7 @@
   window.mixpanel = window.mixpanel || {};
   if (!window.mixpanel.__SV) {
     window.mixpanel.__SV = 1.2;
-    window.mixpanel._i = [[TOKEN, { persistence: 'localStorage', batch_requests: true }, undefined]];
+    window.mixpanel._i = [[TOKEN, { persistence: 'localStorage', batch_requests: true }, 'mixpanel']];
   }
   var s = document.createElement('script');
   s.src = 'https://cdn.mxpnl.com/libs/mixpanel-2-latest.min.js';
