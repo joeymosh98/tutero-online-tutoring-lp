@@ -43,23 +43,34 @@
     else { pending.push([ev, props, opts]); }
   }
 
-  // Minimal official-snippet stub: the CDN lib only bootstraps onto a
-  // pre-existing window.mixpanel carrying __SV (snippet contract) — without
-  // this, the lib loads but window.mixpanel never initialises.
-  window.mixpanel = window.mixpanel || {};
-  if (!window.mixpanel.__SV) {
-    window.mixpanel.__SV = 1.2;
-    window.mixpanel._i = [[TOKEN, { persistence: 'localStorage', batch_requests: true }, 'mixpanel']];
+  // Official-snippet contract: the CDN lib bootstraps only onto an ARRAY
+  // stub carrying __SV + _i (lib source: create_mplib rejects non-array
+  // pre-existing objects with "You have already initialized").
+  if (!window.mixpanel || !window.mixpanel.__SV) {
+    var stub = [];
+    stub.__SV = 1.2;
+    stub._i = [[TOKEN, { persistence: 'localStorage', batch_requests: true }, 'mixpanel']];
+    stub.init = function () {};
+    stub.people = [];
+    window.mixpanel = stub;
   }
   var s = document.createElement('script');
   s.src = 'https://cdn.mxpnl.com/libs/mixpanel-2-latest.min.js';
   s.async = true;
   s.onload = function () {
-    window.mixpanel.identify(uid);
-    window.mixpanel.register({ lp_variant: variant, lp_slug: slug, fl_uid: uid });
-    ready = true;
-    for (var i = 0; i < pending.length; i++) window.mixpanel.track.apply(window.mixpanel, pending[i]);
-    pending = [];
+    var tries = 0;
+    (function whenReady() {
+      var m = window.mixpanel;
+      if (m && typeof m.identify === 'function') {
+        m.identify(uid);
+        m.register({ lp_variant: variant, lp_slug: slug, fl_uid: uid });
+        ready = true;
+        for (var i = 0; i < pending.length; i++) m.track.apply(m, pending[i]);
+        pending = [];
+      } else if (++tries < 100) {
+        setTimeout(whenReady, 100); // lib may finish bootstrap after onload
+      }
+    })();
   };
   document.head.appendChild(s);
 
