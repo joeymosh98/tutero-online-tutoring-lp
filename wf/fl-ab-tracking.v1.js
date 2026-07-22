@@ -6,6 +6,10 @@
  * "FL Lead Submitted" (fired from Make) joins the same funnel.
  */
 (function () {
+  // Only run on the two Florida A/B arms — this script is applied to the
+  // meta-lp CMS TEMPLATE (all /us/meta-lp/* pages share it), so gate hard.
+  var path = location.pathname.replace(/\/$/, '');
+  if (path !== '/us/meta-lp/sufs-tutoring' && path !== '/us/lp/florida-tutoring') return;
   var TOKEN = '80ffa3180bb438ec04211a8a4b3f4a67'; // Tutoring project 3186135 (public ingestion token)
 
   function cookie(name) {
