@@ -1,58 +1,46 @@
-// Vercel Serverless Function — Florida LP A/B/C splitter
-// try.tutero.com/fl → 302 to one of the Florida landing pages.
-// Sticky per visitor via fl_ab cookie (.tutero.com, 90d). Preserves all
-// inbound query params (utm_*, fbclid, …) and appends lp_variant=a|b|c.
+// Vercel Serverless Function — Florida LP router
+// try.tutero.com/fl → 302 to the Florida landing page.
 //
-// Adding an arm does NOT reshuffle anyone: a visitor already carrying
-// fl_ab=a|b keeps that arm, so only new visitors can be assigned c. Arm c
-// therefore ramps from zero rather than inheriting a share of the existing
-// cookied population — expected, and the reason c's counts trail a and b
-// for the first few days.
-const crypto = require('crypto');
+// HISTORY: this was a 50/50 then three-way A/B/C splitter (a = the old
+// /us/meta-lp/sufs-tutoring, b = /us/lp/florida-tutoring, c = /us/lp/florida-sufs).
+// The test ran 23 Jul – 1 Sep 2026 and cleared its pre-committed gates for a
+// and b. Lead rate was a dead heat (10.8% / 10.3% / 9.2%, a vs b p=0.71), and c
+// led lead→customer in every cut without reaching significance. c wins on
+// maintainability and engagement, so 100% of traffic now goes to c.
+//
+// WHY THE HOP STAYS: this is the single control point for the Florida paid
+// destination. Changing the page here is a one-line deploy; changing it on the
+// ads is a bulk Meta creative swap that resets review and learning on every ad.
+//
+// ROUTING IS UNCONDITIONAL. Both former inputs are deliberately ignored:
+//   - the fl_ab cookie, because ~90 days of sticky a/b cookies are still in the
+//     wild and those visitors must not be sent to a retired arm;
+//   - the ?lp_variant= QA override, because an inbound URL must not be able to
+//     divert live paid traffic off the page.
+//
+// The cookie is still SET to c. wf/fl-ab-tracking.v1.js resolves the variant as
+// `qs.get('lp_variant') || cookie('fl_ab') || ''`, so dropping it would make
+// paramless repeat views log as untagged. A future test must therefore use a
+// NEW cookie name (fl_ab2), or it will inherit this sticky population.
 
-const DESTINATIONS = {
-  a: 'https://www.tutero.com/us/meta-lp/sufs-tutoring',
-  b: 'https://www.tutero.com/us/lp/florida-tutoring',
-  c: 'https://www.tutero.com/us/lp/florida-sufs'
-};
-const VARIANTS = Object.keys(DESTINATIONS);
+const DESTINATION = 'https://www.tutero.com/us/lp/florida-sufs';
+
+// Still stamped on the outbound URL so page tracking keeps tagging events —
+// Mixpanel board 11393388 filters lp_variant != "".
+const VARIANT = 'c';
+
 const COOKIE = 'fl_ab';
 const MAX_AGE = 60 * 60 * 24 * 90; // 90 days
 
-function readCookie(header, name) {
-  if (!header) return null;
-  const m = header.match(new RegExp('(?:^|;\\s*)' + name + '=([^;]+)'));
-  return m ? m[1] : null;
-}
-
-// Unbiased pick over n arms. A plain byte % 3 is skewed, because 256 is not a
-// multiple of 3 and the first remainder gets one extra value. Reject the tail
-// (255 when n is 3) and the remaining range divides exactly.
-function pickVariant() {
-  const n = VARIANTS.length;
-  const limit = Math.floor(256 / n) * n;
-  let byte;
-  do { byte = crypto.randomBytes(1)[0]; } while (byte >= limit);
-  return VARIANTS[byte % n];
-}
-
 module.exports = function handler(req, res) {
-  // 1. cookie (sticky) → 2. explicit ?lp_variant= (QA) → 3. random assignment
-  let variant = readCookie(req.headers.cookie, COOKIE);
-  if (!DESTINATIONS[variant]) {
-    const qs = (req.url.split('?')[1] || '');
-    const forced = new URLSearchParams(qs).get('lp_variant');
-    variant = DESTINATIONS[forced] ? forced : pickVariant();
-  }
-
   const params = new URLSearchParams(req.url.split('?')[1] || '');
-  params.delete('lp_variant');
-  params.set('lp_variant', variant);
+  params.delete('lp_variant'); // drop any inbound value, however many
+  params.set('lp_variant', VARIANT);
 
   res.setHeader('Set-Cookie',
-    `${COOKIE}=${variant}; Max-Age=${MAX_AGE}; Domain=.tutero.com; Path=/; Secure; SameSite=Lax`);
-  res.setHeader('Cache-Control', 'no-store'); // never let the CDN cache one arm
+    `${COOKIE}=${VARIANT}; Max-Age=${MAX_AGE}; Domain=.tutero.com; Path=/; Secure; SameSite=Lax`);
+  res.setHeader('Cache-Control', 'no-store'); // never let the CDN cache the hop
   res.statusCode = 302;
-  res.setHeader('Location', `${DESTINATIONS[variant]}?${params.toString()}`);
+  res.setHeader('Location', `${DESTINATION}?${params.toString()}`);
   res.end();
 };
